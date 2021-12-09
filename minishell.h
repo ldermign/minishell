@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/09 10:47:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2021/12/09 11:18:25 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@
 # include <curses.h>
 # include <term.h>
 # include <fcntl.h>
+
+int	fork_fct(void);
 
 #endif
