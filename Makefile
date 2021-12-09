@@ -1,43 +1,51 @@
-NAME	=	so_long
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
+#    Updated: 2021/12/09 10:45:00 by ldermign         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-INCS	=	./includes/
+NAME	=	minishell
 
-SRCS	=	./main/main.c \
-			./main/init.c \
-			./parsing/check_arg.c \
-			./parsing/check_map.c \
-			./draw/get_map.c \
-			./draw/get_map_2.c \
-			./mvmts/wasd.c \
-			./utils/utils_parsing.c \
-			./utils/utils_get_colors.c \
-			./utils/clean_quit.c
+INCS	=	./incs/
+
+SRCS	=	./main.c
 
 OBJS	=	${SRCS:.c=.o}
 
+DEPS	=	${SRCS:.c=.d}
+
 CC		=	clang
 
-CFLAGS	=	-Wall -Wextra -Werror -g3 -I ${INCS} -I ./mlx/
+RM		=	rm -rf
 
-MLFLGS	=	-L./mlx -lbsd -lmlx -lXext -lX11 -lm
+CFLAGS	=	-Wall -Wextra -Werror -I ${INCS}
+
 
 all:		${NAME}
 
-${NAME}:	${OBJS} ${INCS} ./mlx/
+${NAME}:	${OBJS}
 			${MAKE} -C ./libft
-			${MAKE} -C ./mlx
-			${CC} -o ${NAME} ${OBJS} ${CFLAGS} ${MLFLGS} libft/libft.a
+			${CC} -o ${NAME} ${OBJS} ${CFLAGS} libft/libft.a
 
-.c.o:		${CC} ${CFLAGS} -c $< -o ${<:c=o}
+-include	${DEPS}
+
+%.o:%.c
+			@${CC} ${CFLAGS} -o $@ -c $<
+			@${CC} ${CFLAGS} -MMD -MP -MF ${@:.o=.d} -o $@ -c $<
 
 clean:
 			${MAKE} -C libft clean
-			${MAKE} -C mlx clean
-			rm -f ${OBJS}
+			${RM} ${OBJS} ${DEPS}
 
 fclean:		clean
 			${MAKE} -C libft fclean
-			rm -f ${NAME}
+			${RM} ${NAME}
 
 re:			fclean all
 
