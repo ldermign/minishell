@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:17:23 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/09 11:18:16 by ldermign         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:08:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,9 @@
 
 int	fork_fct(void)
 {
+	int	id;
+
+	id = fork();
+	printf("This is the %d process\n", id);
 	return (0);
 }
