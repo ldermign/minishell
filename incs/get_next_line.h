@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 11:17:23 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/14 13:31:23 by ldermign         ###   ########.fr       */
+/*   Created: 2020/12/08 15:24:48 by ldermign          #+#    #+#             */
+/*   Updated: 2021/09/18 16:42:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int	fct_debut_liena_chaipa(void)
-{
-	char	*line;
+# define BUFFER_SIZE 42
 
-	line = NULL;
-	write(0, "$ ", 2);
-	while (get_next_line(0, &line) > 0)
-	{
-		write(0, "$ ", 2);
-	}
-	return (0);
-}
+int		get_next_line(int fd, char **line);
+int		ft_free_reader(char *reader);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+char	*ft_strdup_gnl(char *src);
+
+#endif

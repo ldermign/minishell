@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2021/12/09 11:19:42 by ldermign         ###   ########.fr        #
+#    Updated: 2021/12/14 13:21:09 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ CC		=	clang
 RM		=	rm -rf
 
 CFLAGS	=	-Wall -Wextra -Werror -I ${INCS}
-
 
 all:		${NAME}
 

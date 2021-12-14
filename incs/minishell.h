@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/10 14:10:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:17:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@
 # include <curses.h>
 # include <term.h>
 # include <fcntl.h>
+# include "libft.h"
+# include "ft_printf.h"
+# include "get_next_line.h"
 
-int	fork_fct(void);
+int	fct_debut_liena_chaipa(void);
 
 #endif

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork.c                                             :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 11:17:23 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/14 13:31:23 by ldermign         ###   ########.fr       */
+/*   Created: 2020/12/12 19:44:50 by ldermign          #+#    #+#             */
+/*   Updated: 2021/09/18 16:43:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int	fct_debut_liena_chaipa(void)
-{
-	char	*line;
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <fcntl.h>
+# include <stdarg.h>
+# include "libft_fcts.h"
+# include "get_next_line.h"
+# include "ft_printf.h"
 
-	line = NULL;
-	write(0, "$ ", 2);
-	while (get_next_line(0, &line) > 0)
-	{
-		write(0, "$ ", 2);
-	}
-	return (0);
-}
+#endif
