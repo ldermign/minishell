@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/14 21:48:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2021/12/25 22:39:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-int	fct_debut_liena_chaipa(char *prompt);
+int	get_prompt(char *prompt);
 
 #endif
