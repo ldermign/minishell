@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_minishell.c                                  :+:      :+:    :+:   */
+/*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 11:17:23 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/27 21:10:37 by ldermign         ###   ########.fr       */
+/*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
+/*   Updated: 2021/12/27 21:32:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_STRUCT_H
+# define MINISHELL_STRUCT_H
 
-int	get_prompt(char *prompt)
+typedef struct	t_environnement
 {
-	
-	printf(RED"%s\n"NORMAL, prompt);
-	return (0);
-}
+	char	**env;
+}	t_env;
+
+#endif

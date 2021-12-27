@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/25 22:39:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:52:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
-
-int	get_prompt(char *prompt);
+# include "minishell_struct.h"
+# include "minishell_fcts.h"
 
 #endif

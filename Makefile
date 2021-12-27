@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2021/12/25 22:51:05 by ldermign         ###   ########.fr        #
+#    Updated: 2021/12/27 21:38:42 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ CC		=	clang
 
 RM		=	rm -rf
 
-CFLAGS	=	-Wall -Wextra -Werror -lreadline -I ${INCS}
+CFLAGS	=	-Wall -Wextra -Werror -I ${INCS}
 
 all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS} ${CFLAGS} libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 
