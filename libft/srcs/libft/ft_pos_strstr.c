@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_struct.h                                 :+:      :+:    :+:   */
+/*   ft_pos_strstr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/17 15:52:08 by ldermign         ###   ########.fr       */
+/*   Created: 2021/08/18 15:24:44 by ldermign          #+#    #+#             */
+/*   Updated: 2022/01/16 18:20:10 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCT_H
-# define MINISHELL_STRUCT_H
+#include "libft.h"
 
-typedef struct	t_environnement
+int	ft_pos_strstr(char *str, char *needle)
 {
-	char	**env;
-	char	**path;
-	char	*abs;
-	char	*rel;
-}	t_env;
+	int	i;
+	int	j;
 
-#endif
+	i = 0;
+	while (str[i])
+	{
+		j = 0;
+		while (needle[j] == str[i + j])
+		{
+			if (needle[j + 1] == '\0')
+				return (i);
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}

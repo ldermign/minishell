@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_int_strstr.c                                    :+:      :+:    :+:   */
+/*   ft_alloc_strcpy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/18 15:24:44 by ldermign          #+#    #+#             */
-/*   Updated: 2021/08/18 15:25:08 by ldermign         ###   ########.fr       */
+/*   Created: 2022/01/16 18:26:44 by ldermign          #+#    #+#             */
+/*   Updated: 2022/01/16 18:46:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_int_strstr(char *str, char *needle)
+char	*ft_alloc_strcpy(char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		len;
+	char	*dst;
 
+	if (str == NULL)
+		return (NULL);
 	i = 0;
-	while (str[i])
+	len = ft_strlen(str) + 1;
+	dst = malloc(sizeof(char) * len + 1);
+	if (dst == NULL)
+		return (NULL);
+	while (str[i] && i < len)
 	{
-		j = 0;
-		while (needle[j] == str[i + j])
-		{
-			if (needle[j + 1] == '\0')
-				return (1);
-			j++;
-		}
+		dst[i] = str[i];
 		i++;
 	}
-	if (str[i])
-		return (0);
-	return (0);
+	dst[i] = '\0';
+	return (dst);
 }

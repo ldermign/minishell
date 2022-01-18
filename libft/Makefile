@@ -6,19 +6,20 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/12 19:45:34 by ldermign          #+#    #+#              #
-#    Updated: 2021/10/19 11:19:11 by ldermign         ###   ########.fr        #
+#    Updated: 2022/01/16 23:47:29 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	libft.a
 
-SRCS	=	./srcs/libft/ft_atoi.c \
+SRCS	=	./srcs/libft/ft_alloc_strcat.c \
+			./srcs/libft/ft_alloc_strcpy.c \
+			./srcs/libft/ft_atoi.c \
 			./srcs/libft/ft_atol.c \
 			./srcs/libft/ft_binary.c \
 			./srcs/libft/ft_bzero.c \
 			./srcs/libft/ft_calloc.c \
 			./srcs/libft/ft_free_tab.c \
-			./srcs/libft/ft_int_strstr.c \
 			./srcs/libft/ft_int_strchr.c \
 			./srcs/libft/ft_isalnum.c \
 			./srcs/libft/ft_isalpha.c \
@@ -40,6 +41,7 @@ SRCS	=	./srcs/libft/ft_atoi.c \
 			./srcs/libft/ft_memmove.c \
 			./srcs/libft/ft_memset.c \
 			./srcs/libft/ft_pos_strchr.c \
+			./srcs/libft/ft_pos_strstr.c \
 			./srcs/libft/ft_putchar.c \
 			./srcs/libft/ft_putchar_fd.c \
 			./srcs/libft/ft_putendl_fd.c \

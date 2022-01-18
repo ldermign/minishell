@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:26:06 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/14 13:19:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/16 23:45:32 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+char				*ft_alloc_strcat(char *s1, char *s2);
+char				*ft_alloc_strcpy(char *str);
 int					ft_atoi(const char *str);
 long long int		ft_atol(const char *str);
 int					ft_binary(int nbr_to_convert);
@@ -26,7 +28,6 @@ void				ft_bzero(void *str, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 void				ft_free_tab(char **str_tab);
 int					ft_int_strchr(const char *str, int c);
-int					ft_int_strstr(char *str, char *needle);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 int					ft_isascii(int c);
@@ -47,6 +48,7 @@ void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memset(void *str, int c, size_t len);
 int					ft_pos_strchr(const char *str, int c);
+int					ft_pos_strstr(char *str, char *needle);
 void				ft_putchar(char c);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putendl_fd(char *s, int fd);

@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2021/12/27 21:38:42 by ldermign         ###   ########.fr        #
+#    Updated: 2022/01/16 23:59:00 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,11 @@ NAME	=	minishell
 
 INCS	=	./incs/
 
-SRCS	=	./main.c \
-			./start_minishell.c
+SRCS	=	./srcs/main.c \
+			./srcs/built_in.c \
+			./srcs/supprimer.c \
+			./srcs/get_env.c \
+			./srcs/uts_split_ms.c
 
 OBJS	=	${SRCS:.c=.o}
 
