@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elisa <elisa@student.42.fr>                +#+  +:+       +#+         #
+#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/01/18 15:56:43 by elisa            ###   ########.fr        #
+#    Updated: 2022/01/18 16:01:25 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/supprimer.c \
 			./srcs/get_env.c \
 			./srcs/uts_split_ms.c \
-			./srcs./parsing/command/echo.c ./srcs/parsing/command/cd_pwd.c \
+			./srcs/parsing/command/echo.c ./srcs/parsing/command/cd_pwd.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \
 			./srcs/parsing/command/export.c ./srcs/parsing/command/unset.c \
 			./srcs/parsing/error.c ./srcs/parsing/parsing.c
