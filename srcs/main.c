@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/17 14:51:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:58:47 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,30 @@ int	get_prompt(char *prompt, t_env *env)
 	return (0);
 }
 
+void	init_parsing(t_parsing *parsing)
+{	
+	parsing->ret_error = NULL;
+	parsing->result = NULL;
+	parsing->fd = NULL;
+	parsing->i_line = 0;
+	parsing->echo = 0;
+	parsing->cd = 0;
+	parsing->pwd = 0;
+	parsing->export = 0;
+	parsing->unset = 0;
+	parsing->env = 0;
+	parsing->exit = 0;
+	parsing->simple_quotes = 0;
+	parsing->double_quotes = 0;
+	parsing->option = 0;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)av;
 	char	*line;
 	t_env	cpy_env;
+	t_parsing	parsing;
 
 	line = NULL;
 	if (ac != 1)
@@ -48,7 +67,16 @@ int	main(int ac, char **av, char **env)
 	while (42)
 	{
 		line = readline("$ ");
-		get_prompt(line, &cpy_env);
+		// get_prompt(line, &cpy_env);
+		init_parsing(&parsing);
+		if (parse_line(line, &parsing) == -1)
+		{
+			printf("\033[0;31merror :\033[0m %s\n", parsing.ret_error);
+			free(parsing.ret_error);
+			parsing.ret_error = NULL;
+		}
+		if (parsing.result != NULL)
+			free(parsing.result);
 		free(line);
 	}
 	return (0);
