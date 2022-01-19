@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/18 15:59:16 by elisa            ###   ########.fr       */
+/*   Updated: 2022/01/19 15:36:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 typedef struct	t_environnement
 {
-	char	**env;
-	char	**path;
-	char	*abs;
-	char	*rel;
+	char	**env;	// env de bash
+	char	**path;	// variable d'environnement PATH de bash
+	char	*abs;	// chemin absolu du minishell
+	char	*rel;	// cheminn relatif du minishell
 }	t_env;
 
 typedef	struct s_parsing

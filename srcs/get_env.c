@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/16 21:52:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/19 16:22:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,29 @@ void	get_var_path(char **env, t_env *cpy_env)
 	// }
 }
 
+char	*get_absolute_path_beginning(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_pos_strstr(env[i], "PWD") == -1)
+			i++;
+		else
+			return (&env[i][4]);
+	}
+	return (NULL);
+}
+
 int	recup_var_envs(char **env, t_env *cpy_env)
 {
+	cpy_env->env = NULL;
+	cpy_env->path = NULL;
+	cpy_env->abs = NULL;
+	cpy_env->rel = NULL;
 	get_all_env(env, cpy_env);
 	get_var_path(env, cpy_env);
+	cpy_env->abs = get_absolute_path_beginning(env);
 	return (EXIT_SUCCESS);
 }
