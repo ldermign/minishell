@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/25 13:11:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:04:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,31 @@ int	pos_var(char **env, char *var)
 	return (i);
 }
 
-char	*get_absolute_path_beginning(char **env)
+char	*get_pwd_and_path(char **env, char *str)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (env[i])
 	{
-		if (ft_pos_strstr(env[i], "PWD") == -1)
-			i++;
-		else
-			return (&env[i][4]);
+		while (str[j])
+		{
+			if (env[i][j] == str[j])
+				j++;
+			else if (str[j] != '\0' && env[i][j] != str[j])
+			{
+				j = 0;
+				break ;
+			}
+			else
+			{
+				printf("%s\n", env[i]);
+				return (&env[i][ft_strlen(str)]);
+			}
+		}
+		i++;
 	}
 	return (NULL);
 }
@@ -81,8 +95,9 @@ int	recup_var_envs(char **env, t_env *cpy_env)
 	cpy_env->rel = NULL;
 	cpy_env->env_ms = NULL;
 	get_all_env(env, cpy_env);
-	cpy_env->path = ft_split(&env[pos_var(env, "PATH")][5], ':');
-	cpy_env->abs = get_absolute_path_beginning(env);
+	cpy_env->path = ft_split(get_pwd_and_path(env, "PATH="), ':');
+	// print_tab_char(cpy_env->path);
+	cpy_env->abs = get_pwd_and_path(env, "PWD=");
 	create_env_minishell(&(cpy_env->env_ms), env);
 	print_env_ms(&(cpy_env->env_ms));
 	return (EXIT_SUCCESS);

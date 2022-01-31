@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/19 23:10:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/31 13:32:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <term.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <linux/limits.h>
 # include "colors.h"
 # include "libft.h"
 # include "ft_printf.h"

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/25 14:39:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/31 13:47:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*working_path(char **paths, char *name_fct)
 	{
 		good_path = create_path(paths[i], name_fct);
 		fd = access(good_path, F_OK & X_OK);
+		printf(MAGENTA"[%s][%d]\n"NORMAL, good_path, fd);
 		if (fd == -1)
 			i++;
 		else
@@ -123,6 +124,7 @@ void start_built_in(char *prompt, t_env *env)
 		return ;
 	}
 	good_path = working_path(env->path, args[0]);
+	printf("good_path = %s\n", good_path);
 	execute_cmd(good_path, args, env->env_bash);
 	// err = execve(good_path, args, env->env);
 	// if (err == -1)

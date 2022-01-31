@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 22:23:36 by elisa             #+#    #+#             */
-/*   Updated: 2022/01/25 14:07:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/31 13:26:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ void	parse_unset(char *line, t_parsing *parsing)
 {
 	if (error_check(line, parsing, 5) == -1)
 		return ;
-	printf(GREEN"unset ok\n"NORMAL);
+	// printf(GREEN"unset ok\n"NORMAL);
 }
