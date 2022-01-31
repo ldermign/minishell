@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:08:08 by elisa             #+#    #+#             */
-/*   Updated: 2022/01/31 13:34:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:22:02 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	check_command(char *line, t_parsing *parsing)
 	else if (ft_strlen(line) > 3
 		&& ft_memcmp("exit", &line[parsing->i_line], 4) == 0)
 		parse_exit(line, parsing);
-	// else if (error_command(line, parsing, " : command not found") == -1)
-	// 	return (-1);
-	if (parsing->ret_error != NULL)
+	else
+		error_command(line, parsing);
+	if (parsing->error != 0)
 		return (-1);
 	return (0);
 }

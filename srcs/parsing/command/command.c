@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/01/31 13:26:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:13:41 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	int	i;
 	int	tmp;
 
-	parsing->echo = 1;
+	// parsing->echo = 1;
 	if (error_check(line, parsing, 4) == -1)
 		return ;
 	check_option(line, parsing);
@@ -42,16 +42,19 @@ void	parse_echo(char *line, t_parsing *parsing)
 		return ;
 	parsing->result = malloc(sizeof(char) * i + 1);
 	if (parsing->result == NULL)
+	{
+		parsing->error = 1;
 		return ;
+	}
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
-	// printf("to_print : [%s]\n", parsing->result);
-	// printf(GREEN"echo ok\n"NORMAL);
+	printf("to_print : [%s]\n", parsing->result);
+	printf(GREEN"echo ok\n"NORMAL);
 }
 
 void	parse_exit(char *line, t_parsing *parsing)
 {
 	if (error_check(line, parsing, 4) == -1)
 		return ;
-	// printf(GREEN"exit ok\n"NORMAL);
+	printf(GREEN"exit ok\n"NORMAL);
 }
