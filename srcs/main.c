@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/19 15:38:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:13:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int ac, char **av, char **env)
 		init_parsing(&parsing);
 		if (parse_line(line, &parsing) == -1)
 		{
-			printf("\033[0;31merror :\033[0m %s\n", parsing.ret_error);
+			printf("\033[0;31merror :\033[0m %s\n"NORMAL, parsing.ret_error);
 			free(parsing.ret_error);
 			parsing.ret_error = NULL;
 		}

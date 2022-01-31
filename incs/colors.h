@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:09:46 by ldermign          #+#    #+#             */
-/*   Updated: 2021/12/10 14:10:27 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:19:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define MAGENTA "\e[0;35m"
 # define CYAN "\e[0;36m"
 # define WHITE "\e[0;37m"
+# define GREY "\e[90m"
 # define BBLACK "\e[1;30m"
 # define BRED "\e[1;31m"
 # define BGREEN "\e[1;32m"

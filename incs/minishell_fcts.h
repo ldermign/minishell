@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/18 15:59:39 by elisa            ###   ########.fr       */
+/*   Updated: 2022/01/22 19:44:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,24 @@ int	get_prompt(char *prompt, t_env *env);
 
 void start_built_in(char *prompt, t_env *env);
 int	recup_var_envs(char **env, t_env *cpy_env);
+int	built_in_cd(t_env *env, char **cmd_args);
+int	built_in_pwd();
 
 /*
 **	UTILS
 */
 
 char	**get_cmd_and_args_split(char *str);
+void	add_var_env_minishell(t_env_ms **stack, char *str_var);
+int	search_for_var_in_env(t_env_ms **stack, char *var);
+void	supp_var_env_ms(t_env_ms **stack, char *var);
 
 /*
 **	TEMPORAIRE
 */
 
 void	print_tab_char(char **tabl);
+void	print_env_ms(t_env_ms **stack);
 
 
 // 		>>>>>>>>>  parsing  <<<<<<<<<

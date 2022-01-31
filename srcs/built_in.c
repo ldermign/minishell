@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/19 23:22:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:39:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,38 +83,24 @@ void	execute_cmd(char *path, char **args, char **env)
 	}
 }
 
-int	built_in_cd(t_env *env, char **cmd_args)
+int	built_in_env(t_env_ms *stack)
 {
-	char	*path_to_go;
-	char	actual_path[PATH_MAX];
-
-	path_to_go = ft_alloc_strcat("./", cmd_args[1]);
-	if (chdir(path_to_go) == -1)
-		perror("cd");
-	getcwd(actual_path, sizeof(actual_path));
-	env->abs = actual_path;
-	free(path_to_go);
-	return (1);
-}
-
-int	built_in_pwd(t_env *env, char **cmd_args)
-{
-	(void)env;
-	(void)cmd_args;
-	char	actual_path[PATH_MAX];
-
-	if (getcwd(actual_path, sizeof(actual_path)) != NULL)
-		printf("%s\n", actual_path);
-	else
-		perror("getcwd");
-	return (1);
+	while (stack)
+	{
+		printf("%s\n", stack->var);
+		stack = stack->next;
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	built_in_to_create(t_env *env, char **cmd_args)
 {
-	(void)env;
 	if (ft_pos_strstr(cmd_args[0], "cd") != -1)
 		return (built_in_cd(env, cmd_args));
+	else if (ft_pos_strstr(cmd_args[0], "pwd") != -1)
+		return (built_in_pwd());
+	else if (ft_pos_strstr(cmd_args[0], "env") != -1)
+		return (built_in_env(env->env_ms));
 	// else if (/* condition */)
 	// {
 	// 	/* code */
@@ -130,16 +116,17 @@ void start_built_in(char *prompt, t_env *env)
 
 	i = 0;
 	args = get_cmd_and_args_split(prompt);
-	// print_tab_char(args);
-	if (built_in_to_create(env, args) == 1)
+	if (built_in_to_create(env, args) != -1)
 	{
 		ft_free_tab(args);
+		// print_env_ms(&(env->env_ms));
 		return ;
 	}
 	good_path = working_path(env->path, args[0]);
-	execute_cmd(good_path, args, env->env);
+	execute_cmd(good_path, args, env->env_bash);
 	// err = execve(good_path, args, env->env);
 	// if (err == -1)
 	// printf("err = %d\n", err);
 	ft_free_tab(args);
+	// print_env_ms(&(env->env_ms));
 }
