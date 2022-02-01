@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/31 14:04:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:25:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	get_all_env(char **env, t_env *cpy_env)
 
 	i = 0;
 	nbr_env = 0;
-	while (env[nbr_env] != NULL)
+	while (env[nbr_env])
 		nbr_env++;
-	cpy_env->env_bash = malloc(sizeof(char *) * nbr_env);
-	if (cpy_env == NULL)
+	cpy_env->env_bash = malloc(sizeof(char *) * (nbr_env + 1));
+	if (cpy_env->env_bash == NULL)
 	{
 		printf("Error malloc.\n");
 		return ;
@@ -35,13 +35,23 @@ void	get_all_env(char **env, t_env *cpy_env)
 	cpy_env->env_bash[i] = NULL;
 }
 
-int	pos_var(char **env, char *var)
+int	pos_var(char **env, char *str)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (env[i] && ft_pos_strstr(env[i], var) == -1)
+	j = 0;
+	while (env[i][j])
+	{
+		while (str[j] && env[i][j] && str[j] == env[i][j])
+			j++;
+		if (str[j] == '\0')
+			break ;
+		else
+			j = 0;
 		i++;
+	}
 	return (i);
 }
 
@@ -56,17 +66,14 @@ char	*get_pwd_and_path(char **env, char *str)
 	{
 		while (str[j])
 		{
-			if (env[i][j] == str[j])
+			while (env[i][j] == str[j])
 				j++;
-			else if (str[j] != '\0' && env[i][j] != str[j])
+			if (str[j] == '\0')
+				return (&env[i][ft_strlen(str)]);
+			else
 			{
 				j = 0;
 				break ;
-			}
-			else
-			{
-				printf("%s\n", env[i]);
-				return (&env[i][ft_strlen(str)]);
 			}
 		}
 		i++;
@@ -96,7 +103,6 @@ int	recup_var_envs(char **env, t_env *cpy_env)
 	cpy_env->env_ms = NULL;
 	get_all_env(env, cpy_env);
 	cpy_env->path = ft_split(get_pwd_and_path(env, "PATH="), ':');
-	// print_tab_char(cpy_env->path);
 	cpy_env->abs = get_pwd_and_path(env, "PWD=");
 	create_env_minishell(&(cpy_env->env_ms), env);
 	print_env_ms(&(cpy_env->env_ms));

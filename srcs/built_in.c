@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/31 13:47:27 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:10:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*working_path(char **paths, char *name_fct)
 	{
 		good_path = create_path(paths[i], name_fct);
 		fd = access(good_path, F_OK & X_OK);
-		printf(MAGENTA"[%s][%d]\n"NORMAL, good_path, fd);
 		if (fd == -1)
 			i++;
 		else
@@ -94,7 +93,121 @@ int	built_in_env(t_env_ms *stack)
 	return (EXIT_SUCCESS);
 }
 
-int	built_in_to_create(t_env *env, char **cmd_args)
+int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
+{
+	int	i;
+	t_env_ms	*first;
+
+	i = 0;
+	first = *minishell;
+	while (*minishell)
+	{
+		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
+			i++;
+		if (str[i] == '\0' || str[i] == '=')
+		{
+			*minishell = first;
+			return (1);
+		}
+		else
+		{
+			i = 0;
+			*minishell = (*minishell)->next;
+		}
+	}
+	*minishell = first;
+	return (-1);
+}
+
+int	size_variable(char *prompt)
+{
+	int	i;
+	int	ret;
+	int	len;
+
+	i = 0;
+	ret = 0;
+	len = 0;
+	while (prompt[i] == ' ')
+		i++;
+	i += 6;
+	while (prompt[i] == ' ')
+		i++;
+	while (prompt[i] != '=')
+	{
+		len++;
+		i++;
+	}
+	i++;
+	len++;
+	if (prompt[i] == '"')
+	{
+		i++;
+		len++;
+		ret = 1;
+	}
+	while ((ret == 1 && prompt[i] != '"') || (ret == 0 && prompt[i] != ' '))
+	{
+		i++;
+		len++;
+	}
+	if (ret == 1)
+		len++;
+	return (len);
+}
+
+char	*get_good_variable(char *prompt)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	str = malloc(sizeof(char) * (size_variable(prompt) + 1));
+	if (str == NULL)
+	{
+		printf("Bad malloc.\n");
+		return (NULL);
+	}
+	while (prompt[i] == ' ')
+		i++;
+	i += 6;
+	while (prompt[i] == ' ')
+		i++;
+	while (j < size_variable(prompt))
+	{
+		str[j] = prompt[i];
+		i++;
+		j++;
+	}
+	str[j] = '\0';
+	return (str);
+}
+
+int	built_in_export(t_env *env, char *prompt)
+{(void)env;
+	int		i;
+	char	*str;
+
+	i = 6;
+	while (prompt[i] == ' ')
+		i++;
+	// printf(MAGENTA"[%s]\n"NORMAL, &prompt[i]);
+	str = get_good_variable(prompt);
+	// printf("[%s]\n", str);
+	if (check_if_variable_already_exist(&(env->env_ms), &prompt[i]) == -1)
+	{
+		printf("[%d]\n", check_if_variable_already_exist(&(env->env_ms), &prompt[i]));
+		add_var_env_minishell(&(env->env_ms), str);
+	}
+	
+	print_env_ms(&(env->env_ms));
+	free(str);
+	return (EXIT_SUCCESS);
+}
+
+int	built_in_to_create(t_env *env, char **cmd_args, char *prompt)
 {
 	if (ft_pos_strstr(cmd_args[0], "cd") != -1)
 		return (built_in_cd(env, cmd_args));
@@ -102,6 +215,8 @@ int	built_in_to_create(t_env *env, char **cmd_args)
 		return (built_in_pwd());
 	else if (ft_pos_strstr(cmd_args[0], "env") != -1)
 		return (built_in_env(env->env_ms));
+	else if (ft_pos_strstr(cmd_args[0], "export") != -1)
+		return (built_in_export(env, prompt));
 	// else if (/* condition */)
 	// {
 	// 	/* code */
@@ -117,14 +232,13 @@ void start_built_in(char *prompt, t_env *env)
 
 	i = 0;
 	args = get_cmd_and_args_split(prompt);
-	if (built_in_to_create(env, args) != -1)
+	if (built_in_to_create(env, args, prompt) != -1)
 	{
 		ft_free_tab(args);
 		// print_env_ms(&(env->env_ms));
 		return ;
 	}
 	good_path = working_path(env->path, args[0]);
-	printf("good_path = %s\n", good_path);
 	execute_cmd(good_path, args, env->env_bash);
 	// err = execve(good_path, args, env->env);
 	// if (err == -1)

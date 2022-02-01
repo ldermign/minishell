@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/25 14:13:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:08:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	char	*line;
 	t_env	cpy_env;
-	t_parsing	parsing;
+	// t_parsing	parsing;
 
 	line = NULL;
 	if (ac != 1)
@@ -61,24 +61,26 @@ int	main(int ac, char **av, char **env)
 	}
 	if (recup_var_envs(env, &cpy_env) == EXIT_FAILURE)
 		return (0);
-	// get_prompt("ls -a -l", &cpy_env);
+	get_prompt("export test=\"pouet pouet pouet la la la\" nonnisnka dnejkf", &cpy_env);
+	get_prompt("export test=pouet pouet pouet la la la nonnisnka dnejkf", &cpy_env);
 	// get_prompt("mkdir test", &cpy_env);
-	signal(SIGINT, quit_minishell);
-	while (42)
-	{
-		line = readline("$ ");
-		// get_prompt(line, &cpy_env);
-		init_parsing(&parsing);
-		if (parse_line(line, &parsing) == -1)
-		{
-			printf("\033[0;31merror :\033[0m %s\n"NORMAL, parsing.ret_error);
-			free(parsing.ret_error);
-			parsing.ret_error = NULL;
-		}
-		if (parsing.result != NULL)
-			free(parsing.result);
-		get_prompt(line, &cpy_env);
-		free(line);
-	}
+	// signal(SIGINT, quit_minishell);
+	// while (42)
+	// {
+	// 	line = readline("$ ");
+	// 	// get_prompt(line, &cpy_env);
+		// init_parsing(&parsing);
+	// 	if (parse_line(line, &parsing) == -1)
+	// 	{
+	// 		printf("\033[0;31merror :\033[0m %s\n"NORMAL, parsing.ret_error);
+	// 		free(parsing.ret_error);
+	// 		parsing.ret_error = NULL;
+	// 	}
+	// 	if (parsing.result != NULL)
+	// 		free(parsing.result);
+	// 	get_prompt(line, &cpy_env);
+	// 	free(line);
+	// }
+
 	return (0);
 }
