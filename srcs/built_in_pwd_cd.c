@@ -6,43 +6,44 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/25 14:04:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:35:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	change_old_pwd(t_env_ms **stack, char *name, char *new_path)
+void	change_old_pwd(t_env_ms **stack, char *name, char *str)
 {
 	t_env_ms	*first;
 
 	first = *stack;
 	while (*stack && ft_pos_strstr((*stack)->var, name) == -1)
 		*stack = (*stack)->next;
-	if (*stack != NULL)
-		free((*stack)->var);
-	(*stack)->var = ft_alloc_strcat(name, new_path);
+	(*stack)->var = str;
 	*stack = first;
 
 }
 
 int	built_in_cd(t_env *env, char **cmd_args)
 {
+	int		ret;
 	char	*path_to_go;
+	char	*old_pwd;
 	char	actual_path[PATH_MAX];
 
-	if (search_for_var_in_env(&(env->env_ms), "OLDPWD") == -1)
-		add_var_env_minishell(&(env->env_ms),
-		ft_alloc_strcat("OLDPWD=", getcwd(actual_path, sizeof(actual_path))));
+	ret = check_if_variable_already_exist(&(env->env_ms), "OLDPWD=");
+	old_pwd = ft_alloc_strcat("OLDPWD=", getcwd(actual_path, sizeof(actual_path)));
+	if (ret == -1)
+		add_var_env_minishell(&(env->env_ms), old_pwd);
 	else
-		change_old_pwd(&(env->env_ms), "OLDPWD=", getcwd(actual_path, sizeof(actual_path)));
+		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
 	path_to_go = ft_alloc_strcat("./", cmd_args[1]);
 	if (chdir(path_to_go) == -1)
 		perror("cd");
-	getcwd(actual_path, sizeof(actual_path));
-	env->abs = actual_path;
-	change_old_pwd(&(env->env_ms), "PWD=", getcwd(actual_path, sizeof(actual_path)));
 	free(path_to_go);
+	path_to_go = ft_alloc_strcat("PWD=", getcwd(actual_path, sizeof(actual_path)));
+	env->abs = actual_path;
+	change_var_env_minishell(&(env->env_ms), path_to_go, check_if_variable_already_exist(&(env->env_ms), "PWD="));
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/01 16:10:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:36:03 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,32 +93,6 @@ int	built_in_env(t_env_ms *stack)
 	return (EXIT_SUCCESS);
 }
 
-int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
-{
-	int	i;
-	t_env_ms	*first;
-
-	i = 0;
-	first = *minishell;
-	while (*minishell)
-	{
-		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
-			i++;
-		if (str[i] == '\0' || str[i] == '=')
-		{
-			*minishell = first;
-			return (1);
-		}
-		else
-		{
-			i = 0;
-			*minishell = (*minishell)->next;
-		}
-	}
-	*minishell = first;
-	return (-1);
-}
-
 int	size_variable(char *prompt)
 {
 	int	i;
@@ -143,7 +117,6 @@ int	size_variable(char *prompt)
 	if (prompt[i] == '"')
 	{
 		i++;
-		len++;
 		ret = 1;
 	}
 	while ((ret == 1 && prompt[i] != '"') || (ret == 0 && prompt[i] != ' '))
@@ -151,8 +124,6 @@ int	size_variable(char *prompt)
 		i++;
 		len++;
 	}
-	if (ret == 1)
-		len++;
 	return (len);
 }
 
@@ -160,10 +131,12 @@ char	*get_good_variable(char *prompt)
 {
 	int		i;
 	int		j;
+	int		ret;
 	char	*str;
 
 	i = 0;
 	j = 0;
+	ret = 0;
 	str = malloc(sizeof(char) * (size_variable(prompt) + 1));
 	if (str == NULL)
 	{
@@ -178,32 +151,46 @@ char	*get_good_variable(char *prompt)
 	while (j < size_variable(prompt))
 	{
 		str[j] = prompt[i];
-		i++;
+		if (ret == 0 && prompt[i] == '=' && prompt[i + 1] == '"')
+		{
+			i++;
+			ret = 1;
+		}
 		j++;
+		i++;
 	}
 	str[j] = '\0';
 	return (str);
 }
 
 int	built_in_export(t_env *env, char *prompt)
-{(void)env;
+{
 	int		i;
+	int		ret;
 	char	*str;
 
 	i = 6;
 	while (prompt[i] == ' ')
 		i++;
-	// printf(MAGENTA"[%s]\n"NORMAL, &prompt[i]);
 	str = get_good_variable(prompt);
-	// printf("[%s]\n", str);
-	if (check_if_variable_already_exist(&(env->env_ms), &prompt[i]) == -1)
-	{
-		printf("[%d]\n", check_if_variable_already_exist(&(env->env_ms), &prompt[i]));
+	ret = check_if_variable_already_exist(&(env->env_ms), &prompt[i]);
+	if (ret == -1)
 		add_var_env_minishell(&(env->env_ms), str);
-	}
-	
-	print_env_ms(&(env->env_ms));
-	free(str);
+	else
+		change_var_env_minishell(&(env->env_ms), str, ret);
+	// print_env_ms(&(env->env_ms));
+	return (EXIT_SUCCESS);
+}
+
+int	built_in_unset(t_env *env, char *prompt)
+{(void)env;(void)prompt;
+	int	i;
+	int	ret;
+
+	i = 0;
+	ret = check_if_variable_already_exist(&(env->env_ms), &prompt[i]);
+	if (ret != -1)
+		supp_var_env_ms(&(env->env_ms), ret);
 	return (EXIT_SUCCESS);
 }
 
@@ -217,10 +204,13 @@ int	built_in_to_create(t_env *env, char **cmd_args, char *prompt)
 		return (built_in_env(env->env_ms));
 	else if (ft_pos_strstr(cmd_args[0], "export") != -1)
 		return (built_in_export(env, prompt));
+	else if (ft_pos_strstr(cmd_args[0], "unset") != -1)
+		return (built_in_unset(env, prompt));
 	// else if (/* condition */)
 	// {
 	// 	/* code */
 	// }
+	// print_env_ms(&(env->env_ms));
 	return (-1);
 }
 
@@ -235,7 +225,7 @@ void start_built_in(char *prompt, t_env *env)
 	if (built_in_to_create(env, args, prompt) != -1)
 	{
 		ft_free_tab(args);
-		// print_env_ms(&(env->env_ms));
+		print_env_ms(&(env->env_ms));
 		return ;
 	}
 	good_path = working_path(env->path, args[0]);
@@ -244,5 +234,5 @@ void start_built_in(char *prompt, t_env *env)
 	// if (err == -1)
 	// printf("err = %d\n", err);
 	ft_free_tab(args);
-	// print_env_ms(&(env->env_ms));
+	print_env_ms(&(env->env_ms));
 }

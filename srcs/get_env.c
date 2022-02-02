@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/01 14:25:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:05:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,19 @@ char	*get_pwd_and_path(char **env, char *str)
 
 void	create_env_minishell(t_env_ms **env_minishell, char **env_bash)
 {
-	int	pos;
+	int	i;
 
-	pos = pos_var(env_bash, "PATH");
-	add_var_env_minishell(env_minishell, env_bash[pos]);
-	pos = pos_var(env_bash, "HOME");
-	add_var_env_minishell(env_minishell, env_bash[pos]);
-	pos = pos_var(env_bash, "PWD");
-	add_var_env_minishell(env_minishell,
-		ft_alloc_strcat("PWD=", &env_bash[pos][4]));
+	i = 0;
+	while (env_bash[i])
+	{
+		add_var_env_minishell(env_minishell, env_bash[i]);
+		i++;
+	}
 }
 
 int	recup_var_envs(char **env, t_env *cpy_env)
 {
+	// print_tab_char(env);
 	cpy_env->env_bash = NULL;
 	cpy_env->path = NULL;
 	cpy_env->abs = NULL;
@@ -105,6 +105,6 @@ int	recup_var_envs(char **env, t_env *cpy_env)
 	cpy_env->path = ft_split(get_pwd_and_path(env, "PATH="), ':');
 	cpy_env->abs = get_pwd_and_path(env, "PWD=");
 	create_env_minishell(&(cpy_env->env_ms), env);
-	print_env_ms(&(cpy_env->env_ms));
+	// print_env_ms(&(cpy_env->env_ms));
 	return (EXIT_SUCCESS);
 }

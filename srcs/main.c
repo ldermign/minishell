@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/02 09:04:13 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:42:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,12 @@ int	main(int ac, char **av, char **env)
 	}
 	if (recup_var_envs(env, &cpy_env) == EXIT_FAILURE)
 		return (0);
+	get_prompt("cd srcs", &cpy_env);
+	// get_prompt("cd ..", &cpy_env);
 	get_prompt("export test=\"pouet pouet pouet la la la\" nonnisnka dnejkf", &cpy_env);
-	get_prompt("export test=pouet pouet pouet la la la nonnisnka dnejkf", &cpy_env);
+	get_prompt("export test=bah oui mais non", &cpy_env);
+	get_prompt("export TEST=\"echo pouet\" non", &cpy_env);
+	get_prompt("unset test", &cpy_env);
 	// get_prompt("mkdir test", &cpy_env);
 	// signal(SIGINT, quit_minishell);
 	// while (42)
@@ -81,18 +85,18 @@ int	main(int ac, char **av, char **env)
 	// 	get_prompt(line, &cpy_env);
 	// 	free(line);
 	// }
-
 	signal(SIGINT, quit_minishell);
-	while (42)
-	{
-		line = readline("$ ");
-		// get_prompt(line, &cpy_env);
-		// init_parsing(&parsing);
-		// parse_line(line, &parsing);
-		// if (parsing.result != NULL)
-		// 	free(parsing.result);
-		get_prompt(line, &cpy_env);
-		free(line);
-	}
+	// while (42)
+	// {
+	// 	line = readline("$ ");
+					// get_prompt(line, &cpy_env);
+					// init_parsing(&parsing);
+					// parse_line(line, &parsing);
+					// if (parsing.result != NULL)
+					// 	free(parsing.result);
+	// 	get_prompt(line, &cpy_env);
+	// 	free(line);
+	// }
+	
 	return (0);
 }

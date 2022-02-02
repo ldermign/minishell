@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/31 22:33:56 by elisa            ###   ########.fr       */
+/*   Updated: 2022/02/02 15:12:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	built_in_pwd();
 char	**get_cmd_and_args_split(char *str);
 void	add_var_env_minishell(t_env_ms **stack, char *str_var);
 int	search_for_var_in_env(t_env_ms **stack, char *var);
-void	supp_var_env_ms(t_env_ms **stack, char *var);
+void	supp_var_env_ms(t_env_ms **stack, int pos);
+void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
+int	check_if_variable_already_exist(t_env_ms **minishell, char *str);
 
 /*
 **	TEMPORAIRE
