@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/01 11:27:34 by ldermign         ###   ########.fr       */
+=======
+/*   Updated: 2022/01/25 14:13:41 by elisa            ###   ########.fr       */
+>>>>>>> 76adc7799a86626e13e81f240caa0c7200f79e86
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +36,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	int	i;
 	int	tmp;
 
-	parsing->echo = 1;
+	// parsing->echo = 1;
 	if (error_check(line, parsing, 4) == -1)
 		return ;
 	check_option(line, parsing);
@@ -42,7 +46,10 @@ void	parse_echo(char *line, t_parsing *parsing)
 		return ;
 	parsing->result = malloc(sizeof(char) * i + 1);
 	if (parsing->result == NULL)
+	{
+		parsing->error = 1;
 		return ;
+	}
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
 	printf("to_print : [%s]\n", parsing->result);

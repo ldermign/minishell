@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/01 16:08:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 09:04:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ int	get_prompt(char *prompt, t_env *env)
 
 void	init_parsing(t_parsing *parsing)
 {	
-	parsing->ret_error = NULL;
+	parsing->error = 0;
 	parsing->result = NULL;
 	parsing->fd = NULL;
 	parsing->i_line = 0;
-	parsing->echo = 0;
-	parsing->cd = 0;
-	parsing->pwd = 0;
-	parsing->export = 0;
-	parsing->unset = 0;
-	parsing->env = 0;
-	parsing->exit = 0;
-	parsing->simple_quotes = 0;
-	parsing->double_quotes = 0;
+	// parsing->echo = 0;
+	// parsing->cd = 0;
+	// parsing->pwd = 0;
+	// parsing->export = 0;
+	// parsing->unset = 0;
+	// parsing->env = 0;
+	// parsing->exit = 0;
+	// parsing->simple_quotes = 0;
+	// parsing->double_quotes = 0;
 	parsing->option = 0;
 }
 
@@ -82,5 +82,17 @@ int	main(int ac, char **av, char **env)
 	// 	free(line);
 	// }
 
+	signal(SIGINT, quit_minishell);
+	while (42)
+	{
+		line = readline("$ ");
+		// get_prompt(line, &cpy_env);
+		// init_parsing(&parsing);
+		// parse_line(line, &parsing);
+		// if (parsing.result != NULL)
+		// 	free(parsing.result);
+		get_prompt(line, &cpy_env);
+		free(line);
+	}
 	return (0);
 }

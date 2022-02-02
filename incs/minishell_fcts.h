@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/22 19:44:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/31 22:33:56 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	parse_exit(char *line, t_parsing *parsing);
 // echo
 void	fill_result(char *line, t_parsing *parsing);
 int	find_len(char *line, t_parsing *parsing);
+void	skip_redirections(char *line, t_parsing *parsing);
 // error
-int	error_command(char *line, t_parsing *parsing, char *str);
+void	error_command(char *line, t_parsing *parsing);
 int	error_check(char *line, t_parsing *parsing, int i);
 
 #endif

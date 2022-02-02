@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:08:31 by elisa             #+#    #+#             */
-/*   Updated: 2022/01/31 13:34:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:23:59 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	error_check(char *line, t_parsing *parsing, int i)
 {
 	if (line[parsing->i_line + i] != ' '
 		&& line[parsing->i_line + i] != '\0')
 	{
-		error_command(line, parsing, " : command not found");
+		error_command(line, parsing);
 		return (-1);
 	}
 	parsing->i_line += i;
@@ -27,29 +26,14 @@ int	error_check(char *line, t_parsing *parsing, int i)
 	return (0);
 }
 
-int	error_command(char *line, t_parsing *parsing, char *str)
+void	error_command(char *line, t_parsing *parsing)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (line[parsing->i_line + i] && line[parsing->i_line + i] != ' ')
-		i++;
-	parsing->ret_error = malloc(sizeof(char) * i + 21);
-	if (parsing->ret_error == NULL)
-		return (-1);
-	while (j < i)
+	printf("error : ");
+	while (line[parsing->i_line] && line[parsing->i_line] != ' ')
 	{
-		parsing->ret_error[j] = line[parsing->i_line + j];
-		j++;
+		ft_putchar(line[parsing->i_line]);
+		parsing->i_line++;
 	}
-	i = 0;
-	while (str[i])
-	{
-		parsing->ret_error[j + i] = str[i];
-		i++;
-	}
-	parsing->ret_error[i + j] = '\0';
-	return (0);
+	printf(": command not found\n");
+	parsing->error = 1;
 }

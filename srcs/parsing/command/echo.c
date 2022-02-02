@@ -6,7 +6,7 @@
 /*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 22:18:15 by elisa             #+#    #+#             */
-/*   Updated: 2022/01/13 00:36:05 by elisa            ###   ########.fr       */
+/*   Updated: 2022/01/31 14:19:23 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	simple_quote(char *line, t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	parsing->simple_quotes = 1;
+	// parsing->simple_quotes = 1;
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != 39)
 	{
@@ -48,9 +48,13 @@ static int	simple_quote(char *line, t_parsing *parsing)
 		i++;
 	}
 	if (line[parsing->i_line] == '\0')
+	{
+		printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
+		parsing->error = 1;
 		return (-1);
-	if (line[parsing->i_line] == 39)
-		parsing->simple_quotes = 0;
+	}
+	// if (line[parsing->i_line] == 39)
+	// 	parsing->simple_quotes = 0;
 	return (i);
 }
 
@@ -59,7 +63,7 @@ static int	double_quotes(char *line, t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	parsing->double_quotes = 1;
+	// parsing->double_quotes = 1;
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != 34)
 	{
@@ -69,9 +73,50 @@ static int	double_quotes(char *line, t_parsing *parsing)
 			i++;
 		parsing->i_line++;
 	}
-	if (line[parsing->i_line] == 34)
-		parsing->double_quotes = 0;
+	if (line[parsing->i_line] == '\0')
+	{
+		printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
+		parsing->error = 1;
+		return (-1);
+	}
+	// if (line[parsing->i_line] == 34)
+	// 	parsing->double_quotes = 0;
 	return (i);
+}
+
+// 	60 <	62 >
+
+// void	first_redir_echo(char *line, t_parsing *parsing)	// < test.c
+// {
+// }
+
+// void	second_redir_echo(char *line, t_parsing *parsing)	// << stop
+// {
+// }
+
+// void	third_redir_echo(char *line, t_parsing *parsing)	// > test.c
+// {
+// 	parsing->i_line++;
+// 	while (line[parsing->i_line] == ' ')
+// 		parsing->i_line++;
+// 	// flemme
+// }
+
+// void	fourth_redir_echo(char *line, t_parsing *parsing)	// >> test.c
+// {
+// }
+
+void	redirections_echo(char *line, t_parsing *parsing)
+{
+	skip_redirections(line, parsing); // tmp
+// 	if (line[parsing->i_line] == 60 && line[parsing->i_line] != 60)
+// 		first_redir_echo(line, parsing);
+// 	if (line[parsing->i_line] == 60 && line[parsing->i_line] == 60)
+// 		second_redir_echo(line, parsing);
+// 	if (line[parsing->i_line] == 62 && line[parsing->i_line] != 62)
+// 		third_redir_echo(line, parsing);
+// 	if (line[parsing->i_line] == 62 && line[parsing->i_line] == 62)
+// 		fourth_redir_echo(line, parsing);
 }
 
 int	find_len(char *line, t_parsing *parsing)
@@ -79,8 +124,8 @@ int	find_len(char *line, t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	while (line[parsing->i_line] && line[parsing->i_line] != '|'
-		&& line[parsing->i_line] != 60 && line[parsing->i_line] != 62)
+	while (line[parsing->i_line] && line[parsing->i_line] != '|')
+		// && line[parsing->i_line] != 60 && line[parsing->i_line] != 62)
 	{
 		if (line[parsing->i_line] == '$')
 			i = i + check_variable(line, parsing);
@@ -88,13 +133,18 @@ int	find_len(char *line, t_parsing *parsing)
 			i = i + simple_quote(line, parsing);
 		else if (line[parsing->i_line] == 34)
 			i = i + double_quotes(line, parsing);
+		else if (line[parsing->i_line] == 60 || line[parsing->i_line] == 62)
+			redirections_echo(line, parsing);
 		else
 			i++;
-		if (parsing->simple_quotes != 0 || parsing->double_quotes != 0)
-		{
-			printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
+		// if (parsing->simple_quotes != 0 || parsing->double_quotes != 0)
+		// {
+		// 	printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
+		// 	parsing->error = 1;
+		// 	return (-1);
+		// }
+		if (parsing->error == 1)
 			return (-1);
-		}
 		parsing->i_line++;
 	}
 	return (i);
@@ -164,13 +214,35 @@ int	fill_double_quotes(char *line, t_parsing *parsing, int i)
 	return (j);
 }
 
+void	skip_redirections(char *line, t_parsing *parsing)
+{
+	while (line[parsing->i_line] == 60 || line[parsing->i_line] == 62
+		|| line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	if (line[parsing->i_line] == 34 || line[parsing->i_line] == 39)
+	{
+		parsing->i_line++;
+		while (line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
+			parsing->i_line++;
+		parsing->i_line++;
+	}
+	else
+	{
+		while (line[parsing->i_line] != ' ')
+			parsing->i_line++;
+	}
+	while (line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	parsing->i_line--;
+}
+
 void	fill_result(char *line, t_parsing *parsing)
 {
 	int		i;
 
 	i = 0;
-	while (line[parsing->i_line] && line[parsing->i_line] != '|'
-		&& line[parsing->i_line] != 60 && line[parsing->i_line] != 62)
+	while (line[parsing->i_line] && line[parsing->i_line] != '|')
+		// && line[parsing->i_line] != 60 && line[parsing->i_line] != 62)
 	{
 		if (line[parsing->i_line] == '$')
 			i = i + fill_variable(line, parsing, i);
@@ -178,6 +250,8 @@ void	fill_result(char *line, t_parsing *parsing)
 			i = i + fill_simple_quote(line, parsing, i);
 		else if (line[parsing->i_line] == 34)
 			i = i + fill_double_quotes(line, parsing, i);
+		else if (line[parsing->i_line] == 60 || line[parsing->i_line] == 62)
+			skip_redirections(line, parsing);
 		else
 		{
 			parsing->result[i] = line[parsing->i_line];
@@ -187,3 +261,16 @@ void	fill_result(char *line, t_parsing *parsing)
 	}
 	parsing->result[i] = '\0';
 }
+
+// echo ><
+// bash: syntax error near unexpected token `<'
+
+// echo > "hgv b$PWD"
+// bash: hgv b/Users/elisa/Desktop: No such file or directory
+
+// echo > "$PW D"
+//  ls
+//  D	42	minishell	minishell_test	push_swap	sujets
+
+// echo > "$PWD"
+// bash: /Users/elisa/Desktop: Is a directory
