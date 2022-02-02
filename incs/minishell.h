@@ -6,7 +6,7 @@
 /*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/31 22:37:39 by elisa            ###   ########.fr       */
+/*   Updated: 2022/02/02 21:08:01 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <term.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <linux/limits.h>
+// # include <linux/limits.h>
 # include "colors.h"
 # include "libft.h"
 # include "ft_printf.h"

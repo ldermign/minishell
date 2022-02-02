@@ -6,7 +6,7 @@
 /*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 22:18:15 by elisa             #+#    #+#             */
-/*   Updated: 2022/01/31 14:19:23 by elisa            ###   ########.fr       */
+/*   Updated: 2022/02/02 15:41:10 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	simple_quote(char *line, t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	// parsing->simple_quotes = 1;
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != 39)
 	{
@@ -53,8 +52,6 @@ static int	simple_quote(char *line, t_parsing *parsing)
 		parsing->error = 1;
 		return (-1);
 	}
-	// if (line[parsing->i_line] == 39)
-	// 	parsing->simple_quotes = 0;
 	return (i);
 }
 
@@ -63,7 +60,6 @@ static int	double_quotes(char *line, t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	// parsing->double_quotes = 1;
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != 34)
 	{
@@ -79,22 +75,47 @@ static int	double_quotes(char *line, t_parsing *parsing)
 		parsing->error = 1;
 		return (-1);
 	}
-	// if (line[parsing->i_line] == 34)
-	// 	parsing->double_quotes = 0;
 	return (i);
 }
 
 // 	60 <	62 >
 
-// void	first_redir_echo(char *line, t_parsing *parsing)	// < test.c
+void	first_redir_echo(char *line, t_parsing *parsing)	// < 
+{
+	char	str[ft_strlen(&line[parsing->i_line + 1])];
+	int		i;
+	int		fd;
+
+	i = 0;
+	parsing->i_line++;
+	while (line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	while (line[parsing->i_line] && line[parsing->i_line] != ' ')
+	{
+		str[i] = line[parsing->i_line];
+		i++;
+		parsing->i_line++;
+	}
+	str[i] = '\0';
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("error : %s: no such file or directory\n", str);
+		parsing->error = 1;
+		return ;
+	}
+	close(fd);	
+	while (line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	parsing->i_line--;
+}
+
+// void	second_redir_echo(char *line, t_parsing *parsing)	// << 
 // {
+	
 // }
 
-// void	second_redir_echo(char *line, t_parsing *parsing)	// << stop
-// {
-// }
-
-// void	third_redir_echo(char *line, t_parsing *parsing)	// > test.c
+// void	third_redir_echo(char *line, t_parsing *parsing)	// > 
 // {
 // 	parsing->i_line++;
 // 	while (line[parsing->i_line] == ' ')
@@ -102,20 +123,20 @@ static int	double_quotes(char *line, t_parsing *parsing)
 // 	// flemme
 // }
 
-// void	fourth_redir_echo(char *line, t_parsing *parsing)	// >> test.c
+// void	fourth_redir_echo(char *line, t_parsing *parsing)	// >> 
 // {
 // }
 
 void	redirections_echo(char *line, t_parsing *parsing)
 {
-	skip_redirections(line, parsing); // tmp
-// 	if (line[parsing->i_line] == 60 && line[parsing->i_line] != 60)
-// 		first_redir_echo(line, parsing);
-// 	if (line[parsing->i_line] == 60 && line[parsing->i_line] == 60)
+	// skip_redirections(line, parsing); // tmp
+	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] != 60)
+		first_redir_echo(line, parsing);
+// 	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] == 60)
 // 		second_redir_echo(line, parsing);
-// 	if (line[parsing->i_line] == 62 && line[parsing->i_line] != 62)
+// 	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] != 62)
 // 		third_redir_echo(line, parsing);
-// 	if (line[parsing->i_line] == 62 && line[parsing->i_line] == 62)
+// 	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] == 62)
 // 		fourth_redir_echo(line, parsing);
 }
 
@@ -137,12 +158,6 @@ int	find_len(char *line, t_parsing *parsing)
 			redirections_echo(line, parsing);
 		else
 			i++;
-		// if (parsing->simple_quotes != 0 || parsing->double_quotes != 0)
-		// {
-		// 	printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
-		// 	parsing->error = 1;
-		// 	return (-1);
-		// }
 		if (parsing->error == 1)
 			return (-1);
 		parsing->i_line++;
@@ -274,3 +289,14 @@ void	fill_result(char *line, t_parsing *parsing)
 
 // echo > "$PWD"
 // bash: /Users/elisa/Desktop: Is a directory
+
+// > && >>
+// des que nouvelle redirection -> creation fichier
+// 		mais ecrit seulement dans le dernier
+
+// < 
+// check si le fichier existe mais fait rien
+
+// <<
+// check jusque == a STOP (ou autre)
+// si plusieur dans line, prend que le dernier en compte

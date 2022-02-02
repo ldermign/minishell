@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/02 15:42:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:06:35 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,9 @@ void	init_parsing(t_parsing *parsing)
 	parsing->result = NULL;
 	parsing->fd = NULL;
 	parsing->i_line = 0;
-	// parsing->echo = 0;
-	// parsing->cd = 0;
-	// parsing->pwd = 0;
-	// parsing->export = 0;
-	// parsing->unset = 0;
-	// parsing->env = 0;
-	// parsing->exit = 0;
-	// parsing->simple_quotes = 0;
-	// parsing->double_quotes = 0;
 	parsing->option = 0;
+	parsing->red1 = 0;
+	parsing->red2 = 0;
 }
 
 int	main(int ac, char **av, char **env)

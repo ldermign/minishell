@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/02 13:49:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/02 14:01:08 by elisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	parse_echo(char *line, t_parsing *parsing)
 	int	i;
 	int	tmp;
 
-	// parsing->echo = 1;
 	if (error_check(line, parsing, 4) == -1)
 		return ;
 	check_option(line, parsing);
