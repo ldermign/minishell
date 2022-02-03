@@ -18,17 +18,7 @@ void	parse_cd(char *line, t_parsing *parsing)
 		return ;
 	while (line[parsing->i_line] && line[parsing->i_line] != '|'
 		&& line[parsing->i_line] != '>' && line[parsing->i_line] != '<')
-		// && line[parsing->i_line] != ' ')
 		parsing->i_line++;
-	// if (line[parsing->i_line == ' '])
-	// {
-	// 	while (line[parsing->i_line] == ' ')
-	// 		parsing->i_line++;
-	// 	if (line[parsing->i_line] != '\0' && line[parsing->i_line] != '|'
-	// 	&& line[parsing->i_line] != '>' && line[parsing->i_line] != '<')
-	// 		return ;
-	// }
-	// parsing->cd = 1;
 	printf(GREEN"cd ok\n"NORMAL);
 }
 

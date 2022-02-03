@@ -28,7 +28,7 @@ int	error_check(char *line, t_parsing *parsing, int i)
 
 void	error_command(char *line, t_parsing *parsing)
 {
-	printf("error : ");
+	write(1, "error : ", 8);
 	while (line[parsing->i_line] && line[parsing->i_line] != ' ')
 	{
 		ft_putchar(line[parsing->i_line]);

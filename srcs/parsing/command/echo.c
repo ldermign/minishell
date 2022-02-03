@@ -78,68 +78,6 @@ static int	double_quotes(char *line, t_parsing *parsing)
 	return (i);
 }
 
-// 	60 <	62 >
-
-void	first_redir_echo(char *line, t_parsing *parsing)	// < 
-{
-	char	str[ft_strlen(&line[parsing->i_line + 1])];
-	int		i;
-	int		fd;
-
-	i = 0;
-	parsing->i_line++;
-	while (line[parsing->i_line] == ' ')
-		parsing->i_line++;
-	while (line[parsing->i_line] && line[parsing->i_line] != ' ')
-	{
-		str[i] = line[parsing->i_line];
-		i++;
-		parsing->i_line++;
-	}
-	str[i] = '\0';
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("error : %s: no such file or directory\n", str);
-		parsing->error = 1;
-		return ;
-	}
-	close(fd);	
-	while (line[parsing->i_line] == ' ')
-		parsing->i_line++;
-	parsing->i_line--;
-}
-
-// void	second_redir_echo(char *line, t_parsing *parsing)	// << 
-// {
-	
-// }
-
-// void	third_redir_echo(char *line, t_parsing *parsing)	// > 
-// {
-// 	parsing->i_line++;
-// 	while (line[parsing->i_line] == ' ')
-// 		parsing->i_line++;
-// 	// flemme
-// }
-
-// void	fourth_redir_echo(char *line, t_parsing *parsing)	// >> 
-// {
-// }
-
-void	redirections_echo(char *line, t_parsing *parsing)
-{
-	// skip_redirections(line, parsing); // tmp
-	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] != 60)
-		first_redir_echo(line, parsing);
-// 	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] == 60)
-// 		second_redir_echo(line, parsing);
-// 	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] != 62)
-// 		third_redir_echo(line, parsing);
-// 	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] == 62)
-// 		fourth_redir_echo(line, parsing);
-}
-
 int	find_len(char *line, t_parsing *parsing)
 {
 	int	i;
@@ -155,7 +93,7 @@ int	find_len(char *line, t_parsing *parsing)
 		else if (line[parsing->i_line] == 34)
 			i = i + double_quotes(line, parsing);
 		else if (line[parsing->i_line] == 60 || line[parsing->i_line] == 62)
-			redirections_echo(line, parsing);
+			redirections(line, parsing);
 		else
 			i++;
 		if (parsing->error == 1)
@@ -227,28 +165,6 @@ int	fill_double_quotes(char *line, t_parsing *parsing, int i)
 		parsing->i_line++;
 	}
 	return (j);
-}
-
-void	skip_redirections(char *line, t_parsing *parsing)
-{
-	while (line[parsing->i_line] == 60 || line[parsing->i_line] == 62
-		|| line[parsing->i_line] == ' ')
-		parsing->i_line++;
-	if (line[parsing->i_line] == 34 || line[parsing->i_line] == 39)
-	{
-		parsing->i_line++;
-		while (line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
-			parsing->i_line++;
-		parsing->i_line++;
-	}
-	else
-	{
-		while (line[parsing->i_line] != ' ')
-			parsing->i_line++;
-	}
-	while (line[parsing->i_line] == ' ')
-		parsing->i_line++;
-	parsing->i_line--;
 }
 
 void	fill_result(char *line, t_parsing *parsing)

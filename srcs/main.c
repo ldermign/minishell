@@ -44,7 +44,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	char	*line;
 	t_env	cpy_env;
-	// t_parsing	parsing;
+	t_parsing	parsing;
 
 	line = NULL;
 	if (ac != 1)
@@ -60,25 +60,29 @@ int	main(int ac, char **av, char **env)
 	// get_prompt("export test=bah oui mais non", &cpy_env);
 	// get_prompt("export TEST=\"echo pouet\" non", &cpy_env);
 	// get_prompt("unset test", &cpy_env);
-	get_prompt("   echo -n test non", &cpy_env);
-	get_prompt("echo -n-n--n test non", &cpy_env);
-	get_prompt("       echo -nnnnnn test non", &cpy_env);
-	get_prompt("echo -n -nnn -n -nn -n -n test non", &cpy_env);
-	get_prompt("echo test non", &cpy_env);
-	get_prompt("              echo test non", &cpy_env);
-	get_prompt("echo -------n pouet", &cpy_env);
+
+
+	// get_prompt("   echo -n test non", &cpy_env);
+	// get_prompt("echo -n-n--n test non", &cpy_env);
+	// get_prompt("       echo -nnnnnn test non", &cpy_env);
+	// get_prompt("echo -n -nnn -n -nn -n -n test non", &cpy_env);
+	// get_prompt("echo test non", &cpy_env);
+	// get_prompt("              echo test non", &cpy_env);
+	// get_prompt("echo -------n pouet", &cpy_env);
+
+
 	signal(SIGINT, quit_minishell);
-	// while (42)
-	// {
-	// 	line = readline("$ ");
+	while (42)
+	{
+		line = readline("$ ");
 					// get_prompt(line, &cpy_env);
-					// init_parsing(&parsing);
-					// parse_line(line, &parsing);
-					// if (parsing.result != NULL)
-					// 	free(parsing.result);
-	// 	get_prompt(line, &cpy_env);
-	// 	free(line);
-	// }
+					init_parsing(&parsing);
+					parse_line(line, &parsing);
+					if (parsing.result != NULL)
+						free(parsing.result);
+		// get_prompt(line, &cpy_env);
+		free(line);
+	}
 	
 	return (0);
 }
