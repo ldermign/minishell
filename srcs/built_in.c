@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/03 10:43:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:25:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,20 +205,77 @@ int	built_in_export(t_env *env, char *prompt)
 	return (EXIT_SUCCESS);
 }
 
-int	built_in_unset(t_env *env, char *prompt)
-{(void)env;(void)prompt;
+int	built_in_unset(t_env *env, char **args)
+{
 	int	i;
 	int	ret;
 
 	i = 0;
-	ret = check_if_variable_already_exist(&(env->env_ms), &prompt[i]);
+	ret = check_if_variable_already_exist(&(env->env_ms), args[1]);
 	if (ret != -1)
 		supp_var_env_ms(&(env->env_ms), ret);
 	return (EXIT_SUCCESS);
 }
 
+int	light_parse_echo(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	i += 4;
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+	{
+		i++;
+		while (str[i] && str[i] == 'n')
+			i++;
+		if (str[i] && str[i] == ' ')
+		{
+			while (str[i] && str[i] == ' ')
+				i++;
+			return (i);
+		}
+	}
+	return (-1);
+}
+
+int	built_in_echo(char *prompt)
+{
+	int	i;
+	int	len;
+	int	line_break;
+
+	i = 0;
+	line_break = light_parse_echo(prompt);
+	if (line_break != -1)
+		i = line_break;
+	else
+	{
+		while (prompt[i] == ' ')
+			i++;
+		i += 4;
+		while (prompt[i] == ' ')
+			i++;
+	}
+	len = ft_strlen(&prompt[i]);
+	write(1, &prompt[i], len);  // verifier pour les redirections... a ecrire dans un fichier
+	if (line_break == -1)
+		write(1, "\n", 1); // verifier pour les redirections... a ecrire dans un fichier
+	return (EXIT_SUCCESS);
+}
+
+void	built_in_exit(t_env *env, char **cmd_args, char *prompt)
+{(void)env;(void)cmd_args;(void)prompt;
+	
+	exit (0);
+}
+
 int	built_in_to_create(t_env *env, char **cmd_args, char *prompt)
 {
+	// print_tab_char(cmd_args);
 	if (ft_pos_strstr(cmd_args[0], "cd") != -1)
 		return (built_in_cd(env, cmd_args));
 	else if (ft_pos_strstr(cmd_args[0], "pwd") != -1)
@@ -228,12 +285,11 @@ int	built_in_to_create(t_env *env, char **cmd_args, char *prompt)
 	else if (ft_pos_strstr(cmd_args[0], "export") != -1)
 		return (built_in_export(env, prompt));
 	else if (ft_pos_strstr(cmd_args[0], "unset") != -1)
-		return (built_in_unset(env, prompt));
-	// else if (/* condition */)
-	// {
-	// 	/* code */
-	// }
-	// print_env_ms(&(env->env_ms));
+		return (built_in_unset(env, cmd_args));
+	else if (ft_pos_strstr(cmd_args[0], "echo") != -1)
+		return (built_in_echo(prompt));
+	else if (ft_pos_strstr(cmd_args[0], "exit") != -1)
+		built_in_exit(env, cmd_args, prompt);
 	return (-1);
 }
 
@@ -244,11 +300,13 @@ void start_built_in(char *prompt, t_env *env)
 	char	**args;
 
 	i = 0;
-	args = get_cmd_and_args_split(prompt);
+	while (prompt[i] == ' ')
+		i++;
+	args = get_cmd_and_args_split(&prompt[i]);
 	if (built_in_to_create(env, args, prompt) != -1)
 	{
 		ft_free_tab(args);
-		print_env_ms(&(env->env_ms));
+		// print_env_ms(&(env->env_ms));
 		return ;
 	}
 	good_path = working_path(env->path, args[0]);
@@ -257,5 +315,5 @@ void start_built_in(char *prompt, t_env *env)
 	// if (err == -1)
 	// printf("err = %d\n", err);
 	ft_free_tab(args);
-	print_env_ms(&(env->env_ms));
+	// print_env_ms(&(env->env_ms));
 }

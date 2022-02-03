@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/03 09:59:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:53:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,19 @@ int	main(int ac, char **av, char **env)
 	}
 	if (recup_var_envs(env, &cpy_env) == EXIT_FAILURE)
 		return (0);
-	get_prompt("cd srcs", &cpy_env);
+	// get_prompt("cd srcs", &cpy_env);
 	// get_prompt("cd ..", &cpy_env);
-	get_prompt("export test=\"pouet pouet pouet la la la\" nonnisnka dnejkf", &cpy_env);
-	get_prompt("export test=bah oui mais non", &cpy_env);
-	get_prompt("export TEST=\"echo pouet\" non", &cpy_env);
-	get_prompt("unset test", &cpy_env);
+	// get_prompt("export test=\"pouet pouet pouet la la la\" nonnisnka dnejkf", &cpy_env);
+	// get_prompt("export test=bah oui mais non", &cpy_env);
+	// get_prompt("export TEST=\"echo pouet\" non", &cpy_env);
+	// get_prompt("unset test", &cpy_env);
+	get_prompt("   echo -n test non", &cpy_env);
+	get_prompt("echo -n-n--n test non", &cpy_env);
+	get_prompt("       echo -nnnnnn test non", &cpy_env);
+	get_prompt("echo -n -nnn -n -nn -n -n test non", &cpy_env);
+	get_prompt("echo test non", &cpy_env);
+	get_prompt("              echo test non", &cpy_env);
+	get_prompt("echo -------n pouet", &cpy_env);
 	signal(SIGINT, quit_minishell);
 	// while (42)
 	// {
