@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/02 21:06:35 by elisa            ###   ########.fr       */
+/*   Updated: 2022/02/03 09:59:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,6 @@ int	main(int ac, char **av, char **env)
 	get_prompt("export test=bah oui mais non", &cpy_env);
 	get_prompt("export TEST=\"echo pouet\" non", &cpy_env);
 	get_prompt("unset test", &cpy_env);
-	// get_prompt("mkdir test", &cpy_env);
-	// signal(SIGINT, quit_minishell);
-	// while (42)
-	// {
-	// 	line = readline("$ ");
-	// 	// get_prompt(line, &cpy_env);
-		// init_parsing(&parsing);
-	// 	if (parse_line(line, &parsing) == -1)
-	// 	{
-	// 		printf("\033[0;31merror :\033[0m %s\n"NORMAL, parsing.ret_error);
-	// 		free(parsing.ret_error);
-	// 		parsing.ret_error = NULL;
-	// 	}
-	// 	if (parsing.result != NULL)
-	// 		free(parsing.result);
-	// 	get_prompt(line, &cpy_env);
-	// 	free(line);
-	// }
 	signal(SIGINT, quit_minishell);
 	// while (42)
 	// {

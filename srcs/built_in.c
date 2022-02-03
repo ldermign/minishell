@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/02 15:36:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:43:32 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,24 @@ char	*get_good_variable(char *prompt)
 	return (str);
 }
 
+int	light_parse_export(char *prompt)
+{
+	int	i;
+
+	i = 0;
+	while (prompt[i] == ' ')
+		i++;
+	i += 6;
+	while (prompt[i] == ' ')
+		i++;
+	if (prompt[i] != '=')
+		return (EXIT_FAILURE);
+	i++;
+	if (prompt[i] == '&' || prompt[i] == '(' || prompt[i] == ')' || prompt[i] == ';' || prompt[i] == '<' || prompt[i] == '>' || prompt[i] == '|') // pas vraiment, checker commant il fonctionnne
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
 int	built_in_export(t_env *env, char *prompt)
 {
 	int		i;
@@ -170,6 +188,11 @@ int	built_in_export(t_env *env, char *prompt)
 	char	*str;
 
 	i = 6;
+	if (light_parse_export(prompt) == -1)
+	{
+		printf("Error command export\n");
+		return (EXIT_FAILURE);
+	}
 	while (prompt[i] == ' ')
 		i++;
 	str = get_good_variable(prompt);
