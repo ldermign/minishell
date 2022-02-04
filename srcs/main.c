@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/03 14:53:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:26:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int ac, char **av, char **env)
 					parse_line(line, &parsing);
 					if (parsing.result != NULL)
 						free(parsing.result);
-		// get_prompt(line, &cpy_env);
+		get_prompt(line, &cpy_env);
 		free(line);
 	}
 	

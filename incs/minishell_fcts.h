@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/02 15:12:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:23:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int	built_in_pwd();
 */
 
 char	**get_cmd_and_args_split(char *str);
+
+/*
+**	UTILS LIST
+*/
+
+void	free_lst(t_env_ms *stack);
 void	add_var_env_minishell(t_env_ms **stack, char *str_var);
 int	search_for_var_in_env(t_env_ms **stack, char *var);
 void	supp_var_env_ms(t_env_ms **stack, int pos);

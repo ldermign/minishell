@@ -6,11 +6,26 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/03 11:26:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:22:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_lst(t_env_ms *stack)
+{
+	t_env_ms	*tmp;
+
+	if (!stack)
+		return ;
+	while (stack != NULL)
+	{
+		tmp = stack;
+		stack = stack->next;
+		free(tmp);
+	}
+	free(stack);
+}
 
 t_env_ms	*new_var(char *str)
 {

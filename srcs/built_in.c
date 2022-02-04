@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/03 15:25:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:41:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,8 +268,13 @@ int	built_in_echo(char *prompt)
 }
 
 void	built_in_exit(t_env *env, char **cmd_args, char *prompt)
-{(void)env;(void)cmd_args;(void)prompt;
-	
+{
+	free_lst(env->env_ms);
+	ft_free_tab(cmd_args);
+	ft_free_tab(env->path);
+	// ft_free_tab(env->env_bash); // il me dit qu'il faut pas free parce que j'ai pas alloue mais si ouesh...
+	// free(env->rel); faut l'allouer d'abord en fait....
+	free(prompt);
 	exit (0);
 }
 
