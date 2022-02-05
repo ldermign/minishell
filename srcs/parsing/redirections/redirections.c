@@ -3,41 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/02 14:01:08 by elisa            ###   ########.fr       */
+/*   Updated: 2022/02/05 18:34:56 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	first_redir(char *line, t_parsing *parsing)	// < 
-{
-	char	str[ft_strlen(&line[parsing->i_line + 1])];
-	int		i;
-	int		fd;
+// 	60 <	62 >
 
-	i = 0;
-	parsing->i_line++;
-	while (line[parsing->i_line] == ' ')
+// int	check_error_red(char *line, t_parsing *parsing)
+// {
+//     // flemme la j'avoue
+// }
+
+void	redirections(char *line, t_parsing *parsing)
+{
+	// if (check_error_red(line, parsing) == -1)
+	// {
+	// 	parsing->error = 1;
+	// 	return ;
+	// }
+	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] != 60)
+		parse_first_redir(line, parsing);
+	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] == 60)
+		parse_second_redir(line, parsing);
+	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] != 62)
+		parse_third_redir(line, parsing);
+// 	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] == 62)
+// 		parse_fourth_redir(line, parsing);
+}
+
+void	skip_redirections(char *line, t_parsing *parsing)
+{
+	while (line[parsing->i_line] == 60 || line[parsing->i_line] == 62
+		|| line[parsing->i_line] == ' ')
 		parsing->i_line++;
-	while (line[parsing->i_line] && line[parsing->i_line] != ' ')
+	if (line[parsing->i_line] == 34 || line[parsing->i_line] == 39)
 	{
-		str[i] = line[parsing->i_line];
-		i++;
+		parsing->i_line++;
+		while (line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
+			parsing->i_line++;
 		parsing->i_line++;
 	}
-	str[i] = '\0';
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
+	else
 	{
-		printf("error : %s: no such file or directory\n", str);
-		parsing->error = 1;
-		return ;
+		while (line[parsing->i_line] && line[parsing->i_line] != ' ')
+			parsing->i_line++;
 	}
-	close(fd);	
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
 	parsing->i_line--;
+	printf("redir : [%s]\n", &line[parsing->i_line]);
 }
+
+
+// bash-5.0$ echo ugvj >
+// bash: syntax error near unexpected token `newline'
+
+// echo ><
+// bash: syntax error near unexpected token `<'
+
+// echo > "hgv b$PWD"
+// bash: hgv b/Users/elisa/Desktop: No such file or directory
+
+// echo > "$PW D"
+//  ls
+//  D	42	minishell	minishell_test	push_swap	sujets
+
+// echo > "$PWD"
+// bash: /Users/elisa/Desktop: Is a directory
+
+// > && >>
+// des que nouvelle redirection -> creation fichier
+// 		mais ecrit seulement dans le dernier
+
+// < 
+// check si le fichier existe mais fait rien
+
+// <<
+// check jusque == a STOP (ou autre)
+// si plusieur dans line, prend que le dernier en compte

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:23:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:25:55 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,22 @@ void	parse_exit(char *line, t_parsing *parsing);
 //		>>>>>>>>> echo
 void	fill_result(char *line, t_parsing *parsing);
 int	find_len(char *line, t_parsing *parsing);
+// parse_quotes
+int	simple_quote(char *line, t_parsing *parsing);
+int	double_quotes(char *line, t_parsing *parsing);
+int	check_quotes_and_redir(char *line, t_parsing *parsing);
 
 //		>>>>>>>>> error
 void	error_command(char *line, t_parsing *parsing);
 int	error_check(char *line, t_parsing *parsing, int i);
 
 //		>>>>>>>>> redirections
-void	second_redir(char *line, t_parsing *parsing);
+void	parse_second_redir(char *line, t_parsing *parsing);
 void	skip_redirections(char *line, t_parsing *parsing);
 void	redirections(char *line, t_parsing *parsing);
-void	first_redir(char *line, t_parsing *parsing);
-void	third_redir(char *line, t_parsing *parsing);
-void	fourth_redir(char *line, t_parsing *parsing);
+void	parse_first_redir(char *line, t_parsing *parsing);
+void	parse_third_redir(char *line, t_parsing *parsing);
+void	parse_fourth_redir(char *line, t_parsing *parsing);
+void	check_char_in_file_name(char c, t_parsing *parsing);
 
 #endif
