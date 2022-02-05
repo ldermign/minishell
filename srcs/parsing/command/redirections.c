@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/02 14:01:08 by elisa            ###   ########.fr       */
+/*   Updated: 2022/02/04 11:44:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_end(char *end, char *new_line)
 	}
 	else
 		return (-1);
-	// 	&& ft_memcmp(end, newline, len_end + 1) == 0) pk ca marche paaaaaaaas
+	// ft_memcmp(end, newline, len_end + 1); //pk ca marche paaaaaaaas
 	return (0);
 	// return (-1);
 }

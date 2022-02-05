@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/02 15:35:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:22:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,29 @@ int	built_in_pwd()
 	else
 		perror("getcwd");
 	return (1);
+}
+
+int	built_in_echo(char *prompt)
+{
+	int	i;
+	int	len;
+	int	line_break;
+
+	i = 0;
+	line_break = light_parse_echo(prompt);
+	if (line_break != -1)
+		i = line_break;
+	else
+	{
+		while (prompt[i] == ' ')
+			i++;
+		i += 4;
+		while (prompt[i] == ' ')
+			i++;
+	}
+	len = ft_strlen(&prompt[i]);
+	write(1, &prompt[i], len);  // verifier pour les redirections... a ecrire dans un fichier
+	if (line_break == -1)
+		write(1, "\n", 1); // verifier pour les redirections... a ecrire dans un fichier
+	return (EXIT_SUCCESS);
 }

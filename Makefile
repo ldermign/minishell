@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/04 08:36:49 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/05 16:42:51 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ SRCS	=	./srcs/main.c \
 			./srcs/supprimer.c \
 			./srcs/get_env.c \
 			./srcs/uts_split_ms.c \
-			./srcs/built_in_pwd_cd.c \
+			./srcs/uts_built_in.c \
+			./srcs/cmd_redirection.c \
+			./srcs/built_in_pwd_cd_echo.c \
+			./srcs/built_in_exit_unset_env.c \
 			./srcs/uts_list_var_env_ms.c \
 			./srcs/parsing/command/echo.c ./srcs/parsing/command/cd_pwd.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \

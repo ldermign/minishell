@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:26:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/05 16:44:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,27 @@
 void	quit_minishell(int sig)
 {
 	// free les structures 
-	if (sig == SIGINT)
+	if (sig == SIGQUIT)
 	{
-		printf(RED"EXIT par la fonction du minishell.\n"NORMAL);
+		write(1, "exit\n", 6);
 		exit(0);
 	}
+}
+
+void	line_break(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+	}
+	// printf("la \n");
+	return ;
+}
+
+void	test(int sig)
+{
+	if (sig == 0)
+		printf("test\n");
 }
 
 int	get_prompt(char *prompt, t_env *env)
@@ -71,16 +87,28 @@ int	main(int ac, char **av, char **env)
 	// get_prompt("echo -------n pouet", &cpy_env);
 
 
-	signal(SIGINT, quit_minishell);
+
+	// {
+	// 	free_lst(cpy_env.env_ms);
+	// 	// ft_free_tab(cmd_args);
+	// 	ft_free_tab(cpy_env.path);
+	// 	free(line);
+	// 	exit (0);
+	// }
+	signal(SIGINT, line_break); // PAS BONNNNN ctrl+c
 	while (42)
 	{
+
+		// signal(SIGQUIT, quit_minishell); // ctrl+'\'
+		// signal(0, test);
 		line = readline("$ ");
 					// get_prompt(line, &cpy_env);
 					init_parsing(&parsing);
 					parse_line(line, &parsing);
 					if (parsing.result != NULL)
 						free(parsing.result);
-		get_prompt(line, &cpy_env);
+		if (line[0] != '\0')
+			get_prompt(line, &cpy_env);
 		free(line);
 	}
 	

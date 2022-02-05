@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:23:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:13:19 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,26 @@ void start_built_in(char *prompt, t_env *env);
 int	recup_var_envs(char **env, t_env *cpy_env);
 int	built_in_cd(t_env *env, char **cmd_args);
 int	built_in_pwd();
+void	built_in_exit(t_env *env, char **cmd_args, char *prompt);
+int	built_in_unset(t_env *env, char **args);
+int	built_in_env(t_env_ms *stack);
+int	built_in_echo(char *prompt);
 
 /*
 **	UTILS
 */
 
 char	**get_cmd_and_args_split(char *str);
+
+/*
+**	UTILS BUILT IN
+*/
+
+int	size_variable(char *prompt);
+int	light_parse_export(char *prompt);
+int	light_parse_echo(char *str);
+char	*create_path(char *path, char *cmd);
+char	*get_good_variable(char *prompt);
 
 /*
 **	UTILS LIST
