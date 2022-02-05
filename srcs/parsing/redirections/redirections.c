@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/05 18:34:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/05 21:52:55 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,16 @@
 
 // int	check_error_red(char *line, t_parsing *parsing)
 // {
-//     // flemme la j'avoue
+// 	parsing->i_line++;
+// 	if (line[parsing->i_line] == line[parsing->i_line - 1])
+// 		parsing->i_line++;
+// 	if (line[parsing->i_line] == )//a completer
+// 	{
+// 		printf("syntax error near unexpected token `%c'\n", line[parsing->i_line]);
+// 		parsing->error = 1;
+// 		return (-1);
+// 	}
+// 	// flemme la j'avoue
 // }
 
 void	redirections(char *line, t_parsing *parsing)
@@ -28,12 +37,12 @@ void	redirections(char *line, t_parsing *parsing)
 	// }
 	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] != 60)
 		parse_first_redir(line, parsing);
-	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] == 60)
+	else if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] == 60)
 		parse_second_redir(line, parsing);
-	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] != 62)
+	else if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] != 62)
 		parse_third_redir(line, parsing);
-// 	if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] == 62)
-// 		parse_fourth_redir(line, parsing);
+	else if (line[parsing->i_line] == 62 && line[parsing->i_line + 1] == 62)
+		parse_fourth_redir(line, parsing);
 }
 
 void	skip_redirections(char *line, t_parsing *parsing)

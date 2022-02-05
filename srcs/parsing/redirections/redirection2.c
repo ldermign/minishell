@@ -6,15 +6,16 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/05 18:16:18 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/05 21:41:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// << 
+
 int	check_end(char *end, char *new_line)
 {
-	// printf("TEST %s, %s\n", end, new_line);
 	unsigned int	len_end;
 	int				i;
 
@@ -36,11 +37,12 @@ int	check_end(char *end, char *new_line)
 
 void	parse_second_redir(char *line, t_parsing *parsing)
 {
-	// int	tmp;
-
-	// tmp = parsing->i_line;
-	while (line[parsing->i_line] != ' ' && line[parsing->i_line] != 60
-		&& line[parsing->i_line] != 62 && line[parsing->i_line] != '|')
+	parsing->i_line += 2;
+	while (line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	while (line[parsing->i_line] && line[parsing->i_line] != ' '
+		&& line[parsing->i_line] != 60 && line[parsing->i_line] != 62
+		&& line[parsing->i_line] != '|')
 	{
 		if (line[parsing->i_line] == 39)
 			simple_quote(line, parsing);
