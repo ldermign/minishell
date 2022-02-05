@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/05 16:44:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:02:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,9 @@ int	main(int ac, char **av, char **env)
 	// 	free(line);
 	// 	exit (0);
 	// }
-	signal(SIGINT, line_break); // PAS BONNNNN ctrl+c
 	while (42)
 	{
-
+		signal(SIGINT, line_break); // PAS BONNNNN ctrl+c
 		// signal(SIGQUIT, quit_minishell); // ctrl+'\'
 		// signal(0, test);
 		line = readline("$ ");

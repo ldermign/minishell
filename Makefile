@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/05 16:42:51 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/05 16:53:48 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS} ${CFLAGS} -g3 -fsanitize=address -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 
