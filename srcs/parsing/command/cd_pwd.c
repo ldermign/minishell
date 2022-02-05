@@ -19,23 +19,15 @@ void	parse_cd(char *line, t_parsing *parsing)
 	while (line[parsing->i_line] && line[parsing->i_line] != '|'
 		&& line[parsing->i_line] != '>' && line[parsing->i_line] != '<')
 		parsing->i_line++;
-	printf(GREEN"cd ok\n"NORMAL);
+	// printf(GREEN"cd ok\n"NORMAL);
 }
 
 void	parse_pwd(char *line, t_parsing *parsing)
 {
-	// char	*var;
-
 	if (error_check(line, parsing, 3) == -1)
 		return ;
-	// var = getenv("PWD");
-	// parsing->result = malloc(sizeof(char) * ft_strlen(var) + 1);
-	// if (parsing->result == NULL)
-	// 	return ;
-	// ft_strcpy(parsing->result, var);
 	while (line[parsing->i_line] && (line[parsing->i_line] != '|'
 		|| line[parsing->i_line] != '>' || line[parsing->i_line] != '<'))
 		parsing->i_line++;
-	// parsing->pwd = 1;
-	printf(GREEN"pwd ok\n"NORMAL);
+	// printf(GREEN"pwd ok\n"NORMAL);
 }

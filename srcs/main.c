@@ -77,7 +77,7 @@ int	main(int ac, char **av, char **env)
 		line = readline("$ ");
 					// get_prompt(line, &cpy_env);
 					init_parsing(&parsing);
-					parse_line(line, &parsing);
+					// parse_line(line, &parsing);
 					if (parsing.result != NULL)
 						free(parsing.result);
 		get_prompt(line, &cpy_env);

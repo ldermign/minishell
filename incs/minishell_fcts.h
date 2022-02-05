@@ -55,7 +55,8 @@ void	print_env_ms(t_env_ms **stack);
 
 // 		>>>>>>>>>  parsing  <<<<<<<<<
 int	parse_line(char *line, t_parsing *parsing);
-// check commandes
+
+//		>>>>>>>>> check commandes
 void	parse_echo(char *line, t_parsing *parsing);
 void	parse_cd(char *line, t_parsing *parsing);
 void	parse_pwd(char *line, t_parsing *parsing);
@@ -63,13 +64,21 @@ void	parse_export(char *line, t_parsing *parsing);
 void	parse_unset(char *line, t_parsing *parsing);
 void	parse_env(char *line, t_parsing *parsing);
 void	parse_exit(char *line, t_parsing *parsing);
-// echo
+
+//		>>>>>>>>> echo
 void	fill_result(char *line, t_parsing *parsing);
 int	find_len(char *line, t_parsing *parsing);
-void	skip_redirections(char *line, t_parsing *parsing);
-void	redirections(char *line, t_parsing *parsing);
-// error
+
+//		>>>>>>>>> error
 void	error_command(char *line, t_parsing *parsing);
 int	error_check(char *line, t_parsing *parsing, int i);
+
+//		>>>>>>>>> redirections
+void	second_redir(char *line, t_parsing *parsing);
+void	skip_redirections(char *line, t_parsing *parsing);
+void	redirections(char *line, t_parsing *parsing);
+void	first_redir(char *line, t_parsing *parsing);
+void	third_redir(char *line, t_parsing *parsing);
+void	fourth_redir(char *line, t_parsing *parsing);
 
 #endif

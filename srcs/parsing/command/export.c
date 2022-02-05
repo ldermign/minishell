@@ -16,7 +16,9 @@ void	parse_export(char *line, t_parsing *parsing)
 {
 	if (error_check(line, parsing, 6) == -1)
 		return ;
-	printf(GREEN"export ok\n"NORMAL);
+	while (line[parsing->i_line] && line[parsing->i_line] != '|'
+		&& line[parsing->i_line] != '>' && line[parsing->i_line] != '<')
+		parsing->i_line++;
 }
 
 // https://www.tutorialspoint.com/unix_commands/export.htm

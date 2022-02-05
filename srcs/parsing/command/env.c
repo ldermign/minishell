@@ -23,5 +23,5 @@ void	parse_env(char *line, t_parsing *parsing)
 		parsing->error = 1;
 		return ;
 	}
-	printf(GREEN"env ok\n"NORMAL);
+	// printf(GREEN"env ok\n"NORMAL);
 }

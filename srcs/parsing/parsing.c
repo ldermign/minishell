@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+void	parse_else(char *line, t_parsing *parsing)
+{
+	while (line[parsing->i_line] && line[parsing->i_line] != '<'
+		&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
+		parsing->i_line++;
+}
+
 int	check_command(char *line, t_parsing *parsing)
 {
 	// printf("%s\n", line);
@@ -37,7 +44,8 @@ int	check_command(char *line, t_parsing *parsing)
 		&& ft_memcmp("exit", &line[parsing->i_line], 4) == 0)
 		parse_exit(line, parsing);
 	else
-		error_command(line, parsing);
+		parse_else(line, parsing);
+		// error_command(line, parsing);
 	if (parsing->error != 0)
 		return (-1);
 	return (0);
@@ -63,6 +71,8 @@ int	check_command(char *line, t_parsing *parsing)
 
 int	parse_line(char *line, t_parsing *parsing)
 {
+	if (line[0] == '\0')
+		return (0);
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
 	if (check_command(line, parsing) == -1)
