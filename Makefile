@@ -24,7 +24,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/built_in_pwd_cd_echo.c \
 			./srcs/built_in_exit_unset_env.c \
 			./srcs/uts_list_var_env_ms.c \
-			./srcs/parsing/command/echo.c ./srcs/parsing/command/cd_pwd.c \
+			./srcs/parsing/command/echo2.c ./srcs/parsing/command/cd_pwd.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \
 			./srcs/parsing/command/export.c ./srcs/parsing/command/unset.c \
 			./srcs/parsing/error.c ./srcs/parsing/parsing.c \
