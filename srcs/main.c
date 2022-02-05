@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:26:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/05 21:29:08 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,12 @@ int	main(int ac, char **av, char **env)
 	{
 		line = readline("$ ");
 					// get_prompt(line, &cpy_env);
-					init_parsing(&parsing);
-					parse_line(line, &parsing);
-					if (parsing.result != NULL)
-						free(parsing.result);
-		get_prompt(line, &cpy_env);
+		init_parsing(&parsing);
+		if (parse_line(line, &parsing) == 0)
+			get_prompt(line, &cpy_env);
+		if (parsing.result != NULL)
+			free(parsing.result);
 		free(line);
-	}
-	
+	}	
 	return (0);
 }

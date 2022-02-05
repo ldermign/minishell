@@ -6,11 +6,13 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/05 18:18:33 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/05 21:41:42 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// >>
 
 void	parse_fourth_redir(char *line, t_parsing *parsing)	// >> 
 {
