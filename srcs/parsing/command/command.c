@@ -47,13 +47,13 @@ void	parse_echo(char *line, t_parsing *parsing)
 	}
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
-	printf("to_print : [%s]\n", parsing->result);
-	printf(GREEN"echo ok\n"NORMAL);
+	// printf("to_print : [%s]\n", parsing->result);
+	// printf(GREEN"echo ok\n"NORMAL);
 }
 
 void	parse_exit(char *line, t_parsing *parsing)
 {
 	if (error_check(line, parsing, 4) == -1)
 		return ;
-	printf(GREEN"exit ok\n"NORMAL);
+	// printf(GREEN"exit ok\n"NORMAL);
 }

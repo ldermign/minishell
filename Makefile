@@ -28,7 +28,11 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \
 			./srcs/parsing/command/export.c ./srcs/parsing/command/unset.c \
 			./srcs/parsing/error.c ./srcs/parsing/parsing.c \
-			./srcs/parsing/command/redirections.c
+			./srcs/parsing/redirections/redirections.c \
+			./srcs/parsing/redirections/redirection1.c \
+			./srcs/parsing/redirections/redirection2.c \
+			./srcs/parsing/redirections/redirection3.c \
+			./srcs/parsing/redirections/redirection4.c
 
 OBJS	=	${SRCS:.c=.o}
 

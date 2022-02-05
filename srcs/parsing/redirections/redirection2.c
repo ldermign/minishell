@@ -1,0 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elisa <elisa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
+/*   Updated: 2022/02/02 14:01:08 by elisa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	check_end(char *end, char *new_line)
+{
+	// printf("TEST %s, %s\n", end, new_line);
+	unsigned int	len_end;
+	int				i;
+
+	len_end = ft_strlen(end);
+	i = 0;
+	if (ft_strlen(new_line) == len_end)
+	{
+		while (i < (int)len_end)
+		{
+			if (end[i] != new_line[i])
+				return (end[i] - new_line[i]);
+			i++;
+		}
+	}
+	else
+		return (-1);
+	// 	&& ft_memcmp(end, newline, len_end + 1) == 0) pk ca marche paaaaaaaas
+	return (0);
+	// return (-1);
+}
+
+void	second_redir(char *line, t_parsing *parsing)	// << 
+{
+	char	*end;
+	char	*new_line;
+	int		i;
+
+	i = 0;
+	parsing->i_line += 2;
+	while (line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	while (line[parsing->i_line + i] != ' ')
+		i++;
+	end = malloc(sizeof(char) * i + 1);
+	if (end == NULL)
+	{
+		printf("error malloc\n");
+		parsing->error = 1;
+		return ;
+	}
+	i = 0;
+	while (line[parsing->i_line] && line[parsing->i_line] != ' ')
+	{
+		end[i] = line[parsing->i_line];
+		parsing->i_line++;
+		i++;
+	}
+	end[i] = '\0';
+	printf("[%s]\n", end);
+	while (42)
+	{
+		new_line = readline("> ");
+		if (check_end(end, new_line) == 0)
+		{
+			free(end);
+			free(new_line);
+			return ;
+		}
+		free(new_line);
+	}
+	free(end);
+}
