@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/05 16:53:48 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/06 15:24:57 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/redirections/redirection1.c \
 			./srcs/parsing/redirections/redirection2.c \
 			./srcs/parsing/redirections/redirection3.c \
-			./srcs/parsing/redirections/redirection4.c
+			./srcs/parsing/redirections/redirection4.c \
+			./srcs/parsing/command/echo.c
 
 OBJS	=	${SRCS:.c=.o}
 
