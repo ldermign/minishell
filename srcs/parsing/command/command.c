@@ -6,22 +6,43 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/06 15:25:35 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/06 21:23:17 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// void	check_option(char *line, t_parsing *parsing)
+// {
+// 	if (ft_strlen(&line[parsing->i_line]) > 1
+// 		&& ft_memcmp("-n", &line[parsing->i_line], 2) == 0)
+// 	{
+// 		if (line[parsing->i_line + 2] != '\0'
+// 		&& line[parsing->i_line + 2] != ' ')
+// 			return ;
+// 		parsing->option = 1;
+// 		parsing->i_line += 2;
+// 		while (line[parsing->i_line] == ' ')
+// 			parsing->i_line++;
+// 	}
+// }
+
 void	check_option(char *line, t_parsing *parsing)
 {
-	if (ft_strlen(&line[parsing->i_line]) > 1
+	int	i;
+
+	i = 2;
+	while (ft_strlen(&line[parsing->i_line]) > 1
 		&& ft_memcmp("-n", &line[parsing->i_line], 2) == 0)
 	{
-		if (line[parsing->i_line + 2] != '\0'
-			&& line[parsing->i_line + 2] != ' ')
+		i = 2;
+		while (line[parsing->i_line + i] == 'n')
+			i++;
+		if (line[parsing->i_line + i] != '\0'
+		&& line[parsing->i_line + i] != ' ')
 			return ;
 		parsing->option = 1;
-		parsing->i_line += 2;
+		parsing->i_line += i;
 		while (line[parsing->i_line] == ' ')
 			parsing->i_line++;
 	}
@@ -40,6 +61,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	i = find_len(line, parsing);
 	if (i == -1)
 		return ;
+	// printf("i = %d\n", i); // jsp pk il en manque uuuuunnnn :( :(
 	parsing->result = malloc(sizeof(char) * i + 1);
 	if (parsing->result == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 22:18:15 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/06 17:10:48 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/06 21:11:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static int	check_variable(char *line, t_parsing *parsing)
 	}
 	parsing->i_line--;
 	if (str == NULL)
+	{
+		parsing->i_line++;
 		return (0);
+	}
 	return (ft_strlen(str));
 }
 
@@ -87,6 +90,7 @@ static int	double_quotes_echo(char *line, t_parsing *parsing)
 int	check_space(char *line, t_parsing *parsing)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while (line[parsing->i_line + i] == ' ')
@@ -98,8 +102,12 @@ int	check_space(char *line, t_parsing *parsing)
 	}
 	else if (line[parsing->i_line + i] == '$')
 	{
-		check_variable(line, parsing);
-		return (1);
+		while (line[parsing->i_line + i] == ' ')
+			parsing->i_line++;
+		j = check_variable(line, parsing);
+		if (j == 0)
+			return (0);
+		return (j + 1);
 	}
 	else if (line[parsing->i_line + i] == '\0')
 	{
@@ -109,7 +117,7 @@ int	check_space(char *line, t_parsing *parsing)
 	else
 		return (1);
 }
-
+		
 int	find_len(char *line, t_parsing *parsing)
 {
 	int	i;
@@ -207,9 +215,33 @@ int	fill_double_quotes(char *line, t_parsing *parsing, int i)
 	return (j);
 }
 
+int	len_variable(char *line, t_parsing *parsing)
+{
+	int	i;
+	int	j;
+	char	*str;
+	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
+
+	i = 0;
+	j = 1;
+	while (line[parsing->i_line + j] && line[parsing->i_line + j] != ' '
+		&& line[parsing->i_line + j] != 34 && line[parsing->i_line + j] != 39)
+	{
+		var[i] = line[parsing->i_line + j];
+		i++;
+		j++;
+	}
+	var[i] = '\0';
+	str = getenv(var);
+	if (str == NULL)
+		return (0);
+	return (ft_strlen(str));
+}
+
 int	fill_space(char *line, t_parsing *parsing, int i)
 {
 	int	j;
+	int	k;
 
 	j = 0;
 	while (line[parsing->i_line + j] == ' ')
@@ -222,11 +254,15 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 	}
 	else if (line[parsing->i_line + j] == '$')
 	{
-		parsing->result[i] = ' ';
 		while (line[parsing->i_line] == ' ')
 			parsing->i_line++;
-		parsing->i_line--;
-		return (1);
+		k = len_variable(line, parsing);
+		if (k != 0)
+		{
+			parsing->result[i] = ' ';
+			return (1 + fill_variable(line, parsing, i + 1));
+		}
+		return (fill_variable(line, parsing, i));
 	}
 	else if (line[parsing->i_line + j] == '\0')
 	{
