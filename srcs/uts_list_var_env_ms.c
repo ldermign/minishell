@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:22:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:54:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ void	free_lst(t_env_ms *stack)
 		free(tmp);
 	}
 	free(stack);
+}
+
+int	size_env(t_env_ms **minishell)
+{
+	int	len;
+	t_env_ms	*first;
+
+	len = 0;
+	first = *minishell;
+	while (*minishell)
+	{
+		*minishell = (*minishell)->next;
+		len++;
+	}
+	*minishell = first;
+	return (len);
 }
 
 t_env_ms	*new_var(char *str)
@@ -146,4 +162,29 @@ int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
 	}
 	*minishell = first;
 	return (-1);
+}
+
+char	*get_variable(t_env_ms **minishell, char *str)
+{
+	int			i;
+	char		*tmp;
+	t_env_ms	*first;
+
+	i = 0;
+	tmp = NULL;
+	first = *minishell;
+	while (*minishell)
+	{	
+		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
+			i++;
+		if (str[i] == '\0')
+		{
+			tmp = &((*minishell)->var[ft_strlen(str) + 1]);
+			break ;
+		}
+		i = 0;
+		*minishell = (*minishell)->next;
+	}
+	*minishell = first;
+	return (tmp);
 }

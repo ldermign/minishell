@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/05 18:38:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 14:52:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	get_prompt(char *prompt, t_env *env);
 **	BUILT-IN
 */
 
-void start_built_in(char *prompt, t_env *env);
+void command(char *prompt, t_struct *ms);
 int	recup_var_envs(char **env, t_env *cpy_env);
 int	built_in_cd(t_env *env, char **cmd_args);
 int	built_in_pwd();
 void	built_in_exit(t_env *env, char **cmd_args, char *prompt);
 int	built_in_unset(t_env *env, char **args);
 int	built_in_env(t_env_ms *stack);
-int	built_in_echo(char *prompt);
+int	built_in_echo(t_struct *ms, char *prompt);
 
 /*
 **	UTILS
@@ -46,7 +46,7 @@ int	size_variable(char *prompt);
 int	light_parse_export(char *prompt);
 int	light_parse_echo(char *str);
 char	*create_path(char *path, char *cmd);
-char	*get_good_variable(char *prompt);
+char	*get_good_variable(char *prompt, int size);
 
 /*
 **	UTILS LIST
@@ -58,6 +58,8 @@ int	search_for_var_in_env(t_env_ms **stack, char *var);
 void	supp_var_env_ms(t_env_ms **stack, int pos);
 void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
 int	check_if_variable_already_exist(t_env_ms **minishell, char *str);
+char	*get_variable(t_env_ms **minishell, char *str);
+int		size_env(t_env_ms **minishell);
 
 /*
 **	TEMPORAIRE

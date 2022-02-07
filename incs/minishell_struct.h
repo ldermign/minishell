@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:29:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:10:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,20 @@ typedef	struct s_parsing
 	char	*fd;
 	int		option;
 }	t_parsing;
+
+typedef struct t_structure
+{
+	t_parsing	parsing;
+	t_env		env;
+}	t_struct;
+
+typedef struct t_iterator
+{
+	int	i;
+	int	j;
+	int	k;
+	int	l;
+	int	len;
+}	t_it;
 
 #endif
