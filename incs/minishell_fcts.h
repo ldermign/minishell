@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/05 18:38:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 14:16:29 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	error_check(char *line, t_parsing *parsing, int i);
 
 //		>>>>>>>>> redirections
 void	parse_second_redir(char *line, t_parsing *parsing);
-void	skip_redirections(char *line, t_parsing *parsing);
-void	redirections(char *line, t_parsing *parsing);
+int	skip_redirections(char *line, t_parsing *parsing);
+int	redirections(char *line, t_parsing *parsing);
 void	parse_first_redir(char *line, t_parsing *parsing);
 void	parse_third_redir(char *line, t_parsing *parsing);
 void	parse_fourth_redir(char *line, t_parsing *parsing);

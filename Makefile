@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/06 15:24:57 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/07 14:10:15 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,12 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \
 			./srcs/parsing/command/export.c ./srcs/parsing/command/unset.c \
 			./srcs/parsing/error.c ./srcs/parsing/parsing.c \
-			./srcs/parsing/redirections/redirections.c \
+			./srcs/parsing/redirections/redirections_tst.c \
 			./srcs/parsing/redirections/redirection1.c \
 			./srcs/parsing/redirections/redirection2.c \
 			./srcs/parsing/redirections/redirection3.c \
 			./srcs/parsing/redirections/redirection4.c \
-			./srcs/parsing/command/echo.c
+			./srcs/parsing/command/echo_tst.c
 
 OBJS	=	${SRCS:.c=.o}
 
