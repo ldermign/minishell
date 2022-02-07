@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/05 21:41:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 16:38:04 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	check_char_in_file_name(char c, t_parsing *parsing)
 	}
 }
 
-void	parse_third_redir(char *line, t_parsing *parsing)	// > 
+void	parse_third_redir(char *line, t_parsing *parsing)
 {
 	if (parsing->red2 == 1)
 		parsing->red2 = 0;

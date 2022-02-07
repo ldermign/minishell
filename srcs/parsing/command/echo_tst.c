@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo_tst.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
+/*   Updated: 2022/02/07 16:45:45 by ejahan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -32,7 +43,7 @@ static int	check_variable(char *line, t_parsing *parsing)
 	}
 	return (ft_strlen(str));
 }
-// aaaaa    $PWD    bbbb
+
 static int	simple_quote_echo(char *line, t_parsing *parsing)
 {
 	int	i;
@@ -203,8 +214,8 @@ int	fill_double_quotes(char *line, t_parsing *parsing, int i)
 
 int	len_variable(char *line, t_parsing *parsing)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*str;
 	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
 
@@ -269,7 +280,6 @@ void	fill_result(char *line, t_parsing *parsing)
 
 	i = 0;
 	while (line[parsing->i_line] && line[parsing->i_line] != '|')
-		// && line[parsing->i_line] != 60 && line[parsing->i_line] != 62)
 	{
 		if (line[parsing->i_line] == '$')
 			i = i + fill_variable(line, parsing, i);

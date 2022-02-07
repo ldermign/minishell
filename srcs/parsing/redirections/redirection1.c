@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/05 21:42:05 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 16:37:37 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // < 
 
-void	parse_first_redir(char *line, t_parsing *parsing)	// < 
+void	parse_first_redir(char *line, t_parsing *parsing)
 {
 	char	str[ft_strlen(&line[parsing->i_line + 1])];
 	int		i;
@@ -38,7 +38,7 @@ void	parse_first_redir(char *line, t_parsing *parsing)	// <
 		parsing->error = 1;
 		return ;
 	}
-	close(fd);	
+	close(fd);
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
 	parsing->i_line--;

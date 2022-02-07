@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/05 21:41:42 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 16:39:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 // >>
 
-void	parse_fourth_redir(char *line, t_parsing *parsing)	// >> 
+void	parse_fourth_redir(char *line, t_parsing *parsing)
 {
 	if (parsing->red1 == 1)
 		parsing->red1 = 0;
 	parsing->red2 = 1;
-	parsing->i_line++;
+	parsing->i_line += 2;
 	while (line[parsing->i_line] && line[parsing->i_line] != '|'
 		&& line[parsing->i_line] != ' ')
 	{
@@ -34,5 +34,5 @@ void	parse_fourth_redir(char *line, t_parsing *parsing)	// >>
 		if (parsing->error == 1)
 			return ;
 		parsing->i_line++;
-    }
+	}
 }
