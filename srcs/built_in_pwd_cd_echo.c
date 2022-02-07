@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in_pwd_cd.c                                  :+:      :+:    :+:   */
+/*   built_in_pwd_cd_echo.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 14:22:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/07 13:37:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	built_in_pwd()
 	return (1);
 }
 
-int	built_in_echo(char *prompt)
+int	built_in_echo(t_struct *ms, char *prompt)
 {
-	int	i;
-	int	len;
-	int	line_break;
+	int		i;
+	int		len;
+	int		line_break;
 
 	i = 0;
 	line_break = light_parse_echo(prompt);
@@ -76,9 +76,9 @@ int	built_in_echo(char *prompt)
 		while (prompt[i] == ' ')
 			i++;
 	}
-	len = ft_strlen(&prompt[i]);
-	write(1, &prompt[i], len);  // verifier pour les redirections... a ecrire dans un fichier
-	if (line_break == -1)
+	len = ft_strlen(ms->parsing.result);
+	write(1, ms->parsing.result, len);  // verifier pour les redirections... a ecrire dans un fichier
+	if (line_break == -1) //gerer cas ou $$ chaipukoi
 		write(1, "\n", 1); // verifier pour les redirections... a ecrire dans un fichier
 	return (EXIT_SUCCESS);
 }

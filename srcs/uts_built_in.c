@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 14:22:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:02:25 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*create_path(char *path, char *cmd)
 	return (dst);
 }
 
-char	*get_good_variable(char *prompt)
+char	*get_good_variable(char *prompt, int size)
 {
 	int		i;
 	int		j;
@@ -128,7 +128,7 @@ char	*get_good_variable(char *prompt)
 	i = 0;
 	j = 0;
 	ret = 0;
-	str = malloc(sizeof(char) * (size_variable(prompt) + 1));
+	str = malloc(sizeof(char) * (size + 1));
 	if (str == NULL)
 	{
 		printf("Bad malloc.\n");
@@ -139,7 +139,7 @@ char	*get_good_variable(char *prompt)
 	i += 6;
 	while (prompt[i] == ' ')
 		i++;
-	while (j < size_variable(prompt))
+	while (j < size)
 	{
 		str[j] = prompt[i];
 		if (ret == 0 && prompt[i] == '=' && prompt[i + 1] == '"')

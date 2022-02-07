@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 14:22:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:11:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,110 @@ void	execute_cmd(char *path, char **args, char **env)
 	}
 }
 
-int	built_in_export(t_env *env, char *prompt)
+void	print_export(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '=')
+		i++;
+	i++;
+	write(1, &str[i], ft_strlen(&str[i]));
+	write(1, "export ", 7); // pas forcement dans l'entre standard... OUESHHHHHH
+}
+
+char	**copy_env_in_tab_char(t_env_ms **ms)
+{
+	t_it		it;
+	t_env_ms	*first;
+	char		**copy;
+
+	it.i = 0;
+	it.j = 0;
+	it.k = 0;
+	it.len = size_env(ms);
+	first = *ms;
+	copy = malloc(sizeof(char *) * (it.len + 1));
+	if (copy == NULL)
+		return (NULL);
+	while (*ms && it.i < it.len)
+	{
+		it.j = 0;
+		it.k = 0;
+		copy[it.i] = malloc(sizeof(char) * ft_strlen((*ms)->var) + 3);
+		while ((*ms)->var[it.j])
+		{
+			// printf("%c\n", (*ms)->var[it.j]);
+			if ((*ms)->var[it.j - 1] == '=')
+			{
+				copy[it.i][it.k] = '"';
+				it.k++;
+			}
+			copy[it.i][it.k] = (*ms)->var[it.j];
+			// printf("[%d][%lu]\n", it.j, ft_strlen((*ms)->var) + 3);
+			it.j++;
+			it.k++;
+		}
+		copy[it.i][it.k] = '"';
+		it.k++;
+		copy[it.i][it.k] = '\0';
+		it.i++;
+		printf("i = %d, max = %d\n", it.i, it.len);
+		// printf("k = %d, len = %lu\n", it.k, ft_strlen((*ms)->var) + 3);
+		*ms = (*ms)->next;
+	}
+	copy[it.i] = NULL;
+	*ms = first;
+	return (copy);
+}
+
+void	print_in_alphabetical_order(t_env_ms **ms)
+{
+	int			i;
+	int			len;
+	char		*swap;
+	char		**copy;
+
+	i = 0;
+	len = size_env(ms);
+	swap = NULL;
+	copy = copy_env_in_tab_char(ms);
+	print_tab_char(copy);
+	while (i < len - 1)
+	{
+		if ((ft_strcmp(copy[i], copy[i + 1])) > 0)
+		{
+			swap = copy[i];
+			copy[i] = copy[i + 1];
+			copy[i + 1] = swap;
+			i = 0;
+		}
+		else
+			i++;
+	}
+	i = 0;
+	while (i < len)
+	{
+		write(1, "export ", 8);
+		ft_putstr(copy[i]);
+		write(1, "\n", 1); ///pas forcement ici
+		i++;
+	}
+}
+
+int	built_in_export(t_env *env, char *prompt, char **cmd_args)
 {
 	int		i;
+	int		size;
 	int		ret;
 	char	*str;
 
 	i = 6;
+	if (cmd_args[1] == NULL)
+	{
+		print_in_alphabetical_order(&(env->env_ms));
+		return (EXIT_SUCCESS);
+	}
 	if (light_parse_export(prompt) == -1)
 	{
 		printf("Error command export\n");
@@ -68,37 +165,45 @@ int	built_in_export(t_env *env, char *prompt)
 	}
 	while (prompt[i] == ' ')
 		i++;
-	str = get_good_variable(prompt);
+	size = size_variable(prompt);
+	str = get_good_variable(prompt, size);
 	ret = check_if_variable_already_exist(&(env->env_ms), &prompt[i]);
 	if (ret == -1)
 		add_var_env_minishell(&(env->env_ms), str);
 	else
 		change_var_env_minishell(&(env->env_ms), str, ret);
-	// print_env_ms(&(env->env_ms));
 	return (EXIT_SUCCESS);
 }
 
-int	built_in_to_create(t_env *env, char **cmd_args, char *prompt)
+int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 {
 	// print_tab_char(cmd_args);
 	if (ft_pos_strstr(cmd_args[0], "cd") != -1)
-		return (built_in_cd(env, cmd_args));
+		return (built_in_cd(&(ms->env), cmd_args));
 	else if (ft_pos_strstr(cmd_args[0], "pwd") != -1)
 		return (built_in_pwd());
 	else if (ft_pos_strstr(cmd_args[0], "env") != -1)
-		return (built_in_env(env->env_ms));
+		return (built_in_env(ms->env.env_ms));
 	else if (ft_pos_strstr(cmd_args[0], "export") != -1)
-		return (built_in_export(env, prompt));
+		return (built_in_export(&(ms->env), prompt, cmd_args));
 	else if (ft_pos_strstr(cmd_args[0], "unset") != -1)
-		return (built_in_unset(env, cmd_args));
+		return (built_in_unset(&(ms->env), cmd_args));
 	else if (ft_pos_strstr(cmd_args[0], "echo") != -1)
-		return (built_in_echo(prompt));
+		return (built_in_echo(ms, prompt));
 	else if (ft_pos_strstr(cmd_args[0], "exit") != -1)
-		built_in_exit(env, cmd_args, prompt);
+		built_in_exit(&(ms->env), cmd_args, prompt);
 	return (-1);
 }
 
-void start_built_in(char *prompt, t_env *env)
+
+// int	redirection(t_env *env, char **cmd_args, char *prompt)
+// {(void)env;(void)cmd_args;(void)prompt;
+// 	print_tab_char(cmd_args);
+
+// 	return (-1);
+// }
+
+void command(char *prompt, t_struct *ms)
 {
 	int		i;
 	char	*good_path;
@@ -108,14 +213,19 @@ void start_built_in(char *prompt, t_env *env)
 	while (prompt[i] == ' ')
 		i++;
 	args = get_cmd_and_args_split(&prompt[i]);
-	if (built_in_to_create(env, args, prompt) != -1)
+	if (built_in_to_create(ms, args, prompt) != -1)
 	{
 		ft_free_tab(args);
 		// print_env_ms(&(env->env_ms));
 		return ;
 	}
-	good_path = working_path(env->path, args[0]);
-	execute_cmd(good_path, args, env->env_bash);
+	// if (redirection(env, args, prompt) != -1)
+	// {
+	// 	ft_free_tab(args);
+	// 	return ;
+	// }
+	good_path = working_path(ms->env.path, args[0]);
+	execute_cmd(good_path, args, ms->env.env_bash);
 	// err = execve(good_path, args, env->env);
 	// if (err == -1)
 	// printf("err = %d\n", err);
