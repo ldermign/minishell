@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_fcts.h                                   :+:      :+:    :+:   */
+/*   minishell_fcts_BACKUP_127156.h                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/05 18:38:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 10:18:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_prompt(char *prompt, t_env *env);
 **	BUILT-IN
 */
 
-void start_built_in(char *prompt, t_env *env);
+void command(char *prompt, t_env *env);
 int	recup_var_envs(char **env, t_env *cpy_env);
 int	built_in_cd(t_env *env, char **cmd_args);
 int	built_in_pwd();
