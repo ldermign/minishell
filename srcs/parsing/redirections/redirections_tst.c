@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/07 16:43:07 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 20:46:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	redirections(char *line, t_parsing *parsing)
 		parsing->i_line++;
 	parsing->i_line--;
 	if (line[parsing->i_line] != '<' && line[parsing->i_line] != '>'
-		&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$')
+		&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '|')
 		return (1);
 	return (0);
 }
@@ -85,7 +86,8 @@ int	skip_redirections(char *line, t_parsing *parsing)
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
 	if (line[parsing->i_line] != '<' && line[parsing->i_line] != '>'
-		&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$')
+		&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '|')
 	{
 		parsing->i_line--;
 		return (1);

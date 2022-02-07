@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/07 16:45:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 20:42:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	check_variable(char *line, t_parsing *parsing)
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != ' '
 		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
+		// && line[parsing->i_line] != '|' && line[parsing->i_line] != '$')
 	{
 		var[i] = line[parsing->i_line];
 		i++;
@@ -104,10 +105,11 @@ int	check_space(char *line, t_parsing *parsing)
 		j = check_variable(line, parsing);
 		if (line[parsing->i_line] != '<' && line[parsing->i_line] != '>'
 			&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$')
+			// && line[parsing->i_line] != '|')
 			j++;
 		return (j);
 	}
-	else if (line[parsing->i_line + i] == '\0')
+	else if (line[parsing->i_line + i] == '\0' || line[parsing->i_line + i] == '|')
 	{
 		parsing->i_line += i;
 		return (0);
@@ -152,6 +154,7 @@ int	fill_variable(char *line, t_parsing *parsing, int j)
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != ' '
 		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
+		// && line[parsing->i_line] != '|' && line[parsing->i_line] != '$')
 	{
 		var[i] = line[parsing->i_line];
 		i++;
@@ -223,6 +226,7 @@ int	len_variable(char *line, t_parsing *parsing)
 	j = 1;
 	while (line[parsing->i_line + j] && line[parsing->i_line + j] != ' '
 		&& line[parsing->i_line + j] != 34 && line[parsing->i_line + j] != 39)
+		// && line[parsing->i_line] != '|' && line[parsing->i_line] != '$')
 	{
 		var[i] = line[parsing->i_line + j];
 		i++;
@@ -264,7 +268,7 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 		}
 		return (fill_variable(line, parsing, i));
 	}
-	else if (line[parsing->i_line + j] == '\0')
+	else if (line[parsing->i_line + j] == '\0' || line[parsing->i_line + j] == '|')
 	{
 		parsing->i_line += j;
 		return (0);

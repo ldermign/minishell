@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:08:08 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/07 16:36:36 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 20:31:35 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,38 +72,53 @@ int	check_command(char *line, t_parsing *parsing)
 	return (0);
 }
 
-// int	check_redirection(char *line, t_parsing *parsing)
-// {
-// 	return (0);
-// }
+int	check_redirections(char *line, t_parsing *parsing)
+{
+	if (line[parsing->i_line] == '<' || line[parsing->i_line] == '>')
+		return (redirections(line, parsing));
+	return (0);
+}
 
-// int	check_pipe(char *line, t_parsing *parsing)
-// {
-// 	if (line[parsing->i_line - 1] != ' ' || line[parsing->i_line + 1] != ' ')
-// 	{
-		// parsing->ret_error = malloc(sizeof(char) * 40);
-		// if (parsing->ret_error == NULL)
-		// 	return (-1);
-		// ft_strcpy(parsing->ret_error, "syntax error : bad character around '|'");
-		// return (-1);
-	// }
-// 	return (0);
-// }
+
+int	check_pipe(char *line, t_parsing *parsing)
+{
+	if (line[parsing->i_line] == '|')
+	{
+		parsing->i_line++;
+		if (line[parsing->i_line] == '<' || line[parsing->i_line] == '>'
+			|| line[parsing->i_line] == '\n' || line[parsing->i_line] == '*'
+			|| line[parsing->i_line] == ';' || line[parsing->i_line] == '('
+			|| line[parsing->i_line] == ')' || line[parsing->i_line] == '`')
+		{
+			printf("syntax error near unexpected token `");
+			printf("%c'\n", line[parsing->i_line]);
+			parsing->error = 1;
+			return (-1);
+		}
+		parsing->i_line--;
+	}
+	return (0);
+}
 
 int	parse_line(char *line, t_parsing *parsing)
 {
 	if (line[0] == '\0')
 		return (0);
-	while (line[parsing->i_line] == ' ')
-		parsing->i_line++;
-	if (check_command(line, parsing) == -1)
-		return (-1);
-	// if (check_redirection(line, parsing) == -1)
-	// 	return (-1);
-	// if (check_pipe(line, parsing) == -1)
-	// 	return (-1);
+	while (line[parsing->i_line])
+	{
+		while (line[parsing->i_line] == ' ')
+			parsing->i_line++;
+		if (check_command(line, parsing) == -1)
+			return (-1);
+		// while (line[parsing->i_line] && line[parsing->i_line] != '<'
+		// 	&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
+		// 	parsing->i_line++;
+		// if (check_redirections(line, parsing) == -1)
+		// 	return (-1);
+		// if (check_pipe(line, parsing) == -1)
+		// 	return (-1);
+		if (parsing->error == 1)
+			return (-1);
+	}
 	return (0);
 }
-
-// https://putaindecode.io/articles/maitriser-les-redirections-shell/
-// https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/

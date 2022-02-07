@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 16:10:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/07 20:12:50 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ typedef	struct s_parsing
 	int		red1;
 	int		red2;
 	char	*result;
-	char	*fd;
+	char	*file_redirection;
 	int		option;
+	int		pipe_fd[2];
 }	t_parsing;
 
 typedef struct t_structure

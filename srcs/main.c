@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 16:52:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/07 20:12:35 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_parsing(t_parsing *parsing)
 {	
 	parsing->error = 0;
 	parsing->result = NULL;
-	parsing->fd = NULL;
+	parsing->file_redirection = NULL;
 	parsing->i_line = 0;
 	parsing->option = 0;
 	parsing->red1 = 0;
