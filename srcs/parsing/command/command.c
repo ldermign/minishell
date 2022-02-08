@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/07 16:25:40 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 15:13:21 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	check_option(line, parsing);
 	tmp = parsing->i_line;
 	i = find_len(line, parsing);
+	printf("i = %d\n", i);
 	if (i == -1)
 		return ;
 	parsing->result = malloc(sizeof(char) * i + 1);

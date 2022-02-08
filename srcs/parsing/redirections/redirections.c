@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/08 11:27:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 15:23:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ int	check_error_red(char *line, t_parsing *parsing)
 	if (line[parsing->i_line] == line[parsing->i_line - 1])
 		parsing->i_line++;
 	if (line[parsing->i_line] == '<' || line[parsing->i_line] == '>'
-		|| line[parsing->i_line] == '\n' || line[parsing->i_line] == '*'
+		|| line[parsing->i_line] == '\0' || line[parsing->i_line] == '*'
 		|| line[parsing->i_line] == ';' || line[parsing->i_line] == '('
 		|| line[parsing->i_line] == ')' || line[parsing->i_line] == '`')
 	{
-		printf("syntax error near unexpected token `");
-		printf("%c'\n", line[parsing->i_line]);
+		write(1, "syntax error near unexpected token `", 36);
+		if (line[parsing->i_line] == '\0')
+			write(1, "newline'\n", 9);
+		else
+			printf("%c'\n", line[parsing->i_line]);
 		parsing->error = 1;
 		return (-1);
 	}
