@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 15:11:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 16:18:14 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,36 @@ static int	check_variable(char *line, t_parsing *parsing)
 	return (ft_strlen(str));
 }
 
+static int	check_variable_quotes(char *line, t_parsing *parsing)
+{
+	int		i;
+	char	*str;
+	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
+
+	i = 0;
+	parsing->i_line++;
+	if (line[parsing->i_line] == '{')
+		return (check_variable_crochet(line, parsing));
+	while (line[parsing->i_line] && line[parsing->i_line] != ' '
+		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39
+		&& line[parsing->i_line] != '|' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '}')
+	{
+		var[i] = line[parsing->i_line];
+		i++;
+		parsing->i_line++;
+	}
+	var[i] = '\0';
+	str = getenv(var);
+	parsing->i_line--;
+	if (str == NULL)
+	{
+		parsing->i_line++;
+		return (0);
+	}
+	return (ft_strlen(str));
+}
+
 static int	simple_quote_echo(char *line, t_parsing *parsing)
 {
 	int	i;
@@ -115,6 +145,13 @@ static int	simple_quote_echo(char *line, t_parsing *parsing)
 		parsing->error = 1;
 		return (-1);
 	}
+	if (line[parsing->i_line + 1] == ' ')
+	{
+		parsing->i_line++;
+		while (line[parsing->i_line] == ' ')
+			parsing->i_line++;
+		parsing->i_line -= 2;
+	}
 	return (i);
 }
 
@@ -127,7 +164,7 @@ static int	double_quotes_echo(char *line, t_parsing *parsing)
 	while (line[parsing->i_line] && line[parsing->i_line] != 34)
 	{
 		if (line[parsing->i_line] == '$')
-			i = i + check_variable(line, parsing);
+			i = i + check_variable_quotes(line, parsing);
 		else
 			i++;
 		parsing->i_line++;
@@ -137,6 +174,14 @@ static int	double_quotes_echo(char *line, t_parsing *parsing)
 		printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
 		parsing->error = 1;
 		return (-1);
+	}
+	// printf("line = [%s]\n", &line[parsing->i_line]);
+	if (line[parsing->i_line + 1] == ' ')
+	{
+		parsing->i_line++;
+		while (line[parsing->i_line] == ' ')
+			parsing->i_line++;
+		parsing->i_line -= 2;
 	}
 	return (i);
 }
@@ -167,6 +212,13 @@ int	check_space(char *line, t_parsing *parsing)
 	{
 		parsing->i_line += i;
 		return (0);
+	}
+	else if (line[parsing->i_line + i] == 34 || line[parsing->i_line + i] == 39)
+	{
+		parsing->i_line += i;
+		parsing->i_line--;
+		// printf("line = [%s]\n", &line[parsing->i_line]);
+		return (1);
 	}
 	else
 		return (1);

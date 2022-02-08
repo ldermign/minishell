@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:41:54 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 15:24:14 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 16:19:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,46 @@ int	fill_variable(char *line, t_parsing *parsing, int j)
 	return (ft_strlen(str));
 }
 
+int	fill_variable_quotes(char *line, t_parsing *parsing, int j)
+{
+	int		i;
+	int		a;
+	char	*str;
+	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
+
+	i = 0;
+	a = 0;
+	parsing->i_line++;
+	if (line[parsing->i_line] == '{')
+	{
+		parsing->i_line++;
+		a = 1;
+	}
+	while (line[parsing->i_line] && line[parsing->i_line] != ' '
+		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39
+		&& line[parsing->i_line] != '|' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '}')
+	{
+		var[i] = line[parsing->i_line];
+		i++;
+		parsing->i_line++;
+	}
+	var[i] = '\0';
+	str = getenv(var);
+	if (line[parsing->i_line] == '}' && a == 1)
+		parsing->i_line++;
+	parsing->i_line--;
+	if (str == NULL)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		parsing->result[i + j] = str[i];
+		i++;
+	}
+	return (ft_strlen(str));
+}
+
 int	fill_simple_quote(char *line, t_parsing *parsing, int i)
 {
 	int	j;
@@ -69,6 +109,13 @@ int	fill_simple_quote(char *line, t_parsing *parsing, int i)
 		parsing->result[i + j] = line[parsing->i_line];
 		parsing->i_line++;
 		j++;
+	}
+	if (line[parsing->i_line + 1] == ' ')
+	{
+		parsing->i_line++;
+		while (line[parsing->i_line] == ' ')
+			parsing->i_line++;
+		parsing->i_line -= 2;
 	}
 	return (j);
 }
@@ -82,13 +129,20 @@ int	fill_double_quotes(char *line, t_parsing *parsing, int i)
 	while (line[parsing->i_line] && line[parsing->i_line] != 34)
 	{
 		if (line[parsing->i_line] == '$')
-			j = j + fill_variable(line, parsing, i + j);
+			j = j + fill_variable_quotes(line, parsing, i + j);
 		else
 		{
 			parsing->result[j + i] = line[parsing->i_line];
 			j++;
 		}
 		parsing->i_line++;
+	}
+	if (line[parsing->i_line + 1] == ' ')
+	{
+		parsing->i_line++;
+		while (line[parsing->i_line] == ' ')
+			parsing->i_line++;
+		parsing->i_line -= 2;
 	}
 	return (j);
 }
@@ -152,6 +206,14 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 	{
 		parsing->i_line += j;
 		return (0);
+	}
+	else if (line[parsing->i_line + j] == 34 || line[parsing->i_line + j] == 39)
+	{
+		parsing->i_line += j;
+		parsing->i_line--;
+		parsing->result[i] = ' ';
+		// printf("line = [%s]\n", &line[parsing->i_line]);
+		return (1);
 	}
 	else
 		parsing->result[i] = ' ';

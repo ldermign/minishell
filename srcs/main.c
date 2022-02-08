@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 20:12:35 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 15:48:16 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int	main(int ac, char **av, char **env)
 		line = readline("$ ");
 		init_parsing(&structure.parsing);
 		parse_line(line, &structure.parsing);
-		if (line[0] != '\0' && structure.parsing.error != 1)
-			command(line, &structure);
+		// if (line[0] != '\0' && structure.parsing.error != 1)
+		// 	command(line, &structure);
 		if (structure.parsing.result != NULL)
 			free(structure.parsing.result);
 		free(line);
