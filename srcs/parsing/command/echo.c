@@ -6,27 +6,20 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 12:14:08 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 14:27:19 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_variable(char *line, t_parsing *parsing)
+int	check_variable_crochet(char *line, t_parsing *parsing)
 {
 	int		i;
-	int		a;
 	char	*str;
 	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
 
 	i = 0;
-	a = 0;
 	parsing->i_line++;
-	if (line[parsing->i_line] == '{')
-	{
-		a = 1;
-		parsing->i_line++;
-	}
 	while (line[parsing->i_line] && line[parsing->i_line] != ' '
 		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39
 		&& line[parsing->i_line] != '|' && line[parsing->i_line] != '$'
@@ -38,8 +31,58 @@ static int	check_variable(char *line, t_parsing *parsing)
 	}
 	var[i] = '\0';
 	str = getenv(var);
-	if (line[parsing->i_line] == '}' && a == 1)
+	if (line[parsing->i_line] == ' ' || line[parsing->i_line] == 34
+		|| line[parsing->i_line] == 39 || line[parsing->i_line] == '|'
+		|| line[parsing->i_line] != '$')
+	{
+		printf("${%s}: bad substitution\n", str);
+		parsing->error = 1;
+		return (-1);
+	}
+	if (line[parsing->i_line] == '\0')
+	{
+		printf("error : open crochet (jsp comment on dit faudra changer\n)");
+		parsing->error = 1;
+		return (-1);
+	}
+	if (line[parsing->i_line] == '}')
 		parsing->i_line++;
+	if (line[parsing->i_line] == ' ')
+	{
+		while (line[parsing->i_line] == ' ')
+			parsing->i_line++;
+		parsing->i_line--;
+	}
+	parsing->i_line--;
+	if (str == NULL)
+	{
+		parsing->i_line++;
+		return (0);
+	}
+	return (ft_strlen(str));
+}
+
+static int	check_variable(char *line, t_parsing *parsing)
+{
+	int		i;
+	char	*str;
+	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
+
+	i = 0;
+	parsing->i_line++;
+	if (line[parsing->i_line] == '{')
+		return (check_variable_crochet(line, parsing));
+	while (line[parsing->i_line] && line[parsing->i_line] != ' '
+		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39
+		&& line[parsing->i_line] != '|' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '}')
+	{
+		var[i] = line[parsing->i_line];
+		i++;
+		parsing->i_line++;
+	}
+	var[i] = '\0';
+	str = getenv(var);
 	if (line[parsing->i_line] == ' ')
 	{
 		while (line[parsing->i_line] == ' ')

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:41:54 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 12:14:18 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 14:31:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,12 @@ int	fill_variable(char *line, t_parsing *parsing, int j)
 {
 	int		i;
 	char	*str;
-    int     a;
 	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
 
 	i = 0;
-    a = 0;
 	parsing->i_line++;
 	if (line[parsing->i_line] == '{')
-	{
-		a = 1;
 		parsing->i_line++;
-	}
 	while (line[parsing->i_line] && line[parsing->i_line] != ' '
 		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39
 		&& line[parsing->i_line] != '|' && line[parsing->i_line] != '$'
@@ -38,7 +33,7 @@ int	fill_variable(char *line, t_parsing *parsing, int j)
 	}
 	var[i] = '\0';
 	str = getenv(var);
-	if (line[parsing->i_line] == '}' && a == 1)
+	if (line[parsing->i_line] == '}')
 		parsing->i_line++;
 	if (line[parsing->i_line] == ' ')
 	{
