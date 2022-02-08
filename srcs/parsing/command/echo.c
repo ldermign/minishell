@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 16:18:14 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 16:24:51 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ static int	double_quotes_echo(char *line, t_parsing *parsing)
 		parsing->error = 1;
 		return (-1);
 	}
-	// printf("line = [%s]\n", &line[parsing->i_line]);
 	if (line[parsing->i_line + 1] == ' ')
 	{
 		parsing->i_line++;
