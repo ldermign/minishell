@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/07 16:06:24 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 11:27:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,38 @@
 
 // 	60 <	62 >
 
-// int	check_error_red(char *line, t_parsing *parsing)
-// {
-// 	parsing->i_line++;
-// 	if (line[parsing->i_line] == line[parsing->i_line - 1])
-// 		parsing->i_line++;
-// 	if (line[parsing->i_line] == )//a completer
-// 	{
-// 		printf("syntax error near unexpected token `%c'\n", line[parsing->i_line]);
-// 		parsing->error = 1;
-// 		return (-1);
-// 	}
-// 	// flemme la j'avoue
-// }
+// liste a completer 
 
-void	redirections(char *line, t_parsing *parsing)
+int	check_error_red(char *line, t_parsing *parsing)
 {
-	// if (check_error_red(line, parsing) == -1)
-	// {
-	// 	parsing->error = 1;
-	// 	return ;
-	// }
+	parsing->i_line++;
+	if (line[parsing->i_line] == line[parsing->i_line - 1])
+		parsing->i_line++;
+	if (line[parsing->i_line] == '<' || line[parsing->i_line] == '>'
+		|| line[parsing->i_line] == '\n' || line[parsing->i_line] == '*'
+		|| line[parsing->i_line] == ';' || line[parsing->i_line] == '('
+		|| line[parsing->i_line] == ')' || line[parsing->i_line] == '`')
+	{
+		printf("syntax error near unexpected token `");
+		printf("%c'\n", line[parsing->i_line]);
+		parsing->error = 1;
+		return (-1);
+	}
+	if (line[parsing->i_line - 1] == line[parsing->i_line - 2])
+		parsing->i_line--;
+	parsing->i_line--;
+	return (0);
+}
+
+int	redirections(char *line, t_parsing *parsing)
+{
+	while (line[parsing->i_line] == ' ')
+		parsing->i_line++;
+	if (check_error_red(line, parsing) == -1)
+	{
+		parsing->error = 1;
+		return (-1);
+	}
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
 	if (line[parsing->i_line] == 60 && line[parsing->i_line + 1] != 60)
@@ -48,9 +59,14 @@ void	redirections(char *line, t_parsing *parsing)
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
 	parsing->i_line--;
+	if (line[parsing->i_line] != '<' && line[parsing->i_line] != '>'
+		&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '|')
+		return (1);
+	return (0);
 }
 
-void	skip_redirections(char *line, t_parsing *parsing)
+int	skip_redirections(char *line, t_parsing *parsing)
 {
 	while (line[parsing->i_line] == 60 || line[parsing->i_line] == 62
 		|| line[parsing->i_line] == ' ')
@@ -69,10 +85,16 @@ void	skip_redirections(char *line, t_parsing *parsing)
 	}
 	while (line[parsing->i_line] == ' ')
 		parsing->i_line++;
+	if (line[parsing->i_line] != '<' && line[parsing->i_line] != '>'
+		&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$'
+		&& line[parsing->i_line] != '|')
+	{
+		parsing->i_line--;
+		return (1);
+	}
 	parsing->i_line--;
-	printf("redir : [%s]\n", &line[parsing->i_line]);
+	return (0);
 }
-
 
 // bash-5.0$ echo ugvj >
 // bash: syntax error near unexpected token `newline'
