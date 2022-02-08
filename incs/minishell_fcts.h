@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 18:30:13 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 14:29:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,25 @@ void	built_in_exit(t_env *env, char **cmd_args, char *prompt);
 int	built_in_unset(t_env *env, char **args);
 int	built_in_env(t_env_ms *stack);
 int	built_in_echo(t_struct *ms, char *prompt);
+
+/*
+**	REDIRECTIONS
+*/
+
+int	get_redirections(t_struct *ms, char **args, int which);
+
+/*
+**	UTILS REDIRECTIONS
+*/
+
+int	redirection_in_file(char **cmd_args);
+
+// /*
+// **	HISTORY
+// */
+
+// void	add_cmd_history(t_his **stack, char *cmd);
+// void	free_history(t_his *stack);
 
 /*
 **	UTILS

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
+#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/07 18:23:57 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/08 12:08:45 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,12 @@ NAME	=	minishell
 INCS	=	./incs/
 
 SRCS	=	./srcs/main.c \
-			./srcs/built_in.c \
+			./srcs/exec/built_in.c ./srcs/exec/get_env.c \
+			./srcs/exec/redirections.c ./srcs/exec/built_in_pwd_cd_echo.c \
+			./srcs/exec/built_in_exit_unset_env.c \
+			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
+			./srcs/utils/uts_list_var_env_ms.c \
 			./srcs/supprimer.c \
-			./srcs/get_env.c \
-			./srcs/uts_split_ms.c \
-			./srcs/uts_built_in.c \
-			./srcs/cmd_redirection.c \
-			./srcs/built_in_pwd_cd_echo.c \
-			./srcs/built_in_exit_unset_env.c \
-			./srcs/uts_list_var_env_ms.c \
 			./srcs/parsing/command/echo2.c ./srcs/parsing/command/cd_pwd.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \
 			./srcs/parsing/command/export.c ./srcs/parsing/command/unset.c \
@@ -49,7 +46,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS} ${CFLAGS} -fsanitize=address -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} -g3 ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 16:11:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:29:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,6 @@ void	execute_cmd(char *path, char **args, char **env)
 	}
 }
 
-void	print_export(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '=')
-		i++;
-	i++;
-	write(1, &str[i], ft_strlen(&str[i]));
-	write(1, "export ", 7); // pas forcement dans l'entre standard... OUESHHHHHH
-}
-
 char	**copy_env_in_tab_char(t_env_ms **ms)
 {
 	t_it		it;
@@ -75,26 +63,25 @@ char	**copy_env_in_tab_char(t_env_ms **ms)
 	it.i = 0;
 	it.j = 0;
 	it.k = 0;
-	it.len = size_env(ms);
+	it.ret = 0;
 	first = *ms;
-	copy = malloc(sizeof(char *) * (it.len + 1));
+	copy = malloc(sizeof(char *) * size_env(ms) + 1);
 	if (copy == NULL)
 		return (NULL);
-	while (*ms && it.i < it.len)
+	while (*ms)
 	{
 		it.j = 0;
 		it.k = 0;
 		copy[it.i] = malloc(sizeof(char) * ft_strlen((*ms)->var) + 3);
 		while ((*ms)->var[it.j])
 		{
-			// printf("%c\n", (*ms)->var[it.j]);
-			if ((*ms)->var[it.j - 1] == '=')
+			if ((*ms)->var[it.j - 1] == '=' && it.ret == 0)
 			{
 				copy[it.i][it.k] = '"';
 				it.k++;
+				it.ret = 1;
 			}
 			copy[it.i][it.k] = (*ms)->var[it.j];
-			// printf("[%d][%lu]\n", it.j, ft_strlen((*ms)->var) + 3);
 			it.j++;
 			it.k++;
 		}
@@ -102,8 +89,6 @@ char	**copy_env_in_tab_char(t_env_ms **ms)
 		it.k++;
 		copy[it.i][it.k] = '\0';
 		it.i++;
-		printf("i = %d, max = %d\n", it.i, it.len);
-		// printf("k = %d, len = %lu\n", it.k, ft_strlen((*ms)->var) + 3);
 		*ms = (*ms)->next;
 	}
 	copy[it.i] = NULL;
@@ -122,7 +107,6 @@ void	print_in_alphabetical_order(t_env_ms **ms)
 	len = size_env(ms);
 	swap = NULL;
 	copy = copy_env_in_tab_char(ms);
-	print_tab_char(copy);
 	while (i < len - 1)
 	{
 		if ((ft_strcmp(copy[i], copy[i + 1])) > 0)
@@ -138,11 +122,12 @@ void	print_in_alphabetical_order(t_env_ms **ms)
 	i = 0;
 	while (i < len)
 	{
-		write(1, "export ", 8);
-		ft_putstr(copy[i]);
-		write(1, "\n", 1); ///pas forcement ici
+		write(1, "export ", 8); ///pas forcement ici, dans fichier aussi
+		ft_putstr(copy[i]); ///pas forcement ici, dans fichier aussi
+		write(1, "\n", 1); ///pas forcement ici, dans fichier aussi
 		i++;
 	}
+	ft_free_tab(copy);
 }
 
 int	built_in_export(t_env *env, char *prompt, char **cmd_args)
@@ -206,17 +191,29 @@ int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 void command(char *prompt, t_struct *ms)
 {
 	int		i;
+	int		ret;
 	char	*good_path;
 	char	**args;
 
 	i = 0;
+	// add_history(prompt);
 	while (prompt[i] == ' ')
 		i++;
 	args = get_cmd_and_args_split(&prompt[i]);
+	if (args == NULL)
+		return ;
+	ret = redirection_in_file(args);
+	if (ret != -1)
+	{
+		get_redirections(ms, args, ret);
+		ft_free_tab(args);
+		// print_env_ms(&(ms->env));
+		return ;
+	}
 	if (built_in_to_create(ms, args, prompt) != -1)
 	{
 		ft_free_tab(args);
-		// print_env_ms(&(env->env_ms));
+		// print_env_ms(&(ms->env));
 		return ;
 	}
 	// if (redirection(env, args, prompt) != -1)
@@ -226,9 +223,6 @@ void command(char *prompt, t_struct *ms)
 	// }
 	good_path = working_path(ms->env.path, args[0]);
 	execute_cmd(good_path, args, ms->env.env_bash);
-	// err = execve(good_path, args, env->env);
-	// if (err == -1)
-	// printf("err = %d\n", err);
 	ft_free_tab(args);
 	// print_env_ms(&(env->env_ms));
 }

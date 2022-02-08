@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:54:00 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/01 15:17:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:10:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ char	**get_cmd_and_args_split(char *str)
 	char	**dst;
 
 	if (str == NULL)
+		return (NULL);
+	if (ft_word_count(str) == 0)
 		return (NULL);
 	dst = (char **)malloc(sizeof(char *) * (ft_word_count(str) + 1));
 	if (dst == NULL)

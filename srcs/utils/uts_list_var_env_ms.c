@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 14:54:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/08 11:45:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	size_env(t_env_ms **minishell)
 	return (len);
 }
 
-t_env_ms	*new_var(char *str)
+static t_env_ms	*new_var(char *str)
 {
 	t_env_ms	*elem;
 
@@ -55,9 +55,6 @@ t_env_ms	*new_var(char *str)
 	return (elem);
 }
 
-/*
-**	REVOIR EN DESSSOUS LAAA
-*/
 void	supp_var_env_ms(t_env_ms **stack, int pos)
 {
 	int			i;
@@ -77,24 +74,6 @@ void	supp_var_env_ms(t_env_ms **stack, int pos)
 	free(*stack);
 	*stack = first;
 }
-
-// int	search_for_var_in_env(t_env_ms **stack, char *var)
-// {
-// 	t_env_ms	*first;
-
-// 	first = *stack;
-// 	while (*stack)
-// 	{
-// 		if (ft_pos_strstr((*stack)->var, var) != -1)
-// 		{
-// 			*stack = first;
-// 			return (1);
-// 		}
-// 		*stack = (*stack)->next;
-// 	}
-// 	*stack = first;
-// 	return (-1);
-// }
 
 void	add_var_env_minishell(t_env_ms **stack, char *str_var)
 {

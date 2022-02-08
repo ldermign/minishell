@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/07 20:12:35 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 12:11:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	char	*line;
 	t_struct	structure;
-	// t_env	cpy_env;
-	// t_parsing	parsing;
 
 	line = NULL;
 	if (ac != 1)
