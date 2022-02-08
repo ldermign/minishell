@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 14:27:19 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/08 15:05:11 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	check_variable_crochet(char *line, t_parsing *parsing)
 	str = getenv(var);
 	if (line[parsing->i_line] == ' ' || line[parsing->i_line] == 34
 		|| line[parsing->i_line] == 39 || line[parsing->i_line] == '|'
-		|| line[parsing->i_line] != '$')
+		|| line[parsing->i_line] == '$')
 	{
-		printf("${%s}: bad substitution\n", str);
+		printf("${%c}: bad substitution\n", line[parsing->i_line]);
 		parsing->error = 1;
 		return (-1);
 	}
