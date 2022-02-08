@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/08 11:47:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:03:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@ typedef struct	s_env_minishell
 	char					*var;
 	struct s_env_minishell	*next;
 }	t_env_ms;
-
-// typedef struct	s_history
-// {
-// 	int					nbr;
-// 	char				*cmd;
-// 	struct s_history	*next;
-// }	t_his;
 
 typedef struct	s_environnement
 {
@@ -51,7 +44,6 @@ typedef struct	s_structure
 {
 	t_parsing	parsing;
 	t_env		env;
-	// t_his		history;
 }	t_struct;
 
 typedef struct	s_iterator
