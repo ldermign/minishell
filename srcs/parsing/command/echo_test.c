@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_tst.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/07 20:42:31 by ejahan           ###   ########.fr       */
+/*   Created: 2022/01/09 22:18:15 by elisa             #+#    #+#             */
+/*   Updated: 2022/02/07 13:32:15 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	check_variable(char *line, t_parsing *parsing)
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != ' '
 		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
-		// && line[parsing->i_line] != '|' && line[parsing->i_line] != '$')
 	{
 		var[i] = line[parsing->i_line];
 		i++;
@@ -88,6 +87,21 @@ static int	double_quotes_echo(char *line, t_parsing *parsing)
 	return (i);
 }
 
+
+
+		// while (line[parsing->i_line] == ' ')
+		// 	parsing->i_line++;
+		// k = len_variable(line, parsing);
+		// if (k != 0)
+		// {
+		// 	parsing->result[i] = ' ';
+		// 	return (1 + fill_variable(line, parsing, i + 1));
+		// }
+		// return (fill_variable(line, parsing, i));
+
+		
+
+
 int	check_space(char *line, t_parsing *parsing)
 {
 	int	i;
@@ -97,19 +111,21 @@ int	check_space(char *line, t_parsing *parsing)
 	while (line[parsing->i_line + i] == ' ')
 		i++;
 	if (line[parsing->i_line + i] == 60 || line[parsing->i_line + i] == 62)
-		return (redirections(line, parsing));
+	{
+		redirections(line, parsing);
+		return (1);
+	}
 	else if (line[parsing->i_line + i] == '$')
 	{
-		while (line[parsing->i_line] == ' ')
+		while (line[parsing->i_line + i] == ' ')
 			parsing->i_line++;
 		j = check_variable(line, parsing);
-		if (line[parsing->i_line] != '<' && line[parsing->i_line] != '>'
-			&& line[parsing->i_line] != '\0' && line[parsing->i_line] != '$')
-			// && line[parsing->i_line] != '|')
-			j++;
-		return (j);
+		// if (line[parsing->i_line] )
+		if (j == 0)
+			return (0);
+		return (j + 1);
 	}
-	else if (line[parsing->i_line + i] == '\0' || line[parsing->i_line + i] == '|')
+	else if (line[parsing->i_line + i] == '\0')
 	{
 		parsing->i_line += i;
 		return (0);
@@ -117,7 +133,7 @@ int	check_space(char *line, t_parsing *parsing)
 	else
 		return (1);
 }
-
+		
 int	find_len(char *line, t_parsing *parsing)
 {
 	int	i;
@@ -134,7 +150,7 @@ int	find_len(char *line, t_parsing *parsing)
 		else if (line[parsing->i_line] == ' ')
 			i = i + check_space(line, parsing);
 		else if (line[parsing->i_line] == 60 || line[parsing->i_line] == 62)
-			i += redirections(line, parsing);
+			redirections(line, parsing);
 		else
 			i++;
 		if (parsing->error == 1)
@@ -154,7 +170,6 @@ int	fill_variable(char *line, t_parsing *parsing, int j)
 	parsing->i_line++;
 	while (line[parsing->i_line] && line[parsing->i_line] != ' '
 		&& line[parsing->i_line] != 34 && line[parsing->i_line] != 39)
-		// && line[parsing->i_line] != '|' && line[parsing->i_line] != '$')
 	{
 		var[i] = line[parsing->i_line];
 		i++;
@@ -217,8 +232,8 @@ int	fill_double_quotes(char *line, t_parsing *parsing, int i)
 
 int	len_variable(char *line, t_parsing *parsing)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 	char	*str;
 	char	var[ft_strlen(&line[parsing->i_line + 1]) + 1];
 
@@ -226,7 +241,6 @@ int	len_variable(char *line, t_parsing *parsing)
 	j = 1;
 	while (line[parsing->i_line + j] && line[parsing->i_line + j] != ' '
 		&& line[parsing->i_line + j] != 34 && line[parsing->i_line + j] != 39)
-		// && line[parsing->i_line] != '|' && line[parsing->i_line] != '$')
 	{
 		var[i] = line[parsing->i_line + j];
 		i++;
@@ -249,12 +263,9 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 		j++;
 	if (line[parsing->i_line + j] == 60 || line[parsing->i_line + j] == 62)
 	{
-		if (skip_redirections(line, parsing) == 1)
-		{
-			parsing->result[i] = ' ';
-			return (1);
-		}
-		return (0);
+		skip_redirections(line, parsing);
+		parsing->result[i] = ' ';
+		return (1);
 	}
 	else if (line[parsing->i_line + j] == '$')
 	{
@@ -268,7 +279,7 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 		}
 		return (fill_variable(line, parsing, i));
 	}
-	else if (line[parsing->i_line + j] == '\0' || line[parsing->i_line + j] == '|')
+	else if (line[parsing->i_line + j] == '\0')
 	{
 		parsing->i_line += j;
 		return (0);
@@ -284,6 +295,7 @@ void	fill_result(char *line, t_parsing *parsing)
 
 	i = 0;
 	while (line[parsing->i_line] && line[parsing->i_line] != '|')
+		// && line[parsing->i_line] != 60 && line[parsing->i_line] != 62)
 	{
 		if (line[parsing->i_line] == '$')
 			i = i + fill_variable(line, parsing, i);
@@ -304,3 +316,27 @@ void	fill_result(char *line, t_parsing *parsing)
 	}
 	parsing->result[i] = '\0';
 }
+
+// echo ><
+// bash: syntax error near unexpected token `<'
+
+// echo > "hgv b$PWD"
+// bash: hgv b/Users/elisa/Desktop: No such file or directory
+
+// echo > "$PW D"
+//  ls
+//  D	42	minishell	minishell_test	push_swap	sujets
+
+// echo > "$PWD"
+// bash: /Users/elisa/Desktop: Is a directory
+
+// > && >>
+// des que nouvelle redirection -> creation fichier
+// 		mais ecrit seulement dans le dernier
+
+// < 
+// check si le fichier existe mais fait rien
+
+// <<
+// check jusque == a STOP (ou autre)
+// si plusieur dans line, prend que le dernier en compte

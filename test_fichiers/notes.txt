@@ -10,3 +10,6 @@ https://linuxhint-com.translate.goog/pipe_system_call_c/?_x_tr_sl=en&_x_tr_tl=fr
 redirections
 https://putaindecode.io/articles/maitriser-les-redirections-shell/
 https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/
+
+export
+https://www.tutorialspoint.com/unix_commands/export.htm
