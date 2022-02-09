@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/08 15:58:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/09 11:00:14 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,21 @@ int	redirection1(t_struct *ms, char **args)
 	name_file = args[ft_pos_str_in_tab(args, ">") + 1];
 	if (name_file == NULL)		// normalement, gere dans le parsing
 		return (EXIT_FAILURE);	// normalement, gere dans le parsing
+	fd = open(name_file, O_WRONLY | O_CREAT, 0644); // verifier le 0644
+	write(fd, ms->parsing.result, ft_strlen(ms->parsing.result));
+	write(fd, "\n", 1);
+	return (EXIT_SUCCESS);
+}
+
+int	redirection3(t_struct *ms, char **args)
+{
+	(void)ms;(void)args;
+	int		fd;
+	char	*name_file;
+
+	name_file = args[ft_pos_str_in_tab(args, ">") + 1];
+	if (name_file == NULL)		// normalement, gere dans le parsing
+		return (EXIT_FAILURE);	// normalement, gere dans le parsing
 	fd = open(name_file, O_WRONLY | O_APPEND | O_CREAT, 0644); // verifier le 0644
 	write(fd, ms->parsing.result, ft_strlen(ms->parsing.result));
 	write(fd, "\n", 1);
@@ -79,8 +94,8 @@ int	get_redirections(t_struct *ms, char **args, int which)
 		return (redirection1(ms, args));
 	// else if (which == 2)
 	// 	return (redirection2(ms));
-	// else if (which == 3)
-	// 	return (redirection3(ms));
+	else if (which == 3)
+		return (redirection3(ms, args));
 	// else
 	// 	return (redirection4(ms));
 	return (EXIT_SUCCESS);

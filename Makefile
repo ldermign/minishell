@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/09 08:44:47 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/09 11:07:54 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,16 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c \
 			./srcs/supprimer.c \
-			./srcs/parsing/command/echo2.c ./srcs/parsing/command/cd_pwd.c \
+			./srcs/parsing/utils.c ./srcs/parsing/command/cd_pwd.c \
 			./srcs/parsing/command/command.c ./srcs/parsing/command/env.c \
 			./srcs/parsing/command/export.c ./srcs/parsing/command/unset.c \
+			./srcs/parsing/command/fill_echo.c ./srcs/parsing/command/echo.c \
 			./srcs/parsing/error.c ./srcs/parsing/parsing.c \
 			./srcs/parsing/redirections/redirections.c \
 			./srcs/parsing/redirections/redirection1.c \
 			./srcs/parsing/redirections/redirection2.c \
 			./srcs/parsing/redirections/redirection3.c \
-			./srcs/parsing/redirections/redirection4.c \
-			./srcs/parsing/command/echo.c ./srcs/parsing/command/fill_echo.c
+			./srcs/parsing/redirections/redirection4.c
 
 OBJS	=	${SRCS:.c=.o}
 
