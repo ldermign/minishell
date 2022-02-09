@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/09 11:00:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:15:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	ft_pos_str_in_tab(char **tabl, char *str)
 
 int	redirection1(t_struct *ms, char **args)
 {
-	(void)ms;(void)args;
 	int		fd;
 	char	*name_file;
 
@@ -75,7 +74,6 @@ int	redirection1(t_struct *ms, char **args)
 
 int	redirection3(t_struct *ms, char **args)
 {
-	(void)ms;(void)args;
 	int		fd;
 	char	*name_file;
 
