@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/08 15:13:21 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/10 15:07:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	parse_echo(char *line, t_parsing *parsing)
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
 	printf("to_print : [%s]\n", parsing->result);
-	printf(GREEN"echo ok\n"NORMAL);
 }
 
 void	parse_exit(char *line, t_parsing *parsing)
