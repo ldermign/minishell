@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:44:46 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 16:24:51 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/10 19:52:52 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ int	check_space(char *line, t_parsing *parsing)
 	{
 		parsing->i_line += i;
 		parsing->i_line--;
-		// printf("line = [%s]\n", &line[parsing->i_line]);
 		return (1);
 	}
 	else

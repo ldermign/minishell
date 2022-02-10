@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/08 16:03:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/10 20:01:22 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,32 @@
 **	START
 */
 
-int	get_prompt(char *prompt, t_env *env);
+int		get_prompt(char *prompt, t_env *env);
 
 /*
 **	BUILT-IN
 */
 
-void command(char *prompt, t_struct *ms);
-int	recup_var_envs(char **env, t_env *cpy_env);
-int	built_in_cd(t_env *env, char **cmd_args);
-int	built_in_pwd();
+void	command(char *prompt, t_struct *ms);
+int		recup_var_envs(char **env, t_env *cpy_env);
+int		built_in_cd(t_env *env, char **cmd_args);
+int		built_in_pwd(void);
 void	built_in_exit(t_env *env, char **cmd_args, char *prompt);
-int	built_in_unset(t_env *env, char **args);
-int	built_in_env(t_env_ms *stack);
-int	built_in_echo(t_struct *ms, char *prompt);
+int		built_in_unset(t_env *env, char **args);
+int		built_in_env(t_env_ms *stack);
+int		built_in_echo(t_struct *ms, char *prompt);
 
 /*
 **	REDIRECTIONS
 */
 
-int	get_redirections(t_struct *ms, char **args, int which);
+int		get_redirections(t_struct *ms, char **args, int which);
 
 /*
 **	UTILS REDIRECTIONS
 */
 
-int	redirection_in_file(char **cmd_args);
+int		redirection_in_file(char **cmd_args);
 
 /*
 **	UTILS
@@ -54,9 +54,9 @@ char	**get_cmd_and_args_split(char *str);
 **	UTILS BUILT IN
 */
 
-int	size_variable(char *prompt);
-int	light_parse_export(char *prompt);
-int	light_parse_echo(char *str);
+int		size_variable(char *prompt);
+int		light_parse_export(char *prompt);
+int		light_parse_echo(char *str);
 char	*create_path(char *path, char *cmd);
 char	*get_good_variable(char *prompt, int size);
 
@@ -66,10 +66,10 @@ char	*get_good_variable(char *prompt, int size);
 
 void	free_lst(t_env_ms *stack);
 void	add_var_env_minishell(t_env_ms **stack, char *str_var);
-int	search_for_var_in_env(t_env_ms **stack, char *var);
+int		search_for_var_in_env(t_env_ms **stack, char *var);
 void	supp_var_env_ms(t_env_ms **stack, int pos);
 void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
-int	check_if_variable_already_exist(t_env_ms **minishell, char *str);
+int		check_if_variable_already_exist(t_env_ms **minishell, char *str);
 char	*get_variable(t_env_ms **minishell, char *str);
 int		size_env(t_env_ms **minishell);
 
@@ -80,9 +80,8 @@ int		size_env(t_env_ms **minishell);
 void	print_tab_char(char **tabl);
 void	print_env_ms(t_env_ms **stack);
 
-
 // 		>>>>>>>>>  parsing  <<<<<<<<<
-int	parse_line(char *line, t_parsing *parsing);
+int		parse_line(char *line, t_parsing *parsing);
 
 //		>>>>>>>>> check commandes
 void	parse_echo(char *line, t_parsing *parsing);
@@ -95,20 +94,20 @@ void	parse_exit(char *line, t_parsing *parsing);
 
 //		>>>>>>>>> echo
 void	fill_result(char *line, t_parsing *parsing);
-int	find_len(char *line, t_parsing *parsing);
+int		find_len(char *line, t_parsing *parsing);
 // parse_quotes
-int	simple_quote(char *line, t_parsing *parsing);
-int	double_quotes(char *line, t_parsing *parsing);
-int	check_quotes_and_redir(char *line, t_parsing *parsing);
+int		simple_quote(char *line, t_parsing *parsing);
+int		double_quotes(char *line, t_parsing *parsing);
+int		check_quotes_and_redir(char *line, t_parsing *parsing);
 
 //		>>>>>>>>> error
 void	error_command(char *line, t_parsing *parsing);
-int	error_check(char *line, t_parsing *parsing, int i);
+int		error_check(char *line, t_parsing *parsing, int i);
 
 //		>>>>>>>>> redirections
 void	parse_second_redir(char *line, t_parsing *parsing);
-int	skip_redirections(char *line, t_parsing *parsing);
-int	redirections(char *line, t_parsing *parsing);
+int		skip_redirections(char *line, t_parsing *parsing);
+int		redirections(char *line, t_parsing *parsing);
 void	parse_first_redir(char *line, t_parsing *parsing);
 void	parse_third_redir(char *line, t_parsing *parsing);
 void	parse_fourth_redir(char *line, t_parsing *parsing);

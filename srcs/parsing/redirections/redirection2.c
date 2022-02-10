@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/10 15:11:19 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/10 19:53:42 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	parse_second_redir(char *line, t_parsing *parsing)
 // 		i++;
 // 	}
 // 	end[i] = '\0';
-// 	printf("[%s]\n", end);
 // 	while (42)
 // 	{
 // 		new_line = readline("> ");

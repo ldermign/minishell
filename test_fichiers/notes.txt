@@ -20,3 +20,10 @@ Scénario 1 : Il ne peut pas y avoir d'espaces à côté du =signe (égal)
 Scénario 2 : l'attribution de la valeur d'un objet ne doit pas contenir d'espaces en plus des guillemets
 Scénario 3 : l'attribution de valeurs de liste ne doit pas comporter d'espaces entre les valeurs
 https://stackoverflow-com.translate.goog/questions/18042369/bash-export-not-a-valid-identifier?_x_tr_sl=en&_x_tr_tl=fr&_x_tr_hl=fr&_x_tr_pto=sc
+
+
+
+
+int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
+char	*get_variable(t_env_ms **minishell, char *str)
+

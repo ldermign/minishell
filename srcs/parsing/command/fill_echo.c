@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:41:54 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/08 16:19:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/10 19:53:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,6 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 		k = len_variable(line, parsing);
 		if (k != 0)
 		{
-			printf("k = %d\n", k);
 			parsing->result[i] = ' ';
 			return (1 + fill_variable(line, parsing, i + 1));
 		}
@@ -212,7 +211,6 @@ int	fill_space(char *line, t_parsing *parsing, int i)
 		parsing->i_line += j;
 		parsing->i_line--;
 		parsing->result[i] = ' ';
-		// printf("line = [%s]\n", &line[parsing->i_line]);
 		return (1);
 	}
 	else

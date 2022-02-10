@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:08:08 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/10 15:06:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/10 20:07:02 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,6 @@ void	parse_else(char *line, t_parsing *parsing)
 		&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
 		parsing->i_line++;
 }
-
-// int	check_command(char *line, t_parsing *parsing)
-// {
-// 	if (ft_strlen(line) > 3
-// 		&& ft_memcmp("echo", &line[parsing->i_line], 4) == 0)
-// 		parse_echo(line, parsing);
-// 	else if (ft_strlen(line) > 1
-// 		&& ft_memcmp("cd", &line[parsing->i_line], 2) == 0)
-// 		parse_cd(line, parsing);
-// 	else if (ft_strlen(line) > 2
-// 		&& ft_memcmp("pwd", &line[parsing->i_line], 3) == 0)
-// 		parse_pwd(line, parsing);
-// 	else if (ft_strlen(line) > 5
-// 		&& ft_memcmp("export", &line[parsing->i_line], 6) == 0)
-// 		parse_export(line, parsing);
-// 	else if (ft_strlen(line) > 4
-// 		&& ft_memcmp("unset", &line[parsing->i_line], 5) == 0)
-// 		parse_unset(line, parsing);
-// 	else if (ft_strlen(line) > 2
-// 		&& ft_memcmp("env", &line[parsing->i_line], 3) == 0)
-// 		parse_env(line, parsing);
-// 	else if (ft_strlen(line) > 3
-// 		&& ft_memcmp("exit", &line[parsing->i_line], 4) == 0)
-// 		parse_exit(line, parsing);
-// 	else
-// 		parse_else(line, parsing);
-// 	if (parsing->error != 0)
-// 		return (-1);
-// 	return (0);
-// }
 
 int	check_command(char *line, t_parsing *parsing)
 {
@@ -78,7 +48,6 @@ int	check_redirections(char *line, t_parsing *parsing)
 		return (redirections(line, parsing));
 	return (0);
 }
-
 
 int	check_pipe(char *line, t_parsing *parsing)
 {

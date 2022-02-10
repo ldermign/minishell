@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/09 14:11:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/10 20:05:17 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	init_parsing(t_parsing *parsing)
 
 int	main(int ac, char **av, char **env)
 {
-	(void)av;
-	char	*line;
+	char		*line;
 	t_struct	structure;
 
+	(void)av;
 	line = NULL;
 	if (ac != 1)
 	{
@@ -63,7 +63,6 @@ int	main(int ac, char **av, char **env)
 	}
 	if (recup_var_envs(env, &structure.env) == EXIT_FAILURE)
 		return (0);
-
 	// {
 	// 	free_lst(cpy_env.env_ms);
 	// 	// ft_free_tab(cmd_args);
@@ -72,7 +71,6 @@ int	main(int ac, char **av, char **env)
 	// 	exit (0);
 	// }
 	// char cmd[] = "echo \"test $PWD pouet\"";
-	
 	while (42)
 	{
 	// 	signal(SIGINT, line_break);
