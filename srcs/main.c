@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/09 14:11:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:57:25 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	line_break(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
+		// rl_replace_line("\n", 0);
 	}
 	// printf("la \n");
 	return ;
@@ -64,29 +65,21 @@ int	main(int ac, char **av, char **env)
 	if (recup_var_envs(env, &structure.env) == EXIT_FAILURE)
 		return (0);
 
+	command("ls ~/ > la", &structure)
+
+	// while (42)
 	// {
-	// 	free_lst(cpy_env.env_ms);
-	// 	// ft_free_tab(cmd_args);
-	// 	ft_free_tab(cpy_env.path);
+	// 	// signal(SIGINT, line_break);
+	// 	// signal(SIGQUIT, quit_minishell); // ctrl+'\'
+	// 	// signal(0, test);
+	// 	line = readline("$ ");
+	// 	init_parsing(&structure.parsing);
+	// 	parse_line(line, &structure.parsing);
+	// 	if (line[0] != '\0' && structure.parsing.error != 1)
+	// 		command(line, &structure);
+	// 	if (structure.parsing.result != NULL)
+	// 		free(structure.parsing.result);
 	// 	free(line);
-	// 	exit (0);
 	// }
-	// char cmd[] = "echo \"test $PWD pouet\"";
-	
-	while (42)
-	{
-	// 	signal(SIGINT, line_break);
-	// 	signal(SIGQUIT, quit_minishell); // ctrl+'\'
-	// 	signal(0, test);
-		line = readline("$ ");
-		init_parsing(&structure.parsing);
-		parse_line(line, &structure.parsing);
-		if (line[0] != '\0' && structure.parsing.error != 1)
-			command(line, &structure);
-		if (structure.parsing.result != NULL)
-			free(structure.parsing.result);
-		free(line);
-	}
-	// command(cmd, &structure);
 	return (0);
 }

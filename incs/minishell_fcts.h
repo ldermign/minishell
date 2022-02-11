@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/08 16:03:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:59:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
 int	check_if_variable_already_exist(t_env_ms **minishell, char *str);
 char	*get_variable(t_env_ms **minishell, char *str);
 int		size_env(t_env_ms **minishell);
+
+/*
+**	Test
+*/
+
+void	test_redir_dup(t_struct *ms, char **args);
 
 /*
 **	TEMPORAIRE

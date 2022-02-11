@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/10 15:07:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/11 10:32:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	check_option(line, parsing);
 	tmp = parsing->i_line;
 	i = find_len(line, parsing);
-	printf("i = %d\n", i);
+	// printf("i = %d\n", i);
 	if (i == -1)
 		return ;
 	parsing->result = malloc(sizeof(char) * i + 1);
@@ -55,7 +55,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	}
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
-	printf("to_print : [%s]\n", parsing->result);
+	printf(GREY"to_print : [%s]\n"NORMAL, parsing->result);
 }
 
 void	parse_exit(char *line, t_parsing *parsing)
