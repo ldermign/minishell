@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/10 14:55:12 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/11 17:52:20 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,17 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c \
 			./srcs/supprimer.c \
-			./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
-			./srcs/parsing/command/commands.c \
-			./srcs/parsing/command/fill_echo.c ./srcs/parsing/command/echo.c \
-			./srcs/parsing/error.c ./srcs/parsing/parsing.c \
-			./srcs/parsing/redirections/redirections.c \
-			./srcs/parsing/redirections/redirection1.c \
-			./srcs/parsing/redirections/redirection2.c \
-			./srcs/parsing/redirections/redirection3.c \
-			./srcs/parsing/redirections/redirection4.c
+			./srcs/new_parsing/parsing.c ./srcs/new_parsing/initialisations.c\
+			./srcs/new_parsing/lists.c \
+			# ./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
+			# ./srcs/parsing/command/commands.c \
+			# ./srcs/parsing/command/fill_echo.c ./srcs/parsing/command/echo.c \
+			# ./srcs/parsing/error.c ./srcs/parsing/parsing.c \
+			# ./srcs/parsing/redirections/redirections.c \
+			# ./srcs/parsing/redirections/redirection1.c \
+			# ./srcs/parsing/redirections/redirection2.c \
+			# ./srcs/parsing/redirections/redirection3.c \
+			# ./srcs/parsing/redirections/redirection4.c
 
 OBJS	=	${SRCS:.c=.o}
 

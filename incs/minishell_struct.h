@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/10 20:16:06 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/11 17:42:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef struct s_environnement
 	t_env_ms	*env_ms;
 }	t_env;
 
+typedef struct s_args
+{
+	char			*arg;
+	struct s_args	*next;
+}	t_args;
+
 typedef struct s_parsing
 {
 	int		i_line;
@@ -44,6 +50,7 @@ typedef struct s_structure
 {
 	t_parsing	parsing;
 	t_env		env;
+	t_args		args;
 }	t_struct;
 
 typedef struct s_iterator

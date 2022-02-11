@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/11 15:58:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:37:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,11 +193,11 @@ void command(char *prompt, t_struct *ms)
 	int		i;
 	int		ret;
 	char	*good_path;
-	char	**args;
+	char	**args = NULL;
 
 	i = 0;
 	// add_history(prompt);
-	test_redir_dup(args, ms);
+	// test_redir_dup(args, ms);		//pour que ca compile
 	ft_free_tab(args);
 	// print_env_ms(&(ms->env));
 	return ;

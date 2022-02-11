@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/11 15:59:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:36:49 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int	get_redirections(t_struct *ms, char **args, int which)
 	return (EXIT_SUCCESS);
 }
 
-void	test_redir_dup(t_struct *ms, char **args)
-{
+// void	test_redir_dup(t_struct *ms, char **args)
+// {
 	
-}
+// }

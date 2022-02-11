@@ -6,11 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/10 20:01:22 by ejahan           ###   ########.fr       */
-=======
-/*   Updated: 2022/02/11 15:59:04 by ldermign         ###   ########.fr       */
->>>>>>> liena
+/*   Updated: 2022/02/11 17:24:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,37 +86,54 @@ void	test_redir_dup(t_struct *ms, char **args);
 void	print_tab_char(char **tabl);
 void	print_env_ms(t_env_ms **stack);
 
-// 		>>>>>>>>>  parsing  <<<<<<<<<
-int		parse_line(char *line, t_parsing *parsing);
+/*
+**		>>>>>>>>>  PARSING  <<<<<<<<<
+*/
 
-//		>>>>>>>>> check commandes
-void	parse_echo(char *line, t_parsing *parsing);
-void	parse_cd(char *line, t_parsing *parsing);
-void	parse_pwd(char *line, t_parsing *parsing);
-void	parse_export(char *line, t_parsing *parsing);
-void	parse_unset(char *line, t_parsing *parsing);
-void	parse_env(char *line, t_parsing *parsing);
-void	parse_exit(char *line, t_parsing *parsing);
+//		>>>>>>>>>   initialisations
+void	init_parsing(t_parsing *parsing);
+void	init_args(t_args *args);
+//		>>>>>>>>>   list
+int		insertion(t_args *args, char *new_arg);
+int		free_list(t_args *args);
+//		>>>>>>>>>	parsing
+int		parsing(char *line, t_struct *minish);
 
-//		>>>>>>>>> echo
-void	fill_result(char *line, t_parsing *parsing);
-int		find_len(char *line, t_parsing *parsing);
-// parse_quotes
-int		simple_quote(char *line, t_parsing *parsing);
-int		double_quotes(char *line, t_parsing *parsing);
-int		check_quotes_and_redir(char *line, t_parsing *parsing);
 
-//		>>>>>>>>> error
-void	error_command(char *line, t_parsing *parsing);
-int		error_check(char *line, t_parsing *parsing, int i);
+/*
+**		AVANT
+*/
 
-//		>>>>>>>>> redirections
-void	parse_second_redir(char *line, t_parsing *parsing);
-int		skip_redirections(char *line, t_parsing *parsing);
-int		redirections(char *line, t_parsing *parsing);
-void	parse_first_redir(char *line, t_parsing *parsing);
-void	parse_third_redir(char *line, t_parsing *parsing);
-void	parse_fourth_redir(char *line, t_parsing *parsing);
-void	check_char_in_file_name(char c, t_parsing *parsing);
+// int		parse_line(char *line, t_parsing *parsing);
+
+// //		>>>>>>>>> check commandes
+// void	parse_echo(char *line, t_parsing *parsing);
+// void	parse_cd(char *line, t_parsing *parsing);
+// void	parse_pwd(char *line, t_parsing *parsing);
+// void	parse_export(char *line, t_parsing *parsing);
+// void	parse_unset(char *line, t_parsing *parsing);
+// void	parse_env(char *line, t_parsing *parsing);
+// void	parse_exit(char *line, t_parsing *parsing);
+
+// //		>>>>>>>>> echo
+// void	fill_result(char *line, t_parsing *parsing);
+// int		find_len(char *line, t_parsing *parsing);
+// // parse_quotes
+// int		simple_quote(char *line, t_parsing *parsing);
+// int		double_quotes(char *line, t_parsing *parsing);
+// int		check_quotes_and_redir(char *line, t_parsing *parsing);
+
+// //		>>>>>>>>> error
+// void	error_command(char *line, t_parsing *parsing);
+// int		error_check(char *line, t_parsing *parsing, int i);
+
+// //		>>>>>>>>> redirections
+// void	parse_second_redir(char *line, t_parsing *parsing);
+// int		skip_redirections(char *line, t_parsing *parsing);
+// int		redirections(char *line, t_parsing *parsing);
+// void	parse_first_redir(char *line, t_parsing *parsing);
+// void	parse_third_redir(char *line, t_parsing *parsing);
+// void	parse_fourth_redir(char *line, t_parsing *parsing);
+// void	check_char_in_file_name(char c, t_parsing *parsing);
 
 #endif
