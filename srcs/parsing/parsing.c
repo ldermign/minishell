@@ -6,7 +6,11 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:08:08 by elisa             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/10 20:07:02 by ejahan           ###   ########.fr       */
+=======
+/*   Updated: 2022/02/11 15:08:32 by ldermign         ###   ########.fr       */
+>>>>>>> liena
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +83,13 @@ int	parse_line(char *line, t_parsing *parsing)
 			parsing->i_line++;
 		if (check_command(line, parsing) == -1)
 			return (-1);
-		// while (line[parsing->i_line] && line[parsing->i_line] != '<'
-		// 	&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
-		// 	parsing->i_line++;
-		// if (check_redirections(line, parsing) == -1)
-		// 	return (-1);
-		// if (check_pipe(line, parsing) == -1)
-		// 	return (-1);
+		while (line[parsing->i_line] && line[parsing->i_line] != '<'
+			&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
+			parsing->i_line++;
+		if (check_redirections(line, parsing) == -1)
+			return (-1);
+		if (check_pipe(line, parsing) == -1)
+			return (-1);
 		if (parsing->error == 1)
 			return (-1);
 	}

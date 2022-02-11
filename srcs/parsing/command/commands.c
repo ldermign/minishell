@@ -6,7 +6,11 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/10 19:50:47 by ejahan           ###   ########.fr       */
+=======
+/*   Updated: 2022/02/11 10:32:53 by ldermign         ###   ########.fr       */
+>>>>>>> liena
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +48,10 @@ void	parse_echo(char *line, t_parsing *parsing)
 	check_option(line, parsing);
 	tmp = parsing->i_line;
 	i = find_len(line, parsing);
+<<<<<<< HEAD
+=======
+	// printf("i = %d\n", i);
+>>>>>>> liena
 	if (i == -1)
 		return ;
 	parsing->result = malloc(sizeof(char) * i + 1);
@@ -54,6 +62,10 @@ void	parse_echo(char *line, t_parsing *parsing)
 	}
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
+<<<<<<< HEAD
+=======
+	printf(GREY"to_print : [%s]\n"NORMAL, parsing->result);
+>>>>>>> liena
 }
 
 void	parse_exit(char *line, t_parsing *parsing)
