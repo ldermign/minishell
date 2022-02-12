@@ -6,42 +6,30 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/11 18:07:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/12 22:27:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*init(int i)
+int	insertion(t_list_arg *list, char *new_arg)
 {
-	t_list		*list;
-
-	(void)i;
-	list = malloc(sizeof(*list));
-	if (list == NULL)
-		return (NULL);
-	list->first = NULL;
-	return (list);
-}
-
-int	insertion(t_list *list, int new_nbr)
-{
-	t_element	*new;
+	t_args	*new;
 
 	if (list == NULL)
 		return (-1);
 	new = malloc(sizeof(*new));
 	if (new == NULL)
 		return (-1);
-	new->nbr = new_nbr;
+	new->arg = new_arg;
 	new->next = list->first;
 	list->first = new;
 	return (0);
 }
 
-int	delete(t_list *list)
+int	delete(t_list_arg *list)
 {
-	t_element	*to_delete;
+	t_args	*to_delete;
 
 	if (list == NULL)
 		return (-1);
@@ -54,9 +42,9 @@ int	delete(t_list *list)
 	return (0);
 }
 
-int	free_list(t_list *list)
+int	free_list(t_list_arg *list)
 {
-	t_element	*to_delete;
+	t_args	*to_delete;
 
 	if (list == NULL)
 		return (-1);
@@ -68,4 +56,20 @@ int	free_list(t_list *list)
 	}
 	free(list);
 	return (0);
+}
+
+void	print_list(t_list_arg *list)
+{
+	t_args	*args;
+
+	args = list->first;
+	if (list == NULL)
+		return ;
+	printf("\nlist :\n");
+	while (args != NULL)
+	{
+		printf("\033[1;35m%s\n\033[0m", args->arg);
+		args = args->next;
+	}
+	printf("\n");
 }

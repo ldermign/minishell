@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/11 17:24:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/12 22:25:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,14 @@ void	print_env_ms(t_env_ms **stack);
 
 //		>>>>>>>>>   initialisations
 void	init_parsing(t_parsing *parsing);
-void	init_args(t_args *args);
+t_list_arg	*init_args(void);
 //		>>>>>>>>>   list
-int		insertion(t_args *args, char *new_arg);
-int		free_list(t_args *args);
+int		insertion(t_list_arg *list, char *new_arg);
+int		free_list(t_list_arg *list);
+int		delete(t_list_arg *list);
+void	print_list(t_list_arg *list);
 //		>>>>>>>>>	parsing
 int		parsing(char *line, t_struct *minish);
-
 
 /*
 **		AVANT
