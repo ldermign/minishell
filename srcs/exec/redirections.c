@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/11 15:59:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/12 19:44:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,11 +186,19 @@ int	echo_in_redir(t_struct *ms, char **args, char *name_file)
 		fd = open(name_file, O_WRONLY | O_CREAT, 0644);
 	write(fd, ms->parsing.result, ft_strlen(ms->parsing.result));
 	write(fd, "\n", 1);
+	close(fd);
 	return (EXIT_SUCCESS);
 }
 
 int	exec_redirection(t_struct *ms, char **args, char *name_file)
 {(void)ms;(void)args;(void)name_file;	// utiliser dup et dup2
+	int		fd;
+	char	*good_path;
+
+	fd = open(name_file, O_WRONLY, 0644);
+	dup2(fd, 1);
+	good_path = working_path(ms->env.path, args[0]);
+	execute_cmd(good_path, args, ms->env.env_bash);
 	return (EXIT_SUCCESS);
 }
 
@@ -215,9 +223,4 @@ int	get_redirections(t_struct *ms, char **args, int which)
 	// else
 	// 	return (redirection4(ms));
 	return (EXIT_SUCCESS);
-}
-
-void	test_redir_dup(t_struct *ms, char **args)
-{
-	
 }

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/10 20:01:22 by ejahan           ###   ########.fr       */
-=======
-/*   Updated: 2022/02/11 15:59:04 by ldermign         ###   ########.fr       */
->>>>>>> liena
+/*   Updated: 2022/02/12 19:46:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +59,8 @@ int		light_parse_export(char *prompt);
 int		light_parse_echo(char *str);
 char	*create_path(char *path, char *cmd);
 char	*get_good_variable(char *prompt, int size);
+char	*working_path(char **paths, char *name_fct);
+void	execute_cmd(char *path, char **args, char **env);
 
 /*
 **	UTILS LIST
@@ -76,12 +74,6 @@ void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
 int		check_if_variable_already_exist(t_env_ms **minishell, char *str);
 char	*get_variable(t_env_ms **minishell, char *str);
 int		size_env(t_env_ms **minishell);
-
-/*
-**	Test
-*/
-
-void	test_redir_dup(t_struct *ms, char **args);
 
 /*
 **	TEMPORAIRE

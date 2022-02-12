@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/11 15:58:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/12 19:42:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,10 +197,7 @@ void command(char *prompt, t_struct *ms)
 
 	i = 0;
 	// add_history(prompt);
-	test_redir_dup(args, ms);
-	ft_free_tab(args);
 	// print_env_ms(&(ms->env));
-	return ;
 	while (prompt[i] == ' ')
 		i++;
 	args = get_cmd_and_args_split(&prompt[i]);
