@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/13 22:12:57 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/14 00:29:51 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ typedef struct s_parsing
 	int		error;
 	int		red1;
 	int		red2;
+	int		option;
+	int		nb_pipe;
+	int		pipe_fd[2];
 	char	*result;
 	char	*file_redirection;
-	int		option;
-	int		pipe_fd[2];
+	char	**tab_args;
 }	t_parsing;
 
 typedef struct s_structure

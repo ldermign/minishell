@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/13 18:47:52 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/14 00:03:42 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	print_list(t_list_arg *list);
 //		>>>>>>>>>	parsing
 int		parsing(char *line, t_struct *minish);
 //		>>>>>>>>>	recup_args
+int		recup_pipe(char *line, t_struct *minishell);
 int		recup_args(char *line, t_struct *minishell);
 
 /*
