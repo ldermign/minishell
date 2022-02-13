@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/12 19:44:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/13 21:51:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,16 +158,17 @@ char	*create_all_files(char **args)
 
 	ret = get_name_file_redir(args, 0);
 	last = pos_last_redir(args);
-	if (how_many_redirec(args) != 1)
+	while (ret != -1)
 	{
-		while (ret != -1)
-		{
-			last = ret;
-			name_file = args[ret + 1];
-			fd = open(name_file, O_CREAT, 0644);
-			ret = get_name_file_redir(args, ret);
-			close(fd);
-		}
+		last = ret;
+		name_file = args[ret + 1];
+		fd = open(name_file, O_CREAT, 0644);
+		if (fd == -1)
+			perror("bash"); // arranger le message d'erreur
+		ret = get_name_file_redir(args, ret);
+		close(fd);
+		if (ret == last)
+			break ;
 	}
 	name_file = args[last + 1];
 	return (name_file);
@@ -181,30 +182,86 @@ int	echo_in_redir(t_struct *ms, char **args, char *name_file)
 	fd = 0;
 	last = pos_last_redir(args);
 	if (ft_pos_strstr(args[last], ">>") != -1)
-		fd = open(name_file, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		fd = open(name_file, O_WRONLY | O_APPEND, 0644);
 	else
-		fd = open(name_file, O_WRONLY | O_CREAT, 0644);
+		fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
 	write(fd, ms->parsing.result, ft_strlen(ms->parsing.result));
 	write(fd, "\n", 1);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
 
-int	exec_redirection(t_struct *ms, char **args, char *name_file)
-{(void)ms;(void)args;(void)name_file;	// utiliser dup et dup2
+static int	size(char **args)
+{
+	int	i;
+
+	i = 1;
+	while (args[i])
+	{
+		if (args[i][0] != '-')
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+char	**get_args_exec(char **args)
+{
+	int		i;
+	int		len;
+	char	**tabl;
+
+	i = 0;
+	len = size(args);
+	tabl = malloc(sizeof(char *) * len + 1);
+	if (tabl == NULL)
+		return (NULL);
+	while (i < len)
+	{
+		tabl[i] = args[i];
+		i++;
+	}
+	tabl[i] = NULL;
+	return (tabl);
+}
+
+int	exec_redirection_1_3(t_struct *ms, char **args, char *name_file)
+{
 	int		fd;
+	int		old_stdout;
+	int		redir;
+	char	**exec_args_only;
 	char	*good_path;
 
-	fd = open(name_file, O_WRONLY, 0644);
+	old_stdout = dup(1);
+	if (ft_pos_strstr(args[0], ">") != -1 || ft_pos_strstr(args[0], ">>") != -1)
+	{
+		if (ft_pos_strstr(args[0], ">") != -1)
+			fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
+		return (EXIT_SUCCESS);
+	}
+	redir = pos_last_redir(args);
+	if (ft_pos_strstr(args[redir], ">>") != -1)
+		fd = open(name_file, O_WRONLY | O_APPEND, 0644);
+	else
+		fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
+	printf("%d\n", fd);
 	dup2(fd, 1);
-	good_path = working_path(ms->env.path, args[0]);
-	execute_cmd(good_path, args, ms->env.env_bash);
+	exec_args_only = get_args_exec(args);
+	good_path = working_path(ms->env.path, exec_args_only[0]);
+	execute_cmd(good_path, exec_args_only, ms->env.env_bash);
+	close(fd);
+	dup2(old_stdout, 1);
 	return (EXIT_SUCCESS);
 }
 
+int	exec_redirection_2_4(t_struct *ms, char **args)
+{(void)ms;(void)args;
+	return(EXIT_SUCCESS);
+}
+
 int	get_redirections(t_struct *ms, char **args, int which)
-{ // to_print = ms->parsing.result
-(void)ms;(void)args;(void)which;
+{
 	char	*name_file;
 
 	if (which == 1 | which == 3)
@@ -213,14 +270,11 @@ int	get_redirections(t_struct *ms, char **args, int which)
 		if (ft_pos_strstr(args[0], "echo") != -1)
 			return (echo_in_redir(ms, args, name_file));
 		else
-			return (exec_redirection(ms, args, name_file));
-		// return (redirection1(ms, args));
+			return (exec_redirection_1_3(ms, args, name_file));
 	}
-	// else if (which == 2)
-	// 	return (redirection2(ms));
-	// if (which == 3)
-	// 	return (redirection3(ms, args));
-	// else
-	// 	return (redirection4(ms));
+	else if (which == 2 | which == 4)
+	{
+		return (exec_redirection_2_4(ms, args));
+	}
 	return (EXIT_SUCCESS);
 }

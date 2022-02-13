@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/12 19:37:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/13 21:28:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,14 @@ int	main(int ac, char **av, char **env)
 	if (recup_var_envs(env, &structure.env) == EXIT_FAILURE)
 		return (0);
 
-	command("ls > pouet", &structure);
+	// command("ls > pouet", &structure);
+	// printf("[ls > pouet OK]\n");
+	// command("cat pouet", &structure);
+	// printf("[cat pouet OK]\n");
+	// command("> pouet", &structure);
+	// printf("[> pouet OK]\n");
+	// command("cat pouet", &structure);
+	// printf("[cat pouet OK]\n");
 
 	// while (42)
 	// {
@@ -82,20 +89,20 @@ int	main(int ac, char **av, char **env)
 	// 	free(line);
 	// }
 	// char cmd[] = "echo \"test $PWD pouet\"";
-	// while (42)
-	// {
-	// // 	signal(SIGINT, line_break);
-	// // 	signal(SIGQUIT, quit_minishell); // ctrl+'\'
-	// // 	signal(0, test);
-	// 	line = readline("$ ");
-	// 	init_parsing(&structure.parsing);
-	// 	parse_line(line, &structure.parsing);
-	// 	if (line[0] != '\0' && structure.parsing.error != 1)
-	// 		command(line, &structure);
-	// 	if (structure.parsing.result != NULL)
-	// 		free(structure.parsing.result);
-	// 	free(line);
-	// }
+	while (42)
+	{
+	// 	signal(SIGINT, line_break);
+	// 	signal(SIGQUIT, quit_minishell); // ctrl+'\'
+	// 	signal(0, test);
+		line = readline("$ ");
+		init_parsing(&structure.parsing);
+		parse_line(line, &structure.parsing);
+		if (line[0] != '\0' && structure.parsing.error != 1)
+			command(line, &structure);
+		if (structure.parsing.result != NULL)
+			free(structure.parsing.result);
+		free(line);
+	}
 	// command(cmd, &structure);
 	return (0);
 }
