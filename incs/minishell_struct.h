@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/13 18:50:36 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/13 22:12:57 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_parsing
 typedef struct s_structure
 {
 	t_parsing		parsing;
+	t_parsing		*new_parsing;
 	t_env			env;
 	t_list_arg		*args;
 }	t_struct;
