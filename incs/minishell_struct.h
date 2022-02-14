@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/10 20:16:06 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/14 14:53:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_environnement
 	t_env_ms	*env_ms;
 }	t_env;
 
-typedef struct s_parsing
+typedef struct	s_parsing
 {
 	int		i_line;
 	int		error;
@@ -40,13 +40,13 @@ typedef struct s_parsing
 	int		pipe_fd[2];
 }	t_parsing;
 
-typedef struct s_structure
+typedef struct	s_structure
 {
 	t_parsing	parsing;
 	t_env		env;
 }	t_struct;
 
-typedef struct s_iterator
+typedef struct	s_iterator
 {
 	int	i;
 	int	j;
@@ -55,5 +55,20 @@ typedef struct s_iterator
 	int	ret;
 	int	len;
 }	t_it;
+
+typedef struct	s_redirection_std
+{
+	int	old_stdin;
+	int	new_stdin;
+	int	old_stdout;
+	int	new_stdout;
+	int	old_stderr;
+	int	new_stderr;
+	int	fd;
+	int	fd_last_file;
+	int	right;
+	int	left;
+	char	*name_file;
+}	t_red_std;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/13 21:51:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/14 15:06:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*last_redir(char **args)
 	return (last);
 }
 
-int	pos_last_redir(char **args)
+int	pos_last_redir_right(char **args)
 {
 	int	i;
 	int	last;
@@ -149,6 +149,27 @@ int	pos_last_redir(char **args)
 	return (last);
 }
 
+int	pos_last_redir_left(char **args)
+{
+	int	i;
+	int	last;
+
+	i = 0;
+	last = 0;
+	while (args[i])
+	{
+		if (args[i][0] == '<')
+		{
+			if (args[i][1] == '\0')
+				last = i;
+			else if (args[i][1] && args[i][1] == '<' && args[i][2] == '\0')
+				last = i;
+		}
+		i++;
+	}
+	return (last);
+}
+
 char	*create_all_files(char **args)
 {
 	int		fd;
@@ -157,7 +178,7 @@ char	*create_all_files(char **args)
 	char	*name_file;
 
 	ret = get_name_file_redir(args, 0);
-	last = pos_last_redir(args);
+	last = pos_last_redir_right(args);
 	while (ret != -1)
 	{
 		last = ret;
@@ -180,7 +201,7 @@ int	echo_in_redir(t_struct *ms, char **args, char *name_file)
 	int	last;
 
 	fd = 0;
-	last = pos_last_redir(args);
+	last = pos_last_redir_right(args);
 	if (ft_pos_strstr(args[last], ">>") != -1)
 		fd = open(name_file, O_WRONLY | O_APPEND, 0644);
 	else
@@ -229,7 +250,6 @@ int	exec_redirection_1_3(t_struct *ms, char **args, char *name_file)
 {
 	int		fd;
 	int		old_stdout;
-	int		redir;
 	char	**exec_args_only;
 	char	*good_path;
 
@@ -240,12 +260,10 @@ int	exec_redirection_1_3(t_struct *ms, char **args, char *name_file)
 			fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
 		return (EXIT_SUCCESS);
 	}
-	redir = pos_last_redir(args);
-	if (ft_pos_strstr(args[redir], ">>") != -1)
+	if (ft_pos_strstr(args[pos_last_redir_right(args)], ">>") != -1)
 		fd = open(name_file, O_WRONLY | O_APPEND, 0644);
 	else
 		fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
-	printf("%d\n", fd);
 	dup2(fd, 1);
 	exec_args_only = get_args_exec(args);
 	good_path = working_path(ms->env.path, exec_args_only[0]);
@@ -255,26 +273,126 @@ int	exec_redirection_1_3(t_struct *ms, char **args, char *name_file)
 	return (EXIT_SUCCESS);
 }
 
-int	exec_redirection_2_4(t_struct *ms, char **args)
-{(void)ms;(void)args;
+int	exec_redirection_2_4(t_struct *ms, char **args, t_red_std *std)
+{
+	char	**exec_args_only;
+	char	*good_path;
+
+	std->old_stdin = dup(0);
+	std->fd = open(args[pos_last_redir_left(args) + 1], O_RDONLY);
+	if (std->fd == -1)
+	{
+		perror("bash");
+		return (EXIT_FAILURE);
+	}
+	dup2(std->fd, 0);
+	exec_args_only = get_args_exec(args);
+	good_path = working_path(ms->env.path, exec_args_only[0]);
+	execute_cmd(good_path, exec_args_only, ms->env.env_bash);
+	close(std->fd);
+	dup2(std->old_stdin, 0);
 	return(EXIT_SUCCESS);
+}
+
+int	redir_right(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		if (ft_pos_strstr(args[i], ">") != -1
+			|| ft_pos_strstr(args[i], ">>") != -1)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	redir_left(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		if (ft_pos_strstr(args[i], "<") != -1
+			|| ft_pos_strstr(args[i], "<<") != -1)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	get_fd_redir_right(t_struct *ms, char **args, t_red_std *std)
+{
+	int		last_redir;
+	char	*file_redirection;
+
+	last_redir = pos_last_redir_right(args);
+	file_redirection = args[last_redir + 1];
+	if (ft_pos_strstr(args[0], ">") != -1 || ft_pos_strstr(args[0], ">>") != -1)
+	{
+		if (ft_pos_strstr(args[0], ">") != -1)
+			std->fd = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+		return ;
+	}
+	if (ft_pos_strstr(args[last_redir], ">>") != -1)
+		std->fd = open(std->name_file, O_WRONLY | O_APPEND, 0644);
+	else
+		std->fd = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+	dup2(std->fd, 1);
+}
+
+void	get_good_fd(t_struct *ms, char **args, char *name_file, t_red_std *std)
+{
+	char	**exec_args_only;
+	char	*good_path;
+
+	std->name_file = name_file;
+	if ((redir_right(args) != -1 && redir_left(args) == -1)
+		|| (redir_right(args) == -1 && redir_left(args) != -1))
+	{
+		if (redir_right(args) != -1)
+			get_fd_redir_right(ms, args, std);
+		else
+			get_fd_redir_left(ms, args, std);
+		exec_args_only = get_args_exec(args);
+		good_path = working_path(ms->env.path, exec_args_only[0]);
+		execute_cmd(good_path, exec_args_only, ms->env.env_bash);
+		close(std->fd);
+		dup2(std->old_stdout, 1);
+	}
+}
+
+void	init_struct_std(t_red_std *std)
+{
+	std->old_stdin = dup(0);
+	std->old_stdout = dup(1);
+	std->old_stdout = dup(2);
 }
 
 int	get_redirections(t_struct *ms, char **args, int which)
 {
-	char	*name_file;
+	char		*name_file;
+	t_red_std	std;
 
+	init_struct_std(&std);
+	if (which == 1 | which == 3)
+		name_file = create_all_files(args);
+	get_good_fd(ms, args, name_file, &std);
+	if (which == 2 | which == 4)
+	{
+		exec_redirection_2_4(ms, args, &std);
+	}
 	if (which == 1 | which == 3)
 	{
 		name_file = create_all_files(args);
 		if (ft_pos_strstr(args[0], "echo") != -1)
-			return (echo_in_redir(ms, args, name_file));
+			echo_in_redir(ms, args, name_file);
 		else
-			return (exec_redirection_1_3(ms, args, name_file));
+			exec_redirection_1_3(ms, args, name_file);
 	}
-	else if (which == 2 | which == 4)
-	{
-		return (exec_redirection_2_4(ms, args));
-	}
+
 	return (EXIT_SUCCESS);
 }
