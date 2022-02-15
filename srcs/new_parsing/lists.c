@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/13 22:04:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/16 00:04:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,25 @@ int	delete(t_list_arg *list)
 
 int	free_list(t_list_arg *list)
 {
+	int		i;
 	t_args	*to_delete;
 
 	if (list == NULL)
 		return (-1);
 	while (list->first != NULL)
 	{
+		i = 0;
+		if (list->first->tab_args[i])
+		{
+			while (list->first->tab_args[i] != NULL)
+			{
+				free(list->first->tab_args[i]);
+				i++;
+			}
+			free(list->first->tab_args);
+		}
+		if (list->first->arg != NULL)
+			free(list->first->arg);
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);

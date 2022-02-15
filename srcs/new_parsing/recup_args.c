@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 18:33:48 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/14 00:38:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/16 00:13:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,37 +55,81 @@ int	recup_pipe(char *line, t_struct *minishell)
 	return (0);
 }
 
-static int	count_args(char *line, t_struct *minishell)
+// static int	count_args(t_struct *minishell)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (minishell->args->first->arg[j] == ' ')
+// 		j++;
+	
+// 	return (i);
+// }
+
+// static int	fill_args(t_struct *minishell)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	return (0);
+// }
+
+// static int	check_args(t_struct *minishell)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	return (0);
+// }
+
+static int	sep_and_check_args(t_struct *minishell)
 {
 	int	i;
 
 	i = 0;
-	return (i);
-}
-
-static int	sep_args(char *line, t_struct *minishell)
-{
-	int	i;
-
-	i = count_args(line, minishell);
-	if (i == -1)
-		return (-1);
-	return (0);
-}
-
-int	recup_args(char *line, t_struct *minishell)
-{
-	if (recup_pipe(line, minishell) == -1)
-		return (-1);
-	minishell->pasing.tab_args = malloc(sizeof(char *) * minishell->parsing.nb_pipe + 1);
-	minishell->pasing.tab_args[minishell->parsing.nb_pipe] = NULL;
-	if (minishell->pasing.tab_args == NULL)
+	// i = count_args(minishell);
+	// if (i == -1)
+		// return (-1);
+	// minishell->args->tab_args = malloc(sizeof(char *) * i + 1);
+	minishell->args->first->tab_args = ft_split(minishell->args->first->arg, ' ');
+	if (minishell->args->first->tab_args == NULL)
 	{
 		printf("error malloc\n");
 		minishell->parsing.error = 1;
 		return (-1);
 	}
-	if (sep_args(line, minishell) == -1)
+	while (minishell->args->first->tab_args[i] != NULL)
+	{
+		printf("tab[%i] = [%s]\n", i, minishell->args->first->tab_args[i]);
+		i++;
+	}
+	// if (fill_args(minishell) == -1)
+	// 	return (-1);
+	// if (check_args(minishell) == -1)
+	// 	return (-1);
+	return (0);
+}
+
+int	recup_args(char *line, t_struct *minishell)
+{
+	t_args	*tmp;
+
+	if (recup_pipe(line, minishell) == -1)
 		return (-1);
+	tmp = minishell->args->first;
+	while (minishell->args->first != NULL)
+	{
+		printf("\n\n");
+		if (sep_and_check_args(minishell) == -1)
+		{
+			minishell->args->first = tmp;
+			printf("error\n");
+			return (-1);
+		}
+		minishell->args->first = minishell->args->first->next;
+	}
+	minishell->args->first = tmp;
 	return (0);
 }

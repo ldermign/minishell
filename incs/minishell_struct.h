@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/14 00:29:51 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/15 22:49:27 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_environnement
 
 typedef struct s_args
 {
+	char			**tab_args;
 	char			*arg;
 	struct s_args	*next;
 }	t_args;
@@ -50,7 +51,6 @@ typedef struct s_parsing
 	int		pipe_fd[2];
 	char	*result;
 	char	*file_redirection;
-	char	**tab_args;
 }	t_parsing;
 
 typedef struct s_structure
