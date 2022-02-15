@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
+#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/10 14:55:12 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/15 15:42:09 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/exec/redirections.c ./srcs/exec/built_in_pwd_cd_echo.c \
 			./srcs/exec/built_in_exit_unset_env.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
-			./srcs/utils/uts_list_var_env_ms.c \
+			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
 			./srcs/supprimer.c \
 			./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
 			./srcs/parsing/command/commands.c \

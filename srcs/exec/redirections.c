@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/14 15:06:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:52:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,24 +324,42 @@ int	redir_left(char **args)
 	return (-1);
 }
 
-void	get_fd_redir_right(t_struct *ms, char **args, t_red_std *std)
+void	get_fd_redir_right(char **args, t_red_std *std)
 {
 	int		last_redir;
 	char	*file_redirection;
 
 	last_redir = pos_last_redir_right(args);
 	file_redirection = args[last_redir + 1];
-	if (ft_pos_strstr(args[0], ">") != -1 || ft_pos_strstr(args[0], ">>") != -1)
-	{
-		if (ft_pos_strstr(args[0], ">") != -1)
-			std->fd = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
-		return ;
-	}
 	if (ft_pos_strstr(args[last_redir], ">>") != -1)
 		std->fd = open(std->name_file, O_WRONLY | O_APPEND, 0644);
 	else
 		std->fd = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
 	dup2(std->fd, 1);
+}
+
+int	get_fd_redir_left(char **args, t_red_std *std)
+{(void)std;
+	char	*line;
+	int		last_redir;
+	char	*file_redirection;
+
+	last_redir = pos_last_redir_right(args);
+	file_redirection = args[last_redir + 1];
+
+	// if (ft_pos_strstr(args[last_redir], ">>") != -1)
+	// 	std->fd = open(std->name_file, O_WRONLY | O_APPEND, 0644);
+	// else
+	// 	std->fd = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+	// dup2(std->fd, 1);
+	return (0);
+}
+
+void	chaipa(t_red_std *std)
+{
+	dup2(std->old_stdin, 0);
+	dup2(std->old_stdout, 1);
+	dup2(std->old_stderr, 2);
 }
 
 void	get_good_fd(t_struct *ms, char **args, char *name_file, t_red_std *std)
@@ -354,15 +372,26 @@ void	get_good_fd(t_struct *ms, char **args, char *name_file, t_red_std *std)
 		|| (redir_right(args) == -1 && redir_left(args) != -1))
 	{
 		if (redir_right(args) != -1)
-			get_fd_redir_right(ms, args, std);
+			get_fd_redir_right(args, std);
 		else
-			get_fd_redir_left(ms, args, std);
-		exec_args_only = get_args_exec(args);
-		good_path = working_path(ms->env.path, exec_args_only[0]);
-		execute_cmd(good_path, exec_args_only, ms->env.env_bash);
-		close(std->fd);
-		dup2(std->old_stdout, 1);
+			if (get_fd_redir_left(args, std) == -1)
+				return ;
+		// verifier si besoin de step avant
+		// exec_args_only = get_args_exec(args);
+		// good_path = working_path(ms->env.path, exec_args_only[0]);
+		// execute_cmd(good_path, exec_args_only, ms->env.env_bash);
+		// close(std->fd);
+		// dup2(std->old_stdout, 1);
 	}
+	// else
+	// {
+		
+	// }
+	exec_args_only = get_args_exec(args);
+	good_path = working_path(ms->env.path, exec_args_only[0]);
+	execute_cmd(good_path, exec_args_only, ms->env.env_bash);
+	close(std->fd);
+	chaipa(std);
 }
 
 void	init_struct_std(t_red_std *std)
@@ -372,27 +401,56 @@ void	init_struct_std(t_red_std *std)
 	std->old_stdout = dup(2);
 }
 
+int	first_arg_is_redir(t_struct *ms, char **args, t_red_std *std, int which)
+{
+	int		ret;
+	char	*line;
+
+	ret = 0;
+	if (args[2] != NULL)
+		ret = 1;
+	if (which == 1 || which == 3)
+	{
+		std->fd = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+		close(std->fd);
+		return (ret);
+	}
+	else if (which == 2)
+		return (ret);
+	else
+	{
+		line = readline("> ");
+		while (ft_strcmp(line, args[1]) != 0)
+			line = readline("> ");
+		return (ret);
+	}
+}
+
 int	get_redirections(t_struct *ms, char **args, int which)
 {
 	char		*name_file;
 	t_red_std	std;
 
+	name_file = NULL;
 	init_struct_std(&std);
-	if (which == 1 | which == 3)
-		name_file = create_all_files(args);
-	get_good_fd(ms, args, name_file, &std);
-	if (which == 2 | which == 4)
-	{
-		exec_redirection_2_4(ms, args, &std);
-	}
-	if (which == 1 | which == 3)
-	{
-		name_file = create_all_files(args);
-		if (ft_pos_strstr(args[0], "echo") != -1)
-			echo_in_redir(ms, args, name_file);
-		else
-			exec_redirection_1_3(ms, args, name_file);
-	}
+	if (redirection_first(args[0]) != -1)
+		if (first_arg_is_redir(ms, args, &std, which) == 0)
+			return (EXIT_SUCCESS);
+	if (which == 1 || which == 3)
+		name_file = create_all_files(args); // verifier qu'il existe bien,
+	get_good_fd(ms, args, name_file, &std);	// car parfois pas de fichier
+	// if (which == 2 || which == 4)		// mais juste une sortie
+	// {
+	// 	exec_redirection_2_4(ms, args, &std);
+	// }
+	// if (which == 1 || which == 3)
+	// {
+	// 	name_file = create_all_files(args);
+	// 	if (ft_pos_strstr(args[0], "echo") != -1)
+	// 		echo_in_redir(ms, args, name_file);
+	// 	else
+	// 		exec_redirection_1_3(ms, args, name_file);
+	// }
 
 	return (EXIT_SUCCESS);
 }

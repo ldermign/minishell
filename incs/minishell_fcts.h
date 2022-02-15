@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/12 19:46:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:42:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		get_redirections(t_struct *ms, char **args, int which);
 */
 
 int		redirection_in_file(char **cmd_args);
+int	redirection_first(char *args);
 
 /*
 **	UTILS
