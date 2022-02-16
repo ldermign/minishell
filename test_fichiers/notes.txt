@@ -1,19 +1,36 @@
 
-// ^\ envoie le signal de sortie (SIGQUIT), qui indique classiquement à l'application de quitter au plus vite sans rien sauvegarder ; de nombreuses applications ne remplacent pas le comportement par défaut, qui consiste à arrêter l'application immédiatement¹. Ainsi, lorsque vous appuyez sur Ctrl+ 4(ou tout ce qui envoie le caractère ^\) dans catou bc, aucun des deux ne remplace le comportement par défaut, l'application est tuée.
-// Le terminal lui-même imprime la ^\partie du message : c'est une représentation visuelle du caractère que vous avez tapé, et le terminal est en mode cuit et avec l'écho activé (les caractères sont affichés par le terminal dès que vous les tapez, par opposition à mode sans écho où les caractères ne sont envoyés qu'à l'application, qui choisit ou non de les afficher). La Quitpartie vient de bash : il remarque que son processus enfant est mort à cause d'un signal d'arrêt, et c'est sa façon de vous le faire savoir.
-// Les shells gèrent tous les signaux courants, de sorte que si vous tapez ^\ dans un shell, vous ne tuez pas votre session, vous obtenez simplement une nouvelle invite, identique à ^C.
+SIGNAUX : 
+// ^\ envoie le signal de sortie (SIGQUIT), qui indique classiquement à 
+l'application de quitter au plus vite sans rien sauvegarder ; de nombreuses 
+applications ne remplacent pas le comportement par défaut, qui consiste à 
+arrêter l'application immédiatement¹. Ainsi, lorsque vous appuyez sur 
+Ctrl+ 4(ou tout ce qui envoie le caractère ^\) dans catou bc, aucun des deux 
+ne remplace le comportement par défaut, l'application est tuée.
+
+// Le terminal lui-même imprime la ^\partie du message : c'est une 
+représentation visuelle du caractère que vous avez tapé, et le terminal est 
+en mode cuit et avec l'écho activé (les caractères sont affichés par le 
+terminal dès que vous les tapez, par opposition à mode sans écho où les 
+caractères ne sont envoyés qu'à l'application, qui choisit ou non de les 
+afficher). La Quitpartie vient de bash : il remarque que son processus 
+enfant est mort à cause d'un signal d'arrêt, et c'est sa façon de vous le 
+faire savoir.
+
+// Les shells gèrent tous les signaux courants, de sorte que si vous tapez 
+^\ dans un shell, vous ne tuez pas votre session, vous obtenez simplement 
+une nouvelle invite, identique à ^C.
 
 
-pipe
+PIPE :
 https://linuxhint-com.translate.goog/pipe_system_call_c/?_x_tr_sl=en&_x_tr_tl=fr&_x_tr_hl=fr&_x_tr_pto=op,sc
 
 
-redirections
+REDIRECTIONS :
 https://putaindecode.io/articles/maitriser-les-redirections-shell/
 https://www.pierre-giraud.com/shell-bash/redirection-gestion-flux/
 
 
-export
+EXPORT : 
 https://www.tutorialspoint.com/unix_commands/export.htm
 
 Scénario 1 : Il ne peut pas y avoir d'espaces à côté du =signe (égal)
@@ -26,4 +43,11 @@ https://stackoverflow-com.translate.goog/questions/18042369/bash-export-not-a-va
 
 int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
 char	*get_variable(t_env_ms **minishell, char *str)
+
+
+
+gerer double pipe?
+exemple : echo test || echo retest 
+=>  si "echo test" reussi alors fait pas "echo retest" sinon oui
+
 

@@ -6,13 +6,13 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 18:33:48 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/16 00:13:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/16 01:17:07 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	recup_pipe2(char *line, t_struct *minishell, int i)
+static int	recup_pipe2(char *line, t_struct *minish, int i)
 {
 	int		j;
 	char	*str;
@@ -21,7 +21,7 @@ static int	recup_pipe2(char *line, t_struct *minishell, int i)
 	if (str == NULL)
 	{
 		printf("error malloc\n");
-		minishell->parsing.error = 1;
+		minish->parsing.error = 1;
 		return (-2);
 	}
 	j = i;
@@ -29,46 +29,33 @@ static int	recup_pipe2(char *line, t_struct *minishell, int i)
 	i--;
 	while (i >= 0)
 	{
-		str[i] = line[minishell->parsing.i_line + i];
+		str[i] = line[minish->parsing.i_line + i];
 		i--;
 	}
-	minishell->parsing.i_line += j;
-	insertion(minishell->args, str);
-	minishell->parsing.i_line++;
+	minish->parsing.i_line += j;
+	insertion(minish->args, str);
+	minish->parsing.i_line++;
 	return (i);
 }
 
-int	recup_pipe(char *line, t_struct *minishell)
+int	recup_pipe(char *line, t_struct *minish)
 {
 	int		i;
 
-	while (line[minishell->parsing.i_line])
+	while (line[minish->parsing.i_line])
 	{
 		i = 0;
-		minishell->parsing.nb_pipe++;
-		while (line[minishell->parsing.i_line + i]
-			&& line[minishell->parsing.i_line + i] != '|')
+		minish->parsing.nb_pipe++;
+		while (line[minish->parsing.i_line + i]
+			&& line[minish->parsing.i_line + i] != '|')
 			i++;
-		if (recup_pipe2(line, minishell, i) == -2)
+		if (recup_pipe2(line, minish, i) == -2)
 			return (-1);
 	}
 	return (0);
 }
 
-// static int	count_args(t_struct *minishell)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (minishell->args->first->arg[j] == ' ')
-// 		j++;
-	
-// 	return (i);
-// }
-
-// static int	fill_args(t_struct *minishell)
+// static int	check_args(t_struct *minish)
 // {
 // 	int	i;
 
@@ -76,60 +63,58 @@ int	recup_pipe(char *line, t_struct *minishell)
 // 	return (0);
 // }
 
-// static int	check_args(t_struct *minishell)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	return (0);
-// }
-
-static int	sep_and_check_args(t_struct *minishell)
+static int	sep_and_check_args(t_struct *minish)
 {
 	int	i;
 
 	i = 0;
-	// i = count_args(minishell);
-	// if (i == -1)
-		// return (-1);
-	// minishell->args->tab_args = malloc(sizeof(char *) * i + 1);
-	minishell->args->first->tab_args = ft_split(minishell->args->first->arg, ' ');
-	if (minishell->args->first->tab_args == NULL)
+	minish->args->first->tab_args = ft_split(minish->args->first->arg, ' ');
+	if (minish->args->first->tab_args == NULL)
 	{
 		printf("error malloc\n");
-		minishell->parsing.error = 1;
+		minish->parsing.error = 1;
 		return (-1);
 	}
-	while (minishell->args->first->tab_args[i] != NULL)
+	while (minish->args->first->tab_args[i] != NULL)
 	{
-		printf("tab[%i] = [%s]\n", i, minishell->args->first->tab_args[i]);
+		// printf("tab[%i] = [%s]\n", i, minish->args->first->tab_args[i]);
 		i++;
 	}
-	// if (fill_args(minishell) == -1)
-	// 	return (-1);
-	// if (check_args(minishell) == -1)
+	// if (check_args(minish) == -1)
 	// 	return (-1);
 	return (0);
 }
 
-int	recup_args(char *line, t_struct *minishell)
+int	recup_args(char *line, t_struct *minish)
 {
 	t_args	*tmp;
+	int		i;
 
-	if (recup_pipe(line, minishell) == -1)
+	i = 0;
+	if (recup_pipe(line, minish) == -1)
 		return (-1);
-	tmp = minishell->args->first;
-	while (minishell->args->first != NULL)
+	tmp = minish->args->first;
+	while (minish->args->first != NULL)
 	{
 		printf("\n\n");
-		if (sep_and_check_args(minishell) == -1)
+		while (minish->args->first->arg[i] == ' ')
+			i++;
+		if (minish->args->first->arg[i] == '\0')
 		{
-			minishell->args->first = tmp;
+			printf("syntax error near unexpected token `|'\n\n");
+			minish->args->first = tmp;
+			minish->parsing.error = 1;
+			return (-1);
+		}
+		// printf("arg = [%s]\n", minish->args->first->arg);
+		if (sep_and_check_args(minish) == -1)
+		{
+			minish->args->first = tmp;
 			printf("error\n");
 			return (-1);
 		}
-		minishell->args->first = minishell->args->first->next;
+		minish->args->first = minish->args->first->next;
 	}
-	minishell->args->first = tmp;
+	minish->args->first = tmp;
 	return (0);
 }
