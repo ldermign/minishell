@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/13 18:49:15 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/16 02:09:11 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS} -g3 ${CFLAGS} -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} -g3 -fsanitize=address ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 

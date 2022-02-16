@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/15 22:49:27 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/16 02:41:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ typedef struct s_environnement
 typedef struct s_args
 {
 	char			**tab_args;
-	char			*arg;
+	char			**redir;
+	char			*whole_command;
+	char			**arg_to_pass;
 	struct s_args	*next;
 }	t_args;
 
