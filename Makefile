@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/15 15:42:09 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/16 14:22:21 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,11 @@ INCS	=	./incs/
 SRCS	=	./srcs/main.c \
 			./srcs/exec/built_in.c ./srcs/exec/get_env.c \
 			./srcs/exec/redirections.c ./srcs/exec/built_in_pwd_cd_echo.c \
-			./srcs/exec/built_in_exit_unset_env.c \
+			./srcs/exec/built_in_exit_unset_env.c ./srcs/exec/redir_recup_fd.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
+			./srcs/utils/uts_redir_2.c \
+			./srcs/init/init_struct_std.c \
 			./srcs/supprimer.c \
 			./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
 			./srcs/parsing/command/commands.c \

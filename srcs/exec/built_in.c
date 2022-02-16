@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/14 16:04:52 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:10:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 void command(char *prompt, t_struct *ms)
 {
 	int		i;
-	int		ret;
+	int		last;
 	char	*good_path;
 	char	**args;
 
@@ -195,10 +195,10 @@ void command(char *prompt, t_struct *ms)
 	args = get_cmd_and_args_split(&prompt[i]);
 	if (args == NULL)
 		return ;
-	ret = redirection_in_file(args);
-	if (ret != -1)
+	last = last_redir(args);
+	if (last != -1)
 	{
-		get_redirections(ms, args, ret);
+		get_redirections(ms, args, last);
 		ft_free_tab(args);
 		// print_env_ms(&(ms->env));
 		return ;
@@ -219,32 +219,3 @@ void command(char *prompt, t_struct *ms)
 	ft_free_tab(args);
 	// print_env_ms(&(env->env_ms));
 }
-
-
-// int	exec_redirection_1_3(t_struct *ms, char **args, char *name_file)
-// {
-// 	int		fd;
-// 	int		old_stdout;
-// 	char	**exec_args_only;
-// 	char	*good_path;
-
-// 	old_stdout = dup(1);
-// 	if (ft_pos_strstr(args[0], ">") != -1 || ft_pos_strstr(args[0], ">>") != -1)
-// 	{
-// 		if (ft_pos_strstr(args[0], ">") != -1)
-// 			fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
-// 		return (EXIT_SUCCESS);
-// 	}
-// 	if (ft_pos_strstr(args[pos_last_redir_right(args)], ">>") != -1)
-// 		fd = open(name_file, O_WRONLY | O_APPEND, 0644);
-// 	else
-// 		fd = open(name_file, O_WRONLY | O_TRUNC, 0644);
-// 	dup2(fd, 1);
-
-// 	exec_args_only = get_args_exec(args);
-// 	good_path = working_path(ms->env.path, exec_args_only[0]);
-// 	execute_cmd(good_path, exec_args_only, ms->env.env_bash);
-// 	close(fd);
-// 	dup2(old_stdout, 1);
-// 	return (EXIT_SUCCESS);
-// }

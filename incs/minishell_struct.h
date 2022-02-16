@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/14 14:53:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:38:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,16 @@ typedef struct	s_redirection_std
 	int	new_stdout;
 	int	old_stderr;
 	int	new_stderr;
-	int	fd;
-	int	fd_last_file;
+	int	fd_to_read;
+	int	fd_to_write;
+	int	last_right;
+	int	last_left;
+	int	which;
 	int	right;
+	int	dbl_r;
 	int	left;
+	int	dbl_l;
+	int	both;
 	char	*name_file;
 }	t_red_std;
 

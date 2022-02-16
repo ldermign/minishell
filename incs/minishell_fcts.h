@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/15 15:42:27 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:42:58 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,18 @@ int		built_in_echo(t_struct *ms, char *prompt);
 */
 
 int		get_redirections(t_struct *ms, char **args, int which);
+int	get_good_fd(char **args, char *name_file, t_red_std *std, int ret);
 
 /*
 **	UTILS REDIRECTIONS
 */
 
-int		redirection_in_file(char **cmd_args);
 int	redirection_first(char *args);
+int	only_right(char **args);
+int	is_redir(char **args, char *str);
+int	last_redir(char **args);
+int	pos_last_redir_left(char **args);
+int	pos_last_redir_right(char **args);
 
 /*
 **	UTILS
@@ -75,6 +80,13 @@ void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
 int		check_if_variable_already_exist(t_env_ms **minishell, char *str);
 char	*get_variable(t_env_ms **minishell, char *str);
 int		size_env(t_env_ms **minishell);
+
+/*
+**	INIT
+*/
+
+void	init_struct_std(char **args, t_red_std *std, int which);
+void	reboot_struct_std(t_red_std *std);
 
 /*
 **	TEMPORAIRE
