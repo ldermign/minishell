@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/16 05:45:19 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/16 07:00:11 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils/uts_list_var_env_ms.c \
 			./srcs/supprimer.c \
 			./srcs/new_parsing/parsing.c ./srcs/new_parsing/initialisations.c\
-			./srcs/new_parsing/lists.c ./srcs/new_parsing/recup_args.c \
-			./srcs/new_parsing/arguments.c \
+			./srcs/new_parsing/lists.c ./srcs/new_parsing/sep_args.c \
+			./srcs/new_parsing/arguments.c ./srcs/new_parsing/recup_pipe.c \
 			# ./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
 			# ./srcs/parsing/command/commands.c \
 			# ./srcs/parsing/command/fill_echo.c ./srcs/parsing/command/echo.c \
