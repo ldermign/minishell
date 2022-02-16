@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/16 02:44:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/16 05:46:27 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	insertion(t_list_arg *list, char *new_arg)
 	new = malloc(sizeof(*new));
 	if (new == NULL)
 		return (-1);
-	new->whole_command = new_arg;
+	new->command = new_arg;
 	new->next = list->first;
 	list->first = new;
 	return (0);
@@ -61,8 +61,8 @@ int	free_list(t_list_arg *list)
 			}
 			free(list->first->tab_args);
 		}
-		if (list->first->whole_command != NULL)
-			free(list->first->whole_command);
+		if (list->first->command != NULL)
+			free(list->first->command);
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);
@@ -81,7 +81,7 @@ void	print_list(t_list_arg *list)
 	printf("\nlist :\n");
 	while (args != NULL)
 	{
-		printf("\033[1;35m%s\n\033[0m", args->whole_command);
+		printf("\033[1;35m%s\n\033[0m", args->command);
 		args = args->next;
 	}
 	printf("\n");
