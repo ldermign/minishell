@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 01:32:36 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/17 10:09:56 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		recup_args(char *line, t_struct *minishell);
 int		interpret_args(t_struct *minish);
 // 		>>>>>>>>>	sep_args
 int		sep_and_check_args(t_args *arg, t_struct *minish);
-int		pass_quotes(t_args *arg, t_struct *minish, int i);
+int		pass_quotes(char *line);
 
 /*
 **		AVANT

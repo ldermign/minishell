@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/17 04:52:48 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/17 11:28:21 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,29 +121,5 @@ int	recup_pipe(char *line, t_struct *minish)
 		if (minish->parsing.error == 1)
 			return (-1);
 	}
-	return (0);
-}
-
-int	recup_args(char *line, t_struct *minish)
-{
-	t_args	*tmp;
-
-	if (recup_pipe(line, minish) == -1)
-		return (-1);
-	tmp = minish->args->first;
-	while (minish->args->first != NULL)
-	{
-		printf("\n\n");
-		printf("arg = [%s]\n", minish->args->first->command);
-		minish->parsing.nb_arg = 0;
-		if (sep_and_check_args(minish->args->first, minish) == -1)
-		{
-			minish->args->first = tmp;
-			printf("error\n");
-			return (-1);
-		}
-		minish->args->first = minish->args->first->next;
-	}
-	minish->args->first = tmp;
 	return (0);
 }
