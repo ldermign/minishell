@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/16 15:42:58 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:29:03 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		built_in_pwd(void);
 void	built_in_exit(t_env *env, char **cmd_args, char *prompt);
 int		built_in_unset(t_env *env, char **args);
 int		built_in_env(t_env_ms *stack);
-int		built_in_echo(t_struct *ms, char *prompt);
+int		built_in_echo(t_struct *ms, char **args, char *prompt);
 
 /*
 **	REDIRECTIONS

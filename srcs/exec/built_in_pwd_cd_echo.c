@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/08 14:08:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:59:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	built_in_cd(t_env *env, char **cmd_args)
 		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
 	path_to_go = ft_alloc_strcat("./", cmd_args[1]);
 	if (chdir(path_to_go) == -1)
+	{
+		sig_error = errno;
 		perror("cd");
+	}
 	free(path_to_go);
 	path_to_go = ft_alloc_strcat("PWD=", getcwd(actual_path, sizeof(actual_path)));
 	env->abs = actual_path;
@@ -54,11 +57,14 @@ int	built_in_pwd()
 	if (getcwd(actual_path, sizeof(actual_path)) != NULL)
 		printf("%s\n", actual_path);
 	else
+	{
+		sig_error = errno;
 		perror("getcwd");
+	}
 	return (1);
 }
 
-int	built_in_echo(t_struct *ms, char *prompt)
+int	built_in_echo(t_struct *ms, char **args, char *prompt)
 {
 	int		i;
 	int		len;
@@ -66,6 +72,11 @@ int	built_in_echo(t_struct *ms, char *prompt)
 
 	i = 0;
 	line_break = light_parse_echo(prompt);
+	if (ft_pos_strstr(args[1], "$?") != -1)
+	{
+		printf("%d\n", sig_error);
+		return (EXIT_SUCCESS);
+	}
 	if (line_break != -1)
 		i = line_break;
 	else

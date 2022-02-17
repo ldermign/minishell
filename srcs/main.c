@@ -6,13 +6,15 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/13 21:28:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:10:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	quit_minishell(int sig)
+int	sig_error = 0;
+
+void	signal_quit_minishell(int sig)
 {
 	// free les structures 
 	if (sig == SIGQUIT)
@@ -22,15 +24,16 @@ void	quit_minishell(int sig)
 	}
 }
 
-void	line_break(int sig)
+void	signal_line_break(int sig)
 {
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		// rl_replace_line("\n", 0);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		sig_error = 130;
 	}
-	// printf("la \n");
-	return ;
 }
 
 void	test(int sig)
@@ -64,36 +67,11 @@ int	main(int ac, char **av, char **env)
 	}
 	if (recup_var_envs(env, &structure.env) == EXIT_FAILURE)
 		return (0);
-
-	// command("ls > pouet", &structure);
-	// printf("[ls > pouet OK]\n");
-	// command("cat pouet", &structure);
-	// printf("[cat pouet OK]\n");
-	// command("> pouet", &structure);
-	// printf("[> pouet OK]\n");
-	// command("cat pouet", &structure);
-	// printf("[cat pouet OK]\n");
-
-	// while (42)
-	// {
-	// 	// signal(SIGINT, line_break);
-	// 	// signal(SIGQUIT, quit_minishell); // ctrl+'\'
-	// 	// signal(0, test);
-	// 	line = readline("$ ");
-	// 	init_parsing(&structure.parsing);
-	// 	parse_line(line, &structure.parsing);
-	// 	if (line[0] != '\0' && structure.parsing.error != 1)
-	// 		command(line, &structure);
-	// 	if (structure.parsing.result != NULL)
-	// 		free(structure.parsing.result);
-	// 	free(line);
-	// }
-	// char cmd[] = "echo \"test $PWD pouet\"";
 	while (42)
 	{
-	// 	signal(SIGINT, line_break);
-	// 	signal(SIGQUIT, quit_minishell); // ctrl+'\'
-	// 	signal(0, test);
+		signal(SIGINT, signal_line_break);
+		// signal(SIGQUIT, signal_quit_minishell);
+		// signal(0, test);
 		line = readline("$ ");
 		init_parsing(&structure.parsing);
 		parse_line(line, &structure.parsing);
@@ -103,6 +81,5 @@ int	main(int ac, char **av, char **env)
 			free(structure.parsing.result);
 		free(line);
 	}
-	// command(cmd, &structure);
 	return (0);
 }

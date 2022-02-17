@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/16 14:22:21 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/17 14:19:42 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS} -g3 ${CFLAGS} -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} -g3  ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 

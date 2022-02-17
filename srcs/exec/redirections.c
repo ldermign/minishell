@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/16 16:04:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:13:59 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ char	*create_all_files(char **args)
 		name_file = args[ret + 1];
 		fd = open(name_file, O_CREAT, 0644);
 		if (fd == -1)
-			perror("bash"); // arranger le message d'erreur
+		{
+			sig_error = errno;
+			perror("minishell"); // arranger le message d'erreur
+		}
 		ret = get_name_file_redir(args, ret);
 		close(fd);
 		if (ret == last)
@@ -117,10 +120,7 @@ int	first_arg_is_redir(char **args, t_red_std *std, int which)
 	{
 		line = readline("> ");
 		while (ft_strcmp(line, args[std->last_left + 1]) != 0)
-		{
-			printf("%d\n", ft_strcmp(line, args[1]));
 			line = readline("> ");
-		}
 	}
 	return (ret);
 }
@@ -147,11 +147,12 @@ int	get_redirections(t_struct *ms, char **args, int which)
 	if (redirection_first(args[0]) != -1)
 		if (first_arg_is_redir(args, &std, which) == 0)
 			return (EXIT_SUCCESS);
-	if (std.both == 0 && (which == 1 || which == 3))
+	if (which == 1 || which == 3)
 		name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
 	if (get_good_fd(args, name_file, &std, ft_pos_strstr(args[0], "echo")) == EXIT_FAILURE)
 	{
-		perror("bash");
+		sig_error = errno;
+		perror("minishell");
 		return (EXIT_FAILURE);
 	}
 	if (std.both == 0 && (which == 1 || which == 3))

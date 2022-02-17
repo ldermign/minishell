@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/16 13:10:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:09:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	execute_cmd(char *path, char **args, char **env)
 	status = 0;
 	pid = fork();
 	if (pid == -1)
+	{
+		sig_error = errno;
 		perror("Fork"); // voir le cas d'erreur
+	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
@@ -49,7 +52,10 @@ void	execute_cmd(char *path, char **args, char **env)
 	else
 	{
 		if (execve(path, args, env) == -1)
+		{
 			perror(args[0]); // voir le cas d'erreur
+			sig_error = errno;
+		}
 		exit(EXIT_FAILURE);
 	}
 }
@@ -174,7 +180,7 @@ int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 	else if (ft_pos_strstr(cmd_args[0], "unset") != -1)
 		return (built_in_unset(&(ms->env), cmd_args));
 	else if (ft_pos_strstr(cmd_args[0], "echo") != -1)
-		return (built_in_echo(ms, prompt));
+		return (built_in_echo(ms, cmd_args, prompt));
 	else if (ft_pos_strstr(cmd_args[0], "exit") != -1)
 		built_in_exit(&(ms->env), cmd_args, prompt);
 	return (-1);
