@@ -6,143 +6,164 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/17 01:49:04 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/17 08:46:23 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pass_quotes(t_args *arg, t_struct *minish, int i)
+int	pass_quotes(char *line, t_struct *minish)
 {
 	int	j;
+	int	i;
 
-	j = i;
-	i++;
-	if (arg->command[i] == arg->command[j])
+	j = 0;
+	i = 1;
+	if (line[i] == line[j])
 		return (i + 1);
-	while (arg->command[i] && arg->command[i] != arg->command[j])
+	while (line[i] && line[i] != line[j])
 		i++;
-	if (arg->command[i] == '\0')
-	{
-		printf("error : open quotes\n");
-		minish->parsing.error = 1;
-		return (-1);
-	}
-	// i++;
+	i++;
 	return (i);
 }
 
-// int	count_args(t_args *arg, t_struct *minish)
-// {
-// 	int	i;
-// 	int	j;	//	nombre d arguments
+int	pass_redir(char *line, t_struct *minish)
+{
+	int	i;
 
-// 	i = 0;
-// 	j = 0;
-// 	while (arg->command[i])
-// 	{
-// 		while (arg->command[i] == ' ')
-// 			i++;
-// 		if (arg->command[i] == '>' || arg->command[i] == '<')
-// 		{
-// 			while (arg->command[i] && arg->command[i] != ' ')
-// 				i++;
-// 		}
-// 		while (arg->command[i] && arg->command[i] != ' ')
-// 		{
-// 			if (arg->command[i] == 39 || arg->command[i] == 34)
-// 			{
-// 				// flemmeeeeee
-// 			}
-// 			i++;
-// 	}
-// }
+	i = 1;
+	if (line[i] == line[0])
+		i++;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
+	{
+		if (line[i] == '\0')
+			printf("syntax error near unexpected token `newline'\n");
+		else
+			printf("syntax error near unexpected token `%c'\n", line[i]);
+		minish->parsing.error = 1;
+		return (-1);	
+	}
+	while (line[i] && line[i] != ' ')
+		i++;
+	return (i);
+}
 
-// int	count_args(t_args *arg, t_struct *minish)
-// {
-// 	int	i;
-// 	int	j;
+int	pass_variable(char *line, t_struct *minish)
+{
+	int	i;
 
-// 	i = 0;
-// 	j = 0;
-// 	while (arg->command[i])
-// 	{
-// 		while (arg->command[i] == ' ')
-// 			i++;
-// 		if (arg->command[i] == '\0')
-// 			return (j);
-// 		if ((arg->command[i] == 39) || (arg->command[i] == 34))
-// 			i += pass_quotes(arg, minish, i);
-// 		if (i == -1)
-// 			return (-1);
-// 		else
-// 		{
-// 			while (arg->command[i] && arg->command[i] != ' ')
-// 			{
-// 				while (arg->command[i] && arg->command[i] != ' '
-// 					&& arg->command[i] != 39 && arg->command[i] != 34)
-// 					i++;
-// 				if (arg->command[i] == 39 || arg->command[i] == 34)
-// 					i += pass_quotes(arg, minish, i);
-// 				if (i == -1)
-// 					return (-1);
-// 			}
-// 		}
-// 		j++;
-// 	}
-// 	return (j);
-// }
+	i = 1;
+	while (line[i] && line[i] != 39 || line[i] != 34
+		|| line[i] != '<' || line[i] != '>' || line[)
+		i++;
+	return (i - 1);
+}
 
-// int	len_arg(char *str)
-// {
-// 	int	i;
-// 	int	j;
+int	is_variable_char(char c)
+{
+	if (c == ' ' || c = 34 || c == 39 || c == '|' || c == '$' || c == '\0')
+		return (1);
+	return (0);
+}
 
-// 	i = 0;
-// 	j = 0;
-// 	return (j);
-// }
+int	is_empty(char *line, t_struct *minish)
+{
+	int		i;
+	char	*str;
+	char	*tmp;
 
-// int	fill_arg(t_args *arg, t_struct *minish, int i)
-// {
-// 	int	i;
-// 	int	j;
+	i = 0;
+	if (line[i] == '$' && line[i + 1] == '{')
+	{
+		i += 2;
+		while (is_variable_char(line[i]) == 0 && c != '}')
+			i++;
+		if (is_variable_char(line[i] == 1))
+		{
+			printf("${%c}: bad substitution\n", line[i]);
+			parsing->error = 1;
+			return (-1);
+		}
+		str = malloc(sizeof(char) * i - 1);
+		if (str == NULL)
+		{
+			printf("error malloc\n");
+			minish->parsing.error = 1;
+			return (-1);
+		}
+		str[i - 1] = '\0';
+		while (i > 1)
+		{
+			str[i - 2] = line[i]
+			i--;
+		}
+	}
+	else if ()
+}
 
-// 	i = 0;
-// 	j = 0;
-// 	return (i);
-// }
+int	pass_arg_count(char *line, t_struct *minish)
+{
+	int	i;
+	int	j;
 
-// int	interpret_args(t_args *arg, t_struct *minish)
-// {
-// 	int	i;
-// 	int	j;
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '<' || line[i] == '>')
+		return (pass_redir(line, minish));
+	else if (line[i] == '\0')
+		return (i);
+	else if (line[i] == 39 || line[i] == 34 || line[i] == '$')
+	{
+		j = is_empty(&line[i], minish);
+		if (j == 0)
+			while (line[i] && line[i] != ' ')
+				i++;
+		return (i);
+	}			
+	minish->parsing.nb_arg++;
+	while (line[i])
+	{
+		while (line[i] && line[i] != 39 && line[i] != 34
+			&& line[i] != ' ' && line[i] != '$')
+			i++;
+		if (line[i] == 39 || line[i] == 34)
+			i += pass_quotes(&line[i], minish);
+		else if (line[i] == '$')
+			i += pass_variable(&line[i], minish);
+		else if (line[i] == '\0' || line[i] == ' ')
+			return (i);
+		if (minish->parsing.error == 1)
+			return (-1);
+		i++;
+	}
+	return (i);
+}
 
-// 	i = 0;
-// 	j = 0;
-// 	while (arg->command[i])
-// 	{
-// 		arg->arg_to_pass[j] = malloc(sizeof(char) * len_arg(&arg->command[i] + 1));
-// 		if (arg->arg_to_pass[j] == NULL)
-// 		{
-// 			printf("error malloc\n");
-// 			minish->parsing.error = 1;
-// 			return (-1);
-// 		}
-// 		i += fill_arg(arg, minish, i);
-// 		j++;
-// 	}
-// }
+int	count_args(char *line, t_struct *minish)
+{
+	int	i;
+	int	j;	//	nombre d arguments
+
+	i = 0;
+	j = 0;
+	while (line[i])
+	{
+		i += pass_arg_count(&line[i], minish);
+		if (minish->parsing.error == 1)
+			return (-1);
+	}
+}
 
 int	sep_and_check_args(t_args *arg, t_struct *minish)
 {
 	int	i;
 
 	i = 0;
-	(void)arg;
-	(void)minish;
-	// i = count_args(arg, minish);
-	// printf("i = %d\n", i);
+	count_args(arg->command, minish);
+	printf("i = %d\n", minish->parsing.nb_arg);
 	// arg->arg_to_pass = malloc(sizeof(char *) * i + 1);
 	// if (arg->arg_to_pass == NULL)
 	// {

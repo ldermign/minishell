@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/17 02:11:10 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/17 04:52:48 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ int	check_pipe(char *line, t_struct *minish)
 	int	i;
 
 	i = 1;
-	while (line[i] == ' ')
-		i++;
-	if (line[i] == '|')
+	if (line[0] == '|')
 	{
-		printf("syntax error near unexpected token `|'\n");
-		minish->parsing.error = 1;
-		return (-1);
+		while (line[i] == ' ')
+			i++;
+		if (line[i] == '|' || line[i] == '\0')
+		{
+			printf("syntax error near unexpected token `|'\n");
+			minish->parsing.error = 1;
+			return (-1);
+		}
 	}
 	return (1);
 }
@@ -132,6 +135,7 @@ int	recup_args(char *line, t_struct *minish)
 	{
 		printf("\n\n");
 		printf("arg = [%s]\n", minish->args->first->command);
+		minish->parsing.nb_arg = 0;
 		if (sep_and_check_args(minish->args->first, minish) == -1)
 		{
 			minish->args->first = tmp;
