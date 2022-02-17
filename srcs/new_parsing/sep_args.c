@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/16 08:26:37 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/17 01:49:04 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,35 @@ int	pass_quotes(t_args *arg, t_struct *minish, int i)
 		minish->parsing.error = 1;
 		return (-1);
 	}
-	i++;
+	// i++;
 	return (i);
 }
 
-int	count_args(t_args *arg, t_struct *minish)
-{
-	int	i;
-	int	j;	//	nombre d arguments
+// int	count_args(t_args *arg, t_struct *minish)
+// {
+// 	int	i;
+// 	int	j;	//	nombre d arguments
 
-	i = 0;
-	j = 0;
-	while (arg->command[i])
-	{
-		while (arg->command[i] == ' ')
-			i++;
-		if (arg->command[i] == '>' || arg->command[i] == '<')
-		{
-			while (arg->command[i] && arg->command[i] != ' ')
-				i++;
-		}
-		while (arg->command[i] && arg->command[i] != ' ')
-		{
-			if (arg->command[i] == 39 || arg->command[i] == 34)
-			{
-				// flemmeeeeee
-			}
-			i++;
-	}
-}
+// 	i = 0;
+// 	j = 0;
+// 	while (arg->command[i])
+// 	{
+// 		while (arg->command[i] == ' ')
+// 			i++;
+// 		if (arg->command[i] == '>' || arg->command[i] == '<')
+// 		{
+// 			while (arg->command[i] && arg->command[i] != ' ')
+// 				i++;
+// 		}
+// 		while (arg->command[i] && arg->command[i] != ' ')
+// 		{
+// 			if (arg->command[i] == 39 || arg->command[i] == 34)
+// 			{
+// 				// flemmeeeeee
+// 			}
+// 			i++;
+// 	}
+// }
 
 // int	count_args(t_args *arg, t_struct *minish)
 // {
@@ -139,8 +139,10 @@ int	sep_and_check_args(t_args *arg, t_struct *minish)
 	int	i;
 
 	i = 0;
-	i = count_args(arg, minish);
-	printf("i = %d\n", i);
+	(void)arg;
+	(void)minish;
+	// i = count_args(arg, minish);
+	// printf("i = %d\n", i);
 	// arg->arg_to_pass = malloc(sizeof(char *) * i + 1);
 	// if (arg->arg_to_pass == NULL)
 	// {
