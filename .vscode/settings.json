@@ -14,6 +14,7 @@
 		"new": "c",
 		"*.tcc": "c",
 		"cstdint": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"minishell.h": "c"
 	}
 }

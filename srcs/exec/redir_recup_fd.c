@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:26:27 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 10:40:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/18 17:57:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,16 @@ int	get_good_fd(char **args, char *name_file, t_red_std *std, int ret)
 			std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
 		if (ret == -1 && (std->which == 1 || std->which == 3))
 			dup2(std->fd_to_write, 1);
-		if (std->which == 2 || std->which == 4)
+		if (std->which == 2)
 		{
 			std->fd_to_read = open(args[std->last_left + 1], O_RDONLY);
 			dup2(std->fd_to_read, 0);
 		}
+		// else if (std->which == 4)
+		// {
+		// 	std->fd_to_read = 1;
+		// 	dup2(std->fd_to_read, 0);
+		// }
 
 	}
 	else if (std->both == 1)	//	si les chevrons sont melanges

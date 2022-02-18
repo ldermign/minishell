@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 15:09:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/18 18:38:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execute_cmd(char *path, char **args, char **env)
 	pid = fork();
 	if (pid == -1)
 	{
-		sig_error = errno;
+		sig_error = 127;
 		perror("Fork"); // voir le cas d'erreur
 	}
 	else if (pid > 0)
@@ -54,7 +54,7 @@ void	execute_cmd(char *path, char **args, char **env)
 		if (execve(path, args, env) == -1)
 		{
 			perror(args[0]); // voir le cas d'erreur
-			sig_error = errno;
+			sig_error = 127;
 		}
 		exit(EXIT_FAILURE);
 	}
