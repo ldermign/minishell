@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/18 05:54:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 06:45:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	pass_arg2(char *line, t_struct *minish, int i)
 {
 	while (line[i])
 	{
-		printf("test = [%s]\n", &line[i]);
+		// printf("test = [%s]\n", &line[i]);
 		while (line[i] && line[i] != 39 && line[i] != 34
 			&& line[i] != ' ' && line[i] != '$')
 			i++;

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 06:04:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 06:39:56 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ int		pass_quotes(char *line);
 int		error_malloc(t_struct *minish);
 // 		>>>>>>>>>	empty_args
 int		is_empty(char *line, t_struct *minish);
+// 		>>>>>>>>>	len_arg
+int		len_arg(char *line);
 
 
 
