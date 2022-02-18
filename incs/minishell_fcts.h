@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 10:09:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 06:04:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,19 @@ int		interpret_args(t_struct *minish);
 // 		>>>>>>>>>	sep_args
 int		sep_and_check_args(t_args *arg, t_struct *minish);
 int		pass_quotes(char *line);
+// 		>>>>>>>>>	count_arg
+int		pass_arg_count(char *line, t_struct *minish);
+// 		>>>>>>>>>	utils
+int		is_variable_char(char c);
+int		pass_variable(char *line);
+int		pass_redir(char *line, t_struct *minish);
+int		pass_quotes(char *line);
+int		error_malloc(t_struct *minish);
+// 		>>>>>>>>>	empty_args
+int		is_empty(char *line, t_struct *minish);
+
+
+
 
 /*
 **		AVANT

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/18 05:01:37 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 06:03:51 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,7 @@ static int	recup_pipe2(char *line, t_struct *minish, int i)
 		return (-1);
 	str = malloc(sizeof(char) * i + 1);
 	if (str == NULL)
-	{
-		printf("error malloc\n");
-		minish->parsing.error = 1;
-		return (-2);
-	}
+		return (error_malloc(minish) - 1);
 	j = i;
 	str[i] = '\0';
 	i--;
