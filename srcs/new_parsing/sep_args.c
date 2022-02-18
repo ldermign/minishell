@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/18 06:44:13 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 22:58:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	fill_arg(char *line, char *str, t_struct *minish)
 	int	j;
 
 	i = 0;
-	j = len_arg(line);
+	j = len_arg(line, minish);
+	(void)str;
 	// str = malloc(sizeof(char) * j + 1);
 	// if (str == NULL)
 	// 	return (error_malloc(minish));
