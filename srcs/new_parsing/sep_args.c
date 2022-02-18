@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/18 02:02:26 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 05:10:54 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	pass_quotes(char *line)
 		return (i + 1);
 	while (line[i] && line[i] != line[j])
 		i++;
-	i++;
+	// i++;
 	return (i);
 }
 
@@ -56,7 +56,7 @@ int	pass_variable(char *line)
 
 	i = 1;
 	while (line[i] && line[i] != 39 && line[i] != 34
-		&& line[i] != '<' && line[i] != '>')
+		&& line[i] != '<' && line[i] != '>' && line[i] != ' ')
 		i++;
 	return (i - 1);
 }
@@ -69,55 +69,23 @@ int	is_variable_char(char c)
 	return (0);
 }
 
-int	is_empty(char *line, t_struct *minish)
+int	is_empty_brace(char *line, t_struct *minish)
 {
 	int		i;
-	int		j;
-	char	*str;
 	char	*tmp;
+	char	*str;
 
-	i = 0;
-	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
-		return (1);
-	if (line[i] == '$' && line[i + 1] == '{')
-	{
-		i += 2;
-		while (is_variable_char(line[i]) == 0)
-			i++;
-		if (is_variable_char(line[i]) == 1)
-		{
-			printf("${%c}: bad substitution\n", line[i]);
-			minish->parsing.error = 1;
-			return (-1);
-		}
-		if (line[i] == '}' && line[i + 1] == ' ')
-		{
-			str = malloc(sizeof(char) * i - 1);
-			if (str == NULL)
-			{
-				printf("error malloc\n");
-				minish->parsing.error = 1;
-				return (-1);
-			}
-			str[i - 2] = '\0';
-			i--;
-			while (i > 1)
-			{
-				str[i - 2] = line[i];
-				i--;
-			}
-			tmp = get_variable(&minish->env.env_ms, str);
-			if (tmp == NULL)
-				return (0);
-			// free(tmp);
-		}
-		return (1);
-	}
-	else if (line[i] == '$' && line[i] != '{')
-	{
+	i = 2;
+	while (is_variable_char(line[i]) == 0)
 		i++;
-		while (is_variable_char(line[i]) == 0)
-			i++;
+	if (is_variable_char(line[i]) == 1)
+	{
+		printf("${%c}: bad substitution\n", line[i]);
+		minish->parsing.error = 1;
+		return (-1);
+	}
+	if (line[i] == '}' && line[i + 1] == ' ')
+	{
 		str = malloc(sizeof(char) * i - 1);
 		if (str == NULL)
 		{
@@ -125,19 +93,64 @@ int	is_empty(char *line, t_struct *minish)
 			minish->parsing.error = 1;
 			return (-1);
 		}
-		j = i;
-		str[i - 1] = '\0';
+		str[i - 2] = '\0';
 		i--;
-		while (i > 0)
+		while (i > 1)
 		{
-			str[i - 1] = line[i];
+			str[i - 2] = line[i];
 			i--;
 		}
 		tmp = get_variable(&minish->env.env_ms, str);
-		if (tmp == NULL && line[j] != 34 && line[j] != 39)
+		free(str);
+		if (tmp == NULL)
 			return (0);
-		// free(tmp);
 	}
+	return (1);
+}
+
+int	is_empty_no_brace(char *line, t_struct *minish)
+{
+	int		i;
+	int		j;
+	char	*str;
+	char	*tmp;
+
+	i = 1;
+	while (is_variable_char(line[i]) == 0)
+		i++;
+	str = malloc(sizeof(char) * i - 1);
+	if (str == NULL)
+	{
+		printf("error malloc\n");
+		minish->parsing.error = 1;
+		return (-1);
+	}
+	j = i;
+	str[i - 1] = '\0';
+	i--;
+	while (i > 0)
+	{
+		str[i - 1] = line[i];
+		i--;
+	}
+	tmp = get_variable(&minish->env.env_ms, str);
+	free(str);
+	if (tmp == NULL && (line[j] == ' ' || line[j] == '\0'))
+		return (0);
+	return (1);
+}
+
+int	is_empty(char *line, t_struct *minish)
+{
+	int		i;
+
+	i = 0;
+	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
+		return (1);
+	if (line[i] == '$' && line[i + 1] == '{')
+		return (is_empty_brace(line, minish));
+	else if (line[i] == '$' && line[i] != '{')
+		return (is_empty_no_brace(line, minish));
 	return (1);
 }
 
@@ -169,6 +182,7 @@ int	pass_arg_count(char *line, t_struct *minish)
 	minish->parsing.nb_arg++;
 	while (line[i])
 	{
+		printf("test = [%s]\n", &line[i]);
 		while (line[i] && line[i] != 39 && line[i] != 34
 			&& line[i] != ' ' && line[i] != '$')
 			i++;
@@ -188,16 +202,17 @@ int	pass_arg_count(char *line, t_struct *minish)
 int	count_args(char *line, t_struct *minish)
 {
 	int	i;
-	int	j;	//	nombre d arguments
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (line[i])
 	{
-		// printf("line[i] = [%s]\n", &line[i]);
+		// printf("line = [%s]\narg = %d\n", &line[i], minish->parsing.nb_arg);
 		i += pass_arg_count(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (-1);
+		printf("line after = [%s]\narg = %d\n", &line[i], minish->parsing.nb_arg);
 	}
 	return (i);
 }

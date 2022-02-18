@@ -46,8 +46,6 @@ char	*get_variable(t_env_ms **minishell, char *str)
 
 
 
-gerer double pipe?
-exemple : echo test || echo retest 
-=>  si "echo test" reussi alors fait pas "echo retest" sinon oui
 
-
+TESTS
+tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
