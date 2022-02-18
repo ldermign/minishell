@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/17 11:35:09 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/18 02:02:26 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	pass_variable(char *line)
 
 int	is_variable_char(char c)
 {
-	if (c == ' ' || c == 34 || c == 39 || c == '|' || c == '$' || c == '\0')
+	if (c == ' ' || c == 34 || c == 39 || c == '|' || c == '$'
+		|| c == '}' || c == '\0')
 		return (1);
 	return (0);
 }
@@ -71,6 +72,7 @@ int	is_variable_char(char c)
 int	is_empty(char *line, t_struct *minish)
 {
 	int		i;
+	int		j;
 	char	*str;
 	char	*tmp;
 
@@ -80,7 +82,7 @@ int	is_empty(char *line, t_struct *minish)
 	if (line[i] == '$' && line[i + 1] == '{')
 	{
 		i += 2;
-		while (is_variable_char(line[i]) == 0 && line[i] != '}')
+		while (is_variable_char(line[i]) == 0)
 			i++;
 		if (is_variable_char(line[i]) == 1)
 		{
@@ -107,15 +109,36 @@ int	is_empty(char *line, t_struct *minish)
 			tmp = get_variable(&minish->env.env_ms, str);
 			if (tmp == NULL)
 				return (0);
-			free(tmp);
+			// free(tmp);
 		}
 		return (1);
 	}
-	// else if (line[i] == '$' && line[i] != '{')
-	// {
-	// 	if ()
-	// }
-	return (0);
+	else if (line[i] == '$' && line[i] != '{')
+	{
+		i++;
+		while (is_variable_char(line[i]) == 0)
+			i++;
+		str = malloc(sizeof(char) * i - 1);
+		if (str == NULL)
+		{
+			printf("error malloc\n");
+			minish->parsing.error = 1;
+			return (-1);
+		}
+		j = i;
+		str[i - 1] = '\0';
+		i--;
+		while (i > 0)
+		{
+			str[i - 1] = line[i];
+			i--;
+		}
+		tmp = get_variable(&minish->env.env_ms, str);
+		if (tmp == NULL && line[j] != 34 && line[j] != 39)
+			return (0);
+		// free(tmp);
+	}
+	return (1);
 }
 
 int	pass_arg_count(char *line, t_struct *minish)
@@ -130,7 +153,7 @@ int	pass_arg_count(char *line, t_struct *minish)
 		return (pass_redir(line, minish));
 	else if (line[i] == '\0')
 		return (i);
-	else if (line[i] == 39 || line[i] == 34 || line[i] == '$')
+	else if (line[i] == '$')
 	{
 		j = is_empty(&line[i], minish);
 		if (j != 0)
