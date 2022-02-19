@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/18 06:03:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 04:16:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	is_empty_brace2(char *line, t_struct *minish, int i)
 		str[i - 2] = line[i];
 		i--;
 	}
-	printf("str = [%s]\n", str);
 	tmp = get_variable(&minish->env.env_ms, str);
 	free(str);
 	if (tmp == NULL)

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/18 22:58:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 04:43:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,17 @@ int	count_args(char *line, t_struct *minish)
 	return (i);
 }
 
-// int	fill_arg2(char *line, char *str)
-// {
-	
-// }
-
 int	fill_arg(char *line, char *str, t_struct *minish)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = len_arg(line, minish);
-	(void)str;
-	// str = malloc(sizeof(char) * j + 1);
-	// if (str == NULL)
-	// 	return (error_malloc(minish));
-	// str[j] = '\0';
-	// i += fill_arg2(line, str);
-	return (i);
+	len_arg(line, minish);
+	str = malloc(sizeof(char) * minish->parsing.len_arg + 1);
+	if (str == NULL)
+		return (error_malloc(minish));
+	str[minish->parsing.len_arg] = '\0';
+	return (fill_arg2(line, str, minish));
 }
 
-int	interpret_args(char *line, char	**tab, t_struct *minish)
+int	interpret_args(char *line, char	**tab_arg, t_struct *minish)
 {
 	int	i;
 	int	j;
@@ -58,7 +47,7 @@ int	interpret_args(char *line, char	**tab, t_struct *minish)
 	j = 0;
 	while (line[i])
 	{
-		fill_arg(&line[i], tab[j], minish);
+		fill_arg(&line[i], tab_arg[j], minish);
 		i += pass_arg_count(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (-1);
@@ -70,25 +59,22 @@ int	interpret_args(char *line, char	**tab, t_struct *minish)
 int	sep_and_check_args(t_args *arg, t_struct *minish)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	count_args(arg->command, minish);
-	if (minish->parsing.error = 1)
+	if (minish->parsing.error == 1)
 		return (-1);
 	i = minish->parsing.nb_arg;
-	// printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
+	printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
 	arg->arg_to_pass = malloc(sizeof(char *) * i + 1);
 	if (arg->arg_to_pass == NULL)
 		return (error_malloc(minish));
 	arg->arg_to_pass[i] = NULL;
-	while (j < i)
+	if (interpret_args(arg->command, arg->arg_to_pass, minish) == -1)
 	{
-		if (interpret_args(arg, minish) == -1)
-			return (-1);
-		j++;
+		free(arg->arg_to_pass);
+		return (-1);
 	}
-	free(arg->arg_to_pass);
+	free(arg->arg_to_pass);	//	to delete
 	return (0);
 }
 

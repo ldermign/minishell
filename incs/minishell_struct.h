@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 22:00:17 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 04:27:55 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_parsing
 	int		red2;
 	int		nb_arg;
 	int		len_arg;
+	int		fill_arg;
 	int		option;
 	int		nb_pipe;
 	int		pipe_fd[2];

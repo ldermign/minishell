@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 22:58:04 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 04:41:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		parsing(char *line, t_struct *minish);
 int		recup_pipe(char *line, t_struct *minishell);
 int		recup_args(char *line, t_struct *minishell);
 // 		>>>>>>>>>	arguments
-int		interpret_args(t_struct *minish);
+int 	interpret_args(char *line, char	**tab_arg, t_struct *minish);
 // 		>>>>>>>>>	sep_args
 int		sep_and_check_args(t_args *arg, t_struct *minish);
 int		pass_quotes(char *line);
@@ -120,6 +120,13 @@ int		error_malloc(t_struct *minish);
 int		is_empty(char *line, t_struct *minish);
 // 		>>>>>>>>>	len_arg
 int		len_arg(char *line, t_struct *minish);
+//      >>>>>>>>>   len_variable
+int 	len_variable(char *line, t_struct *minish);
+// 		>>>>>>>>>	fill_arg
+int		fill_arg2(char *line, char *str, t_struct *minish);
+// 		>>>>>>>>>	fill_variable
+int		fill_variable(char *line, char *str, t_struct *minish);
+
 
 
 

@@ -49,3 +49,7 @@ char	*get_variable(t_env_ms **minishell, char *str)
 
 TESTS
 tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
+
+
+
+/mnt/nfs/homes/ejahan/Desktop/minishell
