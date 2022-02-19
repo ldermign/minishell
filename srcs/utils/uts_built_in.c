@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 19:06:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 23:03:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ int	size_variable(char *prompt, int add, int pos)
 				len++;
 			}
 		}
-		if (prompt[i] == '=' && prompt[i - 1] == '+')
+		if (add == 1 && pos == -1)
 			len--;
 		i++;
+		len++;
 		if (prompt[i] == '"')
 		{
 			i++;
 			ret = 1;
 		}
-		while ((ret == 1 && prompt[i] != '"') || (ret == 0 && prompt[i] != ' '))
+		while (prompt[i]
+			&& ((ret == 1 && prompt[i] != '"')
+			|| (ret == 0 && prompt[i] != ' ')))
 		{
 			i++;
 			len++;
@@ -76,7 +79,7 @@ int	light_parse_export(char *prompt)
 		ret = 1;
 		i++;
 	}
-	if (prompt[i] != '=')
+	if (prompt[i] != '=' && prompt[i] != '\0')
 	{
 		printf("bash: export: '%s': not a valid identifier\n", prompt);
 		return (-1);
@@ -167,6 +170,7 @@ char	*get_good_variable(char *prompt, int size, int add, int pos)
 	{
 		while (prompt[i] && prompt[i] != '=')
 			i++;
+		i++;
 	}
 	while (j < size)
 	{

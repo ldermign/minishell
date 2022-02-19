@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 18:24:20 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 22:38:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,15 @@ int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
 	{
 		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
 		{
-			if (((*minishell)->var[i] == '=' && str[i] == '=')
-				|| (str[i + 1] && str[i] == '+'
-				&& str[i + 1] == '=' && (*minishell)->var[i] == '='))
+			if ((*minishell)->var[i] == '=' && str[i] == '=')
 			{
 				*minishell = first;
 				return (ret);
 			}
 			i++;
 		}
-		if (str[i] == '\0')
+		if (str[i] == '\0' || (str[i + 1] && str[i] == '+'
+				&& str[i + 1] == '=' && (*minishell)->var[i] == '='))
 		{
 			*minishell = first;
 			return (ret);
@@ -166,6 +165,24 @@ char	*get_variable(t_env_ms **minishell, char *str)
 		i = 0;
 		*minishell = (*minishell)->next;
 	}
+	*minishell = first;
+	return (tmp);
+}
+
+char	*get_variable_with_pos(t_env_ms **minishell, int pos)
+{
+	int			i;
+	char		*tmp;
+	t_env_ms	*first;
+
+	i = 0;
+	first = *minishell;
+	while (*minishell && i < pos)
+	{
+		*minishell = (*minishell)->next;
+		i++;
+	}
+	tmp = (*minishell)->var;
 	*minishell = first;
 	return (tmp);
 }

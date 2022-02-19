@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:26:27 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 17:57:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/20 00:18:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	get_good_fd(char **args, char *name_file, t_red_std *std, int ret)
 {
 	std->name_file = name_file;
+	if (std->which == -1)
+		return (EXIT_SUCCESS);
 	if (std->both == 0)
 	{
 		if (std->which == 1)

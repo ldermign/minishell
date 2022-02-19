@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 14:29:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 23:45:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,6 @@ typedef struct	s_parsing
 	int		pipe_fd[2];
 }	t_parsing;
 
-typedef struct	s_structure
-{
-	t_parsing	parsing;
-	t_env		env;
-}	t_struct;
-
-typedef struct	s_iterator
-{
-	int	i;
-	int	j;
-	int	k;
-	int	l;
-	int	ret;
-	int	len;
-}	t_it;
-
 typedef struct	s_redirection_std
 {
 	int	old_stdin;
@@ -76,5 +60,25 @@ typedef struct	s_redirection_std
 	int	both;
 	char	*name_file;
 }	t_red_std;
+
+typedef struct	s_structure
+{
+	t_parsing	parsing;
+	t_env		env;
+	t_red_std	std;
+	char		*prompt;
+}	t_struct;
+
+typedef struct	s_iterator
+{
+	int	i;
+	int	j;
+	int	k;
+	int	l;
+	int	pos;
+	int	add;
+	int	ret;
+	int	len;
+}	t_it;
 
 #endif

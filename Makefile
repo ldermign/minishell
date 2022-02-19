@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/19 17:21:51 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/19 23:12:31 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
 			./srcs/utils/uts_redir_2.c \
-			./srcs/init/init_struct_std.c \
+			./srcs/init/init_struct.c \
 			./srcs/supprimer.c \
 			./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
 			./srcs/parsing/command/commands.c \
@@ -47,7 +47,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS}  ${CFLAGS} -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} -fsanitize=address ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 

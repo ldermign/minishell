@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 14:59:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/20 00:13:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	built_in_echo(t_struct *ms, char **args, char *prompt)
 
 	i = 0;
 	line_break = light_parse_echo(prompt);
-	if (ft_pos_strstr(args[1], "$?") != -1)
+	if (args[0] && args[1] && ft_pos_strstr(args[1], "$?") != -1)
 	{
 		printf("%d\n", sig_error);
 		return (EXIT_SUCCESS);
@@ -88,8 +88,8 @@ int	built_in_echo(t_struct *ms, char **args, char *prompt)
 			i++;
 	}
 	len = ft_strlen(ms->parsing.result);
-	write(1, ms->parsing.result, len);  // verifier pour les redirections... a ecrire dans un fichier
+	write(ms->std.fd_to_write, ms->parsing.result, len);
 	if (line_break == -1) //gerer cas ou $$ chaipukoi
-		write(1, "\n", 1); // verifier pour les redirections... a ecrire dans un fichier
+		write(ms->std.fd_to_write, "\n", 1);
 	return (EXIT_SUCCESS);
 }

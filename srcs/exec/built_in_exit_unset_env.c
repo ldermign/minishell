@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 18:46:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 22:54:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	built_in_env(t_env_ms *stack)
 {
 	while (stack)
 	{
-		printf("%s\n", stack->var);
+		if (ft_pos_strstr(stack->var, "=") != -1)
+			printf("%s\n", stack->var);
 		stack = stack->next;
 	}
 	return (EXIT_SUCCESS);

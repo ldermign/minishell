@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 19:06:11 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 23:44:59 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	built_in_exit(t_env *env, char **cmd_args, char *prompt);
 int		built_in_unset(t_env *env, char **args);
 int		built_in_env(t_env_ms *stack);
 int		built_in_echo(t_struct *ms, char **args, char *prompt);
+int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt);
 
 /*
 **	REDIRECTIONS
@@ -80,6 +81,7 @@ void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
 int		check_if_variable_already_exist(t_env_ms **minishell, char *str);
 char	*get_variable(t_env_ms **minishell, char *str);
 int		size_env(t_env_ms **minishell);
+char	*get_variable_with_pos(t_env_ms **minishell, int pos);
 
 /*
 **	INIT
@@ -87,6 +89,7 @@ int		size_env(t_env_ms **minishell);
 
 void	init_struct_std(char **args, t_red_std *std, int which);
 void	reboot_struct_std(t_red_std *std);
+void	init_struct_it(t_it *it);
 
 /*
 **	TEMPORAIRE

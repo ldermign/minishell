@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_struct_std.c                                  :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/16 14:37:16 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 23:13:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,16 @@ void	init_struct_std(char **args, t_red_std *std, int which)
 	if (std->right == 1 && std->left == 1)
 		std->both = 1;
 	std->name_file = NULL;
+}
+
+void	init_struct_it(t_it *it)
+{
+	it->i = 0;
+	it->j = 0;
+	it->k = 0;
+	it->l = 0;
+	it->pos = 0;
+	it->add = 0;
+	it->ret = 0;
+	it->len = 0;
 }

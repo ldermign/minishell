@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 15:13:59 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/20 00:17:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 
 	exec_args_only = get_args_exec(args);
 	good_path = working_path(ms->env.path, exec_args_only[0]);
+	if (built_in_to_create(ms, exec_args_only, ms->prompt) != -1)
+	{
+		reboot_struct_std(&(ms->std));
+		return (EXIT_SUCCESS);
+	}
 	execute_cmd(good_path, exec_args_only, ms->env.env_bash);
 	reboot_struct_std(std);
 	return(EXIT_SUCCESS);
@@ -140,31 +145,20 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 int	get_redirections(t_struct *ms, char **args, int which)
 {
 	char		*name_file;
-	t_red_std	std;
 
 	name_file = NULL;
-	init_struct_std(args, &std, which);
 	if (redirection_first(args[0]) != -1)
-		if (first_arg_is_redir(args, &std, which) == 0)
+		if (first_arg_is_redir(args, &(*ms).std, which) == 0)
 			return (EXIT_SUCCESS);
 	if (which == 1 || which == 3)
 		name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
-	if (get_good_fd(args, name_file, &std, ft_pos_strstr(args[0], "echo")) == EXIT_FAILURE)
+	if (get_good_fd(args, name_file, &(*ms).std, ft_pos_strstr(args[0], "echo")) == EXIT_FAILURE)
 	{
 		sig_error = errno;
 		perror("minishell");
 		return (EXIT_FAILURE);
 	}
-	if (std.both == 0 && (which == 1 || which == 3))
-	{
-		if (ft_pos_strstr(args[0], "echo") != -1)
-		{
-			write(std.fd_to_write, ms->parsing.result, ft_strlen(ms->parsing.result));
-			write(std.fd_to_write, "\n", 1);
-			return (EXIT_SUCCESS);
-		}
-	}
-	execution_redirection(ms, args, &std);
+	execution_redirection(ms, args, &(*ms).std);
 	return (EXIT_SUCCESS);
 }
 
