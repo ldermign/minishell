@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:37:53 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 04:47:25 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 05:08:28 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ int	fill_arg2(char *line, char *str, t_struct *minish)
 		else if (line[i] == 60 || line[i] == 62)
 			i += pass_redir(&line[i], minish) - 1;
 		else
-			str[minish->parsing.len_arg++] = line[i];
+			str[minish->parsing.fill_arg++] = line[i];
 		if (minish->parsing.error == 1)
 			return (-1);
 		i++;
 	}
+	printf("len_arg = [%d]\n", minish->parsing.fill_arg);
 	return (i);
 }
