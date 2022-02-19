@@ -52,4 +52,8 @@ tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
 
 
 
-/mnt/nfs/homes/ejahan/Desktop/minishell
+marche pas : 
+$""
+${PWDtrbrt}
+je sais plus apres
+
