@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:08:08 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/12 19:40:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 17:27:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	check_pipe(char *line, t_parsing *parsing)
 
 int	parse_line(char *line, t_parsing *parsing)
 {
-	if (line[0] == '\0')
-		return (0);
+	if (line == NULL)
+		return (-1);
 	while (line[parsing->i_line])
 	{
 		while (line[parsing->i_line] == ' ')

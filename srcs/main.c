@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 18:07:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 18:05:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 int	sig_error = 0;
 
-void	signal_quit_minishell(int sig)
+void	handle_signal(int sig)
 {
-	// free les structures 
 	if (sig == SIGQUIT)
 	{
-		write(1, "exit\n", 6);
-		exit(0);
+		sig_error = 0;
+		write(2, "exit\n", 5);
+		exit (0);
 	}
-}
-
-void	signal_line_break(int sig)
-{
-	if (sig == SIGINT)
+	else if	(sig == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
@@ -34,12 +30,6 @@ void	signal_line_break(int sig)
 		rl_redisplay();
 		sig_error = 130;
 	}
-}
-
-void	test(int sig)
-{
-	if (sig == 0)
-		printf("test\n");
 }
 
 void	init_parsing(t_parsing *parsing)
@@ -69,16 +59,16 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	while (42)
 	{
-		signal(SIGINT, signal_line_break);
-		// signal(SIGQUIT, signal_quit_minishell);
-		// signal(0, test);
+		signal(SIGINT, handle_signal);
+		signal(SIGQUIT, handle_signal);
 		line = readline("$ ");
 		init_parsing(&structure.parsing);
-		parse_line(line, &structure.parsing);
-		if (line[0] != '\0' && structure.parsing.error != 1)
+		if (parse_line(line, &structure.parsing) != -1)
+		{
 			command(line, &structure);
-		if (structure.parsing.result != NULL)
-			free(structure.parsing.result);
+			if (structure.parsing.result != NULL)
+				free(structure.parsing.result);
+		}
 		free(line);
 	}
 	return (0);

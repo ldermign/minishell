@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/08 11:45:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 18:24:20 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
 	{
 		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
 		{
-			if ((str[i] == '=' && str[i] == '='))
+			if (((*minishell)->var[i] == '=' && str[i] == '=')
+				|| (str[i + 1] && str[i] == '+'
+				&& str[i + 1] == '=' && (*minishell)->var[i] == '='))
 			{
 				*minishell = first;
 				return (ret);

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/18 18:38:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 19:07:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	execute_cmd(char *path, char **args, char **env)
 	if (pid == -1)
 	{
 		sig_error = 127;
-		perror("Fork"); // voir le cas d'erreur
+		perror("fork"); // voir le cas d'erreur
+		return ;
 	}
 	else if (pid > 0)
 	{
@@ -53,11 +54,12 @@ void	execute_cmd(char *path, char **args, char **env)
 	{
 		if (execve(path, args, env) == -1)
 		{
-			perror(args[0]); // voir le cas d'erreur
+			printf("bash: %s: command not found\n", args[0]);
 			sig_error = 127;
 		}
-		exit(EXIT_FAILURE);
+		return ;
 	}
+	sig_error = 0;
 }
 
 char	**copy_env_in_tab_char(t_env_ms **ms)
@@ -140,29 +142,31 @@ int	built_in_export(t_env *env, char *prompt, char **cmd_args)
 {
 	int		i;
 	int		size;
-	int		ret;
+	int		pos;
+	int		add;
 	char	*str;
 
-	i = 6;
+	i = 0;
+	while (prompt[i] == ' ')
+		i++;
+	i += 6;
 	if (cmd_args[1] == NULL)
 	{
 		print_in_alphabetical_order(&(env->env_ms));
 		return (EXIT_SUCCESS);
 	}
-	if (light_parse_export(prompt) == -1)
-	{
-		printf("Error command export\n");
+	add = light_parse_export(&prompt[i]);
+	if (add == -1)
 		return (EXIT_FAILURE);
-	}
 	while (prompt[i] == ' ')
 		i++;
-	size = size_variable(prompt);
-	str = get_good_variable(prompt, size);
-	ret = check_if_variable_already_exist(&(env->env_ms), &prompt[i]);
-	if (ret == -1)
+	pos = check_if_variable_already_exist(&(env->env_ms), &prompt[i]);
+	size = size_variable(&prompt[i], add, pos);
+	str = get_good_variable(&prompt[i], size, add, pos);
+	if (pos == -1)
 		add_var_env_minishell(&(env->env_ms), str);
 	else
-		change_var_env_minishell(&(env->env_ms), str, ret);
+		change_var_env_minishell(&(env->env_ms), str, pos);
 	return (EXIT_SUCCESS);
 }
 

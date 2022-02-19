@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/17 14:29:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/19 19:06:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ char	**get_cmd_and_args_split(char *str);
 **	UTILS BUILT IN
 */
 
-int		size_variable(char *prompt);
+int		size_variable(char *prompt, int add, int pos);
 int		light_parse_export(char *prompt);
 int		light_parse_echo(char *str);
 char	*create_path(char *path, char *cmd);
-char	*get_good_variable(char *prompt, int size);
+char	*get_good_variable(char *prompt, int size, int add, int pos);
 char	*working_path(char **paths, char *name_fct);
 void	execute_cmd(char *path, char **args, char **env);
 
