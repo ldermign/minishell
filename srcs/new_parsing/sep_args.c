@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 05:13:23 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 06:07:11 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	fill_arg(char *line, char *str, t_struct *minish)
 	str = malloc(sizeof(char) * minish->parsing.len_arg + 1);
 	if (str == NULL)
 		return (error_malloc(minish));
+	ft_bzero(str, minish->parsing.len_arg + 1);
 	fill_arg2(line, str, minish);
-	str[minish->parsing.fill_arg] = '\0';
-	// printf("str = [%s]\n", str);
+	// str[minish->parsing.fill_arg] = '\0';
+	printf("str = [%s]\n", str);
 	return (0);
 }
 
@@ -49,12 +50,13 @@ int	interpret_args(char *line, char	**tab_arg, t_struct *minish)
 	j = 0;
 	while (line[i])
 	{
-		printf("interpret\n");
 		fill_arg(&line[i], tab_arg[j], minish);
-		// printf("str = [%s]\n", tab_arg[j]);
+		// printf("str = [%s]\n", tab_arg[j]);	// marche paaaaaaas
 		i += pass_arg_count(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (-1);
+		while (line[i] == ' ')
+			i++;
 		j++;
 	}
 	return (0);
@@ -75,14 +77,14 @@ int	sep_and_check_args(t_args *arg, t_struct *minish)
 	arg->arg_to_pass[i] = NULL;
 	if (interpret_args(arg->command, arg->arg_to_pass, minish) == -1)
 	{
-		printf("tamere\n");
 		free(arg->arg_to_pass);
 		return (-1);
 	}
-	i = 1;
+	i = 0;
 	while (arg->arg_to_pass[i] != NULL)
 	{
-		printf("arg[%d]\n", i);
+		// printf("arg = [%s]\n", arg->arg_to_pass[i]);
+		// printf("arg[%d]\n", i);
 		// free(arg->arg_to_pass[i]);
 		i++;
 	}

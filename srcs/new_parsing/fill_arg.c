@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:37:53 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 05:08:28 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 05:33:04 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	fill_arg2(char *line, char *str, t_struct *minish)
 	minish->parsing.fill_arg = 0;
 	while (line[i] == ' ')
 		i++;
+	// if (line[i] == '\0')
+	// 	return (i - 1);
 	if (line[i] == '<' || line[i] == '>')
 		i += pass_redir(&line[i], minish);
 	while (line[i] && line[i] != ' ')
@@ -62,11 +64,16 @@ int	fill_arg2(char *line, char *str, t_struct *minish)
 		else if (line[i] == 60 || line[i] == 62)
 			i += pass_redir(&line[i], minish) - 1;
 		else
+		{
 			str[minish->parsing.fill_arg++] = line[i];
+			// printf("str[i] = %c\n", str[minish->parsing.fill_arg - 1]);
+		}
 		if (minish->parsing.error == 1)
 			return (-1);
 		i++;
 	}
-	printf("len_arg = [%d]\n", minish->parsing.fill_arg);
+	str[minish->parsing.fill_arg] = '\0';
+	// printf("str = [%s]\n", str);
+	// printf("len_arg = [%d]\n", minish->parsing.fill_arg);
 	return (i);
 }
