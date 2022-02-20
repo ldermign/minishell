@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 07:12:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 08:14:50 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	len_variable2(char *line, t_struct *minish, int i)
 		len_no_brace(line, minish);
 		i++;
 		while (line[i] && line[i] != 34 && line[i] != 39 && line[i] != '<'
-			&& line[i] != '>' && line[i] != '$' && line[i] != '}')
+			&& line[i] != '>' && line[i] != '$' && line[i] != '}' && line[i] != '{')
 			i++;
 	}
 	return (i);

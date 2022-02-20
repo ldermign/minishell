@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:45:54 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 01:39:04 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 08:23:54 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	recup_redir(t_args *arg, t_struct *minish)
 	while (&arg->command[i])
 		i += count_redir(&arg->command[i], minish);
 	j = minish->parsing.nb_redir;
-	minish->args->first->redir = malloc(sizeof(char *) *  + 1);
+	minish->args->first->redir = malloc(sizeof(char *) * j + 1);
 	if (minish->args->first->redir == NULL)
 		return (error_malloc(minish));
 	arg->redir[j] = NULL;

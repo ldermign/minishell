@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 01:39:50 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 08:04:15 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ int		parsing(char *line, t_struct *minish);
 int		recup_pipe(char *line, t_struct *minishell);
 int		recup_args(char *line, t_struct *minishell);
 // 		>>>>>>>>>	arguments
-int 	interpret_args(char *line, char	**tab_arg, t_struct *minish);
+// int 	interpret_args(char *line, char	**tab_arg, t_struct *minish);
+char	**interpret_args(char *line, char	**tab_arg, t_struct *minish);
 // 		>>>>>>>>>	sep_args
-int		sep_and_check_args(t_args *arg, t_struct *minish);
+// int		sep_and_check_args(t_args *arg, t_struct *minish);
+char	**sep_and_check_args(t_args *arg, t_struct *minish);
 int		pass_quotes(char *line);
 // 		>>>>>>>>>	count_arg
 int		pass_arg_count(char *line, t_struct *minish);

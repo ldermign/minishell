@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 02:00:05 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 08:24:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*fill_arg(char *line, char *str, t_struct *minish)
 	return (str);
 }
 
-int	interpret_args(char *line, char	**tab_arg, t_struct *minish)
+char	**interpret_args(char *line, char	**tab_arg, t_struct *minish)
 {
 	int	i;
 	int	j;
@@ -54,33 +54,44 @@ int	interpret_args(char *line, char	**tab_arg, t_struct *minish)
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
 		i += pass_arg_count(&line[i], minish);
 		if (minish->parsing.error == 1)
-			return (-1);
+			return (NULL);
 		printf("arg[%d] = [%s]\n", j, tab_arg[j]);
 		while (line[i] == ' ')
 			i++;
 		j++;
 	}
-	return (0);
+	// i = 0;
+	// while (tab_arg[i] != NULL)
+	// {
+	// 	printf("[%s]\n", tab_arg[i]);
+	// 	printf("oui\n");
+	// 	i++;
+	// }
+	return (tab_arg);
 }
 
-int	sep_and_check_args(t_args *arg, t_struct *minish)
+char	**sep_and_check_args(t_args *arg, t_struct *minish)
 {
-	int	i;
+	int		i;
+	char	**arg_to_pass;
 
 	count_args(arg->command, minish);
 	if (minish->parsing.error == 1)
-		return (-1);
+		return (NULL);
 	i = minish->parsing.nb_arg;
 	printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
-	arg->arg_to_pass = malloc(sizeof(char *) * i + 1);
-	if (arg->arg_to_pass == NULL)
-		return (error_malloc(minish));
-	arg->arg_to_pass[i] = NULL;
-	if (minish->parsing.nb_arg != 0
-		&& interpret_args(arg->command, arg->arg_to_pass, minish) == -1)
+	arg_to_pass = malloc(sizeof(char *) * i + 1);
+	if (arg_to_pass == NULL)
 	{
-		free(arg->arg_to_pass);
-		return (-1);
+		error_malloc(minish);
+		return (NULL);
 	}
-	return (0);
+	arg_to_pass[i] = NULL;
+	arg_to_pass = interpret_args(arg->command, arg_to_pass, minish);
+	if (minish->parsing.nb_arg != 0 && minish->parsing.error == 1)
+	{
+		free(arg_to_pass);
+		return (NULL);
+	}
+	return (arg_to_pass);
 }
