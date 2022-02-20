@@ -6,12 +6,11 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 00:17:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/20 19:18:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	get_name_file_redir(char **args, int last)
 {
@@ -64,7 +63,6 @@ char	*create_all_files(char **args)
 	return (name_file);
 }
 
-
 static int	size(char **args)
 {
 	int	i;
@@ -101,13 +99,9 @@ char	**get_args_exec(char **args)
 
 int	first_arg_is_redir(char **args, t_red_std *std, int which)
 {
-	int		ret;
 	char	*line;
 
-	ret = 0;
-	if (args[2] != NULL)
-		ret = 1;
-	if (which == 1 || which == 3)
+	if (which == 1)
 	{
 		std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
 		close(std->fd_to_write);
@@ -122,7 +116,7 @@ int	first_arg_is_redir(char **args, t_red_std *std, int which)
 		while (ft_strcmp(line, args[std->last_left + 1]) != 0)
 			line = readline("> ");
 	}
-	return (ret);
+	return (EXIT_SUCCESS);
 }
 
 int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
@@ -132,42 +126,36 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 
 	exec_args_only = get_args_exec(args);
 	good_path = working_path(ms->env.path, exec_args_only[0]);
-	if (built_in_to_create(ms, exec_args_only, ms->prompt) != -1)
+	// printf("par la \n");
+	if (built_in_to_create(ms, args, ms->prompt) != -1)
 	{
 		reboot_struct_std(&(ms->std));
 		return (EXIT_SUCCESS);
 	}
-	execute_cmd(good_path, exec_args_only, ms->env.env_bash);
+	execute_cmd(ms, good_path, exec_args_only, ms->env.env_bash);
 	reboot_struct_std(std);
 	return(EXIT_SUCCESS);
 }
 
 int	get_redirections(t_struct *ms, char **args, int which)
 {
-	char		*name_file;
-
-	name_file = NULL;
-	if (redirection_first(args[0]) != -1)
-		if (first_arg_is_redir(args, &(*ms).std, which) == 0)
-			return (EXIT_SUCCESS);
+	// print_tab_char(args);
+	// printf("red = %d\n", redirection_first(args[0]));
 	if (which == 1 || which == 3)
-		name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
-	if (get_good_fd(args, name_file, &(*ms).std, ft_pos_strstr(args[0], "echo")) == EXIT_FAILURE)
-	{
-		sig_error = errno;
-		perror("minishell");
-		return (EXIT_FAILURE);
-	}
+		ms->std.name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
+	if (redirection_first(args[0]) == 1)
+		return (first_arg_is_redir(args, &(*ms).std, which));
+	// if (get_good_fd(args, name_file, &(*ms).std) == EXIT_FAILURE)
+	// {
+	// 	sig_error = errno;
+	// 	perror("minishell");
+	// 	return (EXIT_FAILURE);
+	// }
+	// if (ft_pos_strstr(args[0], "wc") != -1 && ms->std.both == 0 && ms->std.dbl_l == 1)
+	// 	get_args_wc_dbl_l(ms, args); a voir
 	execution_redirection(ms, args, &(*ms).std);
 	return (EXIT_SUCCESS);
 }
-
-/*
-> 1
-< 2
->> 3
-<< 4
-*/
 
 /*
 

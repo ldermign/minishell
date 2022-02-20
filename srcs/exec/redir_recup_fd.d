@@ -1,4 +1,4 @@
-srcs/init/init_struct_std.o: srcs/init/init_struct_std.c incs/minishell.h \
+srcs/exec/redir_recup_fd.o: srcs/exec/redir_recup_fd.c incs/minishell.h \
   incs/colors.h incs/libft.h incs/libft_fcts.h incs/get_next_line.h \
   incs/ft_printf.h incs/minishell_struct.h incs/minishell_fcts.h
 

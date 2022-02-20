@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 23:44:59 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/20 16:13:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt);
 */
 
 int		get_redirections(t_struct *ms, char **args, int which);
-int	get_good_fd(char **args, char *name_file, t_red_std *std, int ret);
+int	get_good_fd(char **args, char *name_file, t_red_std *std);
 
 /*
 **	UTILS REDIRECTIONS
@@ -67,7 +67,7 @@ int		light_parse_echo(char *str);
 char	*create_path(char *path, char *cmd);
 char	*get_good_variable(char *prompt, int size, int add, int pos);
 char	*working_path(char **paths, char *name_fct);
-void	execute_cmd(char *path, char **args, char **env);
+void	execute_cmd(t_struct *ms, char *path, char **args, char **env);
 
 /*
 **	UTILS LIST

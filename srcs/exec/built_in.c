@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 00:17:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/20 19:06:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,6 @@ char	*working_path(char **paths, char *name_fct)
 		free(good_path);
 	}
 	return (NULL);
-}
-
-void	execute_cmd(char *path, char **args, char **env)
-{
-	int		status;
-	pid_t	pid;
-
-	status = 0;
-	pid = fork();
-	if (pid == -1)
-	{
-		sig_error = 127;
-		perror("fork"); // voir le cas d'erreur
-		return ;
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
-	else
-	{
-		if (execve(path, args, env) == -1)
-		{
-			printf("bash: %s: command not found\n", args[0]);
-			sig_error = 127;
-		}
-		return ;
-	}
-	sig_error = 0;
 }
 
 char	**copy_env_in_tab_char(t_env_ms **ms)
@@ -186,6 +156,8 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
 int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 {
 	// print_tab_char(cmd_args);
+	// printf("la\n");
+	get_good_fd(cmd_args, ms->std.name_file, &(ms->std));
 	if (ft_pos_strstr(cmd_args[0], "cd") != -1)
 		return (built_in_cd(&(ms->env), cmd_args));
 	else if (ft_pos_strstr(cmd_args[0], "pwd") != -1)
@@ -221,17 +193,15 @@ void command(char *prompt, t_struct *ms)
 		return ;
 	last = last_redir(args);
 	init_struct_std(args, &(*ms).std, last);
-	if (last != -1)
+	if (last == -1 && built_in_to_create(ms, args, prompt) != -1)
+	{
+		ft_free_tab(args);
+		return ;
+	}
+	else if (last != -1)
 	{
 		get_redirections(ms, args, last);
 		ft_free_tab(args);
-		// print_env_ms(&(ms->env));
-		return ;
-	}
-	else if (built_in_to_create(ms, args, prompt) != -1)
-	{
-		ft_free_tab(args);
-		// print_env_ms(&(ms->env));
 		return ;
 	}
 	// if (redirection(env, args, prompt) != -1)
@@ -240,7 +210,7 @@ void command(char *prompt, t_struct *ms)
 	// 	return ;
 	// }
 	good_path = working_path(ms->env.path, args[0]);
-	execute_cmd(good_path, args, ms->env.env_bash);
+	execute_cmd(ms, good_path, args, ms->env.env_bash);
 	ft_free_tab(args);
 	// print_env_ms(&(env->env_ms));
 }
