@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 04:16:09 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 21:18:52 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	is_empty(char *line, t_struct *minish)
 
 	i = 0;
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
+		return (1);
+	if (line[i + 1] == 34 || line[i + 1] == 39)
 		return (1);
 	if (line[i] == '$' && line[i + 1] == '{')
 		return (is_empty_brace(line, minish));

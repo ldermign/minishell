@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 19:40:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 02:00:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ char	*fill_arg(char *line, char *str, t_struct *minish)
 	}
 	ft_bzero(str, minish->parsing.len_arg + 1);
 	fill_arg2(line, str, minish);
-	// str[minish->parsing.fill_arg] = '\0';
-	// printf("str = [%s]\n", str);
 	return (str);
 }
 
@@ -54,10 +52,10 @@ int	interpret_args(char *line, char	**tab_arg, t_struct *minish)
 	while (line[i])
 	{
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
-		// printf("str = [%s]\n", tab_arg[j]);	// marche paaaaaaas
 		i += pass_arg_count(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (-1);
+		printf("arg[%d] = [%s]\n", j, tab_arg[j]);
 		while (line[i] == ' ')
 			i++;
 		j++;
@@ -78,18 +76,11 @@ int	sep_and_check_args(t_args *arg, t_struct *minish)
 	if (arg->arg_to_pass == NULL)
 		return (error_malloc(minish));
 	arg->arg_to_pass[i] = NULL;
-	if (interpret_args(arg->command, arg->arg_to_pass, minish) == -1)
+	if (minish->parsing.nb_arg != 0
+		&& interpret_args(arg->command, arg->arg_to_pass, minish) == -1)
 	{
 		free(arg->arg_to_pass);
 		return (-1);
 	}
-	i = 0;
-	while (arg->arg_to_pass[i] != NULL)
-	{
-		printf("arg = [%s]\n", arg->arg_to_pass[i]);
-		free(arg->arg_to_pass[i]);
-		i++;
-	}
-	free(arg->arg_to_pass);	//	to delete
 	return (0);
 }

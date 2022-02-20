@@ -52,8 +52,26 @@ tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
 
 
 
-marche pas : 
-$""
-${PWDtrbrt}
-je sais plus apres
+
+
+
+
+recup redirections dans char **
+echo
+pipe
+signaux
+
+
+
+
+
+MARCHE PAS
+bash-5.0$ echo -n -n oui
+ouibash-5.0$ echo -n -nnnnnn oui
+ouibash-5.0$ echo "-n -nnnnnn" oui
+-n -nnnnnn oui
+bash-5.0$ exit
+
+
+
 

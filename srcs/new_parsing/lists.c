@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/16 05:46:27 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 01:53:04 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ int	free_list(t_list_arg *list)
 	while (list->first != NULL)
 	{
 		i = 0;
-		if (list->first->tab_args[i])
+		if (list->first->arg_to_pass[i])
 		{
-			while (list->first->tab_args[i] != NULL)
+			while (list->first->arg_to_pass[i] != NULL)
 			{
-				free(list->first->tab_args[i]);
+				// printf("[%s]\n", list->first->arg_to_pass[i]);
+				free(list->first->arg_to_pass[i]);
 				i++;
 			}
-			free(list->first->tab_args);
+			free(list->first->arg_to_pass);
 		}
 		if (list->first->command != NULL)
 			free(list->first->command);

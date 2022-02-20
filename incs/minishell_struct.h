@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 04:27:55 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/19 23:28:36 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_environnement
 
 typedef struct s_args
 {
-	char			**tab_args;	//	recup arguments pas changes
 	char			**redir;	//	recup toutes les redirections
 	char			*command;
 	char			**arg_to_pass;	//	arguments a donner aux fonction exec
@@ -53,9 +52,9 @@ typedef struct s_parsing
 	int		fill_arg;
 	int		option;
 	int		nb_pipe;
+	int		nb_redir;
 	int		pipe_fd[2];
 	char	*result;
-	// char	*file_redirection;
 }	t_parsing;
 
 typedef struct s_structure

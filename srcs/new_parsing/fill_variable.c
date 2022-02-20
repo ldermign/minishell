@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 04:48:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 07:11:26 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	fill_no_brace(char *line, char *arg, t_struct *minish)
 	}
 	tmp = get_variable(&minish->env.env_ms, str);
 	free(str);
-	if (tmp == NULL && (line[j] == ' ' || line[j] == '\0'))
+	if (tmp == NULL && is_variable_char(line[j]) == 1)
 		return (0);
 	i = 0;
 	while (tmp[i])
@@ -111,7 +111,6 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	i = 0;
 	if (is_empty(line, minish) == 0)
 	{
-		printf("la2\n");
 		while (line[i] && line[i] != ' ')
 			i++;
 		while (line[i] == ' ')
@@ -120,6 +119,8 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	}
 	// if (line[i] == '$' && line[i + 1] == '$')
 	// 	return (fill_double_dollar(minish));
+	if (line[i + 1] == 34 || line[i + 1] == 39)
+		return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
 	{
 		str[minish->parsing.fill_arg++] = line[i];

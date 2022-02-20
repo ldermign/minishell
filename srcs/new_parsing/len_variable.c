@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 04:15:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/20 07:12:15 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	len_no_brace(char *line, t_struct *minish)
 	}
 	tmp = get_variable(&minish->env.env_ms, str);
 	free(str);
-	if (tmp == NULL && (line[j] == ' ' || line[j] == '\0'))
+	if (tmp == NULL && is_variable_char(line[i]) == 1)
 		return (0);
 	minish->parsing.len_arg += ft_strlen(tmp);
 	return (1);
@@ -142,7 +142,6 @@ int	len_variable(char *line, t_struct *minish)
 	i = 0;
 	if (is_empty(line, minish) == 0)
 	{
-		printf("la2\n");
 		while (line[i] && line[i] != ' ')
 			i++;
 		while (line[i] == ' ')
@@ -151,6 +150,8 @@ int	len_variable(char *line, t_struct *minish)
 	}
 	// if (line[i] == '$' && line[i + 1] == '$')
 	// 	return (double_dollar(minish));
+	if (line[i + 1] == 34 || line[i + 1] == 39)
+		return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
 	{
 		minish->parsing.len_arg++;
