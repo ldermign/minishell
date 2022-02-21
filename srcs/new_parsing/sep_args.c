@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/21 08:11:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/21 08:18:27 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 	{
 		printf("line = [%s]\n", &line[i]);
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
-		i = minish->parsing.i_line;
+		i += minish->parsing.i_line;
 		// i += pass_arg_count(&line[i], minish);
 		// i += pass_arg(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (NULL);
+		printf("i = %d\n", i);
 		printf("arg[%d] = [%s]\n", j, tab_arg[j]);
 		while (line[i] == ' ')
 			i++;
