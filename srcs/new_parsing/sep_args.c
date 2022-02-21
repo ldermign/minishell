@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 08:24:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/21 08:11:15 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	count_args(char *line, t_struct *minish)
 char	*fill_arg(char *line, char *str, t_struct *minish)
 {
 	len_arg(line, minish);
+	printf("len arg = %d\n", minish->parsing.len_arg);
 	str = malloc(sizeof(char) * minish->parsing.len_arg + 1);
 	if (str == NULL)
 	{
@@ -38,21 +39,25 @@ char	*fill_arg(char *line, char *str, t_struct *minish)
 		return (NULL);
 	}
 	ft_bzero(str, minish->parsing.len_arg + 1);
-	fill_arg2(line, str, minish);
+	minish->parsing.i_line = fill_arg2(line, str, minish);
 	return (str);
 }
 
-char	**interpret_args(char *line, char	**tab_arg, t_struct *minish)
+char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
+	minish->parsing.i_line = 0;
 	while (line[i])
 	{
+		printf("line = [%s]\n", &line[i]);
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
-		i += pass_arg_count(&line[i], minish);
+		i = minish->parsing.i_line;
+		// i += pass_arg_count(&line[i], minish);
+		// i += pass_arg(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (NULL);
 		printf("arg[%d] = [%s]\n", j, tab_arg[j]);

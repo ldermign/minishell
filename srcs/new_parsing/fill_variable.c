@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 08:13:53 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/21 08:05:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int	fill_variable2(char *line, char *str, t_struct *minish, int i)
 		fill_no_brace(line, str, minish);
 		i++;
 		while (line[i] && line[i] != 34 && line[i] != 39 && line[i] != '<'
-			&& line[i] != '>' && line[i] != '$' && line[i] != '}' && line[i] != '{')
+			&& line[i] != '>' && line[i] != '$' && line[i] != '}'
+			&& line[i] != ' ' && line[i] != '{')
 			i++;
 	}
 	return (i);
@@ -111,10 +112,15 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	i = 0;
 	if (is_empty(line, minish) == 0)
 	{
-		while (line[i] && line[i] != ' ')
+		i++;
+		while (line[i] && line[i] != ' ' && line[i] != 34 && line[i] != 39
+			&& line[i] != '<' && line[i] != '>' && line[i] != '$'
+			&& line[i] != '}' && line[i] != '{')
 			i++;
+		// printf("TAMERE\n");
 		while (line[i] == ' ')
 			i++;
+		// printf("line[i] empty = [%s]\n", &line[i]);
 		return (i - 1);
 	}
 	// if (line[i] == '$' && line[i + 1] == '$')

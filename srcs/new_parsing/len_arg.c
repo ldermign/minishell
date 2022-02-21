@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 06:38:09 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 01:45:00 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/21 07:00:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	len_arg(char *line, t_struct *minish)
 		i += pass_redir(&line[i], minish);
 	while (line[i] && line[i] != ' ')
 	{
+		// printf("len line = [%s]\n", &line[i]);
 		if (line[i] == '$')
 			i += len_variable(&line[i], minish);
 		else if (line[i] == 39)

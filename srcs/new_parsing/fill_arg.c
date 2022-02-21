@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:37:53 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 01:46:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/21 06:58:47 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	fill_arg2(char *line, char *str, t_struct *minish)
 		i += pass_redir(&line[i], minish);
 	while (line[i] && line[i] != ' ')
 	{
+		// printf("line = [%s]\n", &line[i]);
 		if (line[i] == '$')
 			i += fill_variable(&line[i], str, minish);
 		else if (line[i] == 39)

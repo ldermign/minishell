@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/20 08:09:18 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/21 03:05:14 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parsing(char *line, t_struct *minish)
 	init_parsing(&minish->parsing);
 	// init_parsing(minish->new_parsing);
 	recup_args(line, minish);
-	// print_list(minish->args);
+	print_list(minish->args);
 	free_list(minish->args);
 	return (0);
 }
@@ -26,7 +26,7 @@ int	parsing(char *line, t_struct *minish)
 int	recup_args(char *line, t_struct *minish)
 {
 	t_args	*tmp;
-	int	i = 0;
+	// int	i = 0;
 
 	if (recup_pipe(line, minish) == -1)
 		return (-1);
@@ -44,13 +44,13 @@ int	recup_args(char *line, t_struct *minish)
 		}
 		minish->args->first = minish->args->first->next;
 	}
-	i = 0;
+	// i = 0;
 	minish->args->first = tmp;
-	while (minish->args->first->arg_to_pass[i] != NULL)
-	{
-		printf("[%s]\n", minish->args->first->arg_to_pass[i]);
-		printf("oui\n");
-		i++;
-	}
+	// while (minish->args->first->arg_to_pass[i] != NULL)
+	// {
+	// 	printf("[%s]\n", minish->args->first->arg_to_pass[i]);
+	// 	printf("oui\n");
+	// 	i++;
+	// }
 	return (0);
 }
