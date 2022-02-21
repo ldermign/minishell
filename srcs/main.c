@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/11 17:23:41 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 00:00:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ void	test(int sig)
 int	main(int ac, char **av, char **env)
 {
 	char		*line;
+	int			i;
 	t_struct	structure;
 
 	(void)av;
 	line = NULL;
+	i = 0;
 	if (ac != 1)
 	{
 		printf("Error, too many arguments.\n");
@@ -77,7 +79,11 @@ int	main(int ac, char **av, char **env)
 	// 	signal(SIGQUIT, quit_minishell); // ctrl+'\'
 	// 	signal(0, test);
 		line = readline("$ ");
-		parsing(line, &structure);
+		while (line[i] == ' ')
+			i++;
+		if (line[i] != '\0')
+			parsing(line, &structure);
+		i = 0;
 		// if (line[0] != '\0' && structure.parsing.error != 1)
 		// 	command(line, &structure);
 		// if (structure.parsing.result != NULL)

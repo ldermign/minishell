@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/21 08:18:27 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 00:07:57 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 	minish->parsing.i_line = 0;
 	while (line[i])
 	{
-		printf("line = [%s]\n", &line[i]);
+		// printf("line = [%s]\n", &line[i]);
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
 		i += minish->parsing.i_line;
 		// i += pass_arg_count(&line[i], minish);
 		// i += pass_arg(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (NULL);
-		printf("i = %d\n", i);
-		printf("arg[%d] = [%s]\n", j, tab_arg[j]);
+		// printf("i = %d\n", i);
+		// printf("arg[%d] = [%s]\n", j, tab_arg[j]);
 		while (line[i] == ' ')
 			i++;
 		j++;
@@ -86,6 +86,8 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 		return (NULL);
 	i = minish->parsing.nb_arg;
 	printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
+	if (i == 0)
+		return (NULL);
 	arg_to_pass = malloc(sizeof(char *) * i + 1);
 	if (arg_to_pass == NULL)
 	{
