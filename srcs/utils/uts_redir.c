@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/16 13:52:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/21 09:49:42 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,15 @@ int	last_redir(char **args)
 		i++;
 	}
 	return (last);
+}
+
+int	is_built_in(char *str)
+{
+	return (ft_pos_strstr(str, "echo") != -1
+		|| ft_pos_strstr(str, "cd") != -1
+		|| ft_pos_strstr(str, "pwd") != -1
+		|| ft_pos_strstr(str, "env") != -1
+		|| ft_pos_strstr(str, "export") != -1
+		|| ft_pos_strstr(str, "unset") != -1
+		|| ft_pos_strstr(str, "exit") != -1);
 }

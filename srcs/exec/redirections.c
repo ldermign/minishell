@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 19:18:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:39:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,23 +124,24 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 	char	**exec_args_only;
 	char	*good_path;
 
-	exec_args_only = get_args_exec(args);
-	good_path = working_path(ms->env.path, exec_args_only[0]);
-	// printf("par la \n");
-	if (built_in_to_create(ms, args, ms->prompt) != -1)
+	if (is_built_in(args[0]) != -1)
 	{
+		get_good_fd_built_in(args, ms->std.name_file, std);
+		built_in_to_create(ms, args, ms->prompt);
 		reboot_struct_std(&(ms->std));
 		return (EXIT_SUCCESS);
 	}
+	// printf("ici\n");
+	exec_args_only = get_args_exec(args);
+	good_path = working_path(ms->env.path, exec_args_only[0]);
+	// get_good_fd(args, ms->std.name_file, std);
 	execute_cmd(ms, good_path, exec_args_only, ms->env.env_bash);
-	reboot_struct_std(std);
+	// close_all_fd(std);
 	return(EXIT_SUCCESS);
 }
 
 int	get_redirections(t_struct *ms, char **args, int which)
 {
-	// print_tab_char(args);
-	// printf("red = %d\n", redirection_first(args[0]));
 	if (which == 1 || which == 3)
 		ms->std.name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
 	if (redirection_first(args[0]) == 1)
