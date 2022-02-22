@@ -6,11 +6,36 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 00:07:57 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 02:33:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_option(char *line, t_struct *minish)
+{
+	int	i;
+	int	j;
+
+	i = 2;
+	j = 0;
+	while (ft_strlen(&line[j]) > 1
+		&& ft_memcmp("-n", &line[j], 2) == 0)
+	{
+		i = 2;
+		while (line[j + i] == 'n')
+			i++;
+		if (line[j + i] != '\0'
+			&& line[j + i] != ' ')
+			return (j);
+		minish->parsing.option = 1;
+		j += i;
+		while (line[j] == ' ')
+			j++;
+	}
+	printf("option : [%s]\n", &line[j]);
+	return (j);
+}
 
 int	count_args(char *line, t_struct *minish)
 {
@@ -19,6 +44,17 @@ int	count_args(char *line, t_struct *minish)
 
 	i = 0;
 	j = 0;
+	while (line[i] == ' ')
+		i++;
+	if (ft_memcmp(&line[i], "echo", 4) == 0)
+	{
+		i += 4;
+		if (line[i] != '\0' || )
+		minish->parsing.nb_arg++;
+		while (line[i] == ' ')
+			i++;
+		i = check_option(&line[i], minish);
+	}
 	while (line[i])
 	{
 		i += pass_arg_count(&line[i], minish);
@@ -43,6 +79,27 @@ char	*fill_arg(char *line, char *str, t_struct *minish)
 	return (str);
 }
 
+// int	check_option(char *line, t_struct *minish)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (ft_strlen(&line[j + i]) > 1
+// 		&& ft_memcmp("-n", &line[j + i], 2) == 0)
+// 	{
+// 		i = 2;
+// 		while (line[i] == 'n')
+// 			i++;
+// 		if (line[i] == '\0' && line[i] == ' ')
+// 			parsing->option = 1;
+// 		while (line[i] == ' ')
+// 			i++;
+// 	}
+// 	return (i);
+// }
+
 char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 {
 	int	i;
@@ -53,6 +110,8 @@ char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 	minish->parsing.i_line = 0;
 	while (line[i])
 	{
+		if (j == 1 && ft_memcmp(tab_arg[0], "echo", 5) == 0)
+			i += check_option(&line[i], minish);
 		// printf("line = [%s]\n", &line[i]);
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
 		i += minish->parsing.i_line;

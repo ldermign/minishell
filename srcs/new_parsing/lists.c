@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 00:15:29 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 01:16:16 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	free_list(t_list_arg *list)
 	while (list->first != NULL)
 	{
 		i = 0;
-		if (list->first->arg_to_pass)
+		if (list->first->arg_to_pass != NULL)
 		{
 			while (list->first->arg_to_pass[i] != NULL)
 			{
@@ -88,7 +88,7 @@ void	print_list(t_list_arg *list)
 	printf("\nlist :\n");
 	while (args != NULL)
 	{
-		printf("\033[1;35m%s\n\033[0m", args->command);
+		printf("\033[1;35m[%s]\n\033[0m", args->command);
 		args = args->next;
 	}
 	printf("\n");
