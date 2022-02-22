@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/21 03:43:02 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 23:58:41 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	len_no_brace(char *line, t_struct *minish)
 	i = 1;
 	while (is_variable_char(line[i]) == 0 && line[i] != '}')
 		i++;
-	str = malloc(sizeof(char) * i - 1);
+	str = malloc(sizeof(char) * i);
 	if (str == NULL)
 		return (error_malloc(minish));
 	j = i;

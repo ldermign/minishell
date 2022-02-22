@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/22 08:18:40 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 23:56:22 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int ac, char **av, char **env)
 			i++;
 		if (line[i] != '\0')
 			parsing(line, &structure);
-		printf("recup echo parsing : [%s]\n", structure.parsing.result);
+		// printf("recup echo parsing : [%s]\n", structure.parsing.result);
 		i = 0;
 		// if (line[0] != '\0' && structure.parsing.error != 1)
 		// 	command(line, &structure);
@@ -94,3 +94,6 @@ int	main(int ac, char **av, char **env)
 	// command(cmd, &structure);
 	return (0);
 }
+
+// minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
+	
