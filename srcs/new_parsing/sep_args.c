@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 06:01:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 06:29:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_option(char *line, t_struct *minish)
 		while (line[j] == ' ')
 			j++;
 	}
-	printf("option : [%s]\n", &line[j]);
+	// printf("option : [%s]\n", &line[j]);
 	return (j);
 }
 
@@ -57,13 +57,13 @@ int	count_args(char *line, t_struct *minish)
 		// 	return (i);
 		// while (line[i] == ' ')
 		// 	i++;
-		printf("option = [%s]\n", &line[i]);
+		// printf("option = [%s]\n", &line[i]);
 		i += check_option(&line[i], minish);
 	}
-	printf("apres echo = [%s]\n", &line[i]);
+	// printf("apres echo = [%s]\n", &line[i]);
 	while (line[i])
 	{
-		printf("boucle = [%s]\n", &line[i]);
+		// printf("boucle = [%s]\n", &line[i]);
 		i += pass_arg_count(&line[i], minish);
 		if (minish->parsing.error == 1)
 			return (-1);

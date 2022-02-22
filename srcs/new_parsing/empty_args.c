@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/21 08:01:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 08:48:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	is_empty_no_brace(char *line, t_struct *minish)
 	i = 1;
 	while (is_variable_char(line[i]) == 0 && line[i] != '}')
 		i++;
-	str = malloc(sizeof(char) * i - 1);
+	printf("i = %d\n", i);
+	str = malloc(sizeof(char) * i);
 	if (str == NULL)
 		return (error_malloc(minish));
 	j = i;

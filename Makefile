@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/20 01:42:16 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/22 06:49:39 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/new_parsing/utils.c ./srcs/new_parsing/empty_args.c \
 			./srcs/new_parsing/len_arg.c ./srcs/new_parsing/len_variable.c \
 			./srcs/new_parsing/fill_variable.c ./srcs/new_parsing/fill_arg.c \
+			./srcs/new_parsing/echo.c \
 			# ./srcs/new_parsing/recup_redir.c \
 			# ./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
 			# ./srcs/parsing/command/commands.c \

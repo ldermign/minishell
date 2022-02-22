@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 08:04:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 07:39:49 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int		fill_variable(char *line, char *str, t_struct *minish);
 int 	recup_redir(t_args *arg, t_struct *minish);
 int 	count_redir(char *line, t_struct *minish);
 int 	fill_redir(char *line, t_struct *minish);
+//      >>>>>>>>>   echo
+char	*recup_echo(char **args, t_struct *minish);
 
 
 
