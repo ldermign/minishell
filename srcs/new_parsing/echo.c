@@ -6,10 +6,16 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/19 21:46:33 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 06:06:17 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	recup_echo(char **args, minish)
+{
+	int	i;
 
+	i = 0;
+	tant que 
+}

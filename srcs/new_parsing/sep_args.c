@@ -6,32 +6,11 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 05:53:29 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/22 06:01:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	check_option(char *line, t_parsing *parsing)
-// {
-// 	int	i;
-
-// 	i = 2;
-// 	while (ft_strlen(&line[parsing->i_line]) > 1
-// 		&& ft_memcmp("-n", &line[parsing->i_line], 2) == 0)
-// 	{
-// 		i = 2;
-// 		while (line[parsing->i_line + i] == 'n')
-// 			i++;
-// 		if (line[parsing->i_line + i] != '\0'
-// 			&& line[parsing->i_line + i] != ' ')
-// 			return ;
-// 		parsing->option = 1;
-// 		parsing->i_line += i;
-// 		while (line[parsing->i_line] == ' ')
-// 			parsing->i_line++;
-// 	}
-// }
 
 int	check_option(char *line, t_struct *minish)
 {
