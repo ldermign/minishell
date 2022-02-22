@@ -6,11 +6,23 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/21 15:12:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:49:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_all_fd(t_red_std *std)
+{
+	if (std->fd_to_read != 0)
+		close(std->fd_to_read);
+	if (std->fd_to_write != 0)
+		close(std->fd_to_write);
+	// reboot_struct_std(std);
+	// dup2(STDIN_FILENO, 0);
+	// dup2(STDOUT_FILENO, 1);
+	// dup2(STDERR_FILENO, 2);
+}
 
 static void	both_redirections(t_red_std *std, char **args)
 {
@@ -75,10 +87,10 @@ int	get_good_fd_built_in(char **args, char *name_file, t_red_std *std)
 //            _exit(EXIT_SUCCESS);
 
 
-int	get_good_fd(char **args, char *name_file, t_red_std *std, int *pipefd)
+int	get_good_fd(char **args, char *name_file, t_red_std *std, int pipefd[])
 {
 	char	*line;
-
+(void)line;(void)pipefd;
 	std->name_file = name_file;
 	if (std->which == -1)
 		return (EXIT_SUCCESS);
@@ -97,25 +109,14 @@ int	get_good_fd(char **args, char *name_file, t_red_std *std, int *pipefd)
 		}
 		else if (std->which == 4)
 		{
-			if(pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				return (EXIT_FAILURE);
-			}
 			line = readline("> ");
 			while (ft_strcmp(line, args[std->last_left + 1]) != 0)
 			{
-				if (pipefd != NULL)
-				{
-					write(pipefd[1], line, ft_strlen(line));
-					dup2(pipefd[1], std->fd_to_write);
-					close(pipefd[1]);
-				}
+				write(pipefd[1], line, ft_strlen(line));
 				line = readline("> ");
 			}
+			dup2(pipefd[0], STDIN_FILENO);
 		}
-		if (std->which == 4)
-			dup2(std->fd_to_read, 0);
 	}
 	else if (std->both == 1)	//	si les chevrons sont melanges
 		both_redirections(std, args);
@@ -124,23 +125,19 @@ int	get_good_fd(char **args, char *name_file, t_red_std *std, int *pipefd)
 	return (EXIT_SUCCESS);
 }
 
-void	close_all_fd(t_red_std *std)
-{
-	close(std->fd_to_read);
-	close(std->fd_to_write);
-	reboot_struct_std(std);
-}
-
 void	execute_cmd(t_struct *ms, char *path, char **args, char **env)
 {
 	int		status;
 	pid_t	pid;
 	int		pipefd[2];
-	char	buf;
 
 	status = 0;
 	pid = fork();
-	buf = '\0';
+	if(pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		return ;
+	}
 	if (pid == -1)
 	{
 		sig_error = 127;
@@ -149,8 +146,6 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **env)
 	}
 	else if (pid > 0)
 	{
-		close(pipefd[0]);
-		close(pipefd[1]);
 		waitpid(pid, &status, 0);
 		kill(pid, SIGTERM);
 	}
@@ -159,13 +154,13 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **env)
 		get_good_fd(args, ms->std.name_file, &(ms->std), pipefd);
 		if (execve(path, args, env) == -1)
 		{
-			printf("bash: %s: command not found\n", args[0]);
+			printf("minishell: %s: command not found\n", args[0]);
 			sig_error = 127;
 			close_all_fd(&(ms->std));
 			return ;
 		}
-		close_all_fd(&(ms->std));
 	}
+	close_all_fd(&(ms->std));
 	sig_error = 0;
 }
 

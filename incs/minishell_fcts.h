@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/21 14:35:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/22 13:56:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_variable_with_pos(t_env_ms **minishell, int pos);
 */
 
 void	init_struct_std(char **args, t_red_std *std, int which);
-void	reboot_struct_std(t_red_std *std);
+// void	reboot_struct_std(t_red_std *std);
 void	init_struct_it(t_it *it);
 void	close_all_fd(t_red_std *std);
 

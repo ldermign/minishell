@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/21 09:49:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:04:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	redirection_first(char *args)
 {
-	return (ft_pos_strstr(args, ">") != -1
-		|| ft_pos_strstr(args, "<") != -1
-		|| ft_pos_strstr(args, ">>") != -1
-		|| ft_pos_strstr(args, "<<") != -1);
+	if (ft_pos_strstr(args, ">") != -1 || ft_pos_strstr(args, "<") != -1
+		|| ft_pos_strstr(args, ">>") != -1 || ft_pos_strstr(args, "<<") != -1)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 int	only_right(char **args)
@@ -76,11 +76,10 @@ int	last_redir(char **args)
 
 int	is_built_in(char *str)
 {
-	return (ft_pos_strstr(str, "echo") != -1
-		|| ft_pos_strstr(str, "cd") != -1
-		|| ft_pos_strstr(str, "pwd") != -1
-		|| ft_pos_strstr(str, "env") != -1
-		|| ft_pos_strstr(str, "export") != -1
-		|| ft_pos_strstr(str, "unset") != -1
-		|| ft_pos_strstr(str, "exit") != -1);
+	if (ft_pos_strstr(str, "echo") != -1 || ft_pos_strstr(str, "cd") != -1
+		|| ft_pos_strstr(str, "pwd") != -1 || ft_pos_strstr(str, "env") != -1
+		|| ft_pos_strstr(str, "export") != -1 || ft_pos_strstr(str, "unset") != -1
+		|| ft_pos_strstr(str, "exit") != -1)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

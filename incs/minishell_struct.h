@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 17:01:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:03:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ typedef struct	s_parsing
 
 typedef struct	s_redirection_std
 {
-	int	old_stdin;
-	int	new_stdin;
-	int	old_stdout;
-	int	new_stdout;
-	int	old_stderr;
-	int	new_stderr;
+	// int	old_stdin;
+	// int	new_stdin;
+	// int	old_stdout;
+	// int	new_stdout;
+	// int	old_stderr;
+	// int	new_stderr;
 	int	fd_to_read;
 	int	fd_to_write;
 	int	last_right;
