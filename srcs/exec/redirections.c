@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:36:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 14:26:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 	good_path = working_path(ms->env.path, exec_args_only[0]);
 	// get_good_fd(args, ms->std.name_file, std);
 	// execute_cmd(ms, good_path, exec_args_only, ms->env.env_bash);
-	execute_cmd(ms, good_path, args, ms->env.env_bash);
+	execute_cmd(ms, good_path, args, exec_args_only, ms->env.env_bash);
 	// close_all_fd(std);
 	return(EXIT_SUCCESS);
 }

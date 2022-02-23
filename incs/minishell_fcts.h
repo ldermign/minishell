@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:31:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 14:26:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		light_parse_echo(char *str);
 char	*create_path(char *path, char *cmd);
 char	*get_good_variable(char *prompt, int size, int add, int pos);
 char	*working_path(char **paths, char *name_fct);
-void	execute_cmd(t_struct *ms, char *path, char **args, char **env);
+void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, char **env);
 int	is_built_in(char *str);
 
 /*
