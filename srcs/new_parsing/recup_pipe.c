@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 01:36:46 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 04:33:12 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	pass_quotes_pipe(char *line, t_struct *minish)
 		minish->parsing.error = 1;
 		return (-1);
 	}
-	i++;
+	// i++;
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 06:38:09 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/21 07:00:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 04:30:36 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	len_arg(char *line, t_struct *minish)
 		if (minish->parsing.error == 1)
 			return (-1);
 		i++;
+		printf("line[i] = [%s]\n", &line[i]);
 	}
 	return (i);
 }

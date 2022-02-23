@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/21 03:54:14 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 01:14:41 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	pass_arg_count(char *line, t_struct *minish)
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == '<' || line[i] == '>')
-		return (pass_redir(line, minish));
+		return (pass_redir(&line[i], minish));
 	else if (line[i] == '\0')
 		return (i);
 	else if (line[i] == '$')

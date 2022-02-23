@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 23:54:00 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 04:24:17 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
 	{
 		str[minish->parsing.fill_arg++] = line[i];
-		return (1);
+		return (0);
 	}
 	else
 		i = fill_variable2(line, str, minish, i);
