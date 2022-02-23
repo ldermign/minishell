@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 14:29:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:02:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,22 @@ int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 	return (-1);
 }
 
+static int	count_pipe(char *prompt)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (prompt[i])
+	{
+		if (prompt[i] == '|')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 void command(char *prompt, t_struct *ms)
 {
 	int		i;
@@ -181,6 +197,9 @@ void command(char *prompt, t_struct *ms)
 
 	i = 0;
 	ms->prompt = prompt;
+	// printf("[%s]\n", ms->args->first->command);
+	// print_tab_char(ms->args->first->arg_to_pass);
+	ms->parsing.nb_pipe = count_pipe(prompt);	// dire a elisa que le nombre de pipe est tjs 0
 	add_history(prompt);
 	while (prompt[i] == ' ')
 		i++;
@@ -189,6 +208,12 @@ void command(char *prompt, t_struct *ms)
 		return ;
 	last = last_redir(args);
 	init_struct_std(args, &(*ms).std, last);
+	if (ms->parsing.nb_pipe > 0)
+	{
+		there_is_pipe(ms, prompt);
+		ft_free_tab(args);
+		return ;
+	}
 	if (last == -1 && built_in_to_create(ms, args, prompt) != -1)
 	{
 		ft_free_tab(args);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
+#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/23 10:31:53 by ejahan           ###   ########.fr        #
+#    Updated: 2022/02/23 15:49:44 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCS	=	./incs/
 SRCS	=	./srcs/main.c \
 			./srcs/exec/built_in.c ./srcs/exec/get_env.c \
 			./srcs/exec/redirections.c ./srcs/exec/built_in_pwd_cd_echo.c \
-			./srcs/exec/built_in_exit_unset_env.c \
+			./srcs/exec/built_in_exit_unset_env.c ./srcs/exec/pipe.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
 			./srcs/exec/execute_cmd.c \
@@ -56,7 +56,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS} -g3 -fsanitize=address ${CFLAGS} -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS}  ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 

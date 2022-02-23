@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 14:14:55 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:14:03 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 
 	status = 0;
 	pid = fork();
-	if(pipe(pipefd) == -1)
+	if (pipe(pipefd) == -1)
 	{
 		perror("pipe");
 		return ;
@@ -126,7 +126,7 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 		perror("fork");
 		return ;
 	}
-	else if (pid > 0)
+	if (pid > 0)
 	{
 		close(pipefd[0]);
 		close(pipefd[1]);
