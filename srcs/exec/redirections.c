@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/22 13:56:58 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:34:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*create_all_files(char **args)
 			break ;
 	}
 	name_file = args[last + 1];
-	return (name_file);
+	return (name_file);< 2
 }
 
 static int	size(char **args)
@@ -186,4 +186,7 @@ int	how_many_redirec(char **args)
 	return (ret);
 }
 
-*/
+// void	test_redir_dup(t_struct *ms, char **args)
+// {
+	
+// }

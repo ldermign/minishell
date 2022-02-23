@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/22 13:56:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:31:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,37 +101,95 @@ void	close_all_fd(t_red_std *std);
 void	print_tab_char(char **tabl);
 void	print_env_ms(t_env_ms **stack);
 
-// 		>>>>>>>>>  parsing  <<<<<<<<<
-int		parse_line(char *line, t_parsing *parsing);
+/*
+**		>>>>>>>>>  PARSING  <<<<<<<<<
+*/
 
-//		>>>>>>>>> check commandes
-void	parse_echo(char *line, t_parsing *parsing);
-void	parse_cd(char *line, t_parsing *parsing);
-void	parse_pwd(char *line, t_parsing *parsing);
-void	parse_export(char *line, t_parsing *parsing);
-void	parse_unset(char *line, t_parsing *parsing);
-void	parse_env(char *line, t_parsing *parsing);
-void	parse_exit(char *line, t_parsing *parsing);
+//		>>>>>>>>>   initialisations
+void	init_parsing(t_parsing *parsing);
+t_list_arg	*init_args(void);
+//		>>>>>>>>>   list
+int		insertion(t_list_arg *list, char *new_arg);
+int		free_list(t_list_arg *list);
+int		delete(t_list_arg *list);
+void	print_list(t_list_arg *list);
+//		>>>>>>>>>	parsing
+int		parsing(char *line, t_struct *minish);
+//		>>>>>>>>>	recup_args
+int		recup_pipe(char *line, t_struct *minishell);
+int		recup_args(char *line, t_struct *minishell);
+// 		>>>>>>>>>	arguments
+// int 	interpret_args(char *line, char	**tab_arg, t_struct *minish);
+char	**interpret_args(char *line, char	**tab_arg, t_struct *minish);
+// 		>>>>>>>>>	sep_args
+// int		sep_and_check_args(t_args *arg, t_struct *minish);
+char	**sep_and_check_args(t_args *arg, t_struct *minish);
+int		pass_quotes(char *line);
+// 		>>>>>>>>>	count_arg
+int		pass_arg_count(char *line, t_struct *minish);
+// 		>>>>>>>>>	utils
+int		is_variable_char(char c);
+int		pass_variable(char *line);
+int		pass_redir(char *line, t_struct *minish);
+int		pass_quotes(char *line);
+int		error_malloc(t_struct *minish);
+// 		>>>>>>>>>	empty_args
+int		is_empty(char *line, t_struct *minish);
+// 		>>>>>>>>>	len_arg
+int		len_arg(char *line, t_struct *minish);
+int 	len_double_quotes(char *line, t_struct *minish);
+int 	len_simple_quote(char *line, t_struct *minish);
+//      >>>>>>>>>   len_variable
+int 	len_variable(char *line, t_struct *minish);
+// 		>>>>>>>>>	fill_arg
+int		fill_arg2(char *line, char *str, t_struct *minish);
+// 		>>>>>>>>>	fill_variable
+int		fill_variable(char *line, char *str, t_struct *minish);
+//      >>>>>>>>>   redir
+int 	recup_redir(t_args *arg, t_struct *minish);
+int 	count_redir(char *line, t_struct *minish);
+int 	fill_redir(char *line, t_struct *minish);
+//      >>>>>>>>>   echo
+char	*recup_echo(char **args, t_struct *minish);
 
-//		>>>>>>>>> echo
-void	fill_result(char *line, t_parsing *parsing);
-int		find_len(char *line, t_parsing *parsing);
-// parse_quotes
-int		simple_quote(char *line, t_parsing *parsing);
-int		double_quotes(char *line, t_parsing *parsing);
-int		check_quotes_and_redir(char *line, t_parsing *parsing);
 
-//		>>>>>>>>> error
-void	error_command(char *line, t_parsing *parsing);
-int		error_check(char *line, t_parsing *parsing, int i);
 
-//		>>>>>>>>> redirections
-void	parse_second_redir(char *line, t_parsing *parsing);
-int		skip_redirections(char *line, t_parsing *parsing);
-int		redirections(char *line, t_parsing *parsing);
-void	parse_first_redir(char *line, t_parsing *parsing);
-void	parse_third_redir(char *line, t_parsing *parsing);
-void	parse_fourth_redir(char *line, t_parsing *parsing);
-void	check_char_in_file_name(char c, t_parsing *parsing);
+
+
+/*
+**		AVANT
+*/
+
+// int		parse_line(char *line, t_parsing *parsing);
+
+// //		>>>>>>>>> check commandes
+// void	parse_echo(char *line, t_parsing *parsing);
+// void	parse_cd(char *line, t_parsing *parsing);
+// void	parse_pwd(char *line, t_parsing *parsing);
+// void	parse_export(char *line, t_parsing *parsing);
+// void	parse_unset(char *line, t_parsing *parsing);
+// void	parse_env(char *line, t_parsing *parsing);
+// void	parse_exit(char *line, t_parsing *parsing);
+
+// //		>>>>>>>>> echo
+// void	fill_result(char *line, t_parsing *parsing);
+// int		find_len(char *line, t_parsing *parsing);
+// // parse_quotes
+// int		simple_quote(char *line, t_parsing *parsing);
+// int		double_quotes(char *line, t_parsing *parsing);
+// int		check_quotes_and_redir(char *line, t_parsing *parsing);
+
+// //		>>>>>>>>> error
+// void	error_command(char *line, t_parsing *parsing);
+// int		error_check(char *line, t_parsing *parsing, int i);
+
+// //		>>>>>>>>> redirections
+// void	parse_second_redir(char *line, t_parsing *parsing);
+// int		skip_redirections(char *line, t_parsing *parsing);
+// int		redirections(char *line, t_parsing *parsing);
+// void	parse_first_redir(char *line, t_parsing *parsing);
+// void	parse_third_redir(char *line, t_parsing *parsing);
+// void	parse_fourth_redir(char *line, t_parsing *parsing);
+// void	check_char_in_file_name(char c, t_parsing *parsing);
 
 #endif

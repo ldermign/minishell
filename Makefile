@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/20 18:19:44 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/23 10:31:53 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,15 +24,23 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils/uts_redir_2.c \
 			./srcs/init/init_struct.c \
 			./srcs/supprimer.c \
-			./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
-			./srcs/parsing/command/commands.c \
-			./srcs/parsing/command/fill_echo.c ./srcs/parsing/command/echo.c \
-			./srcs/parsing/error.c ./srcs/parsing/parsing.c \
-			./srcs/parsing/redirections/redirections.c \
-			./srcs/parsing/redirections/redirection1.c \
-			./srcs/parsing/redirections/redirection2.c \
-			./srcs/parsing/redirections/redirection3.c \
-			./srcs/parsing/redirections/redirection4.c
+			./srcs/new_parsing/parsing.c ./srcs/new_parsing/initialisations.c\
+			./srcs/new_parsing/lists.c ./srcs/new_parsing/sep_args.c \
+			./srcs/new_parsing/recup_pipe.c ./srcs/new_parsing/count_arg.c \
+			./srcs/new_parsing/utils.c ./srcs/new_parsing/empty_args.c \
+			./srcs/new_parsing/len_arg.c ./srcs/new_parsing/len_variable.c \
+			./srcs/new_parsing/fill_variable.c ./srcs/new_parsing/fill_arg.c \
+			./srcs/new_parsing/echo.c \
+			# ./srcs/new_parsing/recup_redir.c \
+			# ./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
+			# ./srcs/parsing/command/commands.c \
+			# ./srcs/parsing/command/fill_echo.c ./srcs/parsing/command/echo.c \
+			# ./srcs/parsing/error.c ./srcs/parsing/parsing.c \
+			# ./srcs/parsing/redirections/redirections.c \
+			# ./srcs/parsing/redirections/redirection1.c \
+			# ./srcs/parsing/redirections/redirection2.c \
+			# ./srcs/parsing/redirections/redirection3.c \
+			# ./srcs/parsing/redirections/redirection4.c
 
 OBJS	=	${SRCS:.c=.o}
 
@@ -48,7 +56,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS}
 			@${MAKE} -C ./libft
-			@${CC} -o ${NAME} ${OBJS}  ${CFLAGS} -lreadline libft/libft.a
+			@${CC} -o ${NAME} ${OBJS} -g3 -fsanitize=address ${CFLAGS} -lreadline libft/libft.a
 
 -include	${DEPS}
 

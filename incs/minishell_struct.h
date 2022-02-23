@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/22 12:03:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:33:17 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,33 @@ typedef struct s_environnement
 	t_env_ms	*env_ms;
 }	t_env;
 
-typedef struct	s_parsing
+typedef struct s_args
+{
+	char			**redir;	//	recup toutes les redirections
+	char			*command;
+	char			**arg_to_pass;	//	arguments a donner aux fonction exec
+	struct s_args	*next;
+}	t_args;
+
+typedef struct s_list_arg
+{
+	t_args	*first;
+}	t_list_arg;
+
+typedef struct s_parsing
 {
 	int		i_line;
 	int		error;
 	int		red1;
 	int		red2;
-	char	*result;
-	char	*file_redirection;
+	int		nb_arg;
+	int		len_arg;
+	int		fill_arg;
 	int		option;
+	int		nb_pipe;
+	int		nb_redir;
 	int		pipe_fd[2];
+	char	*result;
 }	t_parsing;
 
 typedef struct	s_redirection_std
@@ -63,10 +80,10 @@ typedef struct	s_redirection_std
 
 typedef struct	s_structure
 {
-	t_parsing	parsing;
-	t_env		env;
-	t_red_std	std;
-	char		*prompt;
+	t_parsing		parsing;
+	t_parsing		*new_parsing;
+	t_env			env;
+	t_list_arg		*args;
 }	t_struct;
 
 typedef struct	s_iterator

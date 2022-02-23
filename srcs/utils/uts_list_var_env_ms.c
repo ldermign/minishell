@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_list_var_env_ms.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 22:38:55 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:34:28 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,12 +154,14 @@ char	*get_variable(t_env_ms **minishell, char *str)
 	tmp = NULL;
 	first = *minishell;
 	while (*minishell)
-	{	
+	{
+		// printf("%s\n", str);
 		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
 			i++;
-		if (str[i] == '\0')
+		if (str[i] == '\0' && (*minishell)->var[i] == '=')
 		{
 			tmp = &((*minishell)->var[ft_strlen(str) + 1]);
+			// printf("ca passe pas ici en theorie [%s], [%s]\n", tmp, str);
 			break ;
 		}
 		i = 0;
