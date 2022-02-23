@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:33:17 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:36:07 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct	s_structure
 	t_parsing		*new_parsing;
 	t_env			env;
 	t_list_arg		*args;
+	t_red_std		std;
+	char			*prompt;
 }	t_struct;
 
 typedef struct	s_iterator

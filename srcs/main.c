@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:33:35 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:37:32 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	main(int ac, char **av, char **env)
 			parsing(line, &structure);
 		// printf("recup echo parsing : [%s]\n", structure.parsing.result);
 		i = 0;
-		// if (line[0] != '\0' && structure.parsing.error != 1)
-		// 	command(line, &structure);
-		// if (structure.parsing.result != NULL)
-		// 	free(structure.parsing.result);
+		if (line[0] != '\0' && structure.parsing.error != 1)
+			command(line, &structure);
+		if (structure.parsing.result != NULL)
+			free(structure.parsing.result);
 		free(line);
 	}
 	// command(cmd, &structure);
