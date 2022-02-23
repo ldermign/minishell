@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/21 14:34:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:24:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void command(char *prompt, t_struct *ms)
 
 	i = 0;
 	ms->prompt = prompt;
-	// add_history(prompt);
+	add_history(prompt);
 	// print_env_ms(&(ms->env));
 	while (prompt[i] == ' ')
 		i++;
@@ -201,13 +201,7 @@ void command(char *prompt, t_struct *ms)
 		ft_free_tab(args);
 		return ;
 	}
-	// if (redirection(env, args, prompt) != -1)
-	// {
-	// 	ft_free_tab(args);
-	// 	return ;
-	// }
 	good_path = working_path(ms->env.path, args[0]);
-	execute_cmd(ms, good_path, args, ms->env.env_bash);
+	execute_cmd(ms, good_path, args, args, ms->env.env_bash);
 	ft_free_tab(args);
-	// print_env_ms(&(env->env_ms));
 }

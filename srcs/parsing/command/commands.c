@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/12 19:40:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:22:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	}
 	parsing->i_line = tmp;
 	fill_result(line, parsing);
-	printf(GREY"to_print : [%s]\n"NORMAL, parsing->result);
+	// printf(GREY"to_print : [%s]\n"NORMAL, parsing->result);
 }
 
 void	parse_exit(char *line, t_parsing *parsing)
