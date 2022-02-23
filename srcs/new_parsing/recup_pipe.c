@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 04:33:12 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:03:29 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	pass_quotes_pipe(char *line, t_struct *minish)
 	j = 0;
 	i = 1;
 	if (line[i] == line[j])
-		return (i + 1);
+		return (i);
 	while (line[i] && line[i] != line[j])
 		i++;
 	if (line[i] == '\0')
@@ -29,7 +29,6 @@ int	pass_quotes_pipe(char *line, t_struct *minish)
 		minish->parsing.error = 1;
 		return (-1);
 	}
-	// i++;
 	return (i);
 }
 

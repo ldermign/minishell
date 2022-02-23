@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 06:29:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:22:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	count_args(char *line, t_struct *minish)
 char	*fill_arg(char *line, char *str, t_struct *minish)
 {
 	len_arg(line, minish);
-	printf("len arg = %d\n", minish->parsing.len_arg);
+	// printf("len arg = %d\n", minish->parsing.len_arg);
 	str = malloc(sizeof(char) * minish->parsing.len_arg + 1);
 	if (str == NULL)
 	{
@@ -94,12 +94,11 @@ char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 	i = 0;
 	j = 0;
 	minish->parsing.i_line = 0;
-	while (line[i])
+	while (line[i] && minish->parsing.nb_arg-- > 0)
 	{
 		if (j == 1 && ft_memcmp(tab_arg[0], "echo", 4) == 0
 			&& (tab_arg[0][4] == '\0' || tab_arg[0][4] == ' '))
 		{
-			printf("la\n");
 			i += check_option(&line[i], minish);
 			while (line[i] == ' ')
 				i++;
@@ -138,7 +137,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	if (minish->parsing.error == 1)
 		return (NULL);
 	i = minish->parsing.nb_arg;
-	printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
+	// printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
 	if (i == 0)
 		return (NULL);
 	arg_to_pass = malloc(sizeof(char *) * i + 1);

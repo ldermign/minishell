@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 04:24:03 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:24:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,14 +152,12 @@ int	len_variable(char *line, t_struct *minish)
 			i++;
 		return (i - 1);
 	}
-	printf("la\n");
 	// if (line[i] == '$' && line[i + 1] == '$')
 	// 	return (double_dollar(minish));
 	if (line[i + 1] == 34 || line[i + 1] == 39)
 		return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
 	{
-		printf("here\n");
 		minish->parsing.len_arg++;
 		return (0);
 	}

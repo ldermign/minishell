@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 04:24:17 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:24:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	fill_no_brace(char *line, char *arg, t_struct *minish)
 	if (tmp == NULL && is_variable_char(line[j]) == 1)
 		return (0);
 	i = 0;
-	printf("tmp = [%s]\n", tmp);
+	// printf("tmp = [%s]\n", tmp);
 	while (tmp[i])
 	{
 		arg[minish->parsing.fill_arg++] = tmp[i];

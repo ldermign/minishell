@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/22 23:48:51 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:23:30 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*fill_echo(char **arg, int len, t_struct *minish)
 		j++;
 		i = 0;
 	}
-	printf("recup echo = [%s]\n", str);
+	// printf("recup echo = [%s]\n", str);
 	return (str);
 }
 
@@ -80,7 +80,7 @@ char	*recup_echo(char **args, t_struct *minish)
 	i = len_echo(args);
 	if (i < 0)
 		i = 0;
-	printf("len echo = %d\n", i);
+	// printf("len echo = %d\n", i);
 	str = fill_echo(args, i, minish);
 	if (minish->parsing.error == 1)
 		return (NULL);

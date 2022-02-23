@@ -57,7 +57,7 @@ tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
 
 
 recup redirections dans char **
-echo 
+echo
 signaux
 leaks
 norme
@@ -79,4 +79,8 @@ $""
 $ ""
 
 
+fhurifg3rufi """ :l;lll
 
+echo > salut
+
+bonjour < coucou
