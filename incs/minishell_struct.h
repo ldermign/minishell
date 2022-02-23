@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:36:07 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:45:00 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct	s_redirection_std
 typedef struct	s_structure
 {
 	t_parsing		parsing;
-	t_parsing		*new_parsing;
 	t_env			env;
 	t_list_arg		*args;
 	t_red_std		std;

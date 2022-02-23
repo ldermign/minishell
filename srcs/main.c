@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:37:32 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:48:36 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int	main(int ac, char **av, char **env)
 	// command(cmd, &structure);
 	return (0);
 }
+
+// structure->args->first->arg_to_pass
+// structure->args->first.command
 
 // minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
 	
