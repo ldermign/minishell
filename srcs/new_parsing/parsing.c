@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 10:42:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/24 06:01:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ int	parsing(char *line, t_struct *minish)
 	init_parsing(&minish->parsing);
 	// init_parsing(minish->new_parsing);
 	if (recup_args(line, minish) == -1)
+	{
+		printf("\n\n\n\nERROR\n\n\n\n");
 		return (-1);
+	}
 	// minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
-	// print_list(minish->args);
-	free_list(minish->args);
+	print_list(minish->args);
+	// free_list(minish->args);
 	return (0);
 }
 

@@ -84,3 +84,32 @@ fhurifg3rufi """ :l;lll
 echo > salut
 
 bonjour < coucou
+
+
+"${GYTR" >> cest bon
+
+TESTS :
+echo mdrr 1<>coucou
+echo mdrr 2<>coucou
+echo “” ; cat -e
+echo "" a ; cat -e
+echo >mdr>hey>>sarace \sal"mdr"
+echo <hey1<h'ey2'
+echo bonjour >hey >>hey2 >>hey3
+>> e
+ls $HOME/Desktop
+echo “$PATH”
+echo "$PATH$PWD"
+echo -n a '' b '' c '' d
+e"ch"o bonjour
+echo\ bonjour
+
+
+MARCHE PAS
+"NYR"%"$"HNTEYN"TE$NW$"     -> manque '$'
+
+
+
+^\  ->   fait ce que ^D doit faire
+^D  ->   seg fault??
+

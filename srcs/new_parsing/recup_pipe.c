@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 10:03:29 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/23 23:51:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int	recup_pipe(char *line, t_struct *minish)
 				return (-1);
 		}
 		recup_pipe2(line, minish, i);
+		minish->parsing.nb_pipe++;
 		if (minish->parsing.error == 1)
 			return (-1);
 		if (line[minish->parsing.i_line] != '\0')

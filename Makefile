@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/23 15:49:44 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/24 03:59:55 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ CC		=	clang
 
 RM		=	rm -rf
 
-CFLAGS	=	-Wall -Wextra -Werror -I ${INCS} -g3
+CFLAGS	=	-Wall -Wextra -Werror -I ${INCS} -g3 #-fsanitize=address
 
 all:		${NAME}
 

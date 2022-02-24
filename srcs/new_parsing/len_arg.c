@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 06:38:09 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 10:24:23 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/24 01:20:26 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	len_double_quotes(char *line, t_struct *minish)
 		else
 			minish->parsing.len_arg++;
 		i++;
+		if (minish->parsing.error == 1)
+			return (-1);
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 10:22:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/24 03:59:39 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	count_args(char *line, t_struct *minish)
 char	*fill_arg(char *line, char *str, t_struct *minish)
 {
 	len_arg(line, minish);
+	if (minish->parsing.error == 1)
+		return (NULL);
 	// printf("len arg = %d\n", minish->parsing.len_arg);
 	str = malloc(sizeof(char) * minish->parsing.len_arg + 1);
 	if (str == NULL)
@@ -118,6 +120,11 @@ char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 			i++;
 		j++;
 	}
+	
+	// printf("ok\n");
+	// tab_arg[j] = NULL;
+	// printf("ok\n");
+	
 	// i = 0;
 	// while (tab_arg[i] != NULL)
 	// {
@@ -146,7 +153,9 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 		error_malloc(minish);
 		return (NULL);
 	}
-	arg_to_pass[i] = NULL;
+	// printf("la i = %d\n", i);
+	arg_to_pass[i] = NULL;	// >>>>> fait seg fault??
+	// printf("aussi\n");
 	arg_to_pass = interpret_args(arg->command, arg_to_pass, minish);
 	if (minish->parsing.nb_arg != 0 && minish->parsing.error == 1)
 	{
