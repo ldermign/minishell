@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/24 06:01:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/26 14:12:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parsing(char *line, t_struct *minish)
 		return (-1);
 	}
 	// minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
-	print_list(minish->args);
+	// print_list(minish->args);
 	// free_list(minish->args);
 	return (0);
 }

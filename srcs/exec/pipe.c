@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/24 13:29:31 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/26 16:29:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	len_tab(char **tabl)
 	i = 0;
 	while (tabl[i])
 		i++;
-	return (1);
+	return (i);
 }
 
 static int	size_str(char *str)
@@ -94,13 +94,18 @@ char	**clean_args(char **cmd)
 	return (new_tab);
 }
 
-void	chaipa(t_struct *ms, char **env, char **cmd, int pipe_fd[])
+void	chaipa(t_struct *ms, char **env, char **cmd)
 {
 	int		status;
 	int		pid;
-	// int		pipe_fd[2];
+	int		pipe_fd[2];
 
 	status = 0;
+	if (pipe(pipe_fd) == -1)
+	{
+		perror("pipe");
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -108,17 +113,17 @@ void	chaipa(t_struct *ms, char **env, char **cmd, int pipe_fd[])
 		perror("fork");
 		return ;
 	}
-	printf("pid = %d\n", pid);
+	// printf("pid = %d\n", pid);
 	if (pid != 0)
 	{
 		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		waitpid(pid, &status, 0);
+		// close(pipe_fd[0]);
+		dup2(pipe_fd[0], STDIN_FILENO);
+		waitpid(pid, NULL, 0);
 		// kill(pid, SIGTERM);
 	}
 	else
 	{
-		printf("C'est dedans (normalement, 2 fois)\n");
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		// execve(working_path(ms->env.path, cmd[0]), cmd, env) == -1
@@ -131,8 +136,11 @@ void	chaipa(t_struct *ms, char **env, char **cmd, int pipe_fd[])
 			close_all_fd(&(ms->std));
 			return ;
 		}
+		// close(pipe_fd[0]);
+		// close(pipe_fd[1]);
 		if (pipe_fd[0] != 0)
 			close(pipe_fd[0]);
+		// printf("pipe_fd[0] = %d, pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
 	}
 	// close_all_fd(&(ms->std));
 	sig_error = 0;
@@ -145,7 +153,7 @@ int	pass_previous_cmd(char **old_cmd)
 	i = 0;
 	while (old_cmd[i] && old_cmd[i][0] != '|')
 		i++;
-	if (old_cmd[i][0] == '|')
+	if (old_cmd[i] && old_cmd[i][0] == '|')
 		i++;
 	return (i);
 }
@@ -156,8 +164,7 @@ char	**get_good_args_for_cmd(char **cmd_pipe)
 	int		j;
 	char	**new;
 
-	i = 0;
-	j = 0;
+	i = 0;line
 	while (cmd_pipe[i] && cmd_pipe[i][0] != '|')
 		i++;
 	new = malloc(sizeof(char *) * i + 1);
@@ -173,31 +180,25 @@ char	**get_good_args_for_cmd(char **cmd_pipe)
 }
 
 void	there_is_pipe(t_struct *ms, char *prompt)
-{(void)ms;
+{
 	int		i;
 	char	**cmd_pipe;
 	char	**new_args;
-	int		pipe_fd[2];
 
 	i = 0;
-	// cmd_pipe = ft_split(prompt, '|');
-	// cmd_pipe = clean_args(cmd_pipe);
-	while (prompt[i] == ' ')
-		i++;
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("pipe");
-		return ;
-	}
 	cmd_pipe = get_cmd_and_args_split(&prompt[i]);
-	// print_tab_char(cmd_pipe);
 	int len = len_tab(cmd_pipe);
 	while (i < len)
 	{
+		printf("Xavier a tort\n");
 		new_args = get_good_args_for_cmd(&cmd_pipe[i]);
-		chaipa(ms, ms->env.env_bash, new_args, pipe_fd);
+		printf("Xaviort\n");
+		chaipa(ms, ms->env.env_bash, new_args);
+		printf("Xa\n");
 		i += pass_previous_cmd(&cmd_pipe[i]);
+		printf("tort\n");
 		ft_free_tab(new_args);
+		
 	}
 	close_all_fd(&(ms->std));
 }
@@ -214,3 +215,11 @@ cat /dev/urandom | head -c 1000 | wc -c
 En trover d'autres...
 
 */
+
+// tab[0] = ls
+// tab[1] = -l
+
+// // 2eme tour
+
+// tab[0] = wc
+// tab[1] =

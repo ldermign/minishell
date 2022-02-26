@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/24 06:04:13 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/26 16:00:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	line = NULL;
-	i = 0;
 	if (ac != 1)
 	{
 		printf("Error, too many arguments.\n");
@@ -50,17 +49,18 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	while (42)
 	{
+		i = 0;
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, handle_signal);
 		line = readline("$ ");
-		while (line[i] == ' ')
+		// write(1, line, ft_strlen(line));
+		while (line[i] && line[i] == ' ')
 			i++;
-		if (line[i] != '\0')
-			parsing(line, &structure);
+		if (line[i])
+			parsing(&line[i], &structure);
 		// printf("nb pipe = %d\n", structure.parsing.nb_pipe);
 		// printf("recup echo parsing : [%s]\n", structure.parsing.result);
-		i = 0;
-		if (line[0] != '\0' && structure.parsing.error != 1)
+		if (line[i] && structure.parsing.error != 1)
 			command(line, &structure);
 		if (structure.parsing.result != NULL)
 			free(structure.parsing.result);
