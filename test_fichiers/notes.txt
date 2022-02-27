@@ -113,3 +113,14 @@ MARCHE PAS
 ^\  ->   fait ce que ^D doit faire
 ^D  ->   seg fault??
 
+
+
+
+
+options echo
+$$
+$?
+redirections?
+
+
+

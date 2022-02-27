@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/24 01:16:28 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/27 06:19:00 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,21 @@ int	fill_variable2(char *line, char *str, t_struct *minish, int i)
 	return (i);
 }
 
-// int	fill_double_dollar(t_struct *minish)
-// {
-// 	minish->parsing.len_arg = ft_strlen(je sais pas -> numéro de processus de ton shell courant);
-// 	return (1);
-// }
+int	fill_double_dollar(t_struct *minish, char *str)
+{
+	char	*pid;
+	int		i;
+
+	i = 0;
+	pid = ft_itoa(minish->pid);
+	while (pid[i])
+	{
+		str[minish->parsing.fill_arg] = pid[i];
+		i++;
+		minish->parsing.fill_arg++;
+	}
+	return (1);
+}
 
 int	fill_variable(char *line, char *str, t_struct *minish)
 {
@@ -124,8 +134,8 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 		// printf("line[i] empty = [%s]\n", &line[i]);
 		return (i - 1);
 	}
-	// if (line[i] == '$' && line[i + 1] == '$')
-	// 	return (fill_double_dollar(minish));
+	if (line[i] == '$' && line[i + 1] == '$')
+		return (fill_double_dollar(minish, str));
 	if (line[i + 1] == 34 || line[i + 1] == 39)
 		return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))

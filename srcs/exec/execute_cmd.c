@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/24 04:04:21 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/26 22:29:41 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 
 	status = 0;
 	pid = fork();
+	ms->pid = pid;
 	if (pipe(pipefd) == -1)
 	{
 		perror("pipe");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/26 16:29:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:01:54 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ char	**get_good_args_for_cmd(char **cmd_pipe)
 	int		j;
 	char	**new;
 
-	i = 0;line
+	i = 0;//line
+	j = 0;
 	while (cmd_pipe[i] && cmd_pipe[i][0] != '|')
 		i++;
 	new = malloc(sizeof(char *) * i + 1);

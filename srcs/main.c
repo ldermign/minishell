@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/26 16:00:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:14:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ int	main(int ac, char **av, char **env)
 		// printf("nb pipe = %d\n", structure.parsing.nb_pipe);
 		// printf("recup echo parsing : [%s]\n", structure.parsing.result);
 		if (line[i] && structure.parsing.error != 1)
+		{
 			command(line, &structure);
-		if (structure.parsing.result != NULL)
-			free(structure.parsing.result);
+			free_list(structure.args);
+		}
+		// if (structure.parsing.result != NULL)
+			// free(structure.parsing.result);
 		free(line);
-		free_list(structure.args);
 	}
 	// command(cmd, &structure);
 	return (0);
