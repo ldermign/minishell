@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/26 21:01:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/27 17:10:18 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,46 @@ static int	size_str(char *str)
 		i++;
 	}
 	return (len);
+}
+
+int	pass_previous_cmd(char **old_cmd)
+{
+	int	i;
+
+	i = 0;
+	while (old_cmd[i] && old_cmd[i][0] != '|')
+		i++;
+	if (old_cmd[i] && old_cmd[i][0] == '|')
+		i++;
+	return (i);
+}
+
+char	**get_good_args_for_cmd(t_struct *ms, char **cmd_pipe)
+{
+	int		i;
+	int		j;
+	char	**new;
+
+	i = 0;
+	j = 0;
+	while (cmd_pipe[i] && cmd_pipe[i][0] != '|')
+		i++;
+	new = malloc(sizeof(char *) * (i + 1));
+	if (new == NULL)
+		return (NULL);
+	// printf("%d\n", i);
+	while (j < i)
+	{
+		new[j] = cmd_pipe[j];
+		j++;
+	}
+	new[j] = (char *)NULL;
+	// print_tab_char(new);
+	if (cmd_pipe[j] && cmd_pipe[j][0] == '|')
+		ms->TEST_PIPE_MERDE = 1;
+	else
+		ms->TEST_PIPE_MERDE = 0;
+	return (new);
 }
 
 static char	*fill_in(char *to_fill, char *str)
@@ -114,70 +154,35 @@ void	chaipa(t_struct *ms, char **env, char **cmd)
 		return ;
 	}
 	// printf("pid = %d\n", pid);
-	if (pid != 0)
-	{
-		close(pipe_fd[1]);
-		// close(pipe_fd[0]);
-		dup2(pipe_fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
-		// kill(pid, SIGTERM);
-	}
-	else
+	if (pid == 0) // child
 	{
 		close(pipe_fd[0]);
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		// execve(working_path(ms->env.path, cmd[0]), cmd, env) == -1
+		if (ms->TEST_PIPE_MERDE == 1)
+			dup2(pipe_fd[1], STDOUT_FILENO);
+		close(pipe_fd[1]);
 		if (execve(working_path(ms->env.path, cmd[0]), cmd, env) == -1)
 		{
 			printf("minishell: %s: command not found\n", cmd[0]);
 			sig_error = 127;
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
-			close_all_fd(&(ms->std));
 			return ;
 		}
-		// close(pipe_fd[0]);
-		// close(pipe_fd[1]);
-		if (pipe_fd[0] != 0)
-			close(pipe_fd[0]);
-		// printf("pipe_fd[0] = %d, pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
 	}
-	// close_all_fd(&(ms->std));
-	sig_error = 0;
-}
-
-int	pass_previous_cmd(char **old_cmd)
-{
-	int	i;
-
-	i = 0;
-	while (old_cmd[i] && old_cmd[i][0] != '|')
-		i++;
-	if (old_cmd[i] && old_cmd[i][0] == '|')
-		i++;
-	return (i);
-}
-
-char	**get_good_args_for_cmd(char **cmd_pipe)
-{
-	int		i;
-	int		j;
-	char	**new;
-
-	i = 0;//line
-	j = 0;
-	while (cmd_pipe[i] && cmd_pipe[i][0] != '|')
-		i++;
-	new = malloc(sizeof(char *) * i + 1);
-	if (new == NULL)
-		return (NULL);
-	while (j < i)
+	else // father
 	{
-		new[j] = cmd_pipe[j];
-		j++;
+		close(pipe_fd[1]);
+		if (ms->TEST_PIPE_MERDE == 1)
+			dup2(pipe_fd[0], STDIN_FILENO);
+		close(pipe_fd[0]);
 	}
-	new[j] = NULL;
-	return (new);
+	// printf("pipe_fd[0] = %d, pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
+	// if (pipe_fd[0] != -1)
+	// 	close(pipe_fd[0]);
+	// if (ms->TEST_PIPE_MERDE == 0 && pipe_fd[1] != -1)
+	// 	close(pipe_fd[1]);
+	// printf("pipe_fd[0] = %d, pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
+	sig_error = 0;
 }
 
 void	there_is_pipe(t_struct *ms, char *prompt)
@@ -191,17 +196,14 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	int len = len_tab(cmd_pipe);
 	while (i < len)
 	{
-		printf("Xavier a tort\n");
-		new_args = get_good_args_for_cmd(&cmd_pipe[i]);
-		printf("Xaviort\n");
+		new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
 		chaipa(ms, ms->env.env_bash, new_args);
-		printf("Xa\n");
 		i += pass_previous_cmd(&cmd_pipe[i]);
-		printf("tort\n");
 		ft_free_tab(new_args);
-		
 	}
-	close_all_fd(&(ms->std));
+	// printf("bah alors...\n");
+	// waitpid(pid, NULL, 0);
+	// faire une fonction qui attend la fin de toustes les commandes
 }
 
 /*
@@ -213,7 +215,7 @@ ls | wc
 ls | sort
 cat /dev/urandom | head -c 1000 | wc -c
 
-En trover d'autres...
+En trouver d'autres...
 
 */
 
