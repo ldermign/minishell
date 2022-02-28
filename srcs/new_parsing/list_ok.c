@@ -6,34 +6,26 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:28:49 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/28 17:59:24 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 19:05:32 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*new_list(t_list *list)
+t_list_arg	*new_list(t_list_arg *list)
 {
-	// t_args	*tmp;
-	t_args	*new;
-	t_list	*ret;
+	t_args		*new;
+	t_list_arg	*ret;
 
-	// ret->first = list->first;
-	ret->first = NULL;
+	ret = init_args();
+	print_list(list);
 	while (list->first != NULL)
 	{
 		new = list->first;
 		new->next = ret->first;
-		ret->first = new;
 		list->first = list->first->next;
-		
-		// new = list->first;
-		// ret->first->next = tmp;
-		// tmp = ret->first;
-		
-		// list->first = list->first->next;
-		// ret->first->next = list->first;
-		// ret->first = ret->first->next;
+		ret->first = new;
+		// printf("test -> [%s]\n", list->first->command);
 	}
 	return (ret);
 }

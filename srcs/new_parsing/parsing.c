@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/28 15:26:06 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 18:38:37 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	parsing(char *line, t_struct *minish)
 		printf("\n\n\n\nERROR\n\n\n\n");
 		return (-1);
 	}
+	minish->args = new_list(minish->args);
+	print_list(minish->args);
 	if (ft_memcmp(minish->args->first->arg_to_pass[0], "echo", 5) == 0)
 	{
 		minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);

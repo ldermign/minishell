@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/02/27 15:48:38 by ldermign         ###   ########.fr        #
+#    Updated: 2022/02/28 18:33:19 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/new_parsing/utils.c ./srcs/new_parsing/empty_args.c \
 			./srcs/new_parsing/len_arg.c ./srcs/new_parsing/len_variable.c \
 			./srcs/new_parsing/fill_variable.c ./srcs/new_parsing/fill_arg.c \
-			./srcs/new_parsing/echo.c \
+			./srcs/new_parsing/echo.c ./srcs/new_parsing/list_ok.c \
 			# ./srcs/new_parsing/recup_redir.c \
 			# ./srcs/parsing/utils.c ./srcs/parsing/command/commands2.c \
 			# ./srcs/parsing/command/commands.c \

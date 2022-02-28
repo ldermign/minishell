@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 15:49:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/28 18:34:57 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ int 	count_redir(char *line, t_struct *minish);
 int 	fill_redir(char *line, t_struct *minish);
 //      >>>>>>>>>   echo
 char	*recup_echo(char **args, t_struct *minish);
+//      >>>>>>>>>   list_ok
+t_list_arg	*new_list(t_list_arg *list);
 
 
 
