@@ -52,7 +52,7 @@ char	*get_variable(t_env_ms **minishell, char *str)
 
 
 
-TESTS
+TESTS : 
 
  
 ' '
@@ -84,28 +84,30 @@ e"ch"o bonjour
 
 
 
-MARCHE PAS
+MARCHE PAS : 
 
 
 
 
 
 
-
+SIGNAUX : 
 ^\  ->   fait ce que ^D doit faire
 ^D  ->   seg fault??
 
 
 
 
-
-options echo
 $$              ->>>>> pas possible?
-$?
-redirections?
 
-recup redirections dans char **
-echo
+
+
+
+options echo        >>>>>>  ok?
+echo                >>>>>>  ok?
+
+$?
+recup redirections interpretees dans char **
 signaux
 leaks
 norme

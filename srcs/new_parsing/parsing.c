@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/26 14:12:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/28 15:26:06 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int	parsing(char *line, t_struct *minish)
 		printf("\n\n\n\nERROR\n\n\n\n");
 		return (-1);
 	}
-	// minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
+	if (ft_memcmp(minish->args->first->arg_to_pass[0], "echo", 5) == 0)
+	{
+		minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
+		printf("echo = [%s]\n", minish->parsing.result);
+	}
 	// print_list(minish->args);
 	// free_list(minish->args);
 	return (0);
