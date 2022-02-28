@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sep_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/26 22:02:26 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 14:40:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*fill_arg(char *line, char *str, t_struct *minish)
 
 char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 {
+
 	int	i;
 	int	j;
 
@@ -147,7 +148,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	// printf("nombre d arguments = %d\n", minish->parsing.nb_arg);
 	if (i == 0)
 		return (NULL);
-	arg_to_pass = malloc(sizeof(char *) * i + 1);
+	arg_to_pass = malloc(sizeof(char *) * (i + 1));
 	if (arg_to_pass == NULL)
 	{
 		error_malloc(minish);

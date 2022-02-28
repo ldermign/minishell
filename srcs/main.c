@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/27 17:00:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/28 15:04:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	main(int ac, char **av, char **env)
 		if (line[i] && structure.parsing.error != 1)
 		{
 			command(line, &structure);
-			// printf("BON\n");
 			free_list(structure.args);
 		}
 		// if (structure.parsing.result != NULL)

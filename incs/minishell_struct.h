@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/27 14:19:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/28 17:55:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ typedef struct s_env_minishell
 typedef struct s_environnement
 {
 	char		**env_bash;	// env de bash
-	char		**path;	// variable d'environnement PATH de bash
-	char		*abs;	// chemin absolu du minishell
-	// char		*rel;	// cheminn relatif du minishell -> utile ?
+	char		**path;		// variable d'environnement PATH de bash
+	char		*abs;		// chemin absolu du minishell
+	// char		*rel;		// cheminn relatif du minishell -> utile ?
 	t_env_ms	*env_ms;
 }	t_env;
 
 typedef struct s_args
 {
-	char			**redir;	//	recup toutes les redirections
+	char			**redir;		//	recup toutes les redirections
 	char			*command;
 	char			**arg_to_pass;	//	arguments a donner aux fonction exec
 	struct s_args	*next;
@@ -80,7 +80,8 @@ typedef struct	s_structure
 	t_list_arg		*args;
 	t_red_std		std;
 	char			*prompt;
-	int				TEST_PIPE_MERDE;
+	int				pipe_right;
+	int				pipe_left;
 }	t_struct;
 
 typedef struct	s_iterator

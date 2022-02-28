@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 00:19:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/28 21:07:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@
 # include "minishell_fcts.h"
 
 extern int sig_error;
+
+#define READ_IN 0		// SORTIE
+#define WRITE_OUT 1		// ENTREE
 
 #endif

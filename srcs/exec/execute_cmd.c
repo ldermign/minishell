@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/26 22:29:41 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 20:57:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	get_good_fd_built_in(char **args, char *name_file, t_red_std *std)
 int	get_good_fd(char **args, char *name_file, t_red_std *std, int pipefd[])
 {
 	char	*line;
-(void)line;(void)pipefd;
+
 	std->name_file = name_file;
 	if (std->which == -1)
 		return (EXIT_SUCCESS);
