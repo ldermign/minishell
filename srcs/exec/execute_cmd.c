@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/26 22:29:41 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 13:35:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 
 	status = 0;
 	pid = fork();
-	ms->pid = pid;
 	if (pipe(pipefd) == -1)
 	{
 		perror("pipe");
@@ -129,6 +128,8 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 	}
 	if (pid > 0)
 	{
+		ms->pid = pid;
+		printf("pid == %d\n", pid);
 		close(pipefd[0]);
 		close(pipefd[1]);
 		waitpid(pid, &status, 0);

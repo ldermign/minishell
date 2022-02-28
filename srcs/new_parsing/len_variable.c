@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/27 06:17:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 14:16:46 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int	len_variable2(char *line, t_struct *minish, int i)
 
 int	double_dollar(t_struct *minish)
 {
+	minish->pid = 546456;
 	minish->parsing.len_arg += ft_strlen(ft_itoa(minish->pid));
 	return (1);
 }
@@ -156,9 +157,10 @@ int	len_variable(char *line, t_struct *minish)
 		return (-1);
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (double_dollar(minish));
-	if (line[i + 1] == 34 || line[i + 1] == 39)
-		return (i);
-	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
+	// if (line[i + 1] == 34 || line[i + 1] == 39)
+	// 	return (i);
+	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
+		|| line[i + 1] == 34 || line[i + 1] == 39))
 	{
 		minish->parsing.len_arg++;
 		return (0);
