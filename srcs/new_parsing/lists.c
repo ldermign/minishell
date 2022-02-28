@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/28 13:14:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 17:27:22 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	free_list(t_list_arg *list)
 
 	if (list == NULL)
 		return (-1);
-	// printf("\n");
-	// printf("\n");
-	// printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("\n");
 	while (list->first != NULL)
 	{
 		i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:59:13 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/23 14:22:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/02/28 17:47:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_echo(char *line, t_parsing *parsing)
 	// printf("i = %d\n", i);
 	if (i == -1)
 		return ;
-	parsing->result = malloc(sizeof(char) * i + 1);
+	parsing->result = malloc(sizeof(char) * (i + 1));
 	if (parsing->result == NULL)
 	{
 		parsing->error = 1;

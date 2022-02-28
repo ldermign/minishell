@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 10:23:55 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/02/28 17:44:48 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_empty_brace2(char *line, t_struct *minish, int i)
 	char	*str;
 	char	*tmp;
 
-	str = malloc(sizeof(char) * i - 1);
+	str = malloc(sizeof(char) * (i - 1));
 	if (str == NULL)
 		return (error_malloc(minish));
 	str[i - 2] = '\0';
