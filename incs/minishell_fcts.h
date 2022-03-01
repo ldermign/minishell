@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/01 16:09:46 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/01 22:42:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,15 +152,16 @@ int		fill_arg2(char *line, char *str, t_struct *minish);
 // 		>>>>>>>>>	fill_variable
 int		fill_variable(char *line, char *str, t_struct *minish);
 //      >>>>>>>>>   redir
-int 	recup_redir(t_args *arg, t_struct *minish);
-int 	count_redir(char *line, t_struct *minish);
-int 	fill_redir(char *line, t_struct *minish);
+// int 	recup_redir(t_args *arg, t_struct *minish);
+// int 	count_redir(char *line, t_struct *minish);
+// int 	fill_redir(char *line, t_struct *minish);
 //      >>>>>>>>>   echo
 char	*recup_echo(char **args, t_struct *minish);
 //      >>>>>>>>>   list_ok
 // t_list_arg	*new_list(t_list_arg *list);
 t_list_arg	*reverse_list(t_list_arg *list);
-
+//      >>>>>>>>>   recup_redir
+char	**recup_redir(char *line, t_struct *minish);
 
 
 

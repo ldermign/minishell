@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:28:49 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/01 16:06:21 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/01 21:49:14 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_list_arg	*reverse_list(t_list_arg *list)
 	while (list->first != NULL)
 	{
 		insertion(ret, list->first->command);
-		// free(list->first->command);
 		delete(list);
 	}
+	free(list);
 	return (ret);
 }
 
