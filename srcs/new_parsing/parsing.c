@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/01 22:41:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 00:10:27 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	recup_args(char *line, t_struct *minish)
 		// printf("arg = [%s]\n", minish->args->first->command);
 		minish->parsing.nb_arg = 0;
 		minish->args->first->arg_to_pass = sep_and_check_args(minish->args->first, minish);
+		minish->args->first->redir = recup_redir(minish->args->first->command, minish);
 		if (minish->parsing.error == 1)
 		{
 			minish->args->first = tmp;

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/01 22:42:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 00:02:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ int 	len_simple_quote(char *line, t_struct *minish);
 int 	len_variable(char *line, t_struct *minish);
 // 		>>>>>>>>>	fill_arg
 int		fill_arg2(char *line, char *str, t_struct *minish);
+int	fill_simple_quote(char *line, char *str, t_struct *minish);
+int	fill_double_quotes(char *line, char *str, t_struct *minish);
 // 		>>>>>>>>>	fill_variable
 int		fill_variable(char *line, char *str, t_struct *minish);
 //      >>>>>>>>>   redir
