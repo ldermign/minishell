@@ -105,7 +105,7 @@ $$              ->>>>> pas possible?
 
 options echo        >>>>>>  ok?
 echo                >>>>>>  ok?
-liste a l'endroit
+liste a l'endroit   >>>>>>  ok?
 $?
 recup redirections interpretees dans char **
 signaux

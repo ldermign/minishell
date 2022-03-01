@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/28 17:45:21 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/01 16:22:28 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,24 @@ int	fill_double_dollar(t_struct *minish, char *str)
 	return (1);
 }
 
+int	fill_sig_error(t_struct *minish, char *str)
+{
+	char	*sig;
+	int		i;
+
+	i = 0;
+	// printf("pid = %d\n", minish->pid);
+	sig = ft_itoa(sig_error);
+	while (sig[i])
+	{
+		str[minish->parsing.fill_arg] = sig[i];
+		i++;
+		minish->parsing.fill_arg++;
+	}
+	free(sig);
+	return (1);
+}
+
 int	fill_variable(char *line, char *str, t_struct *minish)
 {
 	int	i;
@@ -138,6 +156,8 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	}
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (fill_double_dollar(minish, str));
+	if (line[i] == '$' && line[i + 1] == '?')
+		return (fill_sig_error(minish, str));
 	// if (line[i + 1] == 34 || line[i + 1] == 39)
 	// 	return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
