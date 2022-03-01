@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/20 19:05:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/01 18:40:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,18 @@ int	built_in_pwd()
 }
 
 int	built_in_echo(t_struct *ms, char **args, char *prompt)
-{
+{(void)args;
 	int		i;
 	int		len;
 	int		line_break;
 
 	i = 0;
 	line_break = light_parse_echo(prompt);
-	if (args[0] && args[1] && ft_pos_strstr(args[1], "$?") != -1)
-	{
-		printf("%d\n", sig_error);
-		return (EXIT_SUCCESS);
-	}
+	// if (args[0] && args[1] && ft_pos_strstr(args[1], "$?") != -1)
+	// {
+	// 	printf("%d\n", sig_error);
+	// 	return (EXIT_SUCCESS);
+	// }
 	if (line_break != -1)
 		i = line_break;
 	else
