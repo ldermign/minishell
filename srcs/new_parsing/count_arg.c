@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/23 10:10:57 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/01 16:36:52 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ int	pass_arg_count(char *line, t_struct *minish)
 		return (pass_redir(&line[i], minish) + i);
 	else if (line[i] == '\0')
 		return (i);
+	else if (line[i] == '$' && line[i + 1] == '?')
+	{
+		minish->parsing.nb_arg++;
+		while (line[i] && line[i] != ' ')
+		{
+			if (line[i] == 39 || line[i] == 34)
+				i += pass_quotes(&line[i]);
+			i++;
+		}
+	}
 	else if (line[i] == '$')
 	{
 		j = is_empty(&line[i], minish);
