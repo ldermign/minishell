@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 00:10:27 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 18:01:57 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	parsing(char *line, t_struct *minish)
 	// printf("count redir = %d\n",count_redir(minish->args->first->command));
 	// minish->args = new_list(minish->args);
 	// print_list(minish->args);
-	if (ft_memcmp(minish->args->first->arg_to_pass[0], "echo", 5) == 0)
+	if (minish->args->first->arg_to_pass
+		&& ft_memcmp(minish->args->first->arg_to_pass[0], "echo", 5) == 0)
 	{
 		minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
 		printf("echo = [%s]\n", minish->parsing.result);

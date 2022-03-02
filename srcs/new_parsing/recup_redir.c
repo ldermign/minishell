@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 00:15:30 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 17:59:27 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	len_redir(char *line, t_struct *minish)
 
 	i = 0;
 	minish->parsing.len_arg = 1;
-	while (line[i] == '<' && line[i] == '>')
+	while (line[i] == '<' || line[i] == '>')
 	{
 		minish->parsing.len_arg++;
 		i++;
@@ -75,7 +75,7 @@ char	*fill_redir(char *str, char *line, t_struct *minish)
 
 	i = 0;
 	minish->parsing.fill_arg = 0;
-	while (line[i] == '<' && line[i] == '>')
+	while (line[i] == '<' || line[i] == '>')
 	{
 		str[minish->parsing.fill_arg++] = line[i];
 		i++;
@@ -83,9 +83,10 @@ char	*fill_redir(char *str, char *line, t_struct *minish)
 	while (line[i] == ' ')
 		i++;
 	str[minish->parsing.fill_arg++] = ' ';
+	printf("line = [%s]\n", &line[i]);
 	while (line[i] && line[i] != ' ' && line[i] != '<' && line[i] != '>')
 	{
-		// printf("line = [%s]\n", &line[i]);
+		printf("line = [%s]\n", &line[i]);
 		if (line[i] == '$')
 			i += fill_variable(&line[i], str, minish);
 		else if (line[i] == 39)
