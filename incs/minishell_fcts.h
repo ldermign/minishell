@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 00:02:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 20:14:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,10 @@ char	*recup_echo(char **args, t_struct *minish);
 t_list_arg	*reverse_list(t_list_arg *list);
 //      >>>>>>>>>   recup_redir
 char	**recup_redir(char *line, t_struct *minish);
+//      >>>>>>>>>   recup_pipe
+int	check_pipe2(char *line, t_struct *minish);
+int	recup_pipe2(char *line, t_struct *minish, int i);
+int	pass_arg(char *line, t_struct *minish);
 
 
 

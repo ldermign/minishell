@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 19:57:11 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 21:43:22 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ int	main(int ac, char **av, char **env)
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, handle_signal);
 		line = readline("$ ");
+		if (line == NULL)
+		{
+			// faire ^D deux fois quand "command(line, &structure)" ?
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			// rl_redisplay();
+			write(1, "exit\n", 5);
+			exit(0); // sig_error?
+		}
 		// write(1, line, ft_strlen(line));
 		while (line[i] && line[i] == ' ')
 			i++;
@@ -63,6 +72,8 @@ int	main(int ac, char **av, char **env)
 			command(line, &structure);
 			free_list(structure.args);
 		}
+		// if (structure.parsing.result)
+		// 	free(structure.parsing.result);
 		free(line);
 	}
 	// command(cmd, &structure);

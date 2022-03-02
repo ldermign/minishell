@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 19:42:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 20:14:29 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_pipe(char *line, t_struct *minish)
 	return (1);
 }
 
-static int	recup_pipe2(char *line, t_struct *minish, int i)
+int	recup_pipe2(char *line, t_struct *minish, int i)
 {
 	int		j;
 	char	*str;

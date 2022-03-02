@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 19:57:40 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 20:22:52 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int	free_list(t_list_arg *list)
 
 	if (list == NULL)
 		return (-1);
-	printf("\n");
-	printf("\n");
-	printf("\n");
+	// printf("\n");
+	// printf("\n");
+	// printf("\n");
 	while (list->first != NULL)
 	{
 		i = 0;
@@ -64,7 +64,7 @@ int	free_list(t_list_arg *list)
 		{
 			while (list->first->arg_to_pass[i] != NULL)
 			{
-				printf("free[%s]\n", list->first->arg_to_pass[i]);
+				// printf("free[%s]\n", list->first->arg_to_pass[i]);
 				free(list->first->arg_to_pass[i]);
 				i++;
 			}
@@ -75,7 +75,7 @@ int	free_list(t_list_arg *list)
 			i = 0;
 			while (list->first->redir[i] != NULL)
 			{
-				printf("free redir[%s]\n", list->first->redir[i]);
+				// printf("free redir[%s]\n", list->first->redir[i]);
 				free(list->first->redir[i]);
 				i++;
 			}

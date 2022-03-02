@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 19:54:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 20:02:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*fill_arg(char *line, char *str, t_struct *minish)
 
 char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 {
-
 	int	i;
 	int	j;
 
