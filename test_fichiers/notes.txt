@@ -94,11 +94,13 @@ MARCHE PAS :
 SIGNAUX : 
 ^\  ->   fait ce que ^D doit faire
 ^D  ->   seg fault??
-
 ^D == EOF
-
 https://openclassrooms.com/forum/sujet/probleme-sur-un-recode-de-minishell-44334
 https://git.42l.fr/Fabien/minishell/src/branch/master/src/signal.c
+
+ctrl C  >>>>>  ok?
+ctrl D  >>>>>  ok mais pas trop
+ctrl \  >>>>>  nop je crois
 
 
 
