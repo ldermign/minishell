@@ -47,24 +47,12 @@ char	*get_variable(t_env_ms **minishell, char *str)
 
 
 
-TESTS
-tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
 
 
 
 
 
-
-
-recup redirections dans char **
-echo
-signaux
-leaks
-norme
-
-
-
-TESTS
+TESTS : 
 
  
 ' '
@@ -77,22 +65,10 @@ $PWD${PWD}
 $PWD$PFRE
 $""
 $ ""
-
-
+tet t t t ytghuij    "htY"jy yruj$RPYJY   $PWD  $pijk" rt"
 fhurifg3rufi """ :l;lll
-
 echo > salut
-
 bonjour < coucou
-
-
-"${GYTR" >> cest bon
-
-TESTS :
-echo mdrr 1<>coucou
-echo mdrr 2<>coucou
-echo “” ; cat -e
-echo "" a ; cat -e
 echo >mdr>hey>>sarace \sal"mdr"
 echo <hey1<h'ey2'
 echo bonjour >hey >>hey2 >>hey3
@@ -102,25 +78,36 @@ echo “$PATH”
 echo "$PATH$PWD"
 echo -n a '' b '' c '' d
 e"ch"o bonjour
-echo\ bonjour
-
-
-MARCHE PAS
-"NYR"%"$"HNTEYN"TE$NW$"     -> manque '$'
+"${GYTR"
+"NYR"%"$"HNTEYN"TE$NW$"
 
 
 
+
+MARCHE PAS : 
+
+
+
+
+
+
+SIGNAUX : 
 ^\  ->   fait ce que ^D doit faire
 ^D  ->   seg fault??
 
 
 
 
-
-options echo
-$$
-$?
-redirections?
+$$              ->>>>> pas possible?
 
 
 
+
+options echo                                    >>>>>>  ok?
+echo                                            >>>>>>  ok?
+liste a l'endroit                               >>>>>>  ok?
+$?                                              >>>>>>  ok?
+recup redirections interpretees dans char **    >>>>>>  ok?
+signaux
+leaks
+norme

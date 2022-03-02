@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisations.c                                  :+:      :+:    :+:   */
+/*   list_ok.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 16:55:27 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:20:34 by ejahan           ###   ########.fr       */
+/*   Created: 2022/02/28 17:28:49 by ejahan            #+#    #+#             */
+/*   Updated: 2022/03/02 18:22:29 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_parsing(t_parsing *parsing)
+t_list_arg	*reverse_list(t_list_arg *list)
 {
-	parsing->error = 0;
-	parsing->result = NULL;
-	parsing->i_line = 0;
-	parsing->option = 0;
-	parsing->red1 = 0;
-	parsing->red2 = 0;
-	parsing->nb_pipe = 0;
-	parsing->nb_arg = 0;
-}
+	t_list_arg	*ret;
 
-t_list_arg	*init_args(void)
-{
-	t_list_arg	*list;
-
-	list = malloc(sizeof(*list));
-	if (list == NULL)
-		return (NULL);
-	list->first = NULL;
-	return (list);
+	ret = init_args();
+	while (list->first != NULL)
+	{
+		insertion(ret, list->first->command);
+		delete(list);
+	}
+	free(list);
+	return (ret);
 }

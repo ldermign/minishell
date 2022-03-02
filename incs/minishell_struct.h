@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/28 17:55:52 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:54:17 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_environnement
 typedef struct s_args
 {
 	char			**redir;		//	recup toutes les redirections
-	char			*command;
+	char			*command;		//	ligne de commande entre pipe
 	char			**arg_to_pass;	//	arguments a donner aux fonction exec
 	struct s_args	*next;
 }	t_args;
