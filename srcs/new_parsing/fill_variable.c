@@ -6,11 +6,13 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/01 16:33:09 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 18:19:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// 28 lignes
 
 int	fill_brace(char *line, char *arg, t_struct *minish)
 {
@@ -44,6 +46,8 @@ int	fill_brace(char *line, char *arg, t_struct *minish)
 	return (1);
 }
 
+// 30 lignes
+
 int	fill_no_brace(char *line, char *arg, t_struct *minish)
 {
 	int		i;
@@ -70,7 +74,6 @@ int	fill_no_brace(char *line, char *arg, t_struct *minish)
 	if (tmp == NULL && is_variable_char(line[j]) == 1)
 		return (0);
 	i = 0;
-	// printf("tmp = [%s]\n", tmp);
 	while (tmp[i])
 	{
 		arg[minish->parsing.fill_arg++] = tmp[i];
@@ -124,7 +127,6 @@ int	fill_sig_error(t_struct *minish, char *str)
 	int		i;
 
 	i = 0;
-	// printf("pid = %d\n", minish->pid);
 	sig = ft_itoa(sig_error);
 	while (sig[i])
 	{
@@ -135,6 +137,8 @@ int	fill_sig_error(t_struct *minish, char *str)
 	free(sig);
 	return (1);
 }
+
+// 27 lignes -> degage double dollar?
 
 int	fill_variable(char *line, char *str, t_struct *minish)
 {
@@ -150,18 +154,14 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 			&& line[i] != '<' && line[i] != '>' && line[i] != '$'
 			&& line[i] != '}' && line[i] != '{')
 			i++;
-		// printf("TAMERE\n");
 		while (line[i] == ' ')
 			i++;
-		// printf("line[i] empty = [%s]\n", &line[i]);
 		return (i - 1);
 	}
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (fill_double_dollar(minish, str));
-	// if (line[i + 1] == 34 || line[i + 1] == 39)
-	// 	return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
-		|| line[i + 1] == 34 || line[i + 1] == 39))
+			|| line[i + 1] == 34 || line[i + 1] == 39))
 	{
 		str[minish->parsing.fill_arg++] = line[i];
 		return (0);

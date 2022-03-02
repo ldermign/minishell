@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/01 16:36:52 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 18:13:10 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	pass_arg_count2(char *line, t_struct *minish, int i)
 	}
 	return (i);
 }
+
+// 35 lignes
 
 int	pass_arg_count(char *line, t_struct *minish)
 {

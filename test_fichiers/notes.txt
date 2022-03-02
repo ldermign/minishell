@@ -107,10 +107,7 @@ options echo                                    >>>>>>  ok?
 echo                                            >>>>>>  ok?
 liste a l'endroit                               >>>>>>  ok?
 $?                                              >>>>>>  ok?
-recup redirections interpretees dans char **
+recup redirections interpretees dans char **    >>>>>>  ok?
 signaux
 leaks
 norme
-
-
-

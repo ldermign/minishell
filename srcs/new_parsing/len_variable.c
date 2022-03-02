@@ -6,52 +6,11 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/01 16:32:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 18:21:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	len_brace_2(char *line, t_struct *minish, int i)
-// {
-// 	char	*str;
-// 	char	*tmp;
-
-// 	str = malloc(sizeof(char) * (i - 1));
-// 	if (str == NULL)
-// 		return (error_malloc(minish));
-// 	str[i - 2] = '\0';
-// 	i--;
-// 	while (i > 1)
-// 	{
-// 		str[i - 2] = line[i];
-// 		i--;
-// 	}
-// 	tmp = get_variable(&minish->env.env_ms, str);
-// 	free(str);
-// 	if (tmp == NULL)
-// 		return (0);
-// 	minish->parsing.len_arg += ft_strlen(tmp);
-// 	return (1);
-// }
-
-// int	len_brace(char *line, t_struct *minish)
-// {
-// 	int		i;
-
-// 	i = 2;
-// 	while (is_variable_char(line[i]) == 0 && line[i] != '}')
-// 		i++;
-// 	if (is_variable_char(line[i]) == 1)
-// 	{
-// 		printf("${%c}: bad substitution\n", line[i]);
-// 		minish->parsing.error = 1;
-// 		return (-1);
-// 	}
-// 	if (line[i] == '}')
-// 		return (len_brace_2(line, minish, i));
-// 	return (1);
-// }
 
 int	len_brace(char *line, t_struct *minish)
 {
@@ -143,6 +102,8 @@ int	len_sig_error(t_struct *minish)
 	return (1);
 }
 
+// 29 lignes
+
 int	len_variable(char *line, t_struct *minish)
 {
 	int	i;
@@ -165,10 +126,8 @@ int	len_variable(char *line, t_struct *minish)
 		return (-1);
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (double_dollar(minish));
-	// if (line[i + 1] == 34 || line[i + 1] == 39)
-	// 	return (i);
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
-		|| line[i + 1] == 34 || line[i + 1] == 39))
+			|| line[i + 1] == 34 || line[i + 1] == 39))
 	{
 		minish->parsing.len_arg++;
 		return (0);

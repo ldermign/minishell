@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/28 15:30:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 18:14:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 int	len_echo(char **args, int j)
 {
 	int	i;
-	// int	j;
 	int	k;
 
 	i = 0;
-	// j = 1;
 	k = 0;
 	while (args[j])
 	{
@@ -34,15 +32,15 @@ int	len_echo(char **args, int j)
 	return (k + j - 2);
 }
 
+// 32 lignes
+
 char	*fill_echo(char **arg, int len, int j, t_struct *minish)
 {
 	char	*str;
 	int		i;
-	// int		j;
 	int		k;
 
 	i = 0;
-	// j = 1;
 	k = 0;
 	str = malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
@@ -68,7 +66,6 @@ char	*fill_echo(char **arg, int len, int j, t_struct *minish)
 		j++;
 		i = 0;
 	}
-	// printf("recup echo = [%s]\n", str);
 	return (str);
 }
 
@@ -115,11 +112,9 @@ char	*recup_echo(char **args, t_struct *minish)
 	char	*str;
 
 	j = check_if_option(args, minish);
-	printf("j = %d\n", j);
 	i = len_echo(args, j);
 	if (i < 0)
 		i = 0;
-	// printf("len echo = %d\n", i);
 	str = fill_echo(args, i, j, minish);
 	if (minish->parsing.error == 1)
 		return (NULL);
