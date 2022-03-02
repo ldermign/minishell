@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 19:54:47 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:57:40 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	delete(t_list_arg *list)
 	}
 	return (0);
 }
+
+/*
+		// if (structure.parsing.result != NULL)
+			// free(structure.parsing.result);
+*/
 
 int	free_list(t_list_arg *list)
 {

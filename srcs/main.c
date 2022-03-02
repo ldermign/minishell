@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 19:53:48 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:57:11 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,11 @@ int	main(int ac, char **av, char **env)
 			i++;
 		if (line[i])
 			parsing(&line[i], &structure);
-		// printf("nb pipe = %d\n", structure.parsing.nb_pipe);
-		// printf("recup echo parsing : [%s]\n", structure.parsing.result);
 		if (line[i] && structure.parsing.error != 1)
 		{
 			command(line, &structure);
 			free_list(structure.args);
 		}
-		// if (structure.parsing.result != NULL)
-			// free(structure.parsing.result);
 		free(line);
 	}
 	// command(cmd, &structure);
