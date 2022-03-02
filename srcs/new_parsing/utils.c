@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/01 22:08:02 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:51:59 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	pass_redir(char *line, t_struct *minish)
 	while (line[i] == ' ')
 		i++;
 	printf("redir\n");
-	// printf("redir = [%s]\n", line);
 	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
 	{
 		if (line[i] == '\0')

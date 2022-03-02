@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 17:59:27 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:43:47 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	count_redir(char *line)
 	return (j);
 }
 
+// 28 lignes
+
 int	len_redir(char *line, t_struct *minish)
 {
 	int	i;
@@ -50,7 +52,6 @@ int	len_redir(char *line, t_struct *minish)
 		i++;
 	while (line[i] && line[i] != ' ' && line[i] != '<' && line[i] != '>')
 	{
-		// printf("len line = [%s]\n", &line[i]);
 		if (line[i] == '$')
 			i += len_variable(&line[i], minish);
 		else if (line[i] == 39)
@@ -62,12 +63,13 @@ int	len_redir(char *line, t_struct *minish)
 		if (minish->parsing.error == 1)
 			return (-1);
 		i++;
-		// printf("line[i] = [%s]\n", &line[i]);
 	}
 	while (line[i] && line[i] != '<' && line[i] != '>')
 		i++;
 	return (i);
 }
+
+// 28 lignes
 
 char	*fill_redir(char *str, char *line, t_struct *minish)
 {
@@ -83,10 +85,8 @@ char	*fill_redir(char *str, char *line, t_struct *minish)
 	while (line[i] == ' ')
 		i++;
 	str[minish->parsing.fill_arg++] = ' ';
-	printf("line = [%s]\n", &line[i]);
 	while (line[i] && line[i] != ' ' && line[i] != '<' && line[i] != '>')
 	{
-		printf("line = [%s]\n", &line[i]);
 		if (line[i] == '$')
 			i += fill_variable(&line[i], str, minish);
 		else if (line[i] == 39)
