@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 16:02:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/02 11:28:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void command(char *prompt, t_struct *ms)
 	ms->prompt = prompt;
 	// printf("[%s]\n", ms->args->first->command);
 	// print_tab_char(ms->args->first->arg_to_pass);
-	ms->parsing.nb_pipe = count_pipe(prompt);	// dire a elisa que le nombre de pipe est tjs 0
+	ms->parsing.nb_pipe = count_pipe(prompt);
 	add_history(prompt);
 	while (prompt[i] == ' ')
 		i++;
