@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 16:40:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/03 21:38:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,8 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
         pipe_nbr = 1;
         if (pipex->cmd_nbr % 2 == 0)
                 pipe_nbr = 0;
-        // close(fd2[0]);
-        // close(fd2[1]);
+        close(pipex->fd2[0]);
+        close(pipex->fd2[1]);
         if (pipex->cmd_nbr == 0)
         {
                 // close(pipe_fd[1][0]);
@@ -307,7 +307,9 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 		else
 		{
 			close(pipex->fd1[1]);
+			close(pipex->fd2[0]);
 			close(pipex->fd2[1]);
+			wait(NULL);
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
 		ft_free_tab(new_args);
