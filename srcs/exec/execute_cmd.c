@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 23:11:12 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/04 00:20:10 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,28 +105,6 @@ int	get_good_fd(char **args, char *name_file, t_red_std *std, int pipefd[])
 	if (std->fd_to_write == -1 || std->fd_to_read == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
-}
-
-void	handle_signal_child(int sig)
-{
-	if (sig == SIGQUIT)
-	{
-		sig_error = 0;
-		write(1, "Quit (core dumped)\n", 19);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		// rl_redisplay();
-		// printf("quit\n");
-		// exit (0);
-	}
-	if	(sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		// rl_redisplay();
-		sig_error = 130;
-	}
 }
 
 void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, char **env)

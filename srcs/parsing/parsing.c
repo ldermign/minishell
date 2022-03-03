@@ -3,91 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/03 16:08:08 by elisa             #+#    #+#             */
-/*   Updated: 2022/02/19 17:27:15 by ldermign         ###   ########.fr       */
+/*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
+/*   Updated: 2022/03/04 00:28:27 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_else(char *line, t_parsing *parsing)
+int	parsing(char *line, t_struct *minish)
 {
-	while (line[parsing->i_line] && line[parsing->i_line] != '<'
-		&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
-		parsing->i_line++;
-}
-
-int	check_command(char *line, t_parsing *parsing)
-{
-	if (ft_memcmp("echo", &line[parsing->i_line], 4) == 0)
-		parse_echo(line, parsing);
-	else if (ft_memcmp("cd", &line[parsing->i_line], 2) == 0)
-		parse_cd(line, parsing);
-	else if (ft_memcmp("pwd", &line[parsing->i_line], 3) == 0)
-		parse_pwd(line, parsing);
-	else if (ft_memcmp("export", &line[parsing->i_line], 6) == 0)
-		parse_export(line, parsing);
-	else if (ft_memcmp("unset", &line[parsing->i_line], 5) == 0)
-		parse_unset(line, parsing);
-	else if (ft_memcmp("env", &line[parsing->i_line], 3) == 0)
-		parse_env(line, parsing);
-	else if (ft_memcmp("exit", &line[parsing->i_line], 4) == 0)
-		parse_exit(line, parsing);
-	else
-		parse_else(line, parsing);
-	if (parsing->error != 0)
+	minish->args = init_args();
+	init_parsing(&minish->parsing);
+	if (recup_args(line, minish) == -1)
 		return (-1);
 	return (0);
 }
 
-int	check_redirections(char *line, t_parsing *parsing)
+int	recup_pipe(char *line, t_struct *minish)
 {
-	if (line[parsing->i_line] == '<' || line[parsing->i_line] == '>')
-		return (redirections(line, parsing));
+	int	i;
+	int	j;
+
+	while (line[minish->parsing.i_line])
+	{
+		i = 0;
+		j = 0;
+		if (check_pipe2(&line[minish->parsing.i_line], minish) == -1)
+			return (-1);
+		while (line[minish->parsing.i_line + i]
+			&& line[minish->parsing.i_line + i] != '|')
+		{
+			i += pass_arg(&line[minish->parsing.i_line + i], minish);
+			if (minish->parsing.error == 1)
+				return (-1);
+		}
+		recup_pipe2(line, minish, i);
+		minish->parsing.nb_pipe++;
+		if (minish->parsing.error == 1)
+			return (-1);
+		if (line[minish->parsing.i_line] != '\0')
+			minish->parsing.i_line++;
+	}
 	return (0);
 }
 
-int	check_pipe(char *line, t_parsing *parsing)
+// 27 lignes
+
+int	recup_args(char *line, t_struct *minish)
 {
-	if (line[parsing->i_line] == '|')
+	t_args	*tmp;
+
+	if (recup_pipe(line, minish) == -1)
+		return (-1);
+	minish->args = reverse_list(minish->args);
+	tmp = minish->args->first;
+	while (minish->args->first != NULL)
 	{
-		parsing->i_line++;
-		if (line[parsing->i_line] == '<' || line[parsing->i_line] == '>'
-			|| line[parsing->i_line] == '\n' || line[parsing->i_line] == '*'
-			|| line[parsing->i_line] == ';' || line[parsing->i_line] == '('
-			|| line[parsing->i_line] == ')' || line[parsing->i_line] == '`')
+		minish->parsing.nb_arg = 0;
+		minish->args->first->arg_to_pass = sep_and_check_args(minish->args->first, minish);
+		if (minish->parsing.error == 1)
 		{
-			printf("syntax error near unexpected token `");
-			printf("%c'\n", line[parsing->i_line]);
-			parsing->error = 1;
+			minish->args->first = tmp;
 			return (-1);
 		}
-		parsing->i_line--;
+		minish->args->first->redir = recup_redir(minish->args->first->command, minish);
+		if (minish->parsing.error == 1)
+		{
+			minish->args->first = tmp;
+			return (-1);
+		}
+		minish->args->first = minish->args->first->next;
 	}
-	return (0);
-}
-
-int	parse_line(char *line, t_parsing *parsing)
-{
-	if (line == NULL)
-		return (-1);
-	while (line[parsing->i_line])
-	{
-		while (line[parsing->i_line] == ' ')
-			parsing->i_line++;
-		if (check_command(line, parsing) == -1)
-			return (-1);
-		while (line[parsing->i_line] && line[parsing->i_line] != '<'
-			&& line[parsing->i_line] != '>' && line[parsing->i_line] != '|')
-			parsing->i_line++;
-		if (check_redirections(line, parsing) == -1)
-			return (-1);
-		if (check_pipe(line, parsing) == -1)
-			return (-1);
-		if (parsing->error == 1)
-			return (-1);
-	}
+	minish->args->first = tmp;
 	return (0);
 }

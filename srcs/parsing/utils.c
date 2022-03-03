@@ -3,62 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/05 17:01:22 by ejahan            #+#    #+#             */
-/*   Updated: 2022/02/09 11:06:59 by ldermign         ###   ########.fr       */
+/*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
+/*   Updated: 2022/03/02 19:51:59 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	simple_quote(char *line, t_parsing *parsing)
+int	pass_quotes(char *line)
 {
+	int	j;
 	int	i;
 
-	i = 0;
-	parsing->i_line++;
-	while (line[parsing->i_line] && line[parsing->i_line] != 39)
-		parsing->i_line++;
-	if (line[parsing->i_line] == '\0')
-	{
-		printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
-		parsing->error = 1;
-		return (-1);
-	}
+	j = 0;
+	i = 1;
+	if (line[i] == line[j])
+		return (i + 1);
+	while (line[i] && line[i] != line[j])
+		i++;
 	return (i);
 }
 
-int	double_quotes(char *line, t_parsing *parsing)
+int	pass_redir(char *line, t_struct *minish)
 {
-	parsing->i_line++;
-	while (line[parsing->i_line] && line[parsing->i_line] != 34)
-		parsing->i_line++;
-	if (line[parsing->i_line] == '\0')
+	int	i;
+
+	i = 1;
+	if (line[i] == line[0])
+		i++;
+	while (line[i] == ' ')
+		i++;
+	printf("redir\n");
+	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
 	{
-		printf("\033[0;31msyntax error :\033[0m echo : open quotes\n");
-		parsing->error = 1;
+		if (line[i] == '\0')
+			printf("syntax error near unexpected token `newline'\n");
+		else
+			printf("syntax error near unexpected token `%c'\n", line[i]);
+		minish->parsing.error = 1;
 		return (-1);
 	}
+	while (line[i] && line[i] != ' ')
+		i++;
+	while (line[i] == ' ')
+		i++;
+	printf("redir = [%s]\n", &line[i]);
+	return (i);
+}
+
+int	pass_variable(char *line)
+{
+	int	i;
+
+	i = 1;
+	while (line[i] && line[i] != 39 && line[i] != 34
+		&& line[i] != '<' && line[i] != '>' && line[i] != ' ')
+		i++;
+	return (i - 1);
+}
+
+int	is_variable_char(char c)
+{
+	if (c == ' ' || c == 34 || c == 39 || c == '|' || c == '$' || c == '\0'
+		|| c == '<' || c == '>' || c == '{')
+		return (1);
 	return (0);
 }
 
-int	check_quotes_and_redir(char *line, t_parsing *parsing)
+int	error_malloc(t_struct *minish)
 {
-	int	i;
-
-	i = 0;
-	while (line[parsing->i_line] && line[parsing->i_line] != '|')
-	{
-		if (line[parsing->i_line] == 39)
-			simple_quote(line, parsing);
-		else if (line[parsing->i_line] == 34)
-			double_quotes(line, parsing);
-		else if (line[parsing->i_line] == 60 || line[parsing->i_line] == 62)
-			redirections(line, parsing);
-		if (parsing->error == 1)
-			return (-1);
-		parsing->i_line++;
-	}
-	return (i);
+	printf("error malloc\n");
+	minish->parsing.error = 1;
+	return (-1);
 }

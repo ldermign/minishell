@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 15:56:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/04 00:21:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,44 +169,8 @@ char	**recup_redir(char *line, t_struct *minish);
 int	check_pipe2(char *line, t_struct *minish);
 int	recup_pipe2(char *line, t_struct *minish, int i);
 int	pass_arg(char *line, t_struct *minish);
-
-
-
-
-/*
-**		AVANT
-*/
-
-// int		parse_line(char *line, t_parsing *parsing);
-
-// //		>>>>>>>>> check commandes
-// void	parse_echo(char *line, t_parsing *parsing);
-// void	parse_cd(char *line, t_parsing *parsing);
-// void	parse_pwd(char *line, t_parsing *parsing);
-// void	parse_export(char *line, t_parsing *parsing);
-// void	parse_unset(char *line, t_parsing *parsing);
-// void	parse_env(char *line, t_parsing *parsing);
-// void	parse_exit(char *line, t_parsing *parsing);
-
-// //		>>>>>>>>> echo
-// void	fill_result(char *line, t_parsing *parsing);
-// int		find_len(char *line, t_parsing *parsing);
-// // parse_quotes
-// int		simple_quote(char *line, t_parsing *parsing);
-// int		double_quotes(char *line, t_parsing *parsing);
-// int		check_quotes_and_redir(char *line, t_parsing *parsing);
-
-// //		>>>>>>>>> error
-// void	error_command(char *line, t_parsing *parsing);
-// int		error_check(char *line, t_parsing *parsing, int i);
-
-// //		>>>>>>>>> redirections
-// void	parse_second_redir(char *line, t_parsing *parsing);
-// int		skip_redirections(char *line, t_parsing *parsing);
-// int		redirections(char *line, t_parsing *parsing);
-// void	parse_first_redir(char *line, t_parsing *parsing);
-// void	parse_third_redir(char *line, t_parsing *parsing);
-// void	parse_fourth_redir(char *line, t_parsing *parsing);
-// void	check_char_in_file_name(char c, t_parsing *parsing);
+//      >>>>>>>>>   signals
+void	handle_signal_child(int sig);
+void	handle_signal(int sig);
 
 #endif

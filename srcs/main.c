@@ -6,25 +6,13 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 23:57:57 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/04 00:29:00 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	sig_error = 0;
-
-void	handle_signal(int sig)
-{
-	if	(sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		// rl_replace_line("", 0);
-		rl_redisplay();
-		sig_error = 130;
-	}
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -71,5 +59,3 @@ int	main(int ac, char **av, char **env)
 
 // structure->args->first->arg_to_pass
 // structure->args->first.command
-
-// minish->parsing.result = recup_echo(minish->args->first->arg_to_pass, minish);
