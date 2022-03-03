@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 23:55:49 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/03 23:57:57 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	main(int ac, char **av, char **env)
 		if (line == NULL)
 		{
 			rl_on_new_line();
-			// rl_replace_line("", 0);
-			// rl_redisplay();
 			write(1, "exit\n", 5);
 			exit(0); // sig_error?
 		}
