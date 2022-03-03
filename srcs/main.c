@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 21:43:22 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/03 18:41:04 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,19 @@ int	sig_error = 0;
 
 void	handle_signal(int sig)
 {
+	// if (sig == SIGQUIT)
+	// {
+	// 	sig_error = 0;
+	// 	write(2, "exit\n", 5);
+	// 	exit (0);
+	// }
 	if (sig == SIGQUIT)
 	{
 		sig_error = 0;
-		write(2, "exit\n", 5);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		write(2, "quit\n", 5);
 		exit (0);
 	}
 	else if	(sig == SIGINT)
@@ -51,7 +60,7 @@ int	main(int ac, char **av, char **env)
 	{
 		i = 0;
 		signal(SIGINT, handle_signal);
-		signal(SIGQUIT, handle_signal);
+		signal(SIGQUIT, SIG_IGN);
 		line = readline("$ ");
 		if (line == NULL)
 		{

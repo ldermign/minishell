@@ -1,4 +1,3 @@
-
 SIGNAUX : 
 // ^\ envoie le signal de sortie (SIGQUIT), qui indique classiquement à 
 l'application de quitter au plus vite sans rien sauvegarder ; de nombreuses 
@@ -19,6 +18,8 @@ faire savoir.
 // Les shells gèrent tous les signaux courants, de sorte que si vous tapez 
 ^\ dans un shell, vous ne tuez pas votre session, vous obtenez simplement 
 une nouvelle invite, identique à ^C.
+
+
 
 
 PIPE :
@@ -80,27 +81,49 @@ echo -n a '' b '' c '' d
 e"ch"o bonjour
 "${GYTR"
 "NYR"%"$"HNTEYN"TE$NW$"
+echoooo oui
+
 
 
 
 
 MARCHE PAS : 
-
+nb pipe dans command
+ctrl \ 
+ctrl D -> exit nb de fois ou error
+ctrl C apres cat
 
 
 
 
 
 SIGNAUX : 
+https://openclassrooms.com/forum/sujet/probleme-sur-un-recode-de-minishell-44334
+https://git.42l.fr/Fabien/minishell/src/branch/master/src/signal.c
 ^\  ->   fait ce que ^D doit faire
 ^D  ->   seg fault??
 ^D == EOF
-https://openclassrooms.com/forum/sujet/probleme-sur-un-recode-de-minishell-44334
-https://git.42l.fr/Fabien/minishell/src/branch/master/src/signal.c
 
 ctrl C  >>>>>  ok?
 ctrl D  >>>>>  ok mais pas trop
 ctrl \  >>>>>  nop je crois
+
+CTRL C
+ok - ctrl-C in an empty prompt should show a new line with a new prompt
+ok - ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
+ok - The buffer should be clean too, press "enter" to make sure nothing from the old line is executed.
+ok - ctrl-C after running a blocking command like cat without arguments or grep “something“
+
+CTRL D
+ok - ctrl-D in an empty prompt should quit minishell --> RELAUNCH!
+ok - ctrl-D in a prompt after you wrote some stuff should not do anything
+ok - ctrl-D after running a blocking command like cat without arguments or grep “something“
+
+CTRL \
+ctrl-\ in an empty prompt should not do anything
+ctrl-\ in a prompt after you wrote some stuff should not do anything!
+ctrl-\ after running a blocking command like cat without arguments or grep “something“
+
 
 
 
@@ -111,11 +134,14 @@ $$              ->>>>> pas possible?
 
 
 
+A FAIRE
 options echo                                    >>>>>>  ok?
 echo                                            >>>>>>  ok?
 liste a l'endroit                               >>>>>>  ok?
 $?                                              >>>>>>  ok?
 recup redirections interpretees dans char **    >>>>>>  ok?
-signaux
+signal ctrl D                                   >>>>>>  ok?
+signal ctrl \
+signal ctrl C quand cat                         >>>>>>  ok?
 leaks
 norme
