@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 19:54:17 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/03 15:54:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,17 @@ typedef struct	s_iterator
 	int	ret;
 	int	len;
 }	t_it;
+
+typedef struct	s_pipe
+{
+	int		pipe_tot;
+	int		pipe_nbr;
+	int		cmd_nbr;
+	int		fd1[2];
+	int		fd2[2];
+	pid_t	pid;
+}	t_pipe;
+
 
 #endif
 

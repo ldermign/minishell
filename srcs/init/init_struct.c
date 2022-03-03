@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 14:13:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/03 15:55:31 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,11 @@ void	init_struct_it(t_it *it)
 	it->add = 0;
 	it->ret = 0;
 	it->len = 0;
+}
+
+void	init_struct_pipe(t_pipe *pipe, t_struct *ms)
+{
+	pipe->pipe_tot = ms->parsing.nb_pipe;
+	pipe->pipe_nbr = 1;
+	pipe->cmd_nbr = 0;
 }

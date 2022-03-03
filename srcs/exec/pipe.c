@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 18:21:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/03 16:40:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,38 +210,55 @@ int		init_fork(int *pid)
 	return (1);
 }
 
-void	child_process(t_struct *ms, int pipe_fd[2][2], char **cmd, int cmd_nbr)
-{
-	int			pipe_nbr;
+void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
+{(void)ms;
+		int	pipe_nbr;
 
-	pipe_nbr = 1;
-	if (cmd_nbr % 2 == 0)
-		pipe_nbr = 0;
-	if (cmd_nbr == 0)
+        pipe_nbr = 1;
+        if (pipex->cmd_nbr % 2 == 0)
+                pipe_nbr = 0;
+        // close(fd2[0]);
+        // close(fd2[1]);
+        if (pipex->cmd_nbr == 0)
+        {
+                // close(pipe_fd[1][0]);
+                // close(pipe_fd[1][1]);
+                close(pipex->fd1[0]);
+                dup2(pipex->fd1[1], STDOUT_FILENO);
+                close(pipex->fd1[1]);
+                execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash);
+                return ;
+        }
+        // else if (cmd_nbr == 1)
+        // {
+                // close(pipe_fd[1][0]);
+                // close(pipe_fd[1][1]);
+                close(pipex->fd1[1]);
+                dup2(pipex->fd1[0], STDIN_FILENO);
+                close(pipex->fd1[0]);
+                execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash);
+                return ;
+        // }
+
+	if (pipex->cmd_nbr == 0)
 	{
-		// on close le 2eme pipe dont on a pas besoin pour la premiere commande
-		// premiere boucle, je close le read puisqu'elle va lire au meme emplacement
-		// je dup le out puisqu'elle va ecrire dans le pipe
-		// je close l'ecriture
-		// close(STDIN_FILENO);
-		close(pipe_fd[1][0]);
-		close(pipe_fd[1][1]);
-		close(pipe_fd[0][0]);
-		dup2(pipe_fd[0][1], STDOUT_FILENO);
-		close(pipe_fd[0][1]);
+		close(pipex->fd1[0]);
+		dup2(pipex->fd1[1], STDOUT_FILENO);
+
+		close(pipex->fd1[1]);
 		execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash);
 		return ;
 	}
-	// else if (ms->parsing.nb_pipe == cmd_nbr)
-	// {
-		close(pipe_fd[0][1]);	// on ecrit plus la
-		dup2(pipe_fd[1][0], pipe_fd[0][0]);	// doit lire le pipe d'avant
-		close(pipe_fd[1][0]);
-		dup2(pipe_fd[1][1], STDOUT_FILENO);
-		close(pipe_fd[1][1]);
+	else if (ms->parsing.nb_pipe == pipex->cmd_nbr)
+	{
+		close(pipex->fd1[1]);	// on ecrit plus la
+		dup2(pipex->fd2[0], pipex->fd1[0]);	// doit lire le pipe d'avant
+		close(pipex->fd2[0]);
+		dup2(pipex->fd2[1], STDOUT_FILENO);
+		close(pipex->fd2[1]);
 		// close(pipe_fd[0][0]);
 		// dup2(STDOUT_FILENO, STDIN_FILENO);
-	// }
+	}
 	// else if (ms->pipe_left == 1 && ms->pipe_right == 1)
 	// {
 	// 	return ;
@@ -251,45 +268,50 @@ void	child_process(t_struct *ms, int pipe_fd[2][2], char **cmd, int cmd_nbr)
 	{
 		printf("minishell: %s: command not found\n", cmd[0]);
 		sig_error = 127;
-		close(pipe_fd[0][0]);
-		close(pipe_fd[0][1]);
-		close(pipe_fd[1][0]);
-		close(pipe_fd[1][1]);
+		close(pipex->fd1[0]);
+		close(pipex->fd1[1]);
+		close(pipex->fd2[0]);
+		close(pipex->fd2[1]);
 		return ;
 	}
 }
 
 void	there_is_pipe(t_struct *ms, char *prompt)
 {
+	t_pipe	*pipex;
 	int		i;
-	int		fd[2][2];
-	int		pid;
-	int		cmd_nbr;
 	char	**cmd_pipe;
 	char	**new_args;
 
 	i = 0;
-	cmd_nbr = 0;
+	pipex = malloc(sizeof(t_pipe));
+	if (pipex == NULL)
+		return ;
+	pipex->pipe_tot = ms->parsing.nb_pipe;
+	pipex->pipe_nbr = 1;
+	pipex->cmd_nbr = 0;
 	cmd_pipe = get_cmd_and_args_split(&prompt[i]);
 	int len = len_tab(cmd_pipe);
-	if (init_fork(&pid) == -1 || init_pipe(fd) == -1)
+	if (pipe(pipex->fd1) == -1 || pipe(pipex->fd2) == -1)
 		return ;
 	while (i < len)
 	{
-		// write(STDOUT_FILENO, &cmd_nbr, sizeof(int));
+		if (init_fork(&pipex->pid) == -1)
+			return ;
+		pipex->pipe_nbr = 1;
+		if (pipex->cmd_nbr % 2 == 0)
+			pipex->pipe_nbr = 0;
 		new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
-		if (pid == 0)	// child
-			child_process(ms, fd, new_args, cmd_nbr);
+		if (pipex->pid == 0)	// child
+			child_process(ms, pipex, new_args);
 		else
 		{
-			close(fd[0][0]);
-			close(fd[0][1]);
-			close(fd[1][0]);
-			close(fd[1][1]);
+			close(pipex->fd1[1]);
+			close(pipex->fd2[1]);
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
 		ft_free_tab(new_args);
-		cmd_nbr++;
+		pipex->cmd_nbr++;
 	}
 	// dup2(STDOUT_FILENO, STDIN_FILENO);	//checker si toujours acces stdin
 	// printf("bah alors...\n");

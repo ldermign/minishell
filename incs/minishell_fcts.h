@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 20:14:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/03 15:56:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	init_struct_std(char **args, t_red_std *std, int which);
 // void	reboot_struct_std(t_red_std *std);
 void	init_struct_it(t_it *it);
 void	close_all_fd(t_red_std *std);
+void	init_struct_pipe(t_pipe *pipe, t_struct *ms);
 
 /*
 **	TEMPORAIRE
