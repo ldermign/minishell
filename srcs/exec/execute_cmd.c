@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 18:42:24 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/03 23:11:12 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,15 +109,16 @@ int	get_good_fd(char **args, char *name_file, t_red_std *std, int pipefd[])
 
 void	handle_signal_child(int sig)
 {
-	// if (sig == SIGQUIT)
-	// {
-	// 	sig_error = 0;
-	// 	write(2, "quit\n", 5);
-	// 	rl_on_new_line();
-	// 	rl_replace_line("", 0);
-	// 	rl_redisplay();
-	// 	exit (0);
-	// }
+	if (sig == SIGQUIT)
+	{
+		sig_error = 0;
+		write(1, "Quit (core dumped)\n", 19);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		// rl_redisplay();
+		// printf("quit\n");
+		// exit (0);
+	}
 	if	(sig == SIGINT)
 	{
 		write(1, "\n", 1);
@@ -148,7 +149,7 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 		return ;
 	}
 	signal(SIGINT, handle_signal_child);
-	// signal(SIGQUIT, handle_signal_child);
+	signal(SIGQUIT, handle_signal_child);
 	if (pid > 0)
 	{
 		ms->pid = pid;

@@ -120,9 +120,9 @@ ok - ctrl-D in a prompt after you wrote some stuff should not do anything
 ok - ctrl-D after running a blocking command like cat without arguments or grep “something“
 
 CTRL \
-ctrl-\ in an empty prompt should not do anything
-ctrl-\ in a prompt after you wrote some stuff should not do anything!
-ctrl-\ after running a blocking command like cat without arguments or grep “something“
+ok - ctrl-\ in an empty prompt should not do anything
+ok - ctrl-\ in a prompt after you wrote some stuff should not do anything!
+ok - ctrl-\ after running a blocking command like cat without arguments or grep “something“
 
 
 
@@ -141,7 +141,7 @@ liste a l'endroit                               >>>>>>  ok?
 $?                                              >>>>>>  ok?
 recup redirections interpretees dans char **    >>>>>>  ok?
 signal ctrl D                                   >>>>>>  ok?
-signal ctrl \
+signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
 leaks
 norme

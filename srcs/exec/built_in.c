@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/02 11:28:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:14:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,19 +155,22 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
 
 int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
 {
-	if (ft_pos_strstr(cmd_args[0], "cd") != -1)
+	if (ft_memcmp(cmd_args[0], "cd", 3) == 0)
 		return (built_in_cd(&(ms->env), cmd_args));
-	else if (ft_pos_strstr(cmd_args[0], "pwd") != -1)
+	else if (ft_memcmp(cmd_args[0], "pwd", 4) == 0)
 		return (built_in_pwd());
-	else if (ft_pos_strstr(cmd_args[0], "env") != -1)
+	else if (ft_memcmp(cmd_args[0], "env", 4) == 0)
 		return (built_in_env(ms->env.env_ms));
-	else if (ft_pos_strstr(cmd_args[0], "export") != -1)
+	else if (ft_memcmp(cmd_args[0], "export", 7) == 0)
 		return (built_in_export(ms, &(ms->env), prompt, cmd_args));
-	else if (ft_pos_strstr(cmd_args[0], "unset") != -1)
+	else if (ft_memcmp(cmd_args[0], "unset", 6) == 0)
 		return (built_in_unset(&(ms->env), cmd_args));
-	else if (ft_pos_strstr(cmd_args[0], "echo") != -1)
+	else if (ft_memcmp(cmd_args[0], "echo", 5) == 0)
+	{
+		ms->parsing.result = recup_echo(ms->args->first->arg_to_pass, ms);
 		return (built_in_echo(ms, cmd_args, prompt));
-	else if (ft_pos_strstr(cmd_args[0], "exit") != -1)
+	}
+	else if (ft_memcmp(cmd_args[0], "exit", 5) == 0)
 		built_in_exit(&(ms->env), cmd_args, prompt);
 	return (-1);
 }

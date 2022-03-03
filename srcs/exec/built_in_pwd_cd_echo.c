@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_pwd_cd_echo.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/01 18:40:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:15:06 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	built_in_echo(t_struct *ms, char **args, char *prompt)
 	write(ms->std.fd_to_write, ms->parsing.result, len);
 	if (line_break == -1) //gerer cas ou $$ chaipukoi
 		write(ms->std.fd_to_write, "\n", 1);
+	free(ms->parsing.result);
 	return (EXIT_SUCCESS);
 }
