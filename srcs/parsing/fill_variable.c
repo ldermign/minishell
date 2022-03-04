@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:19:53 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:14:26 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (fill_double_dollar(minish, str));
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
-			|| line[i + 1] == 34 || line[i + 1] == 39))
+			|| (line[i + 1] == 34 && minish->parsing.quotes == 1)))
 	{
 		str[minish->parsing.fill_arg++] = line[i];
 		return (0);

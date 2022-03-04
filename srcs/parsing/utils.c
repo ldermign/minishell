@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 19:51:59 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/04 23:53:59 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	pass_quotes(char *line)
 	j = 0;
 	i = 1;
 	if (line[i] == line[j])
-		return (i + 1);
+		return (i);
 	while (line[i] && line[i] != line[j])
 		i++;
 	return (i);

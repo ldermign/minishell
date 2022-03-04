@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:55:27 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:20:34 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:11:16 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_parsing(t_parsing *parsing)
 	parsing->red2 = 0;
 	parsing->nb_pipe = 0;
 	parsing->nb_arg = 0;
+	parsing->quotes = 0;
 }
 
 t_list_arg	*init_args(void)
