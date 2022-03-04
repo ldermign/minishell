@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 21:38:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/04 19:45:10 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,57 +137,6 @@ char	**clean_args(char **cmd)
 	return (new_tab);
 }
 
-void	chaipa(t_struct *ms, char **env, char **cmd)
-{
-	int		status;
-	int		pid;
-	int		pipe_fd[2];
-
-	status = 0;
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("pipe");
-		return ;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		sig_error = 127;
-		perror("fork");
-		return ;
-	}
-	// printf("pid = %d\n", pid);
-	if (pid == 0) // child
-	{
-		close(pipe_fd[0]);
-		if (ms->pipe_left == 1)
-			dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
-		if (execve(working_path(ms->env.path, cmd[0]), cmd, env) == -1)
-		{
-			printf("minishell: %s: command not found\n", cmd[0]);
-			sig_error = 127;
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			return ;
-		}
-	}
-	else // father
-	{
-		close(pipe_fd[1]);
-		if (ms->pipe_left == 1)
-			dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
-	}
-	// printf("pipe_fd[0] = %d, pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
-	// if (pipe_fd[0] != -1)
-	// 	close(pipe_fd[0]);
-	// if (ms->TEST_PIPE_MERDE == 0 && pipe_fd[1] != -1)
-	// 	close(pipe_fd[1]);
-	// printf("pipe_fd[0] = %d, pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
-	sig_error = 0;
-}
-
 int		init_pipe(int fd[2][2])
 {
 	if (pipe(fd[0]) == -1 || pipe(fd[1]) == -1)
@@ -210,59 +159,44 @@ int		init_fork(int *pid)
 	return (1);
 }
 
-void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
-{(void)ms;
-		int	pipe_nbr;
-
-        pipe_nbr = 1;
-        if (pipex->cmd_nbr % 2 == 0)
-                pipe_nbr = 0;
-        close(pipex->fd2[0]);
-        close(pipex->fd2[1]);
-        if (pipex->cmd_nbr == 0)
-        {
-                // close(pipe_fd[1][0]);
-                // close(pipe_fd[1][1]);
-                close(pipex->fd1[0]);
-                dup2(pipex->fd1[1], STDOUT_FILENO);
-                close(pipex->fd1[1]);
-                execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash);
-                return ;
-        }
-        // else if (cmd_nbr == 1)
-        // {
-                // close(pipe_fd[1][0]);
-                // close(pipe_fd[1][1]);
-                close(pipex->fd1[1]);
-                dup2(pipex->fd1[0], STDIN_FILENO);
-                close(pipex->fd1[0]);
-                execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash);
-                return ;
-        // }
-
+void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing.nb_pipe][2])
+{
 	if (pipex->cmd_nbr == 0)
 	{
-		close(pipex->fd1[0]);
-		dup2(pipex->fd1[1], STDOUT_FILENO);
-
-		close(pipex->fd1[1]);
-		execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash);
-		return ;
+		close(test[0][0]);
+		dup2(test[0][1], STDOUT_FILENO);
+		close(test[0][1]);
 	}
-	else if (ms->parsing.nb_pipe == pipex->cmd_nbr)
+	else if (pipex->pipe_tot == 1 && pipex->cmd_nbr == 1)
 	{
-		close(pipex->fd1[1]);	// on ecrit plus la
-		dup2(pipex->fd2[0], pipex->fd1[0]);	// doit lire le pipe d'avant
+		close(test[0][1]);
+		dup2(test[0][0], STDIN_FILENO);
+		close(test[0][0]);
+	}
+	else if (pipex->pipe_nbr == 1 && pipex->pipe_tot != pipex->cmd_nbr)
+	{
+		close(pipex->test[pipex->][1]);
+		dup2(pipex->fd1[0], STDIN_FILENO);
+		close(pipex->fd1[0]);
+		dup2(pipex->fd2[0], pipex->fd1[0]);
 		close(pipex->fd2[0]);
 		dup2(pipex->fd2[1], STDOUT_FILENO);
 		close(pipex->fd2[1]);
-		// close(pipe_fd[0][0]);
-		// dup2(STDOUT_FILENO, STDIN_FILENO);
 	}
-	// else if (ms->pipe_left == 1 && ms->pipe_right == 1)
+	else if (ms->parsing.nb_pipe == pipex->cmd_nbr && pipex->pipe_nbr == 0)
+	{
+		close(pipex->fd2[1]);
+		dup2(pipex->fd2[0], STDIN_FILENO);
+		close(pipex->fd2[0]);
+		dup2(pipex->fd1[0], pipex->fd2[0]);
+
+		close(pipex->fd1[0]);				// BON
+		dup2(pipex->fd1[1], STDOUT_FILENO);	// BON
+		close(pipex->fd1[1]);				// BON
+	}
+	// 	else if (pipex->pipe_nbr == 0)
 	// {
 	// 	return ;
-	// 	// 2 pipes ?
 	// }
 	if (execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash) == -1)
 	{
@@ -279,11 +213,14 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
 void	there_is_pipe(t_struct *ms, char *prompt)
 {
 	t_pipe	*pipex;
+	int		test[ms->parsing.nb_pipe][2];
 	int		i;
+	int		j;
 	char	**cmd_pipe;
 	char	**new_args;
 
 	i = 0;
+	j = 0;
 	pipex = malloc(sizeof(t_pipe));
 	if (pipex == NULL)
 		return ;
@@ -292,33 +229,37 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	pipex->cmd_nbr = 0;
 	cmd_pipe = get_cmd_and_args_split(&prompt[i]);
 	int len = len_tab(cmd_pipe);
-	if (pipe(pipex->fd1) == -1 || pipe(pipex->fd2) == -1)
-		return ;
+	while (j < pipex->pipe_tot)
+	{
+		if (pipe(test[j]) == -1)
+			return ;
+		j++;
+	}
 	while (i < len)
 	{
 		if (init_fork(&pipex->pid) == -1)
 			return ;
-		pipex->pipe_nbr = 1;
-		if (pipex->cmd_nbr % 2 == 0)
-			pipex->pipe_nbr = 0;
 		new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
 		if (pipex->pid == 0)	// child
-			child_process(ms, pipex, new_args);
+			child_process(ms, pipex, new_args, test);
 		else
 		{
-			close(pipex->fd1[1]);
-			close(pipex->fd2[0]);
-			close(pipex->fd2[1]);
-			wait(NULL);
+			// if (pipex->cmd_nbr == 0)	// je comprend pas pourquoi mais faut pas faire ca
+				// close(test[0][0]);
+			if (pipex->pipe_tot == 1 && pipex->cmd_nbr == 1)
+				close(test[0][1]);
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
 		ft_free_tab(new_args);
 		pipex->cmd_nbr++;
 	}
-	// dup2(STDOUT_FILENO, STDIN_FILENO);	//checker si toujours acces stdin
-	// printf("bah alors...\n");
-	// waitpid(pid, NULL, 0);
-	// faire une fonction qui attend la fin de toustes les commandes
+	// int	k = -1;
+	// while (k < pipex->pipe_tot)
+	// {
+	// 	// wait(NULL);
+	// 	waitpid(pipex->pid, &pipex->status, 0);
+	// 	k++;
+	// }
 }
 
 /*
@@ -329,15 +270,8 @@ ls -l | wc -cl
 ls | wc
 ls | sort
 cat /dev/urandom | head -c 1000 | wc -c
+cat a_trier | sort | uniq
 
 En trouver d'autres...
 
 */
-
-// tab[0] = ls
-// tab[1] = -l
-
-// // 2eme tour
-
-// tab[0] = wc
-// tab[1] =
