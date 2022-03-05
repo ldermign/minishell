@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 01:17:10 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 06:06:14 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,27 @@ int	pass_arg_count(char *line, t_struct *minish)
 		return (pass_arg_count_else_if(line, i, minish));
 	minish->parsing.nb_arg++;
 	return (pass_arg_count2(line, minish, i));
+}
+
+int	count_redir(char *line)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (line[i])
+	{
+		if (line[i] == '<' || line[i] == '>')
+		{
+			j++;
+			while (line[i] == '<' || line[i] == '>' || line[i] == ' ')
+				i++;
+			while (line[i] && line[i] != '<' && line[i] != '>')
+				i++;
+		}
+		else
+			i++;
+	}
+	return (j);
 }

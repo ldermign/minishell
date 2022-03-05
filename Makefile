@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/05 00:58:31 by ejahan           ###   ########.fr        #
+#    Updated: 2022/03/05 06:16:31 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/fill_variable.c ./srcs/parsing/fill_arg.c \
 			./srcs/parsing/echo.c ./srcs/parsing/list_ok.c \
 			./srcs/parsing/recup_redir.c ./srcs/parsing/signals.c \
-			./srcs/parsing/error_malloc.c ./srcs/parsing/len_variable2.c
+			./srcs/parsing/error_malloc.c ./srcs/parsing/len_variable2.c \
+			./srcs/parsing/free.c 
 
 OBJS	=	${SRCS:.c=.o}
 
