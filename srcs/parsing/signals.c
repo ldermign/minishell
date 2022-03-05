@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:19:51 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/04 23:00:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:24:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	handle_signal_child(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		// rl_redisplay();
-		// printf("quit\n");
 		// exit (0);
 	}
 	if (sig == SIGINT)

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/04 23:36:11 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 01:12:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,33 +49,31 @@ int	recup_pipe(char *line, t_struct *minish)
 	return (0);
 }
 
-// 27 lignes
-
-int	recup_args(char *line, t_struct *minish)
+int	recup_args(char *line, t_struct *ms)
 {
 	t_args	*tmp;
 
-	if (recup_pipe(line, minish) == -1)
+	if (recup_pipe(line, ms) == -1)
 		return (-1);
-	minish->args = reverse_list(minish->args);
-	tmp = minish->args->first;
-	while (minish->args->first != NULL)
+	ms->args = reverse_list(ms->args);
+	tmp = ms->args->first;
+	while (ms->args->first != NULL)
 	{
-		minish->parsing.nb_arg = 0;
-		minish->args->first->arg_to_pass = sep_and_check_args(minish->args->first, minish);
-		if (minish->parsing.error == 1)
+		ms->parsing.nb_arg = 0;
+		ms->args->first->arg_to_pass = sep_and_check_args(ms->args->first, ms);
+		if (ms->parsing.error == 1)
 		{
-			minish->args->first = tmp;
+			ms->args->first = tmp;
 			return (-1);
 		}
-		minish->args->first->redir = recup_redir(minish->args->first->command, minish);
-		if (minish->parsing.error == 1)
+		ms->args->first->redir = recup_redir(ms->args->first->command, ms);
+		if (ms->parsing.error == 1)
 		{
-			minish->args->first = tmp;
+			ms->args->first = tmp;
 			return (-1);
 		}
-		minish->args->first = minish->args->first->next;
+		ms->args->first = ms->args->first->next;
 	}
-	minish->args->first = tmp;
+	ms->args->first = tmp;
 	return (0);
 }

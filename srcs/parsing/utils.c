@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/04 23:53:59 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:49:29 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	pass_redir(char *line, t_struct *minish)
 		i++;
 	while (line[i] == ' ')
 		i++;
-	printf("redir\n");
 	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
 	{
 		if (line[i] == '\0')
@@ -49,7 +48,6 @@ int	pass_redir(char *line, t_struct *minish)
 		i++;
 	while (line[i] == ' ')
 		i++;
-	printf("redir = [%s]\n", &line[i]);
 	return (i);
 }
 
@@ -70,11 +68,4 @@ int	is_variable_char(char c)
 		|| c == '<' || c == '>' || c == '{')
 		return (1);
 	return (0);
-}
-
-int	error_malloc(t_struct *minish)
-{
-	printf("error malloc\n");
-	minish->parsing.error = 1;
-	return (-1);
 }

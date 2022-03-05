@@ -6,13 +6,11 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:14:26 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 01:23:26 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// 28 lignes
 
 int	fill_brace(char *line, char *arg, t_struct *minish)
 {
@@ -39,23 +37,16 @@ int	fill_brace(char *line, char *arg, t_struct *minish)
 		return (0);
 	i = 0;
 	while (tmp[i])
-	{
-		arg[minish->parsing.fill_arg++] = tmp[i];
-		i++;
-	}
+		arg[minish->parsing.fill_arg++] = tmp[i++];
 	return (1);
 }
 
-// 30 lignes
-
-int	fill_no_brace(char *line, char *arg, t_struct *minish)
+int	fill_no_brace(char *line, char *arg, t_struct *minish, int i)
 {
-	int		i;
 	int		j;
 	char	*str;
 	char	*tmp;
 
-	i = 1;
 	while (is_variable_char(line[i]) == 0 && line[i] != '}')
 		i++;
 	str = malloc(sizeof(char) * i);
@@ -75,10 +66,7 @@ int	fill_no_brace(char *line, char *arg, t_struct *minish)
 		return (0);
 	i = 0;
 	while (tmp[i])
-	{
-		arg[minish->parsing.fill_arg++] = tmp[i];
-		i++;
-	}
+		arg[minish->parsing.fill_arg++] = tmp[i++];
 	return (1);
 }
 
@@ -93,7 +81,7 @@ int	fill_variable2(char *line, char *str, t_struct *minish, int i)
 	}
 	else if (line[i] == '$' && line[i] != '{')
 	{
-		fill_no_brace(line, str, minish);
+		fill_no_brace(line, str, minish, 1);
 		i++;
 		while (line[i] && line[i] != 34 && line[i] != 39 && line[i] != '<'
 			&& line[i] != '>' && line[i] != '$' && line[i] != '}'
@@ -103,43 +91,6 @@ int	fill_variable2(char *line, char *str, t_struct *minish, int i)
 	return (i);
 }
 
-int	fill_double_dollar(t_struct *minish, char *str)
-{
-	char	*pid;
-	int		i;
-
-	i = 0;
-	printf("pid = %d\n", minish->pid);
-	pid = ft_itoa(minish->pid);
-	while (pid[i])
-	{
-		str[minish->parsing.fill_arg] = pid[i];
-		i++;
-		minish->parsing.fill_arg++;
-	}
-	free(pid);
-	return (1);
-}
-
-int	fill_sig_error(t_struct *minish, char *str)
-{
-	char	*sig;
-	int		i;
-
-	i = 0;
-	sig = ft_itoa(sig_error);
-	while (sig[i])
-	{
-		str[minish->parsing.fill_arg] = sig[i];
-		i++;
-		minish->parsing.fill_arg++;
-	}
-	free(sig);
-	return (1);
-}
-
-// 27 lignes -> degage double dollar?
-
 int	fill_variable(char *line, char *str, t_struct *minish)
 {
 	int	i;
@@ -148,16 +99,7 @@ int	fill_variable(char *line, char *str, t_struct *minish)
 	if (line[i] == '$' && line[i + 1] == '?')
 		return (fill_sig_error(minish, str));
 	if (is_empty(line, minish) == 0)
-	{
-		i++;
-		while (line[i] && line[i] != ' ' && line[i] != 34 && line[i] != 39
-			&& line[i] != '<' && line[i] != '>' && line[i] != '$'
-			&& line[i] != '}' && line[i] != '{')
-			i++;
-		while (line[i] == ' ')
-			i++;
-		return (i - 1);
-	}
+		return (if_is_empty(line, i));
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (fill_double_dollar(minish, str));
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '

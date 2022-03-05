@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/04 00:21:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 01:11:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,11 @@ int	pass_arg(char *line, t_struct *minish);
 //      >>>>>>>>>   signals
 void	handle_signal_child(int sig);
 void	handle_signal(int sig);
+char	*error_malloc_null(t_struct *minish);
+int	double_dollar(t_struct *minish);
+int	len_sig_error(t_struct *minish);
+int	if_is_empty(char *line, int i);
+int	fill_double_dollar(t_struct *minish, char *str);
+int	fill_sig_error(t_struct *minish, char *str);
 
 #endif
