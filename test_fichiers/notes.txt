@@ -90,11 +90,25 @@ echo $"GTRE"$"GT"
 
 
 
+
 MARCHE PAS : 
 nb pipe dans command
 echo -n
 
 
+
+
+LEAKS
+/*
+$ cat
+^\Quit (core dumped)
+$ cat
+$ cat
+^C
+$ echo iuok
+iuok
+$ frttg
+*/
 
 
 
