@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:14:33 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:49:10 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,20 @@ int	len_echo(char **args, int j)
 	return (k + j - 2);
 }
 
-// 32 lignes
-
 char	*fill_echo(char **arg, int len, int j, t_struct *minish)
 {
 	char	*str;
 	int		i;
 	int		k;
 
-	i = 0;
 	k = 0;
 	str = malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
-	{
-		printf("error malloc\n");
-		minish->parsing.error = 1;
-		return (NULL);
-	}
+		return (error_malloc_null(minish));
 	str[len] = '\0';
 	while (arg[j])
 	{
+		i = 0;
 		while (arg[j][i])
 		{
 			str[k] = arg[j][i];
@@ -59,12 +53,8 @@ char	*fill_echo(char **arg, int len, int j, t_struct *minish)
 			k++;
 		}
 		if (arg[j + 1] != NULL)
-		{
-			str[k] = ' ';
-			k++;
-		}
+			str[k++] = ' ';
 		j++;
-		i = 0;
 	}
 	return (str);
 }

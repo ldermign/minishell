@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 06:38:09 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:20:55 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:10:51 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	len_double_quotes(char *line, t_struct *minish)
 	int	i;
 
 	i = 1;
+	minish->parsing.quotes = 1;
 	while (line[i] != 34)
 	{
 		if (line[i] == '$')
@@ -40,6 +41,7 @@ int	len_double_quotes(char *line, t_struct *minish)
 		if (minish->parsing.error == 1)
 			return (-1);
 	}
+	minish->parsing.quotes = 0;
 	return (i);
 }
 

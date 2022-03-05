@@ -6,43 +6,14 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 19:43:47 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 06:06:32 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_redir(char *line)
+int	norme_redir(char *line, t_struct *minish, int i)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (line[i])
-	{
-		if (line[i] == '<' || line[i] == '>')
-		{
-			j++;
-			while (line[i] == '<' || line[i] == '>' || line[i] == ' ')
-				i++;
-			while (line[i] && line[i] != '<' && line[i] != '>')
-				i++;
-		}
-		else
-			i++;
-	}
-	return (j);
-}
-
-// 28 lignes
-
-int	len_redir(char *line, t_struct *minish)
-{
-	int	i;
-
-	i = 0;
-	minish->parsing.len_arg = 1;
 	while (line[i] == '<' || line[i] == '>')
 	{
 		minish->parsing.len_arg++;
@@ -50,6 +21,16 @@ int	len_redir(char *line, t_struct *minish)
 	}
 	while (line[i] == ' ')
 		i++;
+	return (i);
+}
+
+int	len_redir(char *line, t_struct *minish)
+{
+	int	i;
+
+	i = 0;
+	minish->parsing.len_arg = 1;
+	i += norme_redir(line, minish, i);
 	while (line[i] && line[i] != ' ' && line[i] != '<' && line[i] != '>')
 	{
 		if (line[i] == '$')
@@ -69,13 +50,8 @@ int	len_redir(char *line, t_struct *minish)
 	return (i);
 }
 
-// 28 lignes
-
-char	*fill_redir(char *str, char *line, t_struct *minish)
+char	*fill_redir(char *str, char *line, t_struct *minish, int i)
 {
-	int	i;
-
-	i = 0;
 	minish->parsing.fill_arg = 0;
 	while (line[i] == '<' || line[i] == '>')
 	{
@@ -119,7 +95,7 @@ char	*len_fill_redir(char *line, t_struct *minish)
 		minish->parsing.error = 1;
 		return (NULL);
 	}
-	str = fill_redir(str, &line[i], minish);
+	str = fill_redir(str, &line[i], minish, 0);
 	i += j;
 	if (line[i] == '\0')
 		i = 0;
