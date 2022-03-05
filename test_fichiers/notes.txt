@@ -146,4 +146,4 @@ signal ctrl D                                   >>>>>>  ok?
 signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
 leaks
-norme
+norme                                           >>>>>>  ok?

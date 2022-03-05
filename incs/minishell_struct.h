@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/05 18:00:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/05 21:32:16 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,17 @@ typedef struct s_environnement
 
 typedef struct s_args
 {
-	char			**redir;		//	recup toutes les redirections
-	char			*command;		//	ligne de commande entre pipe
-	char			**arg_to_pass;	//	arguments a donner aux fonction exec
+	char			**redir;
+	char			*command;
+	char			**arg_to_pass;
 	struct s_args	*next;
 }	t_args;
+
+/*
+	redir		->	recup toutes les redirections
+	command		->	ligne de commande entre pipe
+	arg_to_pass	->	arguments a donner aux fonction exec
+*/
 
 typedef struct s_list_arg
 {
@@ -47,35 +53,31 @@ typedef struct s_parsing
 {
 	int		i_line;
 	int		error;
-	int		red1;
-	int		red2;
 	int		nb_arg;
 	int		len_arg;
 	int		fill_arg;
 	int		option;
 	int		nb_pipe;
-	int		nb_redir;
 	int		quotes;
-	int		pipe_fd[2];
 	char	*result;
 }	t_parsing;
 
-typedef struct	s_redirection_std
+typedef struct s_redirection_std
 {
-	int	fd_to_read;
-	int	fd_to_write;
-	int	last_right;
-	int	last_left;
-	int	which;
-	int	right;
-	int	dbl_r;
-	int	left;
-	int	dbl_l;
-	int	both;
+	int		fd_to_read;
+	int		fd_to_write;
+	int		last_right;
+	int		last_left;
+	int		which;
+	int		right;
+	int		dbl_r;
+	int		left;
+	int		dbl_l;
+	int		both;
 	char	*name_file;
 }	t_red_std;
 
-typedef struct	s_structure
+typedef struct s_structure
 {
 	pid_t			pid;
 	t_parsing		parsing;
@@ -87,7 +89,7 @@ typedef struct	s_structure
 	int				pipe_left;
 }	t_struct;
 
-typedef struct	s_iterator
+typedef struct s_iterator
 {
 	int	i;
 	int	j;
@@ -99,7 +101,7 @@ typedef struct	s_iterator
 	int	len;
 }	t_it;
 
-typedef struct	s_pipe
+typedef struct s_pipe
 {
 	int		pipe;
 	int		status;
@@ -113,9 +115,7 @@ typedef struct	s_pipe
 	pid_t	pid;
 }	t_pipe;
 
-
 #endif
-
 
 /*
 > 1

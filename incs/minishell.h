@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:34:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 20:21:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/05 21:33:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # include "minishell_struct.h"
 # include "minishell_fcts.h"
 
-extern int sig_error;
+extern int	sig_error;
 
 #define READ_IN 0		// SORTIE
 #define WRITE_OUT 1		// ENTREE
