@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/04 17:51:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/05 17:16:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_parsing
 	int		option;
 	int		nb_pipe;
 	int		nb_redir;
+	int		quotes;
 	int		pipe_fd[2];
 	char	*result;
 }	t_parsing;
@@ -98,6 +99,7 @@ typedef struct	s_iterator
 
 typedef struct	s_pipe
 {
+	int		pipe;
 	int		status;
 	int		pipe_tot;
 	int		pipe_nbr;

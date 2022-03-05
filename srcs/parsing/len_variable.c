@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:21:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 00:59:00 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,17 @@ int	len_variable2(char *line, t_struct *minish, int i)
 	return (i);
 }
 
-int	double_dollar(t_struct *minish)
+int	if_is_empty(char *line, int i)
 {
-	minish->pid = 546456;
-	minish->parsing.len_arg += ft_strlen(ft_itoa(minish->pid));
-	return (1);
+	i++;
+	while (line[i] && line[i] != ' ' && line[i] != 34 && line[i] != 39
+		&& line[i] != '<' && line[i] != '>' && line[i] != '$'
+		&& line[i] != '}' && line[i] != '{')
+		i++;
+	while (line[i] == ' ')
+		i++;
+	return (i - 1);
 }
-
-int	len_sig_error(t_struct *minish)
-{
-	minish->parsing.len_arg += ft_strlen(ft_itoa(sig_error));
-	return (1);
-}
-
-// 29 lignes
 
 int	len_variable(char *line, t_struct *minish)
 {
@@ -112,22 +109,13 @@ int	len_variable(char *line, t_struct *minish)
 	if (line[i] == '$' && line[i + 1] == '?')
 		return (len_sig_error(minish));
 	if (is_empty(line, minish) == 0)
-	{
-		i++;
-		while (line[i] && line[i] != ' ' && line[i] != 34 && line[i] != 39
-			&& line[i] != '<' && line[i] != '>' && line[i] != '$'
-			&& line[i] != '}' && line[i] != '{')
-			i++;
-		while (line[i] == ' ')
-			i++;
-		return (i - 1);
-	}
+		return (if_is_empty(line, i));
 	if (minish->parsing.error == 1)
 		return (-1);
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (double_dollar(minish));
 	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
-			|| line[i + 1] == 34 || line[i + 1] == 39))
+			|| (line[i + 1] == 34 && minish->parsing.quotes == 1)))
 	{
 		minish->parsing.len_arg++;
 		return (0);

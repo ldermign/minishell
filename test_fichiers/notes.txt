@@ -82,16 +82,18 @@ e"ch"o bonjour
 "${GYTR"
 "NYR"%"$"HNTEYN"TE$NW$"
 echoooo oui
-
-
+ctrl \ 
+ctrl D -> exit nb de fois ou error
+ctrl C apres cat
+echo $"FERWOP$PWD"   "" oijk
+echo $"GTRE"$"GT"
 
 
 
 MARCHE PAS : 
 nb pipe dans command
-ctrl \ 
-ctrl D -> exit nb de fois ou error
-ctrl C apres cat
+echo -n
+
 
 
 

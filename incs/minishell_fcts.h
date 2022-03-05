@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/04 00:21:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 06:20:07 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,64 +113,63 @@ void	print_env_ms(t_env_ms **stack);
 */
 
 //		>>>>>>>>>   initialisations
-void	init_parsing(t_parsing *parsing);
+void		init_parsing(t_parsing *parsing);
 t_list_arg	*init_args(void);
 //		>>>>>>>>>   list
-int		insertion(t_list_arg *list, char *new_arg);
-int		free_list(t_list_arg *list);
-int		delete(t_list_arg *list);
-void	print_list(t_list_arg *list);
+int			insertion(t_list_arg *list, char *new_arg);
+int			free_list(t_list_arg *list);
+int			delete(t_list_arg *list);
+void		print_list(t_list_arg *list);
 //		>>>>>>>>>	parsing
-int		parsing(char *line, t_struct *minish);
+int			parsing(char *line, t_struct *minish);
 //		>>>>>>>>>	recup_args
-int		recup_pipe(char *line, t_struct *minishell);
-int		recup_args(char *line, t_struct *minishell);
-// 		>>>>>>>>>	arguments
-// int 	interpret_args(char *line, char	**tab_arg, t_struct *minish);
-char	**interpret_args(char *line, char	**tab_arg, t_struct *minish);
-// 		>>>>>>>>>	sep_args
-// int		sep_and_check_args(t_args *arg, t_struct *minish);
-char	**sep_and_check_args(t_args *arg, t_struct *minish);
-int		pass_quotes(char *line);
+int			recup_pipe(char *line, t_struct *minishell);
+int			recup_args(char *line, t_struct *minishell);
+char		**interpret_args(char *line, char	**tab_arg, t_struct *minish);
+char		**sep_and_check_args(t_args *arg, t_struct *minish);
+int			pass_quotes(char *line);
 // 		>>>>>>>>>	count_arg
-int		pass_arg_count(char *line, t_struct *minish);
+int			pass_arg_count(char *line, t_struct *minish);
 // 		>>>>>>>>>	utils
-int		is_variable_char(char c);
-int		pass_variable(char *line);
-int		pass_redir(char *line, t_struct *minish);
-int		pass_quotes(char *line);
-int		error_malloc(t_struct *minish);
+int			is_variable_char(char c);
+int			pass_variable(char *line);
+int			pass_redir(char *line, t_struct *minish);
+int			pass_quotes(char *line);
+int			error_malloc(t_struct *minish);
 // 		>>>>>>>>>	empty_args
-int		is_empty(char *line, t_struct *minish);
+int			is_empty(char *line, t_struct *minish);
 // 		>>>>>>>>>	len_arg
-int		len_arg(char *line, t_struct *minish);
-int 	len_double_quotes(char *line, t_struct *minish);
-int 	len_simple_quote(char *line, t_struct *minish);
+int			len_arg(char *line, t_struct *minish);
+int 		len_double_quotes(char *line, t_struct *minish);
+int 		len_simple_quote(char *line, t_struct *minish);
 //      >>>>>>>>>   len_variable
-int 	len_variable(char *line, t_struct *minish);
+int 		len_variable(char *line, t_struct *minish);
 // 		>>>>>>>>>	fill_arg
-int		fill_arg2(char *line, char *str, t_struct *minish);
-int	fill_simple_quote(char *line, char *str, t_struct *minish);
-int	fill_double_quotes(char *line, char *str, t_struct *minish);
+int			fill_arg2(char *line, char *str, t_struct *minish);
+int			fill_simple_quote(char *line, char *str, t_struct *minish);
+int			fill_double_quotes(char *line, char *str, t_struct *minish);
 // 		>>>>>>>>>	fill_variable
-int		fill_variable(char *line, char *str, t_struct *minish);
-//      >>>>>>>>>   redir
-// int 	recup_redir(t_args *arg, t_struct *minish);
-// int 	count_redir(char *line, t_struct *minish);
-// int 	fill_redir(char *line, t_struct *minish);
+int			fill_variable(char *line, char *str, t_struct *minish);
 //      >>>>>>>>>   echo
-char	*recup_echo(char **args, t_struct *minish);
+char		*recup_echo(char **args, t_struct *minish);
 //      >>>>>>>>>   list_ok
 // t_list_arg	*new_list(t_list_arg *list);
 t_list_arg	*reverse_list(t_list_arg *list);
 //      >>>>>>>>>   recup_redir
-char	**recup_redir(char *line, t_struct *minish);
+char		**recup_redir(char *line, t_struct *minish);
 //      >>>>>>>>>   recup_pipe
-int	check_pipe2(char *line, t_struct *minish);
-int	recup_pipe2(char *line, t_struct *minish, int i);
-int	pass_arg(char *line, t_struct *minish);
+int			check_pipe2(char *line, t_struct *minish);
+int			recup_pipe2(char *line, t_struct *minish, int i);
+int			pass_arg(char *line, t_struct *minish);
 //      >>>>>>>>>   signals
-void	handle_signal_child(int sig);
-void	handle_signal(int sig);
+void		handle_signal_child(int sig);
+void		handle_signal(int sig);
+char		*error_malloc_null(t_struct *minish);
+int			double_dollar(t_struct *minish);
+int			len_sig_error(t_struct *minish);
+int			if_is_empty(char *line, int i);
+int			fill_double_dollar(t_struct *minish, char *str);
+int			fill_sig_error(t_struct *minish, char *str);
+int			count_redir(char *line);
 
 #endif

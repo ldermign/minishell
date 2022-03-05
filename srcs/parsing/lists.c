@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 20:22:52 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/05 06:08:44 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,58 +39,6 @@ int	delete(t_list_arg *list)
 		list->first = list->first->next;
 		free(to_delete);
 	}
-	return (0);
-}
-
-/*
-		// if (structure.parsing.result != NULL)
-			// free(structure.parsing.result);
-*/
-
-int	free_list(t_list_arg *list)
-{
-	int		i;
-	t_args	*to_delete;
-
-	if (list == NULL)
-		return (-1);
-	// printf("\n");
-	// printf("\n");
-	// printf("\n");
-	while (list->first != NULL)
-	{
-		i = 0;
-		if (list->first->arg_to_pass != NULL)
-		{
-			while (list->first->arg_to_pass[i] != NULL)
-			{
-				// printf("free[%s]\n", list->first->arg_to_pass[i]);
-				free(list->first->arg_to_pass[i]);
-				i++;
-			}
-			free(list->first->arg_to_pass);
-		}
-		if (list->first->redir != NULL)
-		{
-			i = 0;
-			while (list->first->redir[i] != NULL)
-			{
-				// printf("free redir[%s]\n", list->first->redir[i]);
-				free(list->first->redir[i]);
-				i++;
-			}
-			free(list->first->redir);
-		}
-		if (list->first->command != NULL)
-		{
-			// printf("free command -> [%s]\n", list->first->command);
-			free(list->first->command);
-		}
-		to_delete = list->first;
-		list->first = list->first->next;
-		free(to_delete);
-	}
-	free(list);
 	return (0);
 }
 

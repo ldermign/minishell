@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/04 19:45:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/05 17:55:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,41 +163,35 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing
 {
 	if (pipex->cmd_nbr == 0)
 	{
+		// fprintf(stderr, "merde\n");
 		close(test[0][0]);
 		dup2(test[0][1], STDOUT_FILENO);
 		close(test[0][1]);
 	}
 	else if (pipex->pipe_tot == 1 && pipex->cmd_nbr == 1)
 	{
+		// fprintf(stderr, "putain\n");
 		close(test[0][1]);
 		dup2(test[0][0], STDIN_FILENO);
 		close(test[0][0]);
 	}
-	else if (pipex->pipe_nbr == 1 && pipex->pipe_tot != pipex->cmd_nbr)
+	else if (pipex->pipe_left == 1 && pipex->pipe_right == 1)
 	{
-		close(pipex->test[pipex->][1]);
-		dup2(pipex->fd1[0], STDIN_FILENO);
-		close(pipex->fd1[0]);
-		dup2(pipex->fd2[0], pipex->fd1[0]);
-		close(pipex->fd2[0]);
-		dup2(pipex->fd2[1], STDOUT_FILENO);
-		close(pipex->fd2[1]);
+		close(test[pipex->pipe - 1][1]);
+		dup2(test[pipex->pipe - 1][0], STDIN_FILENO);
+		close(test[pipex->pipe - 1][0]);
+		close(test[pipex->pipe + 1][0]);
+		dup2(test[pipex->pipe + 1][1], STDOUT_FILENO);
+		close(test[pipex->pipe + 1][1]);
 	}
-	else if (ms->parsing.nb_pipe == pipex->cmd_nbr && pipex->pipe_nbr == 0)
+	else if (pipex->cmd_nbr == pipex->pipe)
 	{
-		close(pipex->fd2[1]);
-		dup2(pipex->fd2[0], STDIN_FILENO);
-		close(pipex->fd2[0]);
-		dup2(pipex->fd1[0], pipex->fd2[0]);
-
-		close(pipex->fd1[0]);				// BON
-		dup2(pipex->fd1[1], STDOUT_FILENO);	// BON
-		close(pipex->fd1[1]);				// BON
+		close(test[pipex->pipe - 1][1]);
+		dup2(test[pipex->pipe - 1][0], STDIN_FILENO);
+		close(test[pipex->pipe - 1][0]);
+		close(test[pipex->pipe][0]);
+		close(test[pipex->pipe][1]);
 	}
-	// 	else if (pipex->pipe_nbr == 0)
-	// {
-	// 	return ;
-	// }
 	if (execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash) == -1)
 	{
 		printf("minishell: %s: command not found\n", cmd[0]);
@@ -208,6 +202,16 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing
 		close(pipex->fd2[1]);
 		return ;
 	}
+}
+
+void	pipe_left_right(t_pipe *pipex)
+{
+	pipex->pipe_left = 0;
+	pipex->pipe_right = 0;
+	if (pipex->cmd_nbr != pipex->pipe_tot)
+		pipex->pipe_right = 1;
+	if (pipex->cmd_nbr != 0)
+		pipex->pipe_right = 0;
 }
 
 void	there_is_pipe(t_struct *ms, char *prompt)
@@ -229,6 +233,7 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	pipex->cmd_nbr = 0;
 	cmd_pipe = get_cmd_and_args_split(&prompt[i]);
 	int len = len_tab(cmd_pipe);
+	pipex->pipe = 1;
 	while (j < pipex->pipe_tot)
 	{
 		if (pipe(test[j]) == -1)
@@ -237,6 +242,7 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	}
 	while (i < len)
 	{
+		pipe_left_right(pipex);
 		if (init_fork(&pipex->pid) == -1)
 			return ;
 		new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
@@ -245,21 +251,32 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 		else
 		{
 			// if (pipex->cmd_nbr == 0)	// je comprend pas pourquoi mais faut pas faire ca
-				// close(test[0][0]);
+			// 	close(test[0][0]);
 			if (pipex->pipe_tot == 1 && pipex->cmd_nbr == 1)
 				close(test[0][1]);
+			if (pipex->pipe_left == 1)
+			{
+				// close skifo
+			}
+			if (pipex->pipe_right == 1)
+			{
+				// close skifo
+			}
+			
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
 		ft_free_tab(new_args);
 		pipex->cmd_nbr++;
+		pipex->pipe++;
 	}
-	// int	k = -1;
-	// while (k < pipex->pipe_tot)
-	// {
-	// 	// wait(NULL);
-	// 	waitpid(pipex->pid, &pipex->status, 0);
-	// 	k++;
-	// }
+	int	k = -1;
+	while (k < pipex->pipe_tot)
+	{
+		// wait(NULL);
+		// fprintf(stderr, "Normalement, 2 fois\n");
+		waitpid(pipex->pid, &pipex->status, 0);
+		k++;
+	}
 }
 
 /*

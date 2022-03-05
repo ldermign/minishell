@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisations.c                                  :+:      :+:    :+:   */
+/*   error_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 16:55:27 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:11:16 by ejahan           ###   ########.fr       */
+/*   Created: 2022/03/05 00:48:54 by ejahan            #+#    #+#             */
+/*   Updated: 2022/03/05 00:49:35 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_parsing(t_parsing *parsing)
+char	*error_malloc_null(t_struct *minish)
 {
-	parsing->error = 0;
-	parsing->result = NULL;
-	parsing->i_line = 0;
-	parsing->option = 0;
-	parsing->red1 = 0;
-	parsing->red2 = 0;
-	parsing->nb_pipe = 0;
-	parsing->nb_arg = 0;
-	parsing->quotes = 0;
+	printf("error malloc\n");
+	minish->parsing.error = 1;
+	return (NULL);
 }
 
-t_list_arg	*init_args(void)
+int	error_malloc(t_struct *minish)
 {
-	t_list_arg	*list;
-
-	list = malloc(sizeof(*list));
-	if (list == NULL)
-		return (NULL);
-	list->first = NULL;
-	return (list);
+	printf("error malloc\n");
+	minish->parsing.error = 1;
+	return (-1);
 }
