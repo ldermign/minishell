@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 17:45:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/06 20:48:28 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char	**clean_args(char **cmd)
 	return (new_tab);
 }
 
-int		init_pipe(int fd[2][2])
+int	init_pipe(int fd[2][2])
 {
 	if (pipe(fd[0]) == -1 || pipe(fd[1]) == -1)
 	{
@@ -147,12 +147,12 @@ int		init_pipe(int fd[2][2])
 	return (1);
 }
 
-int		init_fork(int *pid)
+int	init_fork(int *pid)
 {
 	*pid = fork();
 	if (*pid == -1)
 	{
-		sig_error = 127;
+		g_sig_error = 127;
 		perror("fork");
 		return (-1);
 	}
@@ -187,7 +187,7 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing
 	// 	close(test[0][0]);
 	// }
 	// fprintf(stderr, "pipe = %d\n", pipex->pipe);
-	 if (pipex->pipe_left == 1)
+	if (pipex->pipe_left == 1)
 	{
 		close(test[pipex->pipe - 1][1]);
 		dup2(test[pipex->pipe - 1][0], STDIN_FILENO);
@@ -202,7 +202,7 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing
 	if (execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash) == -1)
 	{
 		printf("minishell: %s: command not found\n", cmd[0]);
-		sig_error = 127;
+		g_sig_error = 127;
 		close(pipex->fd1[0]);
 		close(pipex->fd1[1]);
 		close(pipex->fd2[0]);
@@ -217,6 +217,8 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	int		test[ms->parsing.nb_pipe][2];
 	int		i;
 	int		j;
+	int		k;
+	int		len;
 	char	**cmd_pipe;
 	char	**new_args;
 
@@ -229,7 +231,7 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	pipex->pipe_nbr = 1;
 	pipex->cmd_nbr = 0;
 	cmd_pipe = get_cmd_and_args_split(&prompt[i]);
-	int len = len_tab(cmd_pipe);
+	len = len_tab(cmd_pipe);
 	pipex->pipe = 0;
 	while (j < pipex->pipe_tot)
 	{
@@ -259,14 +261,13 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 			// {
 			// 	// test[pipex->pipe - 1] = test[pipex->pipe];
 			// }
-			
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
 		ft_free_tab(new_args);
 		pipex->cmd_nbr++;
 		pipex->pipe++;
 	}
-	int	k = -1;
+	k = -1;
 	while (k < pipex->pipe_tot)
 	{
 		// wait(NULL);

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:19:51 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:24:05 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/06 21:15:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_signal_child(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		sig_error = 131;
+		g_sig_error = 131;
 		write(1, "Quit (core dumped)\n", 19);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -29,7 +29,7 @@ void	handle_signal_child(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		// rl_redisplay();
-		sig_error = 130;
+		g_sig_error = 130;
 	}
 }
 
@@ -38,7 +38,7 @@ void	handle_signal(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
-	sig_error = 130;
+	g_sig_error = 130;
 }

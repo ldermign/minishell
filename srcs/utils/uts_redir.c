@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/22 11:04:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/06 19:57:00 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	is_built_in(char *str)
 {
 	if (ft_pos_strstr(str, "echo") != -1 || ft_pos_strstr(str, "cd") != -1
 		|| ft_pos_strstr(str, "pwd") != -1 || ft_pos_strstr(str, "env") != -1
-		|| ft_pos_strstr(str, "export") != -1 || ft_pos_strstr(str, "unset") != -1
+		|| ft_pos_strstr(str, "export") != -1
+		|| ft_pos_strstr(str, "unset") != -1
 		|| ft_pos_strstr(str, "exit") != -1)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);

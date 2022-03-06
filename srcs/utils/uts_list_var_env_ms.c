@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 10:34:28 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/06 19:55:47 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_lst(t_env_ms *stack)
 
 int	size_env(t_env_ms **minishell)
 {
-	int	len;
+	int			len;
 	t_env_ms	*first;
 
 	len = 0;

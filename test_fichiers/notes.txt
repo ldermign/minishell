@@ -94,7 +94,8 @@ echo $"GTRE"$"GT"
 MARCHE PAS : 
 nb pipe dans command
 echo -n
-
+ctrl D dans <<
+sig_error
 
 
 
@@ -143,8 +144,6 @@ ok - ctrl-\ after running a blocking command like cat without arguments or grep 
 
 
 
-
-
 $$              ->>>>> pas possible?
 
 
@@ -159,5 +158,5 @@ recup redirections interpretees dans char **    >>>>>>  ok?
 signal ctrl D                                   >>>>>>  ok?
 signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
-leaks
+leaks parsing                                   >>>>>>  ok?
 norme                                           >>>>>>  ok?

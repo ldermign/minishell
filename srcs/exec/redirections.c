@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/23 14:26:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/06 20:48:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*create_all_files(char **args)
 		fd = open(name_file, O_CREAT, 0644);
 		if (fd == -1)
 		{
-			sig_error = errno;
+			g_sig_error = errno;
 			perror("minishell"); // arranger le message d'erreur
 		}
 		ret = get_name_file_redir(args, ret);
@@ -137,7 +137,7 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 	// execute_cmd(ms, good_path, exec_args_only, ms->env.env_bash);
 	execute_cmd(ms, good_path, args, exec_args_only, ms->env.env_bash);
 	// close_all_fd(std);
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	get_redirections(t_struct *ms, char **args, int which)
@@ -148,7 +148,7 @@ int	get_redirections(t_struct *ms, char **args, int which)
 		return (first_arg_is_redir(args, &(*ms).std, which));
 	// if (get_good_fd(args, name_file, &(*ms).std) == EXIT_FAILURE)
 	// {
-	// 	sig_error = errno;
+	// 	g_sig_error = errno;
 	// 	perror("minishell");
 	// 	return (EXIT_FAILURE);
 	// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit_unset_env.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 22:54:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/06 20:47:36 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ void	built_in_exit(t_env *env, char **cmd_args, char *prompt)
 	if (len_tab(cmd_args) > 2)
 	{
 		printf("bash: exit: too many arguments\n");
-		sig_error = 2;
+		g_sig_error = 2;
 	}
 	if (cmd_args[1] != NULL)
 	{
 		nbr = ft_atol(cmd_args[1]);
-		sig_error = ft_atoi(cmd_args[1]);
+		g_sig_error = ft_atoi(cmd_args[1]);
 		if (nbr_only(cmd_args[1]) == EXIT_FAILURE
 			|| ft_strlen(cmd_args[1]) > 20)
 		{
 			printf("bash: exit: %s: numeric argument required\n", cmd_args[1]);
-			sig_error = 2;
+			g_sig_error = 2;
 		}
 	}
 	free_lst(env->env_ms);

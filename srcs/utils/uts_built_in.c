@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/19 23:03:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/06 19:55:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	size_variable(char *prompt, int add, int pos)
 		}
 		while (prompt[i]
 			&& ((ret == 1 && prompt[i] != '"')
-			|| (ret == 0 && prompt[i] != ' ')))
+				|| (ret == 0 && prompt[i] != ' ')))
 		{
 			i++;
 			len++;
@@ -71,8 +71,8 @@ int	light_parse_export(char *prompt)
 		printf("bash: export: '%s': not a valid identifier\n", prompt);
 		return (-1);
 	}
-	while (prompt[i]
-		&& (ft_is_alpha(prompt[i]) || prompt[i] == '_' || ft_is_digit(prompt[i])))
+	while (prompt[i] && (ft_is_alpha(prompt[i])
+			|| prompt[i] == '_' || ft_is_digit(prompt[i])))
 		i++;
 	if (prompt[i] == '+' && prompt[i + 1] && prompt[i + 1] == '=')
 	{

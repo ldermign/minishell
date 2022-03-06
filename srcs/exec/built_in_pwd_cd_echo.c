@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 23:15:06 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/06 20:47:56 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	change_old_pwd(t_env_ms **stack, char *name, char *str)
 		*stack = (*stack)->next;
 	(*stack)->var = str;
 	*stack = first;
-
 }
 
 int	built_in_cd(t_env *env, char **cmd_args)
@@ -29,10 +28,10 @@ int	built_in_cd(t_env *env, char **cmd_args)
 	int		ret;
 	char	*path_to_go;
 	char	*old_pwd;
-	char	actual_path[PATH_MAX];
+	char	act_path[PATH_MAX];
 
 	ret = check_if_variable_already_exist(&(env->env_ms), "OLDPWD=");
-	old_pwd = ft_alloc_strcat("OLDPWD=", getcwd(actual_path, sizeof(actual_path)));
+	old_pwd = ft_alloc_strcat("OLDPWD=", getcwd(act_path, sizeof(act_path)));
 	if (ret == -1)
 		add_var_env_minishell(&(env->env_ms), old_pwd);
 	else
@@ -40,17 +39,18 @@ int	built_in_cd(t_env *env, char **cmd_args)
 	path_to_go = ft_alloc_strcat("./", cmd_args[1]);
 	if (chdir(path_to_go) == -1)
 	{
-		sig_error = errno;
+		g_sig_error = errno;
 		perror("cd");
 	}
 	free(path_to_go);
-	path_to_go = ft_alloc_strcat("PWD=", getcwd(actual_path, sizeof(actual_path)));
-	env->abs = actual_path;
-	change_var_env_minishell(&(env->env_ms), path_to_go, check_if_variable_already_exist(&(env->env_ms), "PWD="));
+	path_to_go = ft_alloc_strcat("PWD=", getcwd(act_path, sizeof(act_path)));
+	env->abs = act_path;
+	change_var_env_minishell(&(env->env_ms), path_to_go,
+		check_if_variable_already_exist(&(env->env_ms), "PWD="));
 	return (1);
 }
 
-int	built_in_pwd()
+int	built_in_pwd(void)
 {
 	char	actual_path[PATH_MAX];
 
@@ -58,23 +58,24 @@ int	built_in_pwd()
 		printf("%s\n", actual_path);
 	else
 	{
-		sig_error = errno;
+		g_sig_error = errno;
 		perror("getcwd");
 	}
 	return (1);
 }
 
 int	built_in_echo(t_struct *ms, char **args, char *prompt)
-{(void)args;
+{
 	int		i;
 	int		len;
 	int		line_break;
 
+	(void)args;
 	i = 0;
 	line_break = light_parse_echo(prompt);
 	// if (args[0] && args[1] && ft_pos_strstr(args[1], "$?") != -1)
 	// {
-	// 	printf("%d\n", sig_error);
+	// 	printf("%d\n", g_sig_error);
 	// 	return (EXIT_SUCCESS);
 	// }
 	if (line_break != -1)

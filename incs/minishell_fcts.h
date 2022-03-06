@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/05 21:21:16 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/06 19:34:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			built_in_to_create(t_struct *ms, char **cmd_args, char *prompt);
 */
 
 int			get_redirections(t_struct *ms, char **args, int which);
-int			get_good_fd(char **args, char *name_file, t_red_std *std, int *pipefd);
+int			get_good_fd(char **args, char *file, t_red_std *std, int *pipefd);
 int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/03 23:14:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/06 19:38:37 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
 	it.len = size_variable(&prompt[it.i], it.add, it.pos);
 	if (it.add == 1 && it.pos != -1)
 		str = ft_strjoin(get_variable_with_pos(&(env->env_ms), it.pos),
-			get_good_variable(&prompt[it.i], it.len, it.add, it.pos));
+				get_good_variable(&prompt[it.i], it.len, it.add, it.pos));
 	else
 		str = get_good_variable(&prompt[it.i], it.len, it.add, it.pos);
 	if (it.pos == -1)
@@ -191,12 +191,12 @@ static int	count_pipe(char *prompt)
 	return (count);
 }
 
-void command(char *prompt, t_struct *ms)
+void	command(char *prompt, t_struct *ms)
 {
 	int		i;
 	int		last;
 	char	*good_path;
-	char	**args = NULL;
+	char	**args;
 
 	i = 0;
 	ms->prompt = prompt;
