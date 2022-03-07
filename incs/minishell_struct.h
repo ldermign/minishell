@@ -38,6 +38,12 @@ typedef struct s_args
 	struct s_args	*next;
 }	t_args;
 
+typedef struct s_pid
+{
+	pid_t			pid;
+	struct s_pid	*next;
+}	t_pid;
+
 /*
 	redir		->	recup toutes les redirections
 	command		->	ligne de commande entre pipe

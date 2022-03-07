@@ -19,7 +19,7 @@ void	handle_signal_child(int sig)
 		g_sig_error = 131;
 		write(1, "Quit (core dumped)\n", 19);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		// rl_redisplay();
 		// exit (0);
 	}
@@ -27,7 +27,7 @@ void	handle_signal_child(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		// rl_redisplay();
 		g_sig_error = 130;
 	}
@@ -38,7 +38,7 @@ void	handle_signal(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_error = 130;
 }

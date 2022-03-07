@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 19:34:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/07 14:12:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ int			size_env(t_env_ms **minishell);
 char		*get_variable_with_pos(t_env_ms **minishell, int pos);
 
 /*
+**  UTILS PIPE
+*/
+
+void	add_nbr_back(t_pid **stack, int nbr);
+
+/*
 **	INIT
 */
 
@@ -102,11 +108,12 @@ void		close_all_fd(t_red_std *std);
 void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
 
 /*
-**	TEMPORAIRE
+**	TEMPORAIRE A SUPPRIMEEEEEERRRRRR
 */
 
 void		print_tab_char(char **tabl);
 void		print_env_ms(t_env_ms **stack);
+void	print_struct_pid(t_pid **stack);
 
 /*
 **		>>>>>>>>>  PARSING  <<<<<<<<<
