@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 06:06:14 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/07 22:58:56 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	pass_arg_count(char *line, t_struct *minish)
 				i += pass_quotes(&line[i]);
 			i++;
 		}
+		return (i);
 	}
 	else if (line[i] == '$')
 		return (pass_arg_count_else_if(line, i, minish));

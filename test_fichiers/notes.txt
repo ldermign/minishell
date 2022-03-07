@@ -88,6 +88,8 @@ ctrl C apres cat
 echo $"FERWOP$PWD"   "" oijk
 echo $"GTRE"$"GT"
 echo -n
+echo $?
+$?
 
 
 
@@ -95,7 +97,9 @@ echo -n
 MARCHE PAS : 
 nb pipe dans command
 signaux dans <<   ->    seg fault
-sig_error
+sig_error quand mauvaise commande -> a cause de exit
+
+
 
 
 

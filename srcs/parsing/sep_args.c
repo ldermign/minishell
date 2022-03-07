@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:23:37 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/07 22:52:24 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	if (minish->parsing.error == 1)
 		return (NULL);
 	i = minish->parsing.nb_arg;
+	printf("i = %d\n", i);
 	if (i == 0)
 		return (NULL);
 	arg_to_pass = malloc(sizeof(char *) * (i + 1));
