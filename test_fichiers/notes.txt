@@ -87,14 +87,14 @@ ctrl D -> exit nb de fois ou error
 ctrl C apres cat
 echo $"FERWOP$PWD"   "" oijk
 echo $"GTRE"$"GT"
+echo -n
 
 
 
 
 MARCHE PAS : 
 nb pipe dans command
-echo -n
-ctrl D dans <<
+signaux dans <<   ->    seg fault
 sig_error
 
 
@@ -160,3 +160,10 @@ signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
 leaks parsing                                   >>>>>>  ok?
 norme                                           >>>>>>  ok?
+mettre en commun
+norme liena
+
+
+
+
+args = 

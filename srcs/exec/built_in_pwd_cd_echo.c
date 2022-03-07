@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 20:47:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/07 04:27:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	built_in_echo(t_struct *ms, char **args, char *prompt)
 	}
 	len = ft_strlen(ms->parsing.result);
 	write(ms->std.fd_to_write, ms->parsing.result, len);
-	if (line_break == -1) //gerer cas ou $$ chaipukoi
+	// if (line_break == -1) //gerer cas ou $$ chaipukoi
+	if (ms->parsing.option != 1)
 		write(ms->std.fd_to_write, "\n", 1);
 	free(ms->parsing.result);
 	return (EXIT_SUCCESS);
