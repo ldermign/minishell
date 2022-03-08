@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 06:09:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:53:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	parsing(char *line, t_struct *minish)
 	init_parsing(&minish->parsing);
 	if (recup_args(line, minish) == -1)
 	{
+		if (minish->parsing.error == 2)
+			free_list2(minish->args);
+		if (minish->parsing.error == 3)
+			free_list3(minish->args);
 		// free_list(minish->args);
 		return (-1);
 	}
@@ -39,12 +43,12 @@ int	recup_pipe(char *line, t_struct *minish)
 			&& line[minish->parsing.i_line + i] != '|')
 		{
 			i += pass_arg(&line[minish->parsing.i_line + i], minish);
-			if (minish->parsing.error == 1)
+			if (minish->parsing.error != 0)
 				return (-1);
 		}
 		recup_pipe2(line, minish, i);
 		minish->parsing.nb_pipe++;
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (-1);
 		if (line[minish->parsing.i_line] != '\0')
 			minish->parsing.i_line++;
@@ -64,13 +68,13 @@ int	recup_args(char *line, t_struct *ms)
 	{
 		ms->parsing.nb_arg = 0;
 		ms->args->first->arg_to_pass = sep_and_check_args(ms->args->first, ms);
-		if (ms->parsing.error == 1)
+		if (ms->parsing.error != 0)
 		{
 			ms->args->first = tmp;
 			return (-1);
 		}
 		ms->args->first->redir = recup_redir(ms->args->first->command, ms);
-		if (ms->parsing.error == 1)
+		if (ms->parsing.error != 0)
 		{
 			ms->args->first = tmp;
 			return (-1);

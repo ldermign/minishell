@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:49:29 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:25:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	pass_redir(char *line, t_struct *minish)
 			printf("syntax error near unexpected token `newline'\n");
 		else
 			printf("syntax error near unexpected token `%c'\n", line[i]);
-		minish->parsing.error = 1;
+		minish->parsing.error = 3;
 		return (-1);
 	}
 	while (line[i] && line[i] != ' ')

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 05:15:49 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:33:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*recup_echo(char **args, t_struct *minish)
 	if (i < 0)
 		i = 0;
 	str = fill_echo(args, i, j, minish);
-	if (minish->parsing.error == 1)
+	if (minish->parsing.error != 0)
 		return (NULL);
 	return (str);
 }

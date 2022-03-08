@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/07 23:42:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 08:01:47 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ void	command(char *prompt, t_struct *ms)
 	// printf("[%s]\n", ms->args->first->command);
 	// print_tab_char(ms->args->first->arg_to_pass);
 	ms->parsing.nb_pipe = count_pipe(prompt);
-	add_history(prompt);
+	// add_history(prompt);
 	while (prompt[i] == ' ')
 		i++;
 	args = get_cmd_and_args_split(&prompt[i]);

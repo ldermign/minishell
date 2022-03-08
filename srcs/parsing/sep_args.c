@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 05:15:25 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:47:22 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	count_args(char *line, t_struct *minish)
 	while (line[i])
 	{
 		i += pass_arg_count(&line[i], minish);
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (-1);
 	}
 	return (i);
@@ -33,7 +33,7 @@ int	count_args(char *line, t_struct *minish)
 char	*fill_arg(char *line, char *str, t_struct *minish)
 {
 	len_arg(line, minish);
-	if (minish->parsing.error == 1)
+	if (minish->parsing.error != 0)
 		return (NULL);
 	str = malloc(sizeof(char) * (minish->parsing.len_arg + 1));
 	if (str == NULL)
@@ -58,7 +58,7 @@ char	**interpret_args(char *line, char **tab_arg, t_struct *minish)
 	{
 		tab_arg[j] = fill_arg(&line[i], tab_arg[j], minish);
 		i += minish->parsing.i_line;
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (NULL);
 		while (line[i] == ' ')
 			i++;
@@ -73,7 +73,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	char	**arg_to_pass;
 
 	count_args(arg->command, minish);
-	if (minish->parsing.error == 1)
+	if (minish->parsing.error != 0)
 		return (NULL);
 	i = minish->parsing.nb_arg;
 	if (i == 0)
@@ -86,7 +86,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	}
 	arg_to_pass[i] = NULL;
 	arg_to_pass = interpret_args(arg->command, arg_to_pass, minish);
-	if (minish->parsing.nb_arg != 0 && minish->parsing.error == 1)
+	if (minish->parsing.nb_arg != 0 && minish->parsing.error != 0)
 	{
 		free(arg_to_pass);
 		return (NULL);

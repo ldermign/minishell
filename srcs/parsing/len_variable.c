@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:59:00 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:34:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	len_variable(char *line, t_struct *minish)
 		return (len_sig_error(minish));
 	if (is_empty(line, minish) == 0)
 		return (if_is_empty(line, i));
-	if (minish->parsing.error == 1)
+	if (minish->parsing.error != 0)
 		return (-1);
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (double_dollar(minish));

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/07 22:58:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:33:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	pass_arg_count2(char *line, t_struct *minish, int i)
 			i += pass_variable(&line[i]);
 		else if (line[i] == '\0' || line[i] == ' ')
 			return (i);
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (-1);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 06:15:36 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:28:48 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,48 @@ int	free_list(t_list_arg *list)
 			free_arg_to_pass(list->first->arg_to_pass);
 		if (list->first->redir != NULL)
 			free_redir(list->first->redir);
+		if (list->first->command != NULL)
+			free(list->first->command);
+		to_delete = list->first;
+		list->first = list->first->next;
+		free(to_delete);
+	}
+	free(list);
+	return (0);
+}
+
+int	free_list2(t_list_arg *list)
+{
+	int		i;
+	t_args	*to_delete;
+
+	if (list == NULL)
+		return (-1);
+	while (list->first != NULL)
+	{
+		i = 0;
+		if (list->first->command != NULL)
+			free(list->first->command);
+		to_delete = list->first;
+		list->first = list->first->next;
+		free(to_delete);
+	}
+	free(list);
+	return (0);
+}
+
+int	free_list3(t_list_arg *list)
+{
+	int		i;
+	t_args	*to_delete;
+
+	if (list == NULL)
+		return (-1);
+	while (list->first != NULL)
+	{
+		i = 0;
+		if (list->first->arg_to_pass != NULL)
+			free_arg_to_pass(list->first->arg_to_pass);
 		if (list->first->command != NULL)
 			free(list->first->command);
 		to_delete = list->first;

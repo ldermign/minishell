@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 06:06:32 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:34:32 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	len_redir(char *line, t_struct *minish)
 			i += len_double_quotes(&line[i], minish);
 		else
 			minish->parsing.len_arg++;
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (-1);
 		i++;
 	}
@@ -71,7 +71,7 @@ char	*fill_redir(char *str, char *line, t_struct *minish, int i)
 			i += fill_double_quotes(&line[i], str, minish);
 		else
 			str[minish->parsing.fill_arg++] = line[i];
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (NULL);
 		i++;
 	}

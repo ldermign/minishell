@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 21:16:07 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 08:02:11 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void	loop(t_struct *minish)
 		write(1, "exit\n", 5);
 		exit(g_sig_error);
 	}
+	add_history(line);
 	while (line[i] && line[i] == ' ')
 		i++;
 	if (line[i])
 		parsing(&line[i], minish);
-	if (line[i] && minish->parsing.error != 1)
+	if (line[i] && minish->parsing.error == 0)
 	{
 		command(line, minish);
 		free_list(minish->args);

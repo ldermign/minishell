@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 01:21:55 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 20:14:29 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:34:16 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pass_quotes_pipe(char *line, t_struct *minish)
 	if (line[i] == '\0')
 	{
 		printf("error : open quotes\n");
-		minish->parsing.error = 1;
+		minish->parsing.error = 2;
 		return (-1);
 	}
 	return (i);
@@ -48,7 +48,7 @@ int	pass_arg(char *line, t_struct *minish)
 			i += pass_quotes_pipe(&line[i], minish);
 		else if (line[i] == '\0' || line[i] == ' ' || line[i] == '|')
 			return (i);
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (-1);
 		i++;
 	}
@@ -65,7 +65,7 @@ int	check_pipe2(char *line, t_struct *minish)
 	if (line[i] == '|' || line[i] == '\0')
 	{
 		printf("syntax error near unexpected token `|'\n");
-		minish->parsing.error = 1;
+		minish->parsing.error = 2;
 		return (-1);
 	}
 	return (1);
@@ -83,7 +83,7 @@ int	check_pipe(char *line, t_struct *minish)
 		if (line[i] == '|' || line[i] == '\0')
 		{
 			printf("syntax error near unexpected token `|'\n");
-			minish->parsing.error = 1;
+			minish->parsing.error = 2;
 			return (-1);
 		}
 	}

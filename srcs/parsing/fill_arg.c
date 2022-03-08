@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:37:53 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 00:10:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:33:42 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	fill_arg2(char *line, char *str, t_struct *minish)
 			i += pass_redir(&line[i], minish) - 1;
 		else
 			str[minish->parsing.fill_arg++] = line[i];
-		if (minish->parsing.error == 1)
+		if (minish->parsing.error != 0)
 			return (-1);
 		i++;
 	}

@@ -98,9 +98,7 @@ MARCHE PAS :
 nb pipe dans command
 signaux dans <<   ->    seg fault
 sig_error quand mauvaise commande -> a cause de exit
-
-
-
+historique quand y a une erreur parsing
 
 
 LEAKS
@@ -116,6 +114,13 @@ $ frttg
 */
 
 error parsing
+
+FREE
+1 -> malloc
+2 -> avant fill redir et fill arg
+3 -> pendant fill arg avant fill redir
+
+
 
 
 
@@ -167,7 +172,4 @@ leaks parsing                                   >>>>>>  ok?
 norme moi                                       >>>>>>  ok?
 mettre en commun
 norme liena
-
-
-
 

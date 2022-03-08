@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 06:15:53 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:27:25 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_empty_brace(char *line, t_struct *minish)
 	if (is_variable_char(line[i]) == 1)
 	{
 		printf("${%c}: bad substitution\n", line[i]);
-		minish->parsing.error = 1;
+		minish->parsing.error = 3;
 		return (-1);
 	}
 	if (line[i] == '}' && (line[i + 1] == ' ' || line[i + 1] == '\0'))

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 06:15:48 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 07:30:23 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,7 @@ int			if_is_empty(char *line, int i);
 int			fill_double_dollar(t_struct *minish, char *str);
 int			fill_sig_error(t_struct *minish, char *str);
 int			count_redir(char *line);
+int			free_list2(t_list_arg *list);
+int			free_list3(t_list_arg *list);
 
 #endif

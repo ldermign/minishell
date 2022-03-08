@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 05:14:50 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 08:03:23 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 			close(pipefd[0]);
 			close(pipefd[1]);
 			close_all_fd(&(ms->std));
-			// exit(0); // je sais pas si ca fait de la merde quelque part mais ca marche
+			exit(0); // je sais pas si ca fait de la merde quelque part mais ca marche
 			return ;
 		}
 		close(pipefd[0]);
