@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/05 21:34:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 11:03:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	init_struct_it(t_it *it)
 
 void	init_struct_pipe(t_pipe *pipe, t_struct *ms)
 {
+	pipe->pipe = 0;
 	pipe->status = 0;
 	pipe->pipe_tot = ms->parsing.nb_pipe;
-	pipe->pipe_nbr = 1;
 	pipe->cmd_nbr = 0;
 }

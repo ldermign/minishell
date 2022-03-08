@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 08:02:11 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 15:08:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	loop(t_struct *minish)
 		write(1, "exit\n", 5);
 		exit(g_sig_error);
 	}
-	add_history(line);
+	if (line[i] != '\0')
+		add_history(line);
 	while (line[i] && line[i] == ' ')
 		i++;
 	if (line[i])

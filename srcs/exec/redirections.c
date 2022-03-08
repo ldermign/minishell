@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 20:48:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 10:18:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,15 +128,11 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 	{
 		get_good_fd_built_in(args, ms->std.name_file, std);
 		built_in_to_create(ms, args, ms->prompt);
-		// reboot_struct_std(&(ms->std));
 		return (EXIT_SUCCESS);
 	}
 	exec_args_only = get_args_exec(args);
 	good_path = working_path(ms->env.path, exec_args_only[0]);
-	// get_good_fd(args, ms->std.name_file, std);
-	// execute_cmd(ms, good_path, exec_args_only, ms->env.env_bash);
 	execute_cmd(ms, good_path, args, exec_args_only, ms->env.env_bash);
-	// close_all_fd(std);
 	return (EXIT_SUCCESS);
 }
 
@@ -146,14 +142,6 @@ int	get_redirections(t_struct *ms, char **args, int which)
 		ms->std.name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
 	if (redirection_first(args[0]) == EXIT_SUCCESS)
 		return (first_arg_is_redir(args, &(*ms).std, which));
-	// if (get_good_fd(args, name_file, &(*ms).std) == EXIT_FAILURE)
-	// {
-	// 	g_sig_error = errno;
-	// 	perror("minishell");
-	// 	return (EXIT_FAILURE);
-	// }
-	// if (ft_pos_strstr(args[0], "wc") != -1 && ms->std.both == 0 && ms->std.dbl_l == 1)
-	// 	get_args_wc_dbl_l(ms, args); a voir
 	execution_redirection(ms, args, &(*ms).std);
 	return (EXIT_SUCCESS);
 }

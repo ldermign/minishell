@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/07 16:04:38 by ldermign         ###   ########.fr        #
+#    Updated: 2022/03/08 10:13:45 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CC		=	clang
 
 RM		=	rm -rf
 
-CFLAGS	=	-Wall -Wextra -Werror -I ${INCS} -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I ${INCS} -g3 #-fsanitize=address
 
 all:		${NAME}
 

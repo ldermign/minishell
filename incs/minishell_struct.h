@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/05 21:32:16 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 11:04:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,9 @@ typedef struct s_pipe
 	int		pipe;
 	int		status;
 	int		pipe_tot;
-	int		pipe_nbr;
 	int		pipe_left;
 	int		pipe_right;
 	int		cmd_nbr;
-	int		fd1[2];
-	int		fd2[2];
 	pid_t	pid;
 }	t_pipe;
 
