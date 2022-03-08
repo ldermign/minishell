@@ -115,6 +115,7 @@ iuok
 $ frttg
 */
 
+error parsing
 
 
 
@@ -163,11 +164,10 @@ signal ctrl D                                   >>>>>>  ok?
 signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
 leaks parsing                                   >>>>>>  ok?
-norme                                           >>>>>>  ok?
+norme moi                                       >>>>>>  ok?
 mettre en commun
 norme liena
 
 
 
 
-args = 

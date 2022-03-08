@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/07 22:44:16 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 05:15:49 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	len_echo(char **args, int j)
 	k = 0;
 	while (args[j])
 	{
-		printf("arg[j] = [%s]\n", args[j]);
 		while (args[j][i])
 		{
 			i++;
