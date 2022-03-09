@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 15:33:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:03:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,45 +41,6 @@ static int	size_str(char *str)
 		i++;
 	}
 	return (len);
-}
-
-int	pass_previous_cmd(char **old_cmd, t_struct *ms)
-{
-	int	i;
-
-	i = 0;
-	while (old_cmd[i] && old_cmd[i][0] != '|')
-		i++;
-	if (old_cmd[i] && old_cmd[i][0] == '|')
-	{
-		ms->pipe_left = 1;
-		i++;
-	}
-	else
-		ms->pipe_left = 0;
-	return (i);
-}
-
-char	**get_good_args_for_cmd(char **cmd_pipe)
-{
-	int		i;
-	int		j;
-	char	**new;
-
-	i = 0;
-	j = 0;
-	while (cmd_pipe[i] && cmd_pipe[i][0] != '|')
-		i++;
-	new = malloc(sizeof(char *) * (i + 1));
-	if (new == NULL)
-		return (NULL);
-	while (j < i)
-	{
-		new[j] = cmd_pipe[j];
-		j++;
-	}
-	new[j] = (char *)NULL;
-	return (new);
 }
 
 static char	*fill_in(char *to_fill, char *str)
@@ -187,23 +148,21 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
 	}
 }
 
-void	there_is_pipe(t_struct *ms, char *prompt)
+void	there_is_pipe(t_struct *ms)
 {
 	t_pipe	*pipex;
+	t_args	*stack;
+	int		ret_built_in;
 	int		i;
-	int		len;
-	char	**cmd_pipe;
-	char	**new_args;
 
+	stack = ms->args->first;
 	pipex = malloc(sizeof(t_pipe));
 	if (pipex == NULL)
 		return ;
 	init_struct_pipe(pipex, ms);
-	cmd_pipe = get_cmd_and_args_split(prompt);
-	i = 0;
-	len = len_tab(cmd_pipe);
-	while (i < len)
+	while (stack != NULL)
 	{
+		ret_built_in = is_built_in(stack->arg_to_pass[0]);
 		if (pipex->cmd_nbr % 2 == 0 && pipex->cmd_nbr != pipex->pipe_tot)
 		{
 			if (pipe(pipex->fd0) == -1)
@@ -214,13 +173,10 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 			if (pipe(pipex->fd1) == -1)
 				return ;
 		}
-		if (init_fork(&pipex->pid) == -1)
+		if (ret_built_in == EXIT_FAILURE && init_fork(&pipex->pid) == -1) // checker ici si built in, parce que sinon, pas fork
 			return ;
-		if (pipex->pid == 0)	// child
-		{
-			new_args = get_good_args_for_cmd(&cmd_pipe[i]);
-			child_process(ms, pipex, new_args);
-		}
+		if (pipex->pid == 0)
+			child_process(ms, pipex, stack->arg_to_pass);
 		else
 		{
 			if (pipex->cmd_nbr == 0)
@@ -238,7 +194,7 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 					close(pipex->fd1[1]);
 			}
 		}
-		i += pass_previous_cmd(&cmd_pipe[i], ms);
+		stack = stack->next;
 		pipex->cmd_nbr++;
 		pipex->pipe++;
 	}

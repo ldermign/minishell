@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 07:30:23 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/09 16:04:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 **	PIPE
 */
 
-void		there_is_pipe(t_struct *ms, char *prompt);
+void		there_is_pipe(t_struct *ms);
 
 /*
 **	UTILS REDIRECTIONS
