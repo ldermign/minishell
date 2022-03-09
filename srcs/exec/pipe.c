@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 09:57:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:45:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,28 +170,53 @@ void	pipe_left_right(t_pipe *pipex)
 	// fprintf(stderr, "For [%d], left->[%d] & right->[%d] in total of [%d]\n", pipex->cmd_nbr, pipex->pipe_left, pipex->pipe_right, pipex->pipe_tot);
 }
 
-void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing.nb_pipe][2])
+void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
 {
-	int	i;
-
-	if (pipex->pipe_left == 1)
+	if (pipex->cmd_nbr == 0)
 	{
-		// close(test[pipex->pipe - 1][1]);
-		dup2(test[pipex->pipe - 1][0], STDIN_FILENO);
-		// close(test[pipex->pipe - 1][0]);
+		close(pipex->fd0[0]);
+		dup2(pipex->fd0[1], STDOUT_FILENO);
+		close(pipex->fd0[1]);
 	}
-	if (pipex->pipe_right == 1)
+	else if (pipex->cmd_nbr % 2 == 0)
 	{
-		// close(test[pipex->pipe][0]);
-		dup2(test[pipex->pipe][1], STDOUT_FILENO);
-		// close(test[pipex->pipe][1]);
+		if (pipex->cmd_nbr == pipex->pipe_tot)
+		{
+			close(pipex->fd1[1]);
+			dup2(pipex->fd1[0], STDIN_FILENO);
+			close(pipex->fd1[0]);
+		}
+		else
+		{
+			close(pipex->fd0[0]);
+			close(pipex->fd1[1]);
+			if (pipex->pipe_left == 1)
+				dup2(pipex->fd1[0], STDIN_FILENO);
+			close(pipex->fd1[0]);
+			if (pipex->pipe_right == 1)
+				dup2(pipex->fd0[1], STDOUT_FILENO);
+			close(pipex->fd0[1]);
+		}
 	}
-	i = 0;
-	while (i < pipex->pipe_tot)
+	else
 	{
-		close(test[i][0]);
-		close(test[i][1]);
-		i++;
+		if (pipex->cmd_nbr == pipex->pipe_tot)
+		{
+			close(pipex->fd0[1]);
+			dup2(pipex->fd0[0], STDIN_FILENO);
+			close(pipex->fd0[0]);
+		}
+		else
+		{
+			close(pipex->fd0[1]);
+			close(pipex->fd1[0]);
+			if (pipex->pipe_left == 1)
+				dup2(pipex->fd0[0], STDIN_FILENO);
+			close(pipex->fd0[0]);
+			if (pipex->pipe_right == 1)
+				dup2(pipex->fd1[1], STDOUT_FILENO);
+			close(pipex->fd1[1]);
+		}
 	}
 	if (execve(working_path(ms->env.path, cmd[0]), cmd, ms->env.env_bash) == -1)
 	{
@@ -206,7 +231,6 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing
 void	there_is_pipe(t_struct *ms, char *prompt)
 {
 	t_pipe	*pipex;
-	int		test[ms->parsing.nb_pipe][2];
 	int		i;
 	int		len;
 	char	**cmd_pipe;
@@ -218,34 +242,57 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	init_struct_pipe(pipex, ms);
 	cmd_pipe = get_cmd_and_args_split(prompt);
 	i = 0;
-	while (i < pipex->pipe_tot)
-	{
-		if (pipe(test[i]) == -1)
-			return ;
-		i++;
-	}
-	i = 0;
 	len = len_tab(cmd_pipe);
 	while (i < len)
 	{
 		pipe_left_right(pipex);
+		if (pipex->cmd_nbr % 2 == 0 && pipex->cmd_nbr != pipex->pipe_tot)
+		{
+			// fprintf(stderr, "1 fois\n");
+			if (pipe(pipex->fd0) == -1)
+				return ;
+		}
+		else if (pipex->cmd_nbr % 2 != 0 && pipex->cmd_nbr != pipex->pipe_tot)
+		{
+			// fprintf(stderr, "1 fois\n");
+			if (pipe(pipex->fd1) == -1)
+				return ;
+		}
 		if (init_fork(&pipex->pid) == -1)
 			return ;
 		if (pipex->pid == 0)	// child
 		{
 			new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
-			child_process(ms, pipex, new_args, test);
+			child_process(ms, pipex, new_args);
+		}
+		else
+		{
+			if (pipex->cmd_nbr == 0)
+				close(pipex->fd0[1]);
+			else if (pipex->cmd_nbr % 2 == 0)
+			{
+				if (pipex->cmd_nbr == pipex->pipe_tot)
+					close(pipex->fd1[0]);
+				else
+				{
+					close(pipex->fd1[0]);
+					close(pipex->fd0[1]);
+				}
+			}
+			else if (pipex->cmd_nbr % 2 != 0)
+			{
+				if (pipex->cmd_nbr == pipex->pipe_tot)
+					close(pipex->fd0[0]);
+				else
+				{
+					close(pipex->fd0[0]);
+					close(pipex->fd1[1]);
+				}
+			}
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
 		pipex->cmd_nbr++;
 		pipex->pipe++;
-	}
-	i = 0;
-	while (i < pipex->pipe_tot)
-	{
-		close(test[i][0]);
-		close(test[i][1]);
-		i++;
 	}
 	i = 0;
 	while (i < pipex->pipe_tot + 1)
