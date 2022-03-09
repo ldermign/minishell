@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/07 04:27:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 23:13:04 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ int	built_in_echo(t_struct *ms, char **args, char *prompt)
 	(void)args;
 	i = 0;
 	line_break = light_parse_echo(prompt);
-	// if (args[0] && args[1] && ft_pos_strstr(args[1], "$?") != -1)
-	// {
-	// 	printf("%d\n", g_sig_error);
-	// 	return (EXIT_SUCCESS);
-	// }
 	if (line_break != -1)
 		i = line_break;
 	else

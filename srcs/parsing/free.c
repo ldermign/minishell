@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 07:28:48 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/09 01:15:35 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	free_arg_to_pass(char **arg)
 	i = 0;
 	while (arg[i] != NULL)
 	{
-		// printf("free[%s]\n", arg[i]);
 		free(arg[i]);
 		i++;
 	}
@@ -33,7 +32,6 @@ static void	free_redir(char **arg)
 	i = 0;
 	while (arg[i] != NULL)
 	{
-		// printf("free redir[%s]\n", arg[i]);
 		free(arg[i]);
 		i++;
 	}

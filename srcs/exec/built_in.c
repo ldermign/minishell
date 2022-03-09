@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 08:01:47 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/08 23:30:14 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*working_path(char **paths, char *name_fct)
 	}
 	return (NULL);
 }
+
+// 50 lignes
 
 char	**copy_env_in_tab_char(t_env_ms **ms)
 {
@@ -86,6 +88,8 @@ char	**copy_env_in_tab_char(t_env_ms **ms)
 	return (copy);
 }
 
+// 30 lignes
+
 void	print_in_alphabetical_order(t_struct *ms, t_env_ms **env)
 {
 	int			i;
@@ -119,6 +123,8 @@ void	print_in_alphabetical_order(t_struct *ms, t_env_ms **env)
 	}
 	ft_free_tab(copy);
 }
+
+// 29 lignes
 
 int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
 {
@@ -191,6 +197,8 @@ static int	count_pipe(char *prompt)
 	return (count);
 }
 
+// 38 lignes
+
 void	command(char *prompt, t_struct *ms)
 {
 	int		i;
@@ -203,7 +211,6 @@ void	command(char *prompt, t_struct *ms)
 	// printf("[%s]\n", ms->args->first->command);
 	// print_tab_char(ms->args->first->arg_to_pass);
 	ms->parsing.nb_pipe = count_pipe(prompt);
-	// add_history(prompt);
 	while (prompt[i] == ' ')
 		i++;
 	args = get_cmd_and_args_split(&prompt[i]);

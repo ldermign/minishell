@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 00:58:03 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 05:21:26 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/09 01:14:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	double_dollar(t_struct *minish)
 int	len_sig_error(t_struct *minish)
 {
 	char	*str;
-	
+
 	str = ft_itoa(g_sig_error);
 	minish->parsing.len_arg += ft_strlen(str);
 	free(str);

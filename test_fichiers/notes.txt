@@ -90,7 +90,7 @@ echo $"GTRE"$"GT"
 echo -n
 echo $?
 $?
-
+historique quand y a une erreur parsing
 
 
 
@@ -98,7 +98,6 @@ MARCHE PAS :
 nb pipe dans command
 signaux dans <<   ->    seg fault
 sig_error quand mauvaise commande -> a cause de exit
-historique quand y a une erreur parsing
 
 
 LEAKS
@@ -113,7 +112,6 @@ iuok
 $ frttg
 */
 
-error parsing
 
 FREE
 1 -> malloc
@@ -172,4 +170,3 @@ leaks parsing                                   >>>>>>  ok?
 norme moi                                       >>>>>>  ok?
 mettre en commun
 norme liena
-
