@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 23:13:04 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/09 04:41:51 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ int	built_in_echo(t_struct *ms, char **args, char *prompt)
 	if (ms->parsing.option != 1)
 		write(ms->std.fd_to_write, "\n", 1);
 	free(ms->parsing.result);
+	g_sig_error = 0;
 	return (EXIT_SUCCESS);
 }

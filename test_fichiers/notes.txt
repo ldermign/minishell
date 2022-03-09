@@ -97,7 +97,7 @@ historique quand y a une erreur parsing
 MARCHE PAS : 
 nb pipe dans command
 signaux dans <<   ->    seg fault
-sig_error quand mauvaise commande -> a cause de exit
+exit + sig_error
 
 
 LEAKS
@@ -170,3 +170,41 @@ leaks parsing                                   >>>>>>  ok?
 norme moi                                       >>>>>>  ok?
 mettre en commun
 norme liena
+
+
+
+
+
+
+
+
+
+sig_error == 127 tout le temps
+else
+	{
+		get_good_fd(args, ms->std.name_file, &(ms->std), pipefd);
+		if (execve(path, exec_args_only, env) == -1)
+		{
+			printf("minishell: %s: command not found\n", args[0]);
+			printf("tamereeeeeee\n");
+			g_sig_error = 127;
+			close(pipefd[0]);
+			close(pipefd[1]);
+			close_all_fd(&(ms->std));
+			// exit(0); // je sais pas si ca fait de la merde quelque part mais ca marche
+			return ;
+		}
+		g_sig_error = 0;
+		close(pipefd[0]);
+		close(pipefd[1]);
+		// close_all_fd(&(ms->std));
+		// exit(0);
+	}
+	close_all_fd(&(ms->std));
+	// g_sig_error = 0;
+	// exit(0); // sig_error marche pas
+}
+
+
+
+
