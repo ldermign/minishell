@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 10:35:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:32:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ typedef struct s_structure
 	t_list_arg		*args;
 	t_red_std		std;
 	char			*prompt;
-	int				pipe_right;
-	int				pipe_left;
 }	t_struct;
 
 typedef struct s_iterator
@@ -110,10 +108,7 @@ typedef struct s_iterator
 typedef struct s_pipe
 {
 	int		pipe;
-	int		status;
 	int		pipe_tot;
-	int		pipe_left;
-	int		pipe_right;
 	int		cmd_nbr;
 	int		fd0[2];
 	int		fd1[2];

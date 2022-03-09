@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 14:45:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:33:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	pass_previous_cmd(char **old_cmd, t_struct *ms)
 	return (i);
 }
 
-char	**get_good_args_for_cmd(t_struct *ms, char **cmd_pipe)
+char	**get_good_args_for_cmd(char **cmd_pipe)
 {
 	int		i;
 	int		j;
@@ -79,10 +79,6 @@ char	**get_good_args_for_cmd(t_struct *ms, char **cmd_pipe)
 		j++;
 	}
 	new[j] = (char *)NULL;
-	if (cmd_pipe[j] && cmd_pipe[j][0] == '|')
-		ms->pipe_right = 1;
-	else
-		ms->pipe_right = 0;
 	return (new);
 }
 
@@ -137,16 +133,6 @@ char	**clean_args(char **cmd)
 	return (new_tab);
 }
 
-int	init_pipe(int fd[2][2])
-{
-	if (pipe(fd[0]) == -1 || pipe(fd[1]) == -1)
-	{
-		perror("pipe");
-		return (-1);
-	}
-	return (1);
-}
-
 int	init_fork(int *pid)
 {
 	*pid = fork();
@@ -159,17 +145,6 @@ int	init_fork(int *pid)
 	return (1);
 }
 
-void	pipe_left_right(t_pipe *pipex)
-{
-	pipex->pipe_left = 0;
-	pipex->pipe_right = 0;
-	if (pipex->cmd_nbr != pipex->pipe_tot)
-		pipex->pipe_right = 1;
-	if (pipex->cmd_nbr != 0)
-		pipex->pipe_left = 1;
-	// fprintf(stderr, "For [%d], left->[%d] & right->[%d] in total of [%d]\n", pipex->cmd_nbr, pipex->pipe_left, pipex->pipe_right, pipex->pipe_tot);
-}
-
 void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
 {
 	if (pipex->cmd_nbr == 0)
@@ -180,41 +155,25 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd)
 	}
 	else if (pipex->cmd_nbr % 2 == 0)
 	{
-		if (pipex->cmd_nbr == pipex->pipe_tot)
-		{
-			close(pipex->fd1[1]);
-			dup2(pipex->fd1[0], STDIN_FILENO);
-			close(pipex->fd1[0]);
-		}
-		else
+		close(pipex->fd1[1]);
+		dup2(pipex->fd1[0], STDIN_FILENO);
+		close(pipex->fd1[0]);
+		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
 			close(pipex->fd0[0]);
-			close(pipex->fd1[1]);
-			if (pipex->pipe_left == 1)
-				dup2(pipex->fd1[0], STDIN_FILENO);
-			close(pipex->fd1[0]);
-			if (pipex->pipe_right == 1)
-				dup2(pipex->fd0[1], STDOUT_FILENO);
+			dup2(pipex->fd0[1], STDOUT_FILENO);
 			close(pipex->fd0[1]);
 		}
 	}
 	else
 	{
-		if (pipex->cmd_nbr == pipex->pipe_tot)
+		close(pipex->fd0[1]);
+		dup2(pipex->fd0[0], STDIN_FILENO);
+		close(pipex->fd0[0]);
+		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			close(pipex->fd0[1]);
-			dup2(pipex->fd0[0], STDIN_FILENO);
-			close(pipex->fd0[0]);
-		}
-		else
-		{
-			close(pipex->fd0[1]);
 			close(pipex->fd1[0]);
-			if (pipex->pipe_left == 1)
-				dup2(pipex->fd0[0], STDIN_FILENO);
-			close(pipex->fd0[0]);
-			if (pipex->pipe_right == 1)
-				dup2(pipex->fd1[1], STDOUT_FILENO);
+			dup2(pipex->fd1[1], STDOUT_FILENO);
 			close(pipex->fd1[1]);
 		}
 	}
@@ -245,16 +204,13 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	len = len_tab(cmd_pipe);
 	while (i < len)
 	{
-		pipe_left_right(pipex);
 		if (pipex->cmd_nbr % 2 == 0 && pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			// fprintf(stderr, "1 fois\n");
 			if (pipe(pipex->fd0) == -1)
 				return ;
 		}
 		else if (pipex->cmd_nbr % 2 != 0 && pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			// fprintf(stderr, "1 fois\n");
 			if (pipe(pipex->fd1) == -1)
 				return ;
 		}
@@ -262,7 +218,7 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 			return ;
 		if (pipex->pid == 0)	// child
 		{
-			new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
+			new_args = get_good_args_for_cmd(&cmd_pipe[i]);
 			child_process(ms, pipex, new_args);
 		}
 		else
@@ -271,23 +227,15 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 				close(pipex->fd0[1]);
 			else if (pipex->cmd_nbr % 2 == 0)
 			{
-				if (pipex->cmd_nbr == pipex->pipe_tot)
-					close(pipex->fd1[0]);
-				else
-				{
-					close(pipex->fd1[0]);
+				close(pipex->fd1[0]);
+				if (pipex->cmd_nbr != pipex->pipe_tot)
 					close(pipex->fd0[1]);
-				}
 			}
 			else if (pipex->cmd_nbr % 2 != 0)
 			{
-				if (pipex->cmd_nbr == pipex->pipe_tot)
-					close(pipex->fd0[0]);
-				else
-				{
-					close(pipex->fd0[0]);
+				close(pipex->fd0[0]);
+				if (pipex->cmd_nbr != pipex->pipe_tot)
 					close(pipex->fd1[1]);
-				}
 			}
 		}
 		i += pass_previous_cmd(&cmd_pipe[i], ms);
