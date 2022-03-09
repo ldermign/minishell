@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 23:30:14 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/09 09:51:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,5 +238,4 @@ void	command(char *prompt, t_struct *ms)
 	good_path = working_path(ms->env.path, args[0]);
 	execute_cmd(ms, good_path, args, args, ms->env.env_bash);
 	ft_free_tab(args);
-	// print_env_ms(&(env->env_ms));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 04:05:10 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/09 09:57:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,6 @@ void	child_process(t_struct *ms, t_pipe *pipex, char **cmd, int test[ms->parsing
 
 void	there_is_pipe(t_struct *ms, char *prompt)
 {
-	// t_pid	*all_pid;
 	t_pipe	*pipex;
 	int		test[ms->parsing.nb_pipe][2];
 	int		i;
@@ -213,9 +212,6 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	char	**cmd_pipe;
 	char	**new_args;
 
-	// all_pid = malloc(sizeof(t_pid));
-	// if (all_pid == NULL)
-	// 	return ;
 	pipex = malloc(sizeof(t_pipe));
 	if (pipex == NULL)
 		return ;
@@ -235,7 +231,6 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 		pipe_left_right(pipex);
 		if (init_fork(&pipex->pid) == -1)
 			return ;
-		// add_nbr_back(&all_pid, pipex->pid);
 		if (pipex->pid == 0)	// child
 		{
 			new_args = get_good_args_for_cmd(ms, &cmd_pipe[i]);
@@ -256,13 +251,9 @@ void	there_is_pipe(t_struct *ms, char *prompt)
 	while (i < pipex->pipe_tot + 1)
 	{
 		wait(NULL);
-		// waitpid(all_pid->pid, &pipex->status, 0);
-		// all_pid = all_pid->next;		// mybe not...
 		i++;
 	}
-	// ft_free_tab(cmd_pipe);
 	free(pipex);
-	// dup2(STDOUT_FILENO, STDIN_FILENO);	// maybe not...
 }
 
 /*
