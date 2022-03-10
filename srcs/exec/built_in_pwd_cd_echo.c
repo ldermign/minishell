@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_pwd_cd_echo.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 04:41:51 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/10 11:30:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	change_old_pwd(t_env_ms **stack, char *name, char *str)
 	*stack = first;
 }
 
-int	built_in_cd(t_env *env, char **cmd_args)
+int	built_in_cd(t_env *env, char *new_to_go)
 {
 	int		ret;
 	char	*path_to_go;
@@ -36,7 +36,7 @@ int	built_in_cd(t_env *env, char **cmd_args)
 		add_var_env_minishell(&(env->env_ms), old_pwd);
 	else
 		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
-	path_to_go = ft_alloc_strcat("./", cmd_args[1]);
+	path_to_go = ft_alloc_strcat("./", new_to_go);
 	if (chdir(path_to_go) == -1)
 	{
 		g_sig_error = errno;
@@ -64,13 +64,12 @@ int	built_in_pwd(void)
 	return (1);
 }
 
-int	built_in_echo(t_struct *ms, char **args, char *prompt)
+int	built_in_echo(t_struct *ms, char *prompt)
 {
 	int		i;
 	int		len;
 	int		line_break;
 
-	(void)args;
 	i = 0;
 	line_break = light_parse_echo(prompt);
 	if (line_break != -1)

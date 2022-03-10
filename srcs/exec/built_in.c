@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 16:04:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:40:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	print_in_alphabetical_order(t_struct *ms, t_env_ms **env)
 
 // 29 lignes
 
-int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
+int	built_in_export(t_struct *ms, t_env *env, char *prompt, char *alpha)
 {
 	t_it	it;
 	char	*str;
@@ -135,7 +135,7 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
 	while (prompt[it.i] == ' ')
 		it.i++;
 	it.i += 6;
-	if (cmd_args[1] == NULL)
+	if (alpha == NULL)
 	{
 		print_in_alphabetical_order(ms, &(env->env_ms));
 		return (EXIT_SUCCESS);
@@ -159,25 +159,25 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char **cmd_args)
 	return (EXIT_SUCCESS);
 }
 
-int	built_in_to_create(t_struct *ms, char **cmd_args, char *prompt)
+int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt)
 {
-	if (ft_memcmp(cmd_args[0], "cd", 3) == 0)
-		return (built_in_cd(&(ms->env), cmd_args));
-	else if (ft_memcmp(cmd_args[0], "pwd", 4) == 0)
+	if (ft_memcmp(cmd->arg_to_pass[0], "cd", 3) == 0)
+		return (built_in_cd(&(ms->env), cmd->arg_to_pass[1]));
+	else if (ft_memcmp(cmd->arg_to_pass[0], "pwd", 4) == 0)
 		return (built_in_pwd());
-	else if (ft_memcmp(cmd_args[0], "env", 4) == 0)
+	else if (ft_memcmp(cmd->arg_to_pass[0], "env", 4) == 0)
 		return (built_in_env(ms->env.env_ms));
-	else if (ft_memcmp(cmd_args[0], "export", 7) == 0)
-		return (built_in_export(ms, &(ms->env), prompt, cmd_args));
-	else if (ft_memcmp(cmd_args[0], "unset", 6) == 0)
-		return (built_in_unset(&(ms->env), cmd_args));
-	else if (ft_memcmp(cmd_args[0], "echo", 5) == 0)
+	else if (ft_memcmp(cmd->arg_to_pass[0], "export", 7) == 0)
+		return (built_in_export(ms, &(ms->env), prompt, cmd->arg_to_pass[1]));
+	else if (ft_memcmp(cmd->arg_to_pass[0], "unset", 6) == 0)
+		return (built_in_unset(&(ms->env), cmd->arg_to_pass[1]));
+	else if (ft_memcmp(cmd->arg_to_pass[0], "echo", 5) == 0)
 	{
-		ms->parsing.result = recup_echo(ms->args->first->arg_to_pass, ms);
-		return (built_in_echo(ms, cmd_args, prompt));
+		ms->parsing.result = recup_echo(cmd->arg_to_pass, ms);
+		return (built_in_echo(ms, prompt));
 	}
-	else if (ft_memcmp(cmd_args[0], "exit", 5) == 0)
-		built_in_exit(&(ms->env), cmd_args, prompt);
+	else if (ft_memcmp(cmd->arg_to_pass[0], "exit", 5) == 0)
+		built_in_exit(&(ms->env), cmd->arg_to_pass, prompt);
 	return (-1);
 }
 
@@ -187,10 +187,12 @@ void	command(char *prompt, t_struct *ms)
 {
 	int		i;
 	int		last;
+	t_args	*all_cmds;
 	char	*good_path;
 	char	**args;
 
 	i = 0;
+	all_cmds = ms->args->first;
 	ms->prompt = prompt;
 	while (prompt[i] == ' ')
 		i++;
@@ -199,24 +201,29 @@ void	command(char *prompt, t_struct *ms)
 		return ;
 	last = last_redir(args);
 	init_struct_std(args, &(*ms).std, last);
-	if (ms->parsing.nb_pipe > 0)
+	while (all_cmds)
 	{
-		there_is_pipe(ms);
+		if (ms->parsing.nb_pipe > 0)
+		{
+			there_is_pipe(ms);
+			ft_free_tab(args);
+			return ;
+		}
+		if (last == -1 && built_in_to_create(ms, ms->args->first, prompt) != -1)
+		{
+			ft_free_tab(args);
+			return ;
+		}
+		else if (last != -1)
+		{
+			get_redirections(ms, args, last);
+			ft_free_tab(args);
+			return ;
+		}
+		good_path = working_path(ms->env.path, args[0]);
+		execute_cmd(ms, good_path, args, args, ms->env.env_bash);
 		ft_free_tab(args);
-		return ;
+		all_cmds = all_cmds->next;
 	}
-	if (last == -1 && built_in_to_create(ms, args, prompt) != -1)
-	{
-		ft_free_tab(args);
-		return ;
-	}
-	else if (last != -1)
-	{
-		get_redirections(ms, args, last);
-		ft_free_tab(args);
-		return ;
-	}
-	good_path = working_path(ms->env.path, args[0]);
-	execute_cmd(ms, good_path, args, args, ms->env.env_bash);
-	ft_free_tab(args);
+	free_all_cmds_pompt(all_cmds);
 }

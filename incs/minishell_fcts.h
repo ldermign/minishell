@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 16:04:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:41:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int			get_prompt(char *prompt, t_env *env);
 
 void		command(char *prompt, t_struct *ms);
 int			recup_var_envs(char **env, t_env *cpy_env);
-int			built_in_cd(t_env *env, char **cmd_args);
+int	built_in_cd(t_env *env, char *new_to_go);
 int			built_in_pwd(void);
-void		built_in_exit(t_env *env, char **cmd_args, char *prompt);
-int			built_in_unset(t_env *env, char **args);
+void		built_in_exit(t_env *env, char **cmd, char *prompt);
+int	built_in_unset(t_env *env, char *var);
 int			built_in_env(t_env_ms *stack);
-int			built_in_echo(t_struct *ms, char **args, char *prompt);
-int			built_in_to_create(t_struct *ms, char **cmd_args, char *prompt);
+int			built_in_echo(t_struct *ms, char *prompt);
+int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt);
 
 /*
 **	REDIRECTIONS
@@ -106,6 +106,12 @@ void		init_struct_std(char **args, t_red_std *std, int which);
 void		init_struct_it(t_it *it);
 void		close_all_fd(t_red_std *std);
 void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
+
+/*
+**	FREE
+*/
+
+void	free_all_cmds_pompt(t_args *stack);
 
 /*
 **	TEMPORAIRE A SUPPRIMEEEEEERRRRRR

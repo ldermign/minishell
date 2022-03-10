@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/08 10:18:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:35:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
 	if (is_built_in(args[0]) == EXIT_SUCCESS)
 	{
 		get_good_fd_built_in(args, ms->std.name_file, std);
-		built_in_to_create(ms, args, ms->prompt);
+		built_in_to_create(ms, ms->args->first, ms->prompt);
 		return (EXIT_SUCCESS);
 	}
 	exec_args_only = get_args_exec(args);
@@ -145,37 +145,3 @@ int	get_redirections(t_struct *ms, char **args, int which)
 	execution_redirection(ms, args, &(*ms).std);
 	return (EXIT_SUCCESS);
 }
-/*
-
-int	how_many_redirec(char **args)
-{
-	int	i;
-	int	ret;
-
-	i = 0;
-	ret = 0;
-	while (args[i])
-	{
-		if (args[i][1] != '\0'
-			&& (args[i][0] == '>' || args[i][0] == '<'))
-		{
-			if (args[i][0] == '>' && args[i][1] == '>' && args[i][2] == '\0')
-				ret++;
-			if (args[i][0] == '<' && args[i][1] == '<' && args[i][2] == '\0')
-				ret++;;
-		}
-		else if (args[i][0] == '>' && args[i][1] == '\0')
-			ret++;
-		else if (args[i][0] == '<' && args[i][1] == '\0')
-			ret++;
-		i++;
-	}
-	return (ret);
-}
-
-// void	test_redir_dup(t_struct *ms, char **args)
-// {
-	
-// }
-
-*/
