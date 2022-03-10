@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 15:32:55 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/10 15:30:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,6 @@ typedef struct s_args
 	char			**arg_to_pass;
 	struct s_args	*next;
 }	t_args;
-
-typedef struct s_pid
-{
-	pid_t			pid;
-	struct s_pid	*next;
-}	t_pid;
 
 /*
 	redir		->	recup toutes les redirections

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/10 11:41:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/10 15:30:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ char		*get_variable_with_pos(t_env_ms **minishell, int pos);
 **  UTILS PIPE
 */
 
-void	add_nbr_back(t_pid **stack, int nbr);
 
 /*
 **	INIT
@@ -119,7 +118,6 @@ void	free_all_cmds_pompt(t_args *stack);
 
 void		print_tab_char(char **tabl);
 void		print_env_ms(t_env_ms **stack);
-void	print_struct_pid(t_pid **stack);
 
 /*
 **		>>>>>>>>>  PARSING  <<<<<<<<<
