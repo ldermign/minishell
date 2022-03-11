@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/10 11:40:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/11 10:15:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,50 @@ int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt)
 	return (-1);
 }
 
-// 38 lignes
+// void	command(char *prompt, t_struct *ms)
+// {
+// 	int		i;
+// 	int		last;
+// 	t_args	*all_cmds;
+// 	char	*good_path;
+// 	char	**args;
+
+// 	i = 0;
+// 	all_cmds = ms->args->first;
+// 	ms->prompt = prompt;
+// 	while (prompt[i] == ' ')
+// 		i++;
+// 	args = get_cmd_and_args_split(&prompt[i]);
+// 	if (args == NULL)
+// 		return ;
+// 	last = last_redir(args);
+// 	init_struct_std(args, &(*ms).std, last);
+// 	while (all_cmds)
+// 	{
+// 		if (ms->parsing.nb_pipe > 0)
+// 		{
+// 			there_is_pipe(ms);
+// 			ft_free_tab(args);
+// 			return ;
+// 		}
+// 		if (last == -1 && built_in_to_create(ms, ms->args->first, prompt) != -1)
+// 		{
+// 			ft_free_tab(args);
+// 			return ;
+// 		}
+// 		else if (last != -1)
+// 		{
+// 			get_redirections(ms, args, last);
+// 			ft_free_tab(args);
+// 			return ;
+// 		}
+// 		good_path = working_path(ms->env.path, args[0]);
+// 		execute_cmd(ms, good_path, args, args, ms->env.env_bash);
+// 		ft_free_tab(args);
+// 		all_cmds = all_cmds->next;
+// 	}
+// 	free_all_cmds_pompt(all_cmds);
+// }
 
 void	command(char *prompt, t_struct *ms)
 {
@@ -189,41 +232,33 @@ void	command(char *prompt, t_struct *ms)
 	int		last;
 	t_args	*all_cmds;
 	char	*good_path;
-	char	**args;
 
 	i = 0;
 	all_cmds = ms->args->first;
 	ms->prompt = prompt;
 	while (prompt[i] == ' ')
 		i++;
-	args = get_cmd_and_args_split(&prompt[i]);
-	if (args == NULL)
-		return ;
-	last = last_redir(args);
-	init_struct_std(args, &(*ms).std, last);
+	last = last_redir(all_cmds->redir);
+	init_struct_std(all_cmds->redir, &(*ms).std, last);
 	while (all_cmds)
 	{
 		if (ms->parsing.nb_pipe > 0)
 		{
 			there_is_pipe(ms);
-			ft_free_tab(args);
 			return ;
 		}
 		if (last == -1 && built_in_to_create(ms, ms->args->first, prompt) != -1)
-		{
-			ft_free_tab(args);
 			return ;
-		}
 		else if (last != -1)
 		{
-			get_redirections(ms, args, last);
-			ft_free_tab(args);
+			printf("oui\n");
+			get_redirections(ms, all_cmds, last);
 			return ;
 		}
-		good_path = working_path(ms->env.path, args[0]);
-		execute_cmd(ms, good_path, args, args, ms->env.env_bash);
-		ft_free_tab(args);
+		good_path = working_path(ms->env.path, all_cmds->arg_to_pass[0]);
+		execute_cmd(ms, good_path, all_cmds->redir, all_cmds->arg_to_pass, ms->env.env_bash);
 		all_cmds = all_cmds->next;
 	}
 	free_all_cmds_pompt(all_cmds);
 }
+    

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 15:53:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/11 10:18:57 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,31 @@ int	is_redir(char **args, char *str)
 	return (0);
 }
 
+// int	last_redir(char **args)
+// {
+// 	int	i;
+// 	int	last;
+
+// 	i = 0;
+// 	last = -1;
+// 	while (args[i])
+// 	{
+// 		if (args[i][1] != '\0' && (args[i][0] == '>' || args[i][0] == '<'))
+// 		{
+// 			if (args[i][0] == '>' && args[i][1] == '>' && args[i][2] == '\0')
+// 				last = 3;
+// 			if (args[i][0] == '<' && args[i][1] == '<' && args[i][2] == '\0')
+// 				last = 4;
+// 		}
+// 		else if (args[i][0] == '>' && args[i][1] == '\0')
+// 			last = 1;
+// 		else if (args[i][0] == '<' && args[i][1] == '\0')
+// 			last = 2;
+// 		i++;
+// 	}
+// 	return (last);
+// }
+
 int	last_redir(char **args)
 {
 	int	i;
@@ -58,16 +83,16 @@ int	last_redir(char **args)
 	last = -1;
 	while (args[i])
 	{
-		if (args[i][1] != '\0' && (args[i][0] == '>' || args[i][0] == '<'))
+		if (args[i][1] != ' ' && (args[i][0] == '>' || args[i][0] == '<'))
 		{
-			if (args[i][0] == '>' && args[i][1] == '>' && args[i][2] == '\0')
+			if (args[i][0] == '>' && args[i][1] == '>' && args[i][2])
 				last = 3;
-			if (args[i][0] == '<' && args[i][1] == '<' && args[i][2] == '\0')
+			if (args[i][0] == '<' && args[i][1] == '<' && args[i][2])
 				last = 4;
 		}
-		else if (args[i][0] == '>' && args[i][1] == '\0')
+		else if (args[i][0] == '>')
 			last = 1;
-		else if (args[i][0] == '<' && args[i][1] == '\0')
+		else if (args[i][0] == '<')
 			last = 2;
 		i++;
 	}

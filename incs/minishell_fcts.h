@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/10 15:30:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/11 06:54:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt);
 **	REDIRECTIONS
 */
 
-int			get_redirections(t_struct *ms, char **args, int which);
+// int			get_redirections(t_struct *ms, char **args, int which);
+int	get_redirections(t_struct *ms, t_args *args, int which);
 int			get_good_fd(char **args, char *file, t_red_std *std, int *pipefd);
 int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 

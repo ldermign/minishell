@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/09 06:13:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/11 10:20:47 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,12 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 		get_good_fd(args, ms->std.name_file, &(ms->std), pipefd);
 		if (execve(path, exec_args_only, env) == -1)
 		{
-			printf("minishell: %s: command not found\n", args[0]);
+			printf("minishell: %s: command not found\n", exec_args_only[0]); // juste args[0] avant au lieu de exec_args_only[0]
 			g_sig_error = 127;
 			close(pipefd[0]);
 			close(pipefd[1]);
 			close_all_fd(&(ms->std));
-			// exit(0);
+			exit(0);
 			return ;
 		}
 		// >>>>>passe jamais la?
