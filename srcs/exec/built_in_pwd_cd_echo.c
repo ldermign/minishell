@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/10 11:30:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:20:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,13 @@ int	built_in_pwd(void)
 	return (1);
 }
 
-int	built_in_echo(t_struct *ms, char *prompt)
+int	built_in_echo(t_struct *ms)
 {
-	int		i;
 	int		len;
-	int		line_break;
 
-	i = 0;
-	line_break = light_parse_echo(prompt);
-	if (line_break != -1)
-		i = line_break;
-	else
-	{
-		while (prompt[i] == ' ')
-			i++;
-		i += 4;
-		while (prompt[i] == ' ')
-			i++;
-	}
 	len = ft_strlen(ms->parsing.result);
 	write(ms->std.fd_to_write, ms->parsing.result, len);
-	// if (line_break == -1) //gerer cas ou $$ chaipukoi
+	//gerer cas ou $$ chaipukoi
 	if (ms->parsing.option != 1)
 		write(ms->std.fd_to_write, "\n", 1);
 	free(ms->parsing.result);

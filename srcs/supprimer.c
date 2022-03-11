@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 20:17:21 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/10 15:30:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/11 13:43:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	print_tab_char(char **tabl)
 	printf(GREEN"--------------------\n");
 	while (tabl[i] != NULL)
 	{
-		printf("Line %d = [%s]\n", i, tabl[i]);
+		printf("[%d] = [%s]\n", i, tabl[i]);
 		i++;
 	}
-	printf("Line %d = [%s]\n", i, tabl[i]);
 	printf("--------------------\n"NORMAL);
 }
 
@@ -42,4 +41,19 @@ void	print_env_ms(t_env_ms **stack)
 	}
 	printf("_______________________________\n"NORMAL);
 	*stack = first;
+}
+
+void	print_stack_cmd(t_args *stack)
+{
+	if (stack == NULL)
+		exit (0);
+	printf(GREY"_______________________________\n");
+	while (stack != NULL)
+	{
+		// print_tab_char(stack->redir);
+		printf("command = %s\n", stack->command);
+		print_tab_char(stack->arg_to_pass);
+		stack = stack->next;
+	}
+	printf("_______________________________\n"NORMAL);
 }

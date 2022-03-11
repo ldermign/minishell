@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 10:15:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/11 14:32:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,15 +131,13 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char *alpha)
 	t_it	it;
 	char	*str;
 
-	it.i = 0;
-	while (prompt[it.i] == ' ')
-		it.i++;
-	it.i += 6;
+	init_struct_it(&it);
 	if (alpha == NULL)
 	{
 		print_in_alphabetical_order(ms, &(env->env_ms));
 		return (EXIT_SUCCESS);
 	}
+	it.i = 6;
 	it.add = light_parse_export(&prompt[it.i]);
 	if (it.add == -1)
 		return (EXIT_FAILURE);
@@ -159,7 +157,7 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char *alpha)
 	return (EXIT_SUCCESS);
 }
 
-int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt)
+int	built_in_to_create(t_struct *ms, t_args *cmd)
 {
 	if (ft_memcmp(cmd->arg_to_pass[0], "cd", 3) == 0)
 		return (built_in_cd(&(ms->env), cmd->arg_to_pass[1]));
@@ -168,16 +166,16 @@ int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt)
 	else if (ft_memcmp(cmd->arg_to_pass[0], "env", 4) == 0)
 		return (built_in_env(ms->env.env_ms));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "export", 7) == 0)
-		return (built_in_export(ms, &(ms->env), prompt, cmd->arg_to_pass[1]));
+		return (built_in_export(ms, &(ms->env), cmd->command, cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "unset", 6) == 0)
 		return (built_in_unset(&(ms->env), cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "echo", 5) == 0)
 	{
 		ms->parsing.result = recup_echo(cmd->arg_to_pass, ms);
-		return (built_in_echo(ms, prompt));
+		return (built_in_echo(ms));
 	}
 	else if (ft_memcmp(cmd->arg_to_pass[0], "exit", 5) == 0)
-		built_in_exit(&(ms->env), cmd->arg_to_pass, prompt);
+		built_in_exit(&(ms->env), cmd->arg_to_pass, cmd->command);
 	return (-1);
 }
 
@@ -227,7 +225,8 @@ int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt)
 // }
 
 void	command(char *prompt, t_struct *ms)
-{
+{(void)prompt;
+// printf("prompt = %s\n", prompt);
 	int		i;
 	int		last;
 	t_args	*all_cmds;
@@ -235,23 +234,24 @@ void	command(char *prompt, t_struct *ms)
 
 	i = 0;
 	all_cmds = ms->args->first;
-	ms->prompt = prompt;
-	while (prompt[i] == ' ')
-		i++;
+	// ms->prompt = prompt;
+	// while (prompt[i] == ' ')
+	// 	i++;
 	last = last_redir(all_cmds->redir);
 	init_struct_std(all_cmds->redir, &(*ms).std, last);
+	if (ms->parsing.nb_pipe > 0)
+	{
+		// fprintf(stderr, "bug\n");
+		there_is_pipe(ms);
+		return ;
+	}
 	while (all_cmds)
 	{
-		if (ms->parsing.nb_pipe > 0)
-		{
-			there_is_pipe(ms);
-			return ;
-		}
-		if (last == -1 && built_in_to_create(ms, ms->args->first, prompt) != -1)
+		if (last == -1 && built_in_to_create(ms, ms->args->first) != -1)
 			return ;
 		else if (last != -1)
 		{
-			printf("oui\n");
+			// printf("oui\n");
 			get_redirections(ms, all_cmds, last);
 			return ;
 		}

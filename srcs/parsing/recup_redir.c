@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   recup_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 07:34:32 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/11 11:13:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	here_doc(char *str)
+{
+	int		i;
+	char	*line;
+	char	*heredoc_eof;
+
+	i = 2;
+	while (str[i] == ' ')
+		i++;
+	heredoc_eof = &str[i];
+	line = readline("> ");
+	while (ft_strcmp(line, heredoc_eof) != 0)
+			line = readline("> ");
+}
 
 int	norme_redir(char *line, t_struct *minish, int i)
 {
@@ -19,7 +34,6 @@ int	norme_redir(char *line, t_struct *minish, int i)
 		minish->parsing.len_arg++;
 		i++;
 	}
-	while (line[i] == ' ')
 		i++;
 	return (i);
 }

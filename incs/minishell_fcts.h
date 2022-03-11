@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 06:54:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/11 14:36:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,24 @@
 int			get_prompt(char *prompt, t_env *env);
 
 /*
-**	BUILT-IN
+**	BUILT-IN SOLO
 */
 
 void		command(char *prompt, t_struct *ms);
 int			recup_var_envs(char **env, t_env *cpy_env);
-int	built_in_cd(t_env *env, char *new_to_go);
+int			built_in_cd(t_env *env, char *new_to_go);
 int			built_in_pwd(void);
 void		built_in_exit(t_env *env, char **cmd, char *prompt);
-int	built_in_unset(t_env *env, char *var);
+int			built_in_unset(t_env *env, char *var);
 int			built_in_env(t_env_ms *stack);
-int			built_in_echo(t_struct *ms, char *prompt);
-int	built_in_to_create(t_struct *ms, t_args *cmd, char *prompt);
+int			built_in_echo(t_struct *ms);
+int			built_in_to_create(t_struct *ms, t_args *cmd);
+
+/*
+**	BUILT-IN PIPE
+*/
+
+void	built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
 
 /*
 **	REDIRECTIONS
@@ -119,6 +125,7 @@ void	free_all_cmds_pompt(t_args *stack);
 
 void		print_tab_char(char **tabl);
 void		print_env_ms(t_env_ms **stack);
+void	print_stack_cmd(t_args *stack);
 
 /*
 **		>>>>>>>>>  PARSING  <<<<<<<<<

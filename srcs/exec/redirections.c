@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 10:17:56 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/11 14:19:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // int	get_name_file_redir(char **args, int last)
 // {
 // 	int	i;
-
 // 	i = 0;
 // 	if (last != 0)
 // 		i = last + 1;
@@ -219,7 +218,7 @@ int	execution_redirection(t_struct *ms, t_args *args, t_red_std *std)
 	if (is_built_in(args->arg_to_pass[0]) == EXIT_SUCCESS)
 	{
 		get_good_fd_built_in(args->redir, ms->std.name_file, std);
-		built_in_to_create(ms, ms->args->first, ms->prompt);
+		built_in_to_create(ms, ms->args->first);
 		return (EXIT_SUCCESS);
 	}
 	good_path = working_path(ms->env.path, args->arg_to_pass[0]);

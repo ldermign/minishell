@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 19:55:09 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/11 14:24:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	light_parse_export(char *prompt)
 		i++;
 	if (ft_is_digit(prompt[i]))
 	{
-		printf("bash: export: '%s': not a valid identifier\n", prompt);
+		printf("minishell: export: '%s': not a valid identifier\n", prompt);
 		return (-1);
 	}
 	while (prompt[i] && (ft_is_alpha(prompt[i])
@@ -81,7 +81,7 @@ int	light_parse_export(char *prompt)
 	}
 	if (prompt[i] != '=' && prompt[i] != '\0')
 	{
-		printf("bash: export: '%s': not a valid identifier\n", prompt);
+		printf("minishell: export: '%s': not a valid identifier\n", prompt);
 		return (-1);
 	}
 	while (prompt[i] && prompt[i] != '&' && prompt[i] != '(' && prompt[i] != ')'
