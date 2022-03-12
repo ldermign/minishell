@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:27:50 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 16:01:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/12 18:23:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,15 @@ void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 {
 	if (pipex->cmd_nbr == 0)
 	{
-		// fprintf(stderr, "4 jusqu'a la fin\n");
-		// fprintf(stderr, "fd0[0] == %d - fd0[1] == %d - fd1[0] == %d - fd1[1] == %d\n", pipex->fd0[0], pipex->fd0[1], pipex->fd1[0], pipex->fd1[1]);
-		close(pipex->fd0[0]);
-		// fprintf(stderr, "4bis\n");
-		// fprintf(stderr, "%s\n", str);
-		// fprintf(stderr, "alive ? %d\n", pipex->fd0[1]);
-		fprintf(stderr, "fd0[0] == %d - fd0[1] == %d - fd1[0] == %d - fd1[1] == %d\n", pipex->fd0[0], pipex->fd0[1], pipex->fd1[0], pipex->fd1[1]);
-		write(pipex->fd0[1], str, ft_strlen(str));
-		fprintf(stderr, "4bisbis\n");
+		if (write(pipex->fd0[1], str, ft_strlen(str)) < 0)
+		{
+			fprintf(stderr, "[%d]\n", errno);
+			perror("write");
+		}
+		write(pipex->fd0[1], "\n", 1);
+		// dup2(pipex->fd0[0], STDIN_FILENO);
 		close(pipex->fd0[1]);
-		// fprintf(stderr, "4bisbisbis\n");
+		close(pipex->fd0[0]);
 	}
 	else if (pipex->cmd_nbr % 2 == 0)
 	{
@@ -69,9 +67,9 @@ void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 		close(pipex->fd1[0]);
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			close(pipex->fd0[0]);
 			write(pipex->fd0[1], str, ft_strlen(str));
 			close(pipex->fd0[1]);
+			close(pipex->fd0[0]);
 		}
 	}
 	else
@@ -81,9 +79,9 @@ void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 		close(pipex->fd0[0]);
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			close(pipex->fd1[0]);
 			write(pipex->fd1[1], str, ft_strlen(str));
 			close(pipex->fd1[1]);
+			close(pipex->fd1[0]);
 		}
 	}
 }
@@ -113,25 +111,68 @@ void	pwd_pipe(t_pipe *pipex)
 // 	}
 // }
 
-void	env_pipe(t_env_ms *stack, t_pipe *pipex)
+int	sum_all_str_in_stack(t_env_ms *stack)
 {
-	fprintf(stderr, "3\n");
-	// char	*all_env;
+	int	len;
 
-	// all_env = env_stack_to_tab_char(stack);
+	len = 0;
 	while (stack)
 	{
-		if (ft_pos_strstr(stack->var, "=") != -1)
-			write_in_pipe_for_built_in(pipex, stack->var);
+		len += ft_strlen(stack->var);
 		stack = stack->next;
 	}
-	// free(all_env);
+	return (len);
+}
+
+char	*env_stack_to_tab_char(t_env_ms *stack)
+{
+	int		j;
+	int		i;
+	int		len;
+	char	*dst;
+
+	len = sum_all_str_in_stack(stack);
+	dst = malloc(sizeof(char) * (len + 1));
+	if (dst == NULL)
+		return (NULL);
+	i = 0;
+	while (stack && i < len)
+	{
+		j = 0;
+		while (stack->var[j])
+		{
+			dst[j] = stack->var[j];
+			j++;
+		}
+		i += j;
+		dst[i] = '\n';
+		i++;
+		stack = stack->next;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+void	env_pipe(t_env_ms *stack, t_pipe *pipex)
+{
+	char	*all_env;
+
+	all_env = env_stack_to_tab_char(stack);
+	if (all_env == NULL)
+	// 	exit (0);
+	// while (stack)
+	// {
+		// if (ft_pos_strstr(stack->var, "=") != -1)
+		// 	write_in_pipe_for_built_in(pipex, stack->var);
+		write_in_pipe_for_built_in(pipex, all_env);
+	// 	stack = stack->next;
+	// }
+	free(all_env);
 }
 
 void	built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex)
 {(void)ms;(void)cmd;(void)pipex;
 	// pas cd
-	fprintf(stderr, "2\n");
 	if (ft_memcmp(cmd->arg_to_pass[0], "pwd", 4) == 0)
 		pwd_pipe(pipex);
 	else if (ft_memcmp(cmd->arg_to_pass[0], "env", 4) == 0)
