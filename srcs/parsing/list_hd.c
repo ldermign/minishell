@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lists.c                                            :+:      :+:    :+:   */
+/*   list_hd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 08:11:34 by ejahan           ###   ########.fr       */
+/*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
+/*   Updated: 2022/03/12 08:13:39 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	insertion(t_list_arg *list, char *new_arg)
+int	insertion_here_doc(t_list_hd *list, char *new_arg)
 {
-	t_args	*new;
+	t_here_doc	*new;
 
 	if (list == NULL)
 		return (-1);
 	new = malloc(sizeof(*new));
 	if (new == NULL)
 		return (-1);
-	new->command = new_arg;
-	new->here_doc = init_here_doc();
+	new->here_doc = new_arg;
 	new->next = list->first;
 	list->first = new;
 	return (0);
 }
 
-int	delete(t_list_arg *list)
+int	delete_hd(t_list_hd *list)
 {
-	t_args	*to_delete;
+	t_here_doc	*to_delete;
 
 	if (list == NULL)
 		return (-1);
@@ -43,9 +42,9 @@ int	delete(t_list_arg *list)
 	return (0);
 }
 
-void	print_list(t_list_arg *list)
+void	print_list_hd(t_list_hd *list)
 {
-	t_args	*args;
+	t_here_doc	*args;
 
 	args = list->first;
 	if (list == NULL)
@@ -53,22 +52,22 @@ void	print_list(t_list_arg *list)
 	printf("\nlist :\n");
 	while (args != NULL)
 	{
-		printf("\033[1;35m[%s]\n\033[0m", args->command);
+		printf("\033[1;35m[%s]\n\033[0m", args->here_doc);
 		args = args->next;
 	}
 	printf("\033[1;35mNULL\n\033[0m");
 	printf("\n");
 }
 
-t_list_arg	*reverse_list(t_list_arg *list)
+t_list_hd	*reverse_list_hd(t_list_hd *list)
 {
-	t_list_arg	*ret;
+	t_list_hd	*ret;
 
-	ret = init_args();
+	ret = init_here_doc();
 	while (list->first != NULL)
 	{
-		insertion(ret, list->first->command);
-		delete(list);
+		insertion_here_doc(ret, list->first->here_doc);
+		delete_hd(list);
 	}
 	free(list);
 	return (ret);

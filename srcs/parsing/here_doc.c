@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 07:52:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 08:29:15 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,20 @@ void	here_doc(char *str)
 		i++;
 	heredoc_eof = &str[i];
 	line = readline("> ");
+	if (line == NULL)
+	{
+		rl_on_new_line();
+		return ;
+	}
 	while (ft_strcmp(line, heredoc_eof) != 0)
-			line = readline("> ");
+	{
+		line = readline("> ");
+		if (line == NULL)
+		{
+			rl_on_new_line();
+			return ;
+		}
+	}
 }
 
 t_struct	*recup_here_doc(char *line, t_struct *minish)
@@ -55,14 +67,13 @@ t_struct	*recup_here_doc(char *line, t_struct *minish)
 void	exec_here_doc(t_list_arg *args)
 {
 	t_args		*tmp;
-	t_here_doc	*re_tmp;
-
+	// t_here_doc	*re_tmp;
 	tmp = args->first;
-	re_tmp = args->first->here_doc->first;
+	// re_tmp = args->first->here_doc->first;
 	while (args->first != NULL)
 	{
 		args->first->here_doc = reverse_list_hd(args->first->here_doc);
-		re_tmp = args->first->here_doc->first;
+		// re_tmp = args->first->here_doc->first;
 		while (args->first->here_doc->first != NULL)
 		{
 			if (args->first->here_doc->first->next == NULL)

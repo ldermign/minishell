@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 07:48:30 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 08:03:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	recup_args(char *line, t_struct *ms)
 	if (recup_pipe(line, ms) == -1)
 		return (-1);
 	ms->args = reverse_list(ms->args);
-	exec_here_doc(ms->args);
 	tmp = ms->args->first;
 	while (ms->args->first != NULL)
 	{

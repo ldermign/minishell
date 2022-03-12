@@ -164,7 +164,11 @@ ok - ctrl-\ after running a blocking command like cat without arguments or grep 
 
 
 
+
+
 $$              ->>>>> pas possible?
+
+
 
 
 

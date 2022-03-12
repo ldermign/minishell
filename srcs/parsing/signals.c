@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:19:51 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/06 21:15:53 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 08:15:14 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	handle_signal(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_error = 130;
 }
