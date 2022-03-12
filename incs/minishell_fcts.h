@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/12 04:20:30 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 07:26:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,6 @@ int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);
 // 		>>>>>>>>>	here_doc
 void	exec_here_doc(t_list_arg *args);
-int	recup_here_doc(char *line, t_struct *minish);
+t_struct	*recup_here_doc(char *line, t_struct *minish);
 
 #endif

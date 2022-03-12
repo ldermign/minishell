@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 05:53:30 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 07:47:22 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 07:33:09 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	count_args(arg->command, minish);
 	if (minish->parsing.error != 0)
 		return (NULL);
+	exec_here_doc(minish->args);
 	i = minish->parsing.nb_arg;
 	if (i == 0)
 		return (NULL);

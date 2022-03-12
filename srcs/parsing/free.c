@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 05:52:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 07:40:32 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	free_list(t_list_arg *list)
 			free_redir(list->first->redir);
 		if (list->first->command != NULL)
 			free(list->first->command);
-		free_list_hd(list->first->here_doc);
+		// free_list_hd(list->first->here_doc);
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);

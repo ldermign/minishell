@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 04:20:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 07:25:53 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	pass_redir_hd(char *line, t_struct *minish)
 		return (-1);
 	}
 	if (line[0] == '<' && line[1] == '<')
-		recup_here_doc(&line[i], minish);
+		minish = recup_here_doc(&line[i], minish);
 	while (line[i] && line[i] != ' ')
 		i++;
 	while (line[i] == ' ')

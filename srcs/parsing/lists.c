@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 04:07:37 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 07:03:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	print_list(t_list_arg *list)
 		printf("\033[1;35m[%s]\n\033[0m", args->command);
 		args = args->next;
 	}
+	printf("\033[1;35mNULL\n\033[0m");
 	printf("\n");
 }
 
@@ -102,5 +103,6 @@ void	print_list_hd(t_list_hd *list)
 		printf("\033[1;35m[%s]\n\033[0m", args->here_doc);
 		args = args->next;
 	}
+	printf("\033[1;35mNULL\n\033[0m");
 	printf("\n");
 }
