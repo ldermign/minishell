@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/10 09:53:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/12 05:05:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void	redirections(t_struct *minish)
+// {
+// 	// creer les fichiers si '>' ou '>>'
+// 	// verifier si les fichiers existent si '<'
+// }
 
 int	parsing(char *line, t_struct *minish)
 {
@@ -18,12 +24,20 @@ int	parsing(char *line, t_struct *minish)
 	init_parsing(&minish->parsing);
 	if (recup_args(line, minish) == -1)
 	{
+		minish->args = reverse_list(minish->args);
+		exec_here_doc(minish->args);
 		if (minish->parsing.error == 2)
 			free_list2(minish->args);
 		if (minish->parsing.error == 3)
 			free_list3(minish->args);
 		return (-1);
 	}
+	// redirections(minish);
+	// if (minish->parsing.error != 0)
+	// {
+	// 	free_list(minish->args);
+	// 	return (-1);
+	// }
 	minish->parsing.nb_pipe -= 1;
 	return (0);
 }
@@ -63,6 +77,7 @@ int	recup_args(char *line, t_struct *ms)
 	if (recup_pipe(line, ms) == -1)
 		return (-1);
 	ms->args = reverse_list(ms->args);
+	exec_here_doc(ms->args);
 	tmp = ms->args->first;
 	while (ms->args->first != NULL)
 	{

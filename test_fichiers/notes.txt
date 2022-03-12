@@ -94,10 +94,22 @@ historique quand y a une erreur parsing
 
 
 
-MARCHE PAS : 
-nb pipe dans command
+MARCHE PAS :
 signaux dans <<   ->    seg fault
 exit + sig_error
+
+
+
+JE COMPRENDS PAS
+====================================================
+bash-5.0$ uijok oiuo > oui | echo oijo < oiuj  > oij 
+bash: oiuj: No such file or directory
+bash: uijok: command not found
+====================================================
+bash-5.0$ echo oiuo > oui | uio oijo < oiuj  > oij
+bash: oiuj: No such file or directory
+
+
 
 
 LEAKS
@@ -168,6 +180,10 @@ signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
 leaks parsing                                   >>>>>>  ok?
 norme moi                                       >>>>>>  ok?
+recup '<<'										>>>>>>	ok?
+exec here_doc
+free here_doc
+redirections
 mettre en commun
 norme liena
 

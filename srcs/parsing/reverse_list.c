@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_ok.c                                          :+:      :+:    :+:   */
+/*   reverse_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:28:49 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/02 18:22:29 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 03:13:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ t_list_arg	*reverse_list(t_list_arg *list)
 	{
 		insertion(ret, list->first->command);
 		delete(list);
+	}
+	free(list);
+	return (ret);
+}
+
+t_list_hd	*reverse_list_hd(t_list_hd *list)
+{
+	t_list_hd	*ret;
+
+	ret = init_here_doc();
+	while (list->first != NULL)
+	{
+		insertion_here_doc(ret, list->first->here_doc);
+		delete_hd(list);
 	}
 	free(list);
 	return (ret);

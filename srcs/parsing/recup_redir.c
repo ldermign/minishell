@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   recup_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/11 11:13:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/12 04:56:10 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	here_doc(char *str)
-{
-	int		i;
-	char	*line;
-	char	*heredoc_eof;
-
-	i = 2;
-	while (str[i] == ' ')
-		i++;
-	heredoc_eof = &str[i];
-	line = readline("> ");
-	while (ft_strcmp(line, heredoc_eof) != 0)
-			line = readline("> ");
-}
 
 int	norme_redir(char *line, t_struct *minish, int i)
 {
@@ -100,7 +85,12 @@ char	*len_fill_redir(char *line, t_struct *minish)
 	char		*str;
 
 	while (line[i] && line[i] != '<' && line[i] != '>')
-		i++;
+	{
+		while (line[i] && line[i] != '<' && line[i] != '>')
+			i++;
+		if (line[i] != '\0' && line[i + 1] == '<')
+			i += 2;
+	}
 	j = len_redir(&line[i], minish);
 	str = malloc(sizeof(char) * (minish->parsing.len_arg + 1));
 	if (str == NULL)

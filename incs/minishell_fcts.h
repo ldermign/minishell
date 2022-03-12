@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 14:36:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/12 04:20:30 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,15 @@ void	print_stack_cmd(t_args *stack);
 //		>>>>>>>>>   initialisations
 void		init_parsing(t_parsing *parsing);
 t_list_arg	*init_args(void);
+t_list_hd	*init_here_doc(void);
 //		>>>>>>>>>   list
 int			insertion(t_list_arg *list, char *new_arg);
 int			free_list(t_list_arg *list);
 int			delete(t_list_arg *list);
+int			delete_hd(t_list_hd *list);
 void		print_list(t_list_arg *list);
+int			insertion_here_doc(t_list_hd *list, char *new_arg);
+void		print_list_hd(t_list_hd *list);
 //		>>>>>>>>>	parsing
 int			parsing(char *line, t_struct *minish);
 //		>>>>>>>>>	recup_args
@@ -153,6 +157,7 @@ int			pass_arg_count(char *line, t_struct *minish);
 int			is_variable_char(char c);
 int			pass_variable(char *line);
 int			pass_redir(char *line, t_struct *minish);
+int			pass_redir_hd(char *line, t_struct *minish);
 int			pass_quotes(char *line);
 int			error_malloc(t_struct *minish);
 // 		>>>>>>>>>	empty_args
@@ -173,6 +178,7 @@ int			fill_variable(char *line, char *str, t_struct *minish);
 char		*recup_echo(char **args, t_struct *minish);
 //      >>>>>>>>>   list_ok
 t_list_arg	*reverse_list(t_list_arg *list);
+t_list_hd	*reverse_list_hd(t_list_hd *list);
 //      >>>>>>>>>   recup_redir
 char		**recup_redir(char *line, t_struct *minish);
 //      >>>>>>>>>   recup_pipe
@@ -191,5 +197,8 @@ int			fill_sig_error(t_struct *minish, char *str);
 int			count_redir(char *line);
 int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);
+// 		>>>>>>>>>	here_doc
+void	exec_here_doc(t_list_arg *args);
+int	recup_here_doc(char *line, t_struct *minish);
 
 #endif

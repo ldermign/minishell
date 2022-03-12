@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 13:53:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/12 03:11:34 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,20 @@ typedef struct s_environnement
 	t_env_ms	*env_ms;
 }	t_env;
 
+typedef struct s_here_doc
+{
+	char				*here_doc;
+	struct s_here_doc	*next;
+}	t_here_doc;
+
+typedef struct s_list_hd
+{
+	t_here_doc	*first;
+}	t_list_hd;
+
 typedef struct s_args
 {
+	t_list_hd		*here_doc;
 	char			**redir;
 	char			*command;
 	char			**arg_to_pass;

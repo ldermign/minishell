@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:55:27 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/05 21:29:22 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/12 05:33:50 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ void	init_parsing(t_parsing *parsing)
 t_list_arg	*init_args(void)
 {
 	t_list_arg	*list;
+
+	list = malloc(sizeof(*list));
+	if (list == NULL)
+		return (NULL);
+	list->first = NULL;
+	return (list);
+}
+
+t_list_hd	*init_here_doc(void)
+{
+	t_list_hd	*list;
 
 	list = malloc(sizeof(*list));
 	if (list == NULL)

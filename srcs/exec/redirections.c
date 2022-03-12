@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 14:19:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/12 03:54:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,12 +240,12 @@ int	get_redirections(t_struct *ms, t_args *args, int which)
 {
 	if (which == 1 || which == 3)
 	{
-		printf("la\n");
+		// printf("la\n");
 		ms->std.name_file = create_all_files(args->redir); // verifier qu'il existe bien, car parfois pas de fichier
 	}
 	// if (redirection_first(args->command) == EXIT_SUCCESS) // a changer
 	// 	return (first_arg_is_redir(args->redir, &(*ms).std, which));
-	printf("ici\n");
+	// printf("ici\n");
 	execution_redirection(ms, args, &(*ms).std);
 	return (EXIT_SUCCESS);
 }
