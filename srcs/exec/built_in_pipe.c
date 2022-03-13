@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:27:50 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/13 02:12:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 00:15:49 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,40 @@ void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 		}
 		write(pipex->fd0[1], "\n", 1);
 		close(pipex->fd0[1]);
+		close(pipex->fd0[0]);
 	}
 	else if (pipex->cmd_nbr % 2 == 0)
 	{
-		fprintf(stderr, "ca passe ici\n");
-		// dup2(pipex->fd1[0], STDIN_FILENO);
 		close(pipex->fd1[1]);
 		close(pipex->fd1[0]);
-		if (pipex->cmd_nbr != pipex->pipe_tot)
+		if (pipex->cmd_nbr == pipex->pipe_tot)
+		{
+			write(STDOUT_FILENO, str, ft_strlen(str));
+			write(STDOUT_FILENO, "\n", 1);
+		}
+		else
 		{
 			write(pipex->fd0[1], str, ft_strlen(str));
+			write(pipex->fd0[1], "\n", 1);
 			close(pipex->fd0[1]);
+			close(pipex->fd0[0]);
 		}
 	}
 	else
 	{
-		// dup2(pipex->fd0[0], STDIN_FILENO);
 		close(pipex->fd0[1]);
 		close(pipex->fd0[0]);
-		if (pipex->cmd_nbr != pipex->pipe_tot)
+		if (pipex->cmd_nbr == pipex->pipe_tot)
+		{
+			write(STDOUT_FILENO, str, ft_strlen(str));
+			write(STDOUT_FILENO, "\n", 1);
+		}
+		else
 		{
 			write(pipex->fd1[1], str, ft_strlen(str));
+			write(pipex->fd1[1], "\n", 1);
 			close(pipex->fd1[1]);
+			close(pipex->fd1[0]);
 		}
 	}
 }
@@ -129,7 +141,6 @@ void	built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex)
 	else if (ft_memcmp(cmd->arg_to_pass[0], "echo", 5) == 0)
 	{
 		ms->parsing.result = recup_echo(cmd->arg_to_pass, ms);
-		fprintf(stderr, "[%s]\n", ms->parsing.result);
 		write_in_pipe_for_built_in(pipex, ms->parsing.result);
 	}
 }
