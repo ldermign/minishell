@@ -24,13 +24,13 @@ void	here_doc(char *str)
 	}
 	while (ft_strcmp(line, str) != 0)
 	{
+		free(line);
 		line = readline("> ");
 		if (line == NULL)
 		{
 			rl_on_new_line();
 			return ;
 		}
-		free(line);
 	}
 	free(line);
 }
@@ -48,7 +48,6 @@ t_list_hd	*recup_arg_here_doc(char *str, t_list_hd *hd)
 	}
 	while (ft_strcmp(line, str) != 0)
 	{
-		printf("la\n");
 		insertion_here_doc(hd, line);
 		line = readline("> ");
 		if (line == NULL)
@@ -86,29 +85,30 @@ t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 	return (minish);
 }
 
-void	exec_here_doc(t_list_arg *args)
+void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 {
 	t_args		*tmp;
 
-	tmp = args->first;
-	while (args->first != NULL)
+	tmp = arg->first;
+	while (arg->first != NULL)
 	{
-		args->first->here_doc = reverse_list_hd(args->first->here_doc);
-		while (args->first->here_doc->first != NULL)
+		arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
+		while (arg->first->here_doc->first != NULL)
 		{
-			if (args->first->here_doc->first->next == NULL)
+			if (arg->first->here_doc->first->next == NULL)
 			{
-				args->first->here_doc = recup_arg_here_doc(args->first->here_doc->first->here_doc, args->first->here_doc);
-				args->first->here_doc = reverse_list_hd(args->first->here_doc);
+				arg->first->here_doc
+					= recup_arg_here_doc(arg->first->here_doc->first->here_doc,
+						arg->first->here_doc);
+				arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
+				arg->first->args_here_doc = arg_list(arg->first->here_doc, ms);
 				break ;
 			}
 			else
-				here_doc(args->first->here_doc->first->here_doc);
-			delete_hd(args->first->here_doc);
+				here_doc(arg->first->here_doc->first->here_doc);
+			delete_hd(arg->first->here_doc);
 		}
-		args->first = args->first->next;
-		// free(args->first->here_doc->first);
-		// free(args->first->here_doc);
+		arg->first = arg->first->next;
 	}
-	args->first = tmp;
+	arg->first = tmp;
 }

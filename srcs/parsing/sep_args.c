@@ -75,7 +75,7 @@ char	**sep_and_check_args(t_args *arg, t_struct *minish)
 	count_args(arg->command, minish);
 	if (minish->parsing.error != 0)
 		return (NULL);
-	exec_here_doc(minish->args);
+	exec_here_doc(minish->args, minish);
 	i = minish->parsing.nb_arg;
 	if (i == 0)
 		return (NULL);
