@@ -6,45 +6,11 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:27:50 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/12 18:23:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/13 02:12:49 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	yes_built_in(t_struct *ms, t_args *stack, t_pipe *pipex)
-// {(void)ms;(void)stack;
-// 	if (pipex->cmd_nbr == 0)
-// 	{
-// 		close(pipex->fd0[0]);
-// 		dup2(pipex->fd0[1], STDOUT_FILENO);
-// 		close(pipex->fd0[1]);
-// 	}
-// 	else if (pipex->cmd_nbr % 2 == 0)
-// 	{
-// 		close(pipex->fd1[1]);
-// 		dup2(pipex->fd1[0], STDIN_FILENO);
-// 		close(pipex->fd1[0]);
-// 		if (pipex->cmd_nbr != pipex->pipe_tot)
-// 		{
-// 			close(pipex->fd0[0]);
-// 			dup2(pipex->fd0[1], STDOUT_FILENO);
-// 			close(pipex->fd0[1]);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		close(pipex->fd0[1]);
-// 		dup2(pipex->fd0[0], STDIN_FILENO);
-// 		close(pipex->fd0[0]);
-// 		if (pipex->cmd_nbr != pipex->pipe_tot)
-// 		{
-// 			close(pipex->fd1[0]);
-// 			dup2(pipex->fd1[1], STDOUT_FILENO);
-// 			close(pipex->fd1[1]);
-// 		}
-// 	}
-// }
 
 void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 {
@@ -56,32 +22,29 @@ void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 			perror("write");
 		}
 		write(pipex->fd0[1], "\n", 1);
-		// dup2(pipex->fd0[0], STDIN_FILENO);
 		close(pipex->fd0[1]);
-		close(pipex->fd0[0]);
 	}
 	else if (pipex->cmd_nbr % 2 == 0)
 	{
+		fprintf(stderr, "ca passe ici\n");
+		// dup2(pipex->fd1[0], STDIN_FILENO);
 		close(pipex->fd1[1]);
-		dup2(pipex->fd1[0], STDIN_FILENO);
 		close(pipex->fd1[0]);
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
 			write(pipex->fd0[1], str, ft_strlen(str));
 			close(pipex->fd0[1]);
-			close(pipex->fd0[0]);
 		}
 	}
 	else
 	{
+		// dup2(pipex->fd0[0], STDIN_FILENO);
 		close(pipex->fd0[1]);
-		dup2(pipex->fd0[0], STDIN_FILENO);
 		close(pipex->fd0[0]);
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
 			write(pipex->fd1[1], str, ft_strlen(str));
 			close(pipex->fd1[1]);
-			close(pipex->fd1[0]);
 		}
 	}
 }
@@ -99,18 +62,6 @@ void	pwd_pipe(t_pipe *pipex)
 	}
 }
 
-// char	*env_stack_to_tab_char(t_env_ms *stack)
-// {
-// 	int	len;
-
-// 	len = 0;
-// 	while (stack)
-// 	{
-
-// 		stack = stack->var;
-// 	}
-// }
-
 int	sum_all_str_in_stack(t_env_ms *stack)
 {
 	int	len;
@@ -119,6 +70,8 @@ int	sum_all_str_in_stack(t_env_ms *stack)
 	while (stack)
 	{
 		len += ft_strlen(stack->var);
+		if (stack->next != NULL)
+			len++;
 		stack = stack->next;
 	}
 	return (len);
@@ -136,15 +89,17 @@ char	*env_stack_to_tab_char(t_env_ms *stack)
 	if (dst == NULL)
 		return (NULL);
 	i = 0;
-	while (stack && i < len)
+	while (stack)
 	{
 		j = 0;
 		while (stack->var[j])
 		{
-			dst[j] = stack->var[j];
+			dst[i] = stack->var[j];
+			i++;
 			j++;
 		}
-		i += j;
+		if (stack->next == NULL)
+			break ;
 		dst[i] = '\n';
 		i++;
 		stack = stack->next;
@@ -159,22 +114,22 @@ void	env_pipe(t_env_ms *stack, t_pipe *pipex)
 
 	all_env = env_stack_to_tab_char(stack);
 	if (all_env == NULL)
-	// 	exit (0);
-	// while (stack)
-	// {
-		// if (ft_pos_strstr(stack->var, "=") != -1)
-		// 	write_in_pipe_for_built_in(pipex, stack->var);
-		write_in_pipe_for_built_in(pipex, all_env);
-	// 	stack = stack->next;
-	// }
+		return ;
+	write_in_pipe_for_built_in(pipex, all_env);
 	free(all_env);
 }
 
 void	built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex)
-{(void)ms;(void)cmd;(void)pipex;
-	// pas cd
+{
+	// pas cd, pas export, pas unset
 	if (ft_memcmp(cmd->arg_to_pass[0], "pwd", 4) == 0)
 		pwd_pipe(pipex);
 	else if (ft_memcmp(cmd->arg_to_pass[0], "env", 4) == 0)
 		env_pipe(ms->env.env_ms, pipex);
+	else if (ft_memcmp(cmd->arg_to_pass[0], "echo", 5) == 0)
+	{
+		ms->parsing.result = recup_echo(cmd->arg_to_pass, ms);
+		fprintf(stderr, "[%s]\n", ms->parsing.result);
+		write_in_pipe_for_built_in(pipex, ms->parsing.result);
+	}
 }

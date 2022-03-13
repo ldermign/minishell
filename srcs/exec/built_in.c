@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 14:32:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/13 02:22:10 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,54 +179,8 @@ int	built_in_to_create(t_struct *ms, t_args *cmd)
 	return (-1);
 }
 
-// void	command(char *prompt, t_struct *ms)
-// {
-// 	int		i;
-// 	int		last;
-// 	t_args	*all_cmds;
-// 	char	*good_path;
-// 	char	**args;
-
-// 	i = 0;
-// 	all_cmds = ms->args->first;
-// 	ms->prompt = prompt;
-// 	while (prompt[i] == ' ')
-// 		i++;
-// 	args = get_cmd_and_args_split(&prompt[i]);
-// 	if (args == NULL)
-// 		return ;
-// 	last = last_redir(args);
-// 	init_struct_std(args, &(*ms).std, last);
-// 	while (all_cmds)
-// 	{
-// 		if (ms->parsing.nb_pipe > 0)
-// 		{
-// 			there_is_pipe(ms);
-// 			ft_free_tab(args);
-// 			return ;
-// 		}
-// 		if (last == -1 && built_in_to_create(ms, ms->args->first, prompt) != -1)
-// 		{
-// 			ft_free_tab(args);
-// 			return ;
-// 		}
-// 		else if (last != -1)
-// 		{
-// 			get_redirections(ms, args, last);
-// 			ft_free_tab(args);
-// 			return ;
-// 		}
-// 		good_path = working_path(ms->env.path, args[0]);
-// 		execute_cmd(ms, good_path, args, args, ms->env.env_bash);
-// 		ft_free_tab(args);
-// 		all_cmds = all_cmds->next;
-// 	}
-// 	free_all_cmds_pompt(all_cmds);
-// }
-
-void	command(char *prompt, t_struct *ms)
-{(void)prompt;
-// printf("prompt = %s\n", prompt);
+void	command(t_struct *ms)
+{
 	int		i;
 	int		last;
 	t_args	*all_cmds;
@@ -234,14 +188,10 @@ void	command(char *prompt, t_struct *ms)
 
 	i = 0;
 	all_cmds = ms->args->first;
-	// ms->prompt = prompt;
-	// while (prompt[i] == ' ')
-	// 	i++;
 	last = last_redir(all_cmds->redir);
 	init_struct_std(all_cmds->redir, &(*ms).std, last);
 	if (ms->parsing.nb_pipe > 0)
 	{
-		// fprintf(stderr, "bug\n");
 		there_is_pipe(ms);
 		return ;
 	}
