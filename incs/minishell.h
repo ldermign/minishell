@@ -44,7 +44,7 @@
 
 extern int	g_sig_error;
 
-#define READ_IN 0		// SORTIE
-#define WRITE_OUT 1		// ENTREE
+# define READ_IN 0      // SORTIE
+# define WRITE_OUT 1    // ENTREE
 
 #endif

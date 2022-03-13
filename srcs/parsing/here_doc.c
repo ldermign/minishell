@@ -14,22 +14,17 @@
 
 void	here_doc(char *str)
 {
-	int		i;
 	char	*line;
-	char	*heredoc_eof;
 
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	heredoc_eof = &str[i];
 	line = readline("> ");
 	if (line == NULL)
 	{
 		rl_on_new_line();
 		return ;
 	}
-	while (ft_strcmp(line, heredoc_eof) != 0)
+	while (ft_strcmp(line, str) != 0)
 	{
+		free(line);
 		line = readline("> ");
 		if (line == NULL)
 		{
@@ -37,9 +32,35 @@ void	here_doc(char *str)
 			return ;
 		}
 	}
+	free(line);
 }
 
-t_struct	*recup_here_doc(char *line, t_struct *minish)
+t_list_hd	*recup_arg_here_doc(char *str, t_list_hd *hd)
+{
+	char	*line;
+
+	delete_hd(hd);
+	line = readline("> ");
+	if (line == NULL)
+	{
+		rl_on_new_line();
+		return (hd);
+	}
+	while (ft_strcmp(line, str) != 0)
+	{
+		insertion_here_doc(hd, line);
+		line = readline("> ");
+		if (line == NULL)
+		{
+			rl_on_new_line();
+			return (hd);
+		}
+	}
+	free(line);
+	return (hd);
+}
+
+t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 {
 	char	*str;
 	int		i;
@@ -64,32 +85,30 @@ t_struct	*recup_here_doc(char *line, t_struct *minish)
 	return (minish);
 }
 
-void	exec_here_doc(t_list_arg *args)
+void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 {
 	t_args		*tmp;
-	// t_here_doc	*re_tmp;
-	tmp = args->first;
-	// re_tmp = args->first->here_doc->first;
-	while (args->first != NULL)
+
+	tmp = arg->first;
+	while (arg->first != NULL)
 	{
-		args->first->here_doc = reverse_list_hd(args->first->here_doc);
-		// re_tmp = args->first->here_doc->first;
-		while (args->first->here_doc->first != NULL)
+		arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
+		while (arg->first->here_doc->first != NULL)
 		{
-			if (args->first->here_doc->first->next == NULL)
+			if (arg->first->here_doc->first->next == NULL)
 			{
-				here_doc(args->first->here_doc->first->here_doc);
-				// here_doc + recup
+				arg->first->here_doc
+					= recup_arg_here_doc(arg->first->here_doc->first->here_doc,
+						arg->first->here_doc);
+				arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
+				arg->first->args_here_doc = arg_list(arg->first->here_doc, ms);
+				break ;
 			}
 			else
-				here_doc(args->first->here_doc->first->here_doc);
-			// args->first->here_doc->first = args->first->here_doc->first->next;
-			delete_hd(args->first->here_doc);
+				here_doc(arg->first->here_doc->first->here_doc);
+			delete_hd(arg->first->here_doc);
 		}
-		args->first = args->first->next;
-		// free(args->first->here_doc->first);
-		// free(args->first->here_doc);
-		// args->first->here_doc->first = re_tmp;
+		arg->first = arg->first->next;
 	}
-	args->first = tmp;
+	arg->first = tmp;
 }

@@ -42,6 +42,7 @@ typedef struct s_list_hd
 typedef struct s_args
 {
 	t_list_hd		*here_doc;
+	char			**args_here_doc;
 	char			**redir;
 	char			*command;
 	char			**arg_to_pass;

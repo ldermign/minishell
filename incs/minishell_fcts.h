@@ -37,14 +37,14 @@ int			built_in_to_create(t_struct *ms, t_args *cmd);
 **	BUILT-IN PIPE
 */
 
-void	built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
+void		built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
 
 /*
 **	REDIRECTIONS
 */
 
 // int			get_redirections(t_struct *ms, char **args, int which);
-int	get_redirections(t_struct *ms, t_args *args, int which);
+int			get_redirections(t_struct *ms, t_args *args, int which);
 int			get_good_fd(char **args, char *file, t_red_std *std, int *pipefd);
 int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 
@@ -102,7 +102,6 @@ char		*get_variable_with_pos(t_env_ms **minishell, int pos);
 **  UTILS PIPE
 */
 
-
 /*
 **	INIT
 */
@@ -117,7 +116,7 @@ void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
 **	FREE
 */
 
-void	free_all_cmds_pompt(t_args *stack);
+void		free_all_cmds_pompt(t_args *stack);
 
 /*
 **	TEMPORAIRE A SUPPRIMEEEEEERRRRRR
@@ -125,80 +124,68 @@ void	free_all_cmds_pompt(t_args *stack);
 
 void		print_tab_char(char **tabl);
 void		print_env_ms(t_env_ms **stack);
-void	print_stack_cmd(t_args *stack);
+void		print_stack_cmd(t_args *stack);
 
 /*
 **		>>>>>>>>>  PARSING  <<<<<<<<<
 */
 
-//		>>>>>>>>>   initialisations
-void		init_parsing(t_parsing *parsing);
-t_list_arg	*init_args(void);
-t_list_hd	*init_here_doc(void);
-//		>>>>>>>>>   list
-int			insertion(t_list_arg *list, char *new_arg);
-int			free_list(t_list_arg *list);
+char    	**arg_list(t_list_hd *hd, t_struct *minish);
+void		check_file(char *arg, t_struct *minish);
+int			check_pipe2(char *line, t_struct *minish);
+int			count_redir(char *line);
+void		create_file(char *args, t_struct *minish);
 int			delete(t_list_arg *list);
 int			delete_hd(t_list_hd *list);
-void		print_list(t_list_arg *list);
-int			insertion_here_doc(t_list_hd *list, char *new_arg);
-void		print_list_hd(t_list_hd *list);
-//		>>>>>>>>>	parsing
-int			parsing(char *line, t_struct *minish);
-//		>>>>>>>>>	recup_args
-int			recup_pipe(char *line, t_struct *minishell);
-int			recup_args(char *line, t_struct *minishell);
-char		**interpret_args(char *line, char	**tab_arg, t_struct *minish);
-char		**sep_and_check_args(t_args *arg, t_struct *minish);
-int			pass_quotes(char *line);
-// 	>>>>>>>>>	count_arg
-int			pass_arg_count(char *line, t_struct *minish);
-// 		>>>>>>>>>	utils
-int			is_variable_char(char c);
-int			pass_variable(char *line);
-int			pass_redir(char *line, t_struct *minish);
-int			pass_redir_hd(char *line, t_struct *minish);
-int			pass_quotes(char *line);
-int			error_malloc(t_struct *minish);
-// 		>>>>>>>>>	empty_args
-int			is_empty(char *line, t_struct *minish);
-// 	>>>>>>>>>	len_arg
-int			len_arg(char *line, t_struct *minish);
-int			len_double_quotes(char *line, t_struct *minish);
-int			len_simple_quote(char *line, t_struct *minish);
-//      >>>>>>>>>   len_variable
-int			len_variable(char *line, t_struct *minish);
-// 		>>>>>>>>>	fill_arg
-int			fill_arg2(char *line, char *str, t_struct *minish);
-int			fill_simple_quote(char *line, char *str, t_struct *minish);
-int			fill_double_quotes(char *line, char *str, t_struct *minish);
-// 		>>>>>>>>>	fill_variable
-int			fill_variable(char *line, char *str, t_struct *minish);
-//      >>>>>>>>>   echo
-char		*recup_echo(char **args, t_struct *minish);
-//      >>>>>>>>>   list_ok
-t_list_arg	*reverse_list(t_list_arg *list);
-t_list_hd	*reverse_list_hd(t_list_hd *list);
-//      >>>>>>>>>   recup_redir
-char		**recup_redir(char *line, t_struct *minish);
-//      >>>>>>>>>   recup_pipe
-int			check_pipe2(char *line, t_struct *minish);
-int			recup_pipe2(char *line, t_struct *minish, int i);
-int			pass_arg(char *line, t_struct *minish);
-//      >>>>>>>>>   signals
-void		handle_signal_child(int sig);
-void		handle_signal(int sig);
-char		*error_malloc_null(t_struct *minish);
 int			double_dollar(t_struct *minish);
-int			len_sig_error(t_struct *minish);
-int			if_is_empty(char *line, int i);
+int			error_malloc(t_struct *minish);
+char		*error_malloc_null(t_struct *minish);
+void		exec_here_doc(t_list_arg *args, t_struct *minish);
+int			fill_arg2(char *line, char *str, t_struct *minish);
 int			fill_double_dollar(t_struct *minish, char *str);
+int			fill_double_quotes(char *line, char *str, t_struct *minish);
 int			fill_sig_error(t_struct *minish, char *str);
-int			count_redir(char *line);
+int			fill_simple_quote(char *line, char *str, t_struct *minish);
+int			fill_variable(char *line, char *str, t_struct *minish);
+int			free_list(t_list_arg *list);
 int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);
-// 		>>>>>>>>>	here_doc
-void	exec_here_doc(t_list_arg *args);
-t_struct	*recup_here_doc(char *line, t_struct *minish);
+int			free_list_hd(t_list_hd *list);
+void		handle_signal(int sig);
+void		handle_signal_child(int sig);
+int			if_is_empty(char *line, int i);
+t_list_arg	*init_args(void);
+t_list_hd	*init_here_doc(void);
+void		init_parsing(t_parsing *parsing);
+int			insertion(t_list_arg *list, char *new_arg);
+int			insertion_here_doc(t_list_hd *list, char *new_arg);
+int			is_empty(char *line, t_struct *minish);
+int			is_variable_char(char c);
+char		**interpret_args(char *line, char	**tab_arg, t_struct *minish);
+int			len_arg(char *line, t_struct *minish);
+int			len_double_quotes(char *line, t_struct *minish);
+int			len_sig_error(t_struct *minish);
+int			len_simple_quote(char *line, t_struct *minish);
+int			len_variable(char *line, t_struct *minish);
+int			parsing(char *line, t_struct *minish);
+int			pass_arg(char *line, t_struct *minish);
+int			pass_arg_count(char *line, t_struct *minish);
+int			pass_quotes(char *line);
+int			pass_redir(char *line, t_struct *minish);
+int			pass_redir_hd(char *line, t_struct *minish);
+int			pass_variable(char *line);
+void		print_list(t_list_arg *list);
+void		print_list_hd(t_list_hd *list);
+int			recup_args(char *line, t_struct *minishell);
+char		*recup_echo(char **args, t_struct *minish);
+t_struct	*recup_here_doc_end(char *line, t_struct *minish);
+char		*recup_name(char *args);
+int			recup_pipe(char *line, t_struct *minishell);
+int			recup_pipe2(char *line, t_struct *minish, int i);
+char		**recup_redir(char *line, t_struct *minish);
+void		redirections(t_list_arg *args, t_struct *minish);
+t_list_arg	*reverse_list(t_list_arg *list);
+t_list_hd	*reverse_list_hd(t_list_hd *list);
+char		**sep_and_check_args(t_args *arg, t_struct *minish);
 
 #endif

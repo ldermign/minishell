@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-// void	redirections(t_struct *minish)
-// {
-// 	// creer les fichiers si '>' ou '>>'
-// 	// verifier si les fichiers existent si '<'
-// }
-
 int	parsing(char *line, t_struct *minish)
 {
 	minish->args = init_args();
@@ -25,19 +19,25 @@ int	parsing(char *line, t_struct *minish)
 	if (recup_args(line, minish) == -1)
 	{
 		minish->args = reverse_list(minish->args);
-		exec_here_doc(minish->args);
+		exec_here_doc(minish->args, minish);
 		if (minish->parsing.error == 2)
 			free_list2(minish->args);
 		if (minish->parsing.error == 3)
 			free_list3(minish->args);
 		return (-1);
 	}
-	// redirections(minish);
-	// if (minish->parsing.error != 0)
+	// int	i = 0;
+	// while (minish->args->first->args_here_doc[i] != NULL)
 	// {
-	// 	free_list(minish->args);
-	// 	return (-1);
+	// 	printf("args = [%s]\n", minish->args->first->args_here_doc[i]);
+	// 	i++;
 	// }
+	redirections(minish->args, minish);
+	if (minish->parsing.error != 0)
+	{
+		free_list(minish->args);
+		return (-1);
+	}
 	minish->parsing.nb_pipe -= 1;
 	return (0);
 }

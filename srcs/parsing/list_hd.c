@@ -72,3 +72,19 @@ t_list_hd	*reverse_list_hd(t_list_hd *list)
 	free(list);
 	return (ret);
 }
+
+int	free_list_hd(t_list_hd *list)
+{
+	t_here_doc	*to_delete;
+
+	if (list == NULL)
+		return (-1);
+	while (list->first != NULL)
+	{
+		to_delete = list->first;
+		list->first = list->first->next;
+		free(to_delete);
+	}
+	free(list);
+	return (0);
+}

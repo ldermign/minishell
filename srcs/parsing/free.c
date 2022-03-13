@@ -38,22 +38,6 @@ static void	free_redir(char **arg)
 	free(arg);
 }
 
-int	free_list_hd(t_list_hd *list)
-{
-	t_here_doc	*to_delete;
-
-	if (list == NULL)
-		return (-1);
-	while (list->first != NULL)
-	{
-		to_delete = list->first;
-		list->first = list->first->next;
-		free(to_delete);
-	}
-	free(list);
-	return (0);
-}
-
 int	free_list(t_list_arg *list)
 {
 	t_args	*to_delete;
@@ -68,7 +52,7 @@ int	free_list(t_list_arg *list)
 			free_redir(list->first->redir);
 		if (list->first->command != NULL)
 			free(list->first->command);
-		// free_list_hd(list->first->here_doc);
+		free_list_hd(list->first->here_doc);
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);
@@ -89,6 +73,7 @@ int	free_list2(t_list_arg *list)
 		i = 0;
 		if (list->first->command != NULL)
 			free(list->first->command);
+		free_list_hd(list->first->here_doc);
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);
@@ -107,6 +92,7 @@ int	free_list3(t_list_arg *list)
 	while (list->first != NULL)
 	{
 		i = 0;
+		free_list_hd(list->first->here_doc);
 		if (list->first->arg_to_pass != NULL)
 			free_arg_to_pass(list->first->arg_to_pass);
 		if (list->first->command != NULL)

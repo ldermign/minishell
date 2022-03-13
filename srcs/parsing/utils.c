@@ -45,7 +45,7 @@ int	pass_redir(char *line, t_struct *minish)
 		return (-1);
 	}
 	// if (line[0] == '<' && line[1] == '<')
-	// 	recup_here_doc(&line[i], minish);
+	// 	recup_here_doc_end(&line[i], minish);
 	while (line[i] && line[i] != ' ')
 		i++;
 	while (line[i] == ' ')
@@ -72,7 +72,7 @@ int	pass_redir_hd(char *line, t_struct *minish)
 		return (-1);
 	}
 	if (line[0] == '<' && line[1] == '<')
-		minish = recup_here_doc(&line[i], minish);
+		minish = recup_here_doc_end(&line[i], minish);
 	while (line[i] && line[i] != ' ')
 		i++;
 	while (line[i] == ' ')
