@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 15:40:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/13 01:19:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	cmd_execve(t_struct *ms, char **cmd)
 	char	*str_path;
 
 	str_path = working_path(ms->env.path, cmd[0]);
-	fprintf(stderr, "8\n");
+	// fprintf(stderr, "8\n");
 	if (execve(str_path, cmd, ms->env.env_bash) == -1)
 	{
 		printf("minishell: %s: command not found\n", cmd[0]);
@@ -147,7 +147,7 @@ void	child_process(t_pipe *pipex)
 		close(pipex->fd0[1]);
 		dup2(pipex->fd0[0], STDIN_FILENO);
 		close(pipex->fd0[0]);
-		fprintf(stderr, "7\n");
+		// fprintf(stderr, "7\n");
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
 			close(pipex->fd1[0]);
@@ -170,7 +170,7 @@ void	close_fd_main(t_pipe * pipex)
 	else if (pipex->cmd_nbr % 2 != 0)
 	{
 		close(pipex->fd0[0]);
-		fprintf(stderr, "7bis\n");
+		// fprintf(stderr, "7bis\n");
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 			close(pipex->fd1[1]);
 	}
@@ -203,19 +203,16 @@ void	there_is_pipe(t_struct *ms)
 		ret_built_in = is_built_in(stack->arg_to_pass[0]);
 		if (pipex->cmd_nbr % 2 == 0 && pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			fprintf(stderr, "1 fois !\n");
 			if (pipe(pipex->fd0) == -1)
 				return ;
 		}
 		else if (pipex->cmd_nbr % 2 != 0 && pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			fprintf(stderr, "non\n");
 			if (pipe(pipex->fd1) == -1)
 				return ;
 		}
 		if (ret_built_in == EXIT_FAILURE)
 		{
-			fprintf(stderr, "6\n");
 			pipex->nbr_exec++;
 			no_built_in_execve(pipex);				// redir ?
 			if (pipex->pid == 0)
@@ -227,7 +224,7 @@ void	there_is_pipe(t_struct *ms)
 			built_in_with_pipe(ms, stack, pipex);
 			// close_fd_main(pipex);
 		}
-		fprintf(stderr, "5\n");
+		// fprintf(stderr, "5\n");
 		stack = stack->next;
 		pipex->cmd_nbr++;
 		pipex->pipe++;
@@ -235,9 +232,12 @@ void	there_is_pipe(t_struct *ms)
 	i = 0;
 	while (i < pipex->nbr_exec)
 	{
+		// fprintf(stderr, "1 fois\n");
 		wait(NULL);
 		i++;
 	}
+	// fprintf(stderr, "ici\n");
+	dup2(STDOUT_FILENO, STDIN_FILENO);
 	free(pipex);
 }
 

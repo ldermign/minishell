@@ -3,13 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/12 03:11:34 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/13 00:45:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
 /* ************************************************************************** */
 
 #ifndef MINISHELL_STRUCT_H
@@ -26,7 +24,7 @@ typedef struct s_environnement
 	char		**env_bash;	// env de bash
 	char		**path;		// variable d'environnement PATH de bash
 	char		*abs;		// chemin absolu du minishell
-	// char		*rel;		// cheminn relatif du minishell -> utile ?
+	// char		*rel;		// chemin relatif du minishell -> utile ?
 	t_env_ms	*env_ms;
 }	t_env;
 
