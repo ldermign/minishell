@@ -184,9 +184,10 @@ signal ctrl \                                   >>>>>>  ok?
 signal ctrl C quand cat                         >>>>>>  ok?
 leaks parsing                                   >>>>>>  ok?
 norme moi                                       >>>>>>  ok?
-recup '<<'										>>>>>>	ok?
-exec here_doc
-free here_doc
+exec here_doc									>>>>>>	ok?
+recup dernier '<<'								>>>>>>	ok?
+changer list en char **
+free here_doc									>>>>>>	ok?
 redirections
 mettre en commun
 norme liena

@@ -14,21 +14,15 @@
 
 void	here_doc(char *str)
 {
-	int		i;
 	char	*line;
-	char	*heredoc_eof;
 
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	heredoc_eof = &str[i];
 	line = readline("> ");
 	if (line == NULL)
 	{
 		rl_on_new_line();
 		return ;
 	}
-	while (ft_strcmp(line, heredoc_eof) != 0)
+	while (ft_strcmp(line, str) != 0)
 	{
 		line = readline("> ");
 		if (line == NULL)
@@ -36,10 +30,38 @@ void	here_doc(char *str)
 			rl_on_new_line();
 			return ;
 		}
+		free(line);
 	}
+	free(line);
 }
 
-t_struct	*recup_here_doc(char *line, t_struct *minish)
+t_list_hd	*recup_arg_here_doc(char *str, t_list_hd *hd)
+{
+	char	*line;
+
+	delete_hd(hd);
+	line = readline("> ");
+	if (line == NULL)
+	{
+		rl_on_new_line();
+		return (hd);
+	}
+	while (ft_strcmp(line, str) != 0)
+	{
+		printf("la\n");
+		insertion_here_doc(hd, line);
+		line = readline("> ");
+		if (line == NULL)
+		{
+			rl_on_new_line();
+			return (hd);
+		}
+	}
+	free(line);
+	return (hd);
+}
+
+t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 {
 	char	*str;
 	int		i;
@@ -67,29 +89,26 @@ t_struct	*recup_here_doc(char *line, t_struct *minish)
 void	exec_here_doc(t_list_arg *args)
 {
 	t_args		*tmp;
-	// t_here_doc	*re_tmp;
+
 	tmp = args->first;
-	// re_tmp = args->first->here_doc->first;
 	while (args->first != NULL)
 	{
 		args->first->here_doc = reverse_list_hd(args->first->here_doc);
-		// re_tmp = args->first->here_doc->first;
 		while (args->first->here_doc->first != NULL)
 		{
 			if (args->first->here_doc->first->next == NULL)
 			{
-				here_doc(args->first->here_doc->first->here_doc);
-				// here_doc + recup
+				args->first->here_doc = recup_arg_here_doc(args->first->here_doc->first->here_doc, args->first->here_doc);
+				args->first->here_doc = reverse_list_hd(args->first->here_doc);
+				break ;
 			}
 			else
 				here_doc(args->first->here_doc->first->here_doc);
-			// args->first->here_doc->first = args->first->here_doc->first->next;
 			delete_hd(args->first->here_doc);
 		}
 		args->first = args->first->next;
 		// free(args->first->here_doc->first);
 		// free(args->first->here_doc);
-		// args->first->here_doc->first = re_tmp;
 	}
 	args->first = tmp;
 }

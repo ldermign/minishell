@@ -199,6 +199,7 @@ int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);
 // 		>>>>>>>>>	here_doc
 void	exec_here_doc(t_list_arg *args);
-t_struct	*recup_here_doc(char *line, t_struct *minish);
+// t_struct	*recup_here_doc(char *line, t_struct *minish);
+t_struct	*recup_here_doc_end(char *line, t_struct *minish);
 
 #endif

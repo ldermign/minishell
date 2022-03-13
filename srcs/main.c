@@ -25,6 +25,7 @@ void	loop(t_struct *minish)
 	if (line == NULL)
 	{
 		rl_on_new_line();
+		// rl_replace_line("", 0);
 		write(1, "exit\n", 5);
 		exit(g_sig_error);
 	}
