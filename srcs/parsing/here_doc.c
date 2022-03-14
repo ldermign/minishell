@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/14 06:19:52 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 06:34:34 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 	}
 	while (ft_strcmp(line, str) != 0)
 	{
-		insertion_here_doc(hd, ft_strdup(line)); // LA
+		insertion_here_doc(hd, ft_strdup(line));
 		line = readline("> ");
 		if (line == NULL)
 		{
@@ -71,7 +71,7 @@ t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 	int		i;
 
 	i = 0;
-	minish->args->first->here_doc = init_here_doc();
+	// minish->args->first->here_doc = init_here_doc();
 	while (line[i] && line[i] != ' ')
 		i++;
 	str = malloc(sizeof(char) * (i + 1));
@@ -98,8 +98,8 @@ void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 	tmp = arg->first;
 	while (arg->first != NULL)
 	{
-		if (arg->first->here_doc != NULL)
-		{
+		// if (arg->first->here_doc != NULL)
+		// {
 			arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
 			while (arg->first->here_doc->first != NULL)
 			{
@@ -118,7 +118,7 @@ void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 				free(arg->first->here_doc->first->here_doc);
 				delete_hd(arg->first->here_doc);
 			}
-		}
+		// }
 		arg->first = arg->first->next;
 	}
 	arg->first = tmp;
