@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 15:20:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 14:11:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ int	built_in_echo(t_struct *ms)
 	int		len;
 
 	len = ft_strlen(ms->parsing.result);
-	write(ms->std.fd_to_write, ms->parsing.result, len);
+	write(1, ms->parsing.result, len);
 	//gerer cas ou $$ chaipukoi
 	if (ms->parsing.option != 1)
-		write(ms->std.fd_to_write, "\n", 1);
+		write(1, "\n", 1);
 	free(ms->parsing.result);
 	g_sig_error = 0;
 	return (EXIT_SUCCESS);

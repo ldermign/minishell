@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 00:13:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 14:05:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	init_fork(int *pid)
 	return (1);
 }
 
-void	cmd_execve(t_struct *ms, char **cmd)
+int	cmd_execve(t_struct *ms, char **cmd)
 {
 	char	*str_path;
 
@@ -118,74 +118,95 @@ void	cmd_execve(t_struct *ms, char **cmd)
 		g_sig_error = 127;
 		// creer fonction qui close all
 		// freeetoutbalalandls
-		return ;
+		exit (127); // revoir l'exit
 	}
+	return (0);
 }
 
 void	child_process(t_pipe *pipex)
 {
 	if (pipex->cmd_nbr == 0)
 	{
-		dup2(pipex->fd0[1], STDOUT_FILENO);
-		close(pipex->fd0[1]);
 		close(pipex->fd0[0]);
-
+		if (dup2(pipex->fd0[1], STDOUT_FILENO) < 0)
+			perror("dup2");
+		close(pipex->fd0[1]);
 	}
 	else if (pipex->cmd_nbr % 2 == 0)
 	{
-		dup2(pipex->fd1[0], STDIN_FILENO);
+		if (dup2(pipex->fd1[0], STDIN_FILENO) < 0)
+			perror("dup2");
 		close(pipex->fd1[0]);
-		close(pipex->fd1[1]);
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			dup2(pipex->fd0[1], STDOUT_FILENO);
-			close(pipex->fd0[1]);
 			close(pipex->fd0[0]);
+			if (dup2(pipex->fd0[1], STDOUT_FILENO) < 0)
+				perror("dup2");
+			close(pipex->fd0[1]);
 		}
 	}
 	else
 	{
-		dup2(pipex->fd0[0], STDIN_FILENO);
+		if (dup2(pipex->fd0[0], STDIN_FILENO) < 0)
+			perror("dup2");
 		close(pipex->fd0[0]);
-		close(pipex->fd0[1]);
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 		{
-			dup2(pipex->fd1[1], STDOUT_FILENO);
-			close(pipex->fd1[1]);
 			close(pipex->fd1[0]);
+			if (dup2(pipex->fd1[1], STDOUT_FILENO) < 0)
+				perror("dup2");
+			close(pipex->fd1[1]);
 		}
 	}
 }
 
 void	close_fd_main(t_pipe * pipex)
 {
-	if (pipex->cmd_nbr != 0 && pipex->cmd_nbr % 2 == 0)
+	if (pipex->cmd_nbr == 0)
+		close(pipex->fd0[1]);
+	else if (pipex->cmd_nbr % 2 == 0)
 	{
 		close(pipex->fd1[0]);
-		close(pipex->fd1[1]);
+		if (pipex->cmd_nbr != pipex->pipe_tot)
+			close(pipex->fd0[1]);
 	}
 	else if (pipex->cmd_nbr % 2 != 0)
 	{
 		close(pipex->fd0[0]);
-		close(pipex->fd0[1]);
+		// fprintf(stderr, "7bis\n");
+		if (pipex->cmd_nbr != pipex->pipe_tot)
+			close(pipex->fd1[1]);
 	}
 }
 
-void	no_built_in_execve(t_pipe *pipex)
+int	pipe_the_good_one(t_pipe *pipex)
 {
-	if (init_fork(&pipex->pid) == -1) // checker ici si built in, parce que sinon, pas fork
-		return ;
-	if (pipex->pid == 0)
-		child_process(pipex);
-	else
-		close_fd_main(pipex);
+	if (pipex->cmd_nbr != pipex->pipe_tot)
+	{
+		if (pipex->cmd_nbr % 2 == 0)
+		{
+			if (pipe(pipex->fd0) == -1)
+			{
+				perror("pipe fd0:");
+				return (EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			if (pipe(pipex->fd1) == -1)
+			{
+				perror("pipe fd1:");
+				return (EXIT_FAILURE);
+			}
+		}
+	}
+	return (EXIT_SUCCESS);
 }
 
 void	there_is_pipe(t_struct *ms)
 {
 	t_pipe	*pipex;
 	t_args	*stack;
-	int		ret_built_in;
 	int		i;
 
 	stack = ms->args->first;
@@ -195,38 +216,25 @@ void	there_is_pipe(t_struct *ms)
 	init_struct_pipe(pipex, ms);
 	while (stack)
 	{
-		ret_built_in = is_built_in(stack->arg_to_pass[0]);
-		if (pipex->cmd_nbr != pipex->pipe_tot && pipex->cmd_nbr % 2 == 0)
+		if (pipe_the_good_one(pipex) == EXIT_FAILURE)
+			exit (127); // pas le bon chiffre
+		pipex->nbr_exec++;
+		if (init_fork(&pipex->pid) == -1)
 		{
-			if (pipe(pipex->fd0) == -1)
-			{
-				perror("pipe fd0:");
-				return ;
-			}
+			perror("fork");
+			return ;
 		}
-		else if (pipex->cmd_nbr != pipex->pipe_tot && pipex->cmd_nbr % 2 != 0)
+		if (pipex->pid == 0)
+			child_process(pipex);
+		else
+			close_fd_main(pipex);
+		if (pipex->pid == 0)
 		{
-			if (pipe(pipex->fd1) == -1)
-			{
-				perror("pipe fd1:");
-				return ;
-			}
+			if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
+				exit (cmd_execve(ms, stack->arg_to_pass));
+			else
+				exit (built_in_to_create(ms, stack));
 		}
-		if (ret_built_in == EXIT_FAILURE)
-		{
-			pipex->nbr_exec++;
-			no_built_in_execve(pipex);				// redir ?
-			if (pipex->pid == 0)
-				cmd_execve(ms, stack->arg_to_pass);
-		}
-		else if (ret_built_in == EXIT_SUCCESS)
-		{
-			// fprintf(stderr, "2 fois putain !!\n");
-			// yes_built_in(ms, stack, pipex);			// redir ?
-			built_in_with_pipe(ms, stack, pipex);
-			// close_fd_main(pipex);
-		}
-		// fprintf(stderr, "5\n");
 		stack = stack->next;
 		pipex->cmd_nbr++;
 		pipex->pipe++;
@@ -234,15 +242,10 @@ void	there_is_pipe(t_struct *ms)
 	i = 0;
 	while (i < pipex->nbr_exec)
 	{
-		// fprintf(stderr, "1 fois\n");
 		wait(NULL);
 		i++;
 	}
-
-	// fprintf(stderr, "ici\n");
-	dup2(STDOUT_FILENO, STDIN_FILENO);
 	free(pipex);
-	// fprintf(stderr, "[FIN DE LA BOUCLE]\n");
 }
 
 /*

@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/12 03:54:13 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 14:29:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	get_name_file_redir(char **args, int last)
-// {
-// 	int	i;
-// 	i = 0;
-// 	if (last != 0)
-// 		i = last + 1;
-// 	else
-// 		i = last;
-// 	while (args[i])
-// 	{
-// 		if (args[i][0] == '>')
-// 		{
-// 			if (args[i][1] == '\0')
-// 				return (i);
-// 			else if (args[i][1] && args[i][1] == '>' && args[i][2] == '\0')
-// 				return (i);
-// 		}
-// 		i++;
-// 	}
-// 	return (-1);
-// }
 
 int	get_name_file_redir(char **args, int last)
 {
@@ -80,34 +58,6 @@ char	*recup_name(char *args)
 		name[k++] = args[i++];
 	return (name);
 }
-
-// char	*create_all_files(char **args)
-// {
-// 	int		fd;
-// 	int		ret;
-// 	int		last;
-// 	char	*name_file;
-
-// 	ret = get_name_file_redir(args, 0);
-// 	last = last_redir(args);
-// 	while (ret != -1)
-// 	{
-// 		last = ret;
-// 		name_file = args[ret + 1];
-// 		fd = open(name_file, O_CREAT, 0644);
-// 		if (fd == -1)
-// 		{
-// 			g_sig_error = errno;
-// 			perror("minishell"); // arranger le message d'erreur
-// 		}
-// 		ret = get_name_file_redir(args, ret);
-// 		close(fd);
-// 		if (ret == last)
-// 			break ;
-// 	}
-// 	name_file = args[last + 1];
-// 	return (name_file);
-// }
 
 char	*create_all_files(char **args)
 {
@@ -194,23 +144,6 @@ int	first_arg_is_redir(char **args, t_red_std *std, int which)
 	return (EXIT_SUCCESS);
 }
 
-// int	execution_redirection(t_struct *ms, char **args, t_red_std *std)
-// {
-// 	char	**exec_args_only;
-// 	char	*good_path;
-
-// 	if (is_built_in(args[0]) == EXIT_SUCCESS)
-// 	{
-// 		get_good_fd_built_in(args, ms->std.name_file, std);
-// 		built_in_to_create(ms, ms->args->first, ms->prompt);
-// 		return (EXIT_SUCCESS);
-// 	}
-// 	exec_args_only = get_args_exec(args);
-// 	good_path = working_path(ms->env.path, exec_args_only[0]);
-// 	execute_cmd(ms, good_path, args, exec_args_only, ms->env.env_bash);
-// 	return (EXIT_SUCCESS);
-// }
-
 int	execution_redirection(t_struct *ms, t_args *args, t_red_std *std)
 {
 	char	*good_path;
@@ -226,21 +159,10 @@ int	execution_redirection(t_struct *ms, t_args *args, t_red_std *std)
 	return (EXIT_SUCCESS);
 }
 
-// int	get_redirections(t_struct *ms, char **args, int which)
-// {
-// 	if (which == 1 || which == 3)
-// 		ms->std.name_file = create_all_files(args); // verifier qu'il existe bien, car parfois pas de fichier
-// 	if (redirection_first(args[0]) == EXIT_SUCCESS)
-// 		return (first_arg_is_redir(args, &(*ms).std, which));
-// 	execution_redirection(ms, args, &(*ms).std);
-// 	return (EXIT_SUCCESS);
-// }
-
 int	get_redirections(t_struct *ms, t_args *args, int which)
 {
 	if (which == 1 || which == 3)
 	{
-		// printf("la\n");
 		ms->std.name_file = create_all_files(args->redir); // verifier qu'il existe bien, car parfois pas de fichier
 	}
 	// if (redirection_first(args->command) == EXIT_SUCCESS) // a changer

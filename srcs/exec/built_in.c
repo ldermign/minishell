@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/13 02:22:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 14:10:14 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int	built_in_export(t_struct *ms, t_env *env, char *prompt, char *alpha)
 
 int	built_in_to_create(t_struct *ms, t_args *cmd)
 {
+	// fprintf(stderr, "cmd = %s\n", cmd->arg_to_pass[0]);
 	if (ft_memcmp(cmd->arg_to_pass[0], "cd", 3) == 0)
 		return (built_in_cd(&(ms->env), cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "pwd", 4) == 0)

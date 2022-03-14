@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 10:18:57 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 14:03:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,12 @@ int	last_redir(char **args)
 
 int	is_built_in(char *str)
 {
-	if (ft_memcmp(str, "echo", 4) == 0 || ft_memcmp(str, "pwd", 4) == 0
+	if (ft_memcmp(str, "echo", 5) == 0
+		|| ft_memcmp(str, "pwd", 4) == 0
 		|| ft_memcmp(str, "env", 4) == 0
 		|| ft_memcmp(str, "export", 7) == 0
 		|| ft_memcmp(str, "unset", 6) == 0
-		|| ft_memcmp(str, "echo", 5) == 0
+		|| ft_memcmp(str, "cd", 3) == 0
 		|| ft_memcmp(str, "exit", 5) == 0)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);

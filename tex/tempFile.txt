@@ -1,3 +1,0 @@
-total 4
--rw-r--r-- 1 ldermign 2020_paris 40 Feb 16 15:57 a_trier
--rw-r--r-- 1 ldermign 2020_paris  0 Feb 16 16:05 tempFile.txt

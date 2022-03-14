@@ -6,14 +6,30 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:27:50 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 00:15:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:07:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	close_if_last_is_built_in_or_if_last(t_pipe *pipex)
+{
+	if (pipex->cmd_nbr % 2 == 0)
+	{
+		close(pipex->fd1[0]);
+		close(pipex->fd1[1]);
+	}
+	else
+	{
+		close(pipex->fd0[0]);
+		close(pipex->fd0[1]);
+	}
+}
+
 void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 {
+	if (pipex->last_is_built_in == 1)
+		close_if_last_is_built_in_or_if_last(pipex);
 	if (pipex->cmd_nbr == 0)
 	{
 		if (write(pipex->fd0[1], str, ft_strlen(str)) < 0)
@@ -23,40 +39,35 @@ void	write_in_pipe_for_built_in(t_pipe *pipex, char *str)
 		}
 		write(pipex->fd0[1], "\n", 1);
 		close(pipex->fd0[1]);
-		close(pipex->fd0[0]);
 	}
 	else if (pipex->cmd_nbr % 2 == 0)
 	{
 		close(pipex->fd1[1]);
-		close(pipex->fd1[0]);
 		if (pipex->cmd_nbr == pipex->pipe_tot)
 		{
 			write(STDOUT_FILENO, str, ft_strlen(str));
 			write(STDOUT_FILENO, "\n", 1);
+			close_if_last_is_built_in_or_if_last(pipex);
 		}
 		else
 		{
 			write(pipex->fd0[1], str, ft_strlen(str));
 			write(pipex->fd0[1], "\n", 1);
-			close(pipex->fd0[1]);
-			close(pipex->fd0[0]);
 		}
 	}
 	else
 	{
 		close(pipex->fd0[1]);
-		close(pipex->fd0[0]);
 		if (pipex->cmd_nbr == pipex->pipe_tot)
 		{
 			write(STDOUT_FILENO, str, ft_strlen(str));
 			write(STDOUT_FILENO, "\n", 1);
+			close_if_last_is_built_in_or_if_last(pipex);
 		}
 		else
 		{
 			write(pipex->fd1[1], str, ft_strlen(str));
 			write(pipex->fd1[1], "\n", 1);
-			close(pipex->fd1[1]);
-			close(pipex->fd1[0]);
 		}
 	}
 }
