@@ -189,6 +189,8 @@ recup dernier '<<'								>>>>>>	ok?
 changer list en char **							>>>>>>	ok?
 free here_doc									>>>>>>	ok?
 redirections									>>>>>>	ok?
+sig_error
+leaks
 mettre en commun
 norme liena
 
@@ -225,7 +227,4 @@ else
 	// g_sig_error = 0;
 	// exit(0); // sig_error marche pas
 }
-
-
-
 

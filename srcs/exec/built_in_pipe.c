@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:27:50 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 00:15:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 02:34:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,6 @@ void	built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex)
 	{
 		ms->parsing.result = recup_echo(cmd->arg_to_pass, ms);
 		write_in_pipe_for_built_in(pipex, ms->parsing.result);
+		free(ms->parsing.result);
 	}
 }

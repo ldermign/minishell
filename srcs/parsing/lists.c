@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 08:11:34 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 06:17:37 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	insertion(t_list_arg *list, char *new_arg)
 	if (new == NULL)
 		return (-1);
 	new->command = new_arg;
-	new->here_doc = init_here_doc();
+	// new->here_doc = init_here_doc();
+	new->here_doc = NULL;
 	new->next = list->first;
+	new->args_here_doc = NULL;
 	list->first = new;
 	return (0);
 }

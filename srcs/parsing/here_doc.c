@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 08:29:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 06:19:52 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	here_doc(char *str)
 {
 	char	*line;
-
 	line = readline("> ");
 	if (line == NULL)
 	{
@@ -35,27 +34,33 @@ void	here_doc(char *str)
 	free(line);
 }
 
-t_list_hd	*recup_arg_here_doc(char *str, t_list_hd *hd)
+t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 {
 	char	*line;
+	char	*str;
 
+	str = ft_strdup(end);
+	free(hd->first->here_doc);
 	delete_hd(hd);
 	line = readline("> ");
 	if (line == NULL)
 	{
+		free(str);
 		rl_on_new_line();
 		return (hd);
 	}
 	while (ft_strcmp(line, str) != 0)
 	{
-		insertion_here_doc(hd, line);
+		insertion_here_doc(hd, ft_strdup(line)); // LA
 		line = readline("> ");
 		if (line == NULL)
 		{
+			free(str);
 			rl_on_new_line();
 			return (hd);
 		}
 	}
+	free(str);
 	free(line);
 	return (hd);
 }
@@ -66,6 +71,7 @@ t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 	int		i;
 
 	i = 0;
+	minish->args->first->here_doc = init_here_doc();
 	while (line[i] && line[i] != ' ')
 		i++;
 	str = malloc(sizeof(char) * (i + 1));
@@ -92,21 +98,26 @@ void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 	tmp = arg->first;
 	while (arg->first != NULL)
 	{
-		arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
-		while (arg->first->here_doc->first != NULL)
+		if (arg->first->here_doc != NULL)
 		{
-			if (arg->first->here_doc->first->next == NULL)
+			arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
+			while (arg->first->here_doc->first != NULL)
 			{
-				arg->first->here_doc
-					= recup_arg_here_doc(arg->first->here_doc->first->here_doc,
-						arg->first->here_doc);
-				arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
-				arg->first->args_here_doc = arg_list(arg->first->here_doc, ms);
-				break ;
+				if (arg->first->here_doc->first->next == NULL)
+				{
+					arg->first->here_doc
+						= recup_arg_here_doc(arg->first->here_doc->first->here_doc,
+							arg->first->here_doc);
+					// free(arg->first->here_doc->first->here_doc);
+					arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
+					arg->first->args_here_doc = arg_list(arg->first->here_doc, ms);
+					break ;
+				}
+				else
+					here_doc(arg->first->here_doc->first->here_doc);
+				free(arg->first->here_doc->first->here_doc);
+				delete_hd(arg->first->here_doc);
 			}
-			else
-				here_doc(arg->first->here_doc->first->here_doc);
-			delete_hd(arg->first->here_doc);
 		}
 		arg->first = arg->first->next;
 	}
