@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 07:40:32 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 04:49:34 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ static void	free_redir(char **arg)
 	free(arg);
 }
 
+void	free_arg_hd(char **args)
+{
+	int	i;
+
+	i = 0;
+	if (args != NULL)
+	{
+		while (args[i] != NULL)
+		{
+			free(args[i]);
+			i++;
+		}
+		free(args);
+	}
+}
+
 int	free_list(t_list_arg *list)
 {
 	t_args	*to_delete;
@@ -46,6 +62,8 @@ int	free_list(t_list_arg *list)
 		return (-1);
 	while (list->first != NULL)
 	{
+		if (list->first->args_here_doc != NULL)
+			free_arg_hd(list->first->args_here_doc);
 		if (list->first->arg_to_pass != NULL)
 			free_arg_to_pass(list->first->arg_to_pass);
 		if (list->first->redir != NULL)
@@ -71,6 +89,8 @@ int	free_list2(t_list_arg *list)
 	while (list->first != NULL)
 	{
 		i = 0;
+		if (list->first->args_here_doc != NULL)
+			free_arg_hd(list->first->args_here_doc);
 		if (list->first->command != NULL)
 			free(list->first->command);
 		free_list_hd(list->first->here_doc);
@@ -92,6 +112,8 @@ int	free_list3(t_list_arg *list)
 	while (list->first != NULL)
 	{
 		i = 0;
+		if (list->first->args_here_doc != NULL)
+			free_arg_hd(list->first->args_here_doc);
 		free_list_hd(list->first->here_doc);
 		if (list->first->arg_to_pass != NULL)
 			free_arg_to_pass(list->first->arg_to_pass);
