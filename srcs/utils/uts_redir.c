@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 14:03:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 15:54:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,6 @@ int	is_redir(char **args, char *str)
 	}
 	return (0);
 }
-
-// int	last_redir(char **args)
-// {
-// 	int	i;
-// 	int	last;
-
-// 	i = 0;
-// 	last = -1;
-// 	while (args[i])
-// 	{
-// 		if (args[i][1] != '\0' && (args[i][0] == '>' || args[i][0] == '<'))
-// 		{
-// 			if (args[i][0] == '>' && args[i][1] == '>' && args[i][2] == '\0')
-// 				last = 3;
-// 			if (args[i][0] == '<' && args[i][1] == '<' && args[i][2] == '\0')
-// 				last = 4;
-// 		}
-// 		else if (args[i][0] == '>' && args[i][1] == '\0')
-// 			last = 1;
-// 		else if (args[i][0] == '<' && args[i][1] == '\0')
-// 			last = 2;
-// 		i++;
-// 	}
-// 	return (last);
-// }
 
 int	last_redir(char **args)
 {

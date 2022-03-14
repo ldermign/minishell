@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 14:05:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/14 16:07:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	cmd_execve(t_struct *ms, char **cmd)
 	return (0);
 }
 
-void	child_process(t_pipe *pipex)
+void	close_fd_child_main(t_pipe *pipex)
 {
 	if (pipex->cmd_nbr == 0)
 	{
@@ -160,7 +160,7 @@ void	child_process(t_pipe *pipex)
 	}
 }
 
-void	close_fd_main(t_pipe * pipex)
+void	close_fd_pipe_main(t_pipe * pipex)
 {
 	if (pipex->cmd_nbr == 0)
 		close(pipex->fd0[1]);
@@ -173,7 +173,6 @@ void	close_fd_main(t_pipe * pipex)
 	else if (pipex->cmd_nbr % 2 != 0)
 	{
 		close(pipex->fd0[0]);
-		// fprintf(stderr, "7bis\n");
 		if (pipex->cmd_nbr != pipex->pipe_tot)
 			close(pipex->fd1[1]);
 	}
@@ -203,6 +202,11 @@ int	pipe_the_good_one(t_pipe *pipex)
 	return (EXIT_SUCCESS);
 }
 
+int	good_fd_for_redir(t_pipe *pipex, t_args *stack)
+{(void)pipex;(void)stack;
+	return (1);
+}
+
 void	there_is_pipe(t_struct *ms)
 {
 	t_pipe	*pipex;
@@ -219,17 +223,24 @@ void	there_is_pipe(t_struct *ms)
 		if (pipe_the_good_one(pipex) == EXIT_FAILURE)
 			exit (127); // pas le bon chiffre
 		pipex->nbr_exec++;
+		fprintf(stderr, "[%s]\n", stack->redir[0]);
 		if (init_fork(&pipex->pid) == -1)
 		{
 			perror("fork");
 			return ;
 		}
 		if (pipex->pid == 0)
-			child_process(pipex);
+		{
+			// if (stack->redir[0] != NULL)
+			// 	good_fd_for_redir(pipex, stack);
+			// else
+				close_fd_child_main(pipex);
+		}
 		else
-			close_fd_main(pipex);
+			close_fd_pipe_main(pipex);
 		if (pipex->pid == 0)
 		{
+
 			if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
 				exit (cmd_execve(ms, stack->arg_to_pass));
 			else

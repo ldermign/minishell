@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
+#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/03/14 08:33:35 by ldermign         ###   ########.fr        #
-=======
-#    Updated: 2022/03/14 06:24:52 by ejahan           ###   ########.fr        #
->>>>>>> 832e480ccc085e91f236216d921934a5e02b55b3
+#    Updated: 2022/03/14 15:39:29 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +20,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/exec/built_in_exit_unset_env.c ./srcs/exec/pipe.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
-			./srcs/utils/free.c ./srcs/exec/built_in_pipe.c \
+			./srcs/utils/free.c \
 			./srcs/exec/execute_cmd.c \
 			./srcs/utils/uts_redir_2.c \
 			./srcs/init/init_struct.c \

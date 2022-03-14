@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_hd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/14 04:56:21 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/14 15:40:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	free_list_hd(t_list_hd *list)
 		list->first = list->first->next;
 		free(to_delete);
 	}
-	printf("free hd\n");
+	// printf("free hd\n");
 	free(list);
 	return (0);
 }
