@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/14 15:39:29 by ldermign         ###   ########.fr        #
+#    Updated: 2022/03/15 15:32:24 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/exec/built_in.c ./srcs/exec/get_env.c \
 			./srcs/exec/redirections.c ./srcs/exec/built_in_pwd_cd_echo.c \
 			./srcs/exec/built_in_exit_unset_env.c ./srcs/exec/pipe.c \
+			./srcs/exec/execve.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
 			./srcs/utils/free.c \
@@ -45,7 +46,7 @@ CC		=	clang
 
 RM		=	rm -rf
 
-CFLAGS	=	-Wall -Wextra -Werror -I ${INCS} -g3 #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I ${INCS} -g3 -fsanitize=address
 
 all:		${NAME}
 

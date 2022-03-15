@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/13 01:27:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:42:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void		built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
 **	REDIRECTIONS
 */
 
+int	redirection(t_struct *ms, t_args *stack);
+void	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t_red_std *std);
 // int			get_redirections(t_struct *ms, char **args, int which);
 int			get_redirections(t_struct *ms, t_args *args, int which);
 int			get_good_fd(char **args, char *file, t_red_std *std, int *pipefd);
@@ -53,6 +55,13 @@ int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 */
 
 void		there_is_pipe(t_struct *ms);
+
+/*
+**	EXECVE
+*/
+
+int	cmd_execve(t_struct *ms, char **cmd);
+void	execute_cmd2(t_struct *ms, t_args *stack);
 
 /*
 **	UTILS REDIRECTIONS

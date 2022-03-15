@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 14:29:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:27:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,4 +170,26 @@ int	get_redirections(t_struct *ms, t_args *args, int which)
 	// printf("ici\n");
 	execution_redirection(ms, args, &(*ms).std);
 	return (EXIT_SUCCESS);
+}
+
+int	redirection(t_struct *ms, t_args *stack)
+{
+	int			i;
+	int			j;
+	t_red_std	fd_redir;
+
+	if (!ft_is_alpha(stack->arg_to_pass[0][0]))
+		return (1);
+	init_struct_std(stack->arg_to_pass, &fd_redir, last_redir(stack->redir));
+	i = 0;
+	while (stack->redir[i + 1])
+		i++;
+	j = 0;
+	while (stack->redir[i][j] == ' '
+		|| stack->redir[i][j] == '>' || stack->redir[i][j] == '<')
+		j++;
+	fd_redir.name_file = &(stack->redir[i][j]);
+	execute_redirection_built_in_or_execve(ms, stack, &fd_redir);
+	dup2(STDOUT_FILENO, STDIN_FILENO);
+	return (1);
 }

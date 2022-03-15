@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 14:10:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:43:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,31 +185,18 @@ void	command(t_struct *ms)
 	int		i;
 	int		last;
 	t_args	*all_cmds;
-	char	*good_path;
 
 	i = 0;
 	all_cmds = ms->args->first;
 	last = last_redir(all_cmds->redir);
 	init_struct_std(all_cmds->redir, &(*ms).std, last);
 	if (ms->parsing.nb_pipe > 0)
-	{
 		there_is_pipe(ms);
-		return ;
-	}
-	while (all_cmds)
-	{
-		if (last == -1 && built_in_to_create(ms, ms->args->first) != -1)
-			return ;
-		else if (last != -1)
-		{
-			// printf("oui\n");
-			get_redirections(ms, all_cmds, last);
-			return ;
-		}
-		good_path = working_path(ms->env.path, all_cmds->arg_to_pass[0]);
-		execute_cmd(ms, good_path, all_cmds->redir, all_cmds->arg_to_pass, ms->env.env_bash);
-		all_cmds = all_cmds->next;
-	}
-	free_all_cmds_pompt(all_cmds);
+	else if (last == -1 && built_in_to_create(ms, all_cmds) == -1)
+		execute_cmd2(ms, all_cmds);
+	else
+		redirection(ms, all_cmds);
+		// get_redirections(ms, all_cmds, last);
+	// free_all_cmds_pompt(all_cmds);
 }
     

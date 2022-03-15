@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 15:59:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 11:44:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_structure
 	t_parsing		parsing;
 	t_env			env;
 	t_list_arg		*args;
-	t_red_std		std;
+	t_red_std		std;		// pas forcement
 	char			*prompt;
 }	t_struct;
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 15:59:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:01:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	init_struct_std(char **args, t_red_std *std, int which)
 	std->last_right = pos_last_redir_right(args);
 	std->last_left = pos_last_redir_left(args);
 	std->which = which;
-	std->right = is_redir(args, ">");
-	std->dbl_r = is_redir(args, ">>");
-	std->left = is_redir(args, "<");
-	std->dbl_l = is_redir(args, "<<");
+	std->right = is_redir(args, ">");	// 1
+	std->dbl_r = is_redir(args, ">>");	// 3
+	std->left = is_redir(args, "<");	// 2
+	std->dbl_l = is_redir(args, "<<");	// 4
 	std->both = 0;
 	if (std->right == 1 && std->left == 1)
 		std->both = 1;

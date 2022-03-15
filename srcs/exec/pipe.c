@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 16:07:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:31:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,23 +106,6 @@ int	init_fork(int *pid)
 	return (1);
 }
 
-int	cmd_execve(t_struct *ms, char **cmd)
-{
-	char	*str_path;
-
-	str_path = working_path(ms->env.path, cmd[0]);
-	// fprintf(stderr, "8\n");
-	if (execve(str_path, cmd, ms->env.env_bash) == -1)
-	{
-		printf("minishell: %s: command not found\n", cmd[0]);
-		g_sig_error = 127;
-		// creer fonction qui close all
-		// freeetoutbalalandls
-		exit (127); // revoir l'exit
-	}
-	return (0);
-}
-
 void	close_fd_child_main(t_pipe *pipex)
 {
 	if (pipex->cmd_nbr == 0)
@@ -202,9 +185,83 @@ int	pipe_the_good_one(t_pipe *pipex)
 	return (EXIT_SUCCESS);
 }
 
-int	good_fd_for_redir(t_pipe *pipex, t_args *stack)
-{(void)pipex;(void)stack;
-	return (1);
+static void	both_redirections(t_red_std *std, char **args)
+{
+	std->fd_to_read = open(args[std->last_left + 1], O_RDONLY, 0644);
+	if (std->which == 1)
+		std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+	else
+		std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
+	dup2(std->fd_to_read, 0);
+	dup2(std->fd_to_write, 1);
+}
+
+int	good_fd_for_redir(t_args *stack, t_red_std *std)
+{
+	if (std->both == 0)
+	{
+		if (std->which == 1)
+			std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+		else if (std->which == 3)
+			std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
+		if (std->which == 1 || std->which == 3)
+			dup2(std->fd_to_write, 1);
+		if (std->which == 2)
+		{
+			std->fd_to_read = open(stack->arg_to_pass[std->last_left + 1], O_RDONLY);
+			dup2(std->fd_to_read, 0);
+		}
+		// else if (std->which == 4)
+		// {
+		// 	line = readline("> ");
+		// 	while (ft_strcmp(line, stack->arg_to_pass[std->last_left + 1]) != 0)
+		// 	{
+		// 		write(pipefd[1], line, ft_strlen(line));
+		// 		write(pipefd[1], "\n", 1);
+		// 		line = readline("> ");
+		// 	}
+		// 	dup2(pipefd[0], STDIN_FILENO);
+		// 	close(pipefd[1]);
+		// }
+	}
+	else if (std->both == 1)
+		both_redirections(std, stack->arg_to_pass);
+	if (std->fd_to_write == -1 || std->fd_to_read == -1)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+void	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t_red_std *std)
+{
+	int		status;
+	pid_t	pid;
+
+	status = 0;
+	pid = fork();
+	if (pid == -1)
+	{
+		g_sig_error = 127;
+		perror("fork");
+		return ;
+	}
+	signal(SIGINT, handle_signal_child);
+	signal(SIGQUIT, handle_signal_child);
+	if (pid == 0)
+	{
+		good_fd_for_redir(stack, std);
+		if (is_built_in(stack->arg_to_pass[0]) == EXIT_SUCCESS)
+			built_in_to_create(ms, stack);
+		else
+			cmd_execve(ms, stack->arg_to_pass);
+		g_sig_error = 0;
+		exit (0);
+	}
+	else
+	{
+		ms->pid = pid;
+		wait(NULL);
+	}
+
 }
 
 void	there_is_pipe(t_struct *ms)
@@ -223,7 +280,8 @@ void	there_is_pipe(t_struct *ms)
 		if (pipe_the_good_one(pipex) == EXIT_FAILURE)
 			exit (127); // pas le bon chiffre
 		pipex->nbr_exec++;
-		fprintf(stderr, "[%s]\n", stack->redir[0]);
+		if (stack->redir[0] != NULL)
+			redirection(ms, stack);
 		if (init_fork(&pipex->pid) == -1)
 		{
 			perror("fork");
@@ -231,16 +289,14 @@ void	there_is_pipe(t_struct *ms)
 		}
 		if (pipex->pid == 0)
 		{
-			// if (stack->redir[0] != NULL)
-			// 	good_fd_for_redir(pipex, stack);
-			// else
-				close_fd_child_main(pipex);
+			close_fd_child_main(pipex);
+			if (stack->redir[0] != NULL)
+				exit (0);
 		}
 		else
 			close_fd_pipe_main(pipex);
-		if (pipex->pid == 0)
+		if (stack->redir[0] == NULL && pipex->pid == 0)
 		{
-
 			if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
 				exit (cmd_execve(ms, stack->arg_to_pass));
 			else
@@ -258,17 +314,3 @@ void	there_is_pipe(t_struct *ms)
 	}
 	free(pipex);
 }
-
-/*
-
-Commandes a tester =>
-
-ls -l | wc -cl
-ls | wc
-ls | sort
-cat /dev/urandom | head -c 1000 | wc -c
-cat a_trier | sort | uniq
-
-En trouver d'autres...
-
-*/

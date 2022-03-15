@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 16:10:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 09:38:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:00:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 	}
 	else
 	{
-		// g_sig_error = 0;
 		get_good_fd(args, ms->std.name_file, &(ms->std), pipefd);
 		if (execve(path, exec_args_only, env) == -1)
 		{
@@ -150,19 +149,11 @@ void	execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, c
 			close(pipefd[0]);
 			close(pipefd[1]);
 			close_all_fd(&(ms->std));
-			exit(0);
-			return ;
+			exit (127);
 		}
-		// >>>>>passe jamais la?
-		// g_sig_error = 0;
 		close(pipefd[0]);
 		close(pipefd[1]);
-		// close_all_fd(&(ms->std));
-		// exit(0);
 	}
-	// close(pipefd[0]);
-	// close(pipefd[1]);
 	close_all_fd(&(ms->std));
 	g_sig_error = 0;
-	// exit(0); // sig_error marche pas
 }
