@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:19:51 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 14:53:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/16 10:51:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_signal_child(int sig)
 		g_sig_error = 131;
 		write(1, "Quit (core dumped)\n", 19);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		// rl_redisplay();
 		// exit (0);
 	}
@@ -27,7 +27,7 @@ void	handle_signal_child(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		// rl_redisplay();
 		g_sig_error = 130;
 	}
@@ -38,7 +38,7 @@ void	handle_signal(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_error = 130;
 }

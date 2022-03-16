@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:54:17 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/13 02:54:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/16 15:28:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	check_file(char *arg, t_struct *minish)
 
 	i = 0;
 	while (arg[i] && arg[i] != ' ')
+		i++;
+	while (arg[i] && arg[i] == ' ')
 		i++;
 	fd = open(&arg[i], O_RDONLY);
 	if (fd == -1)

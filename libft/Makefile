@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/12 19:45:34 by ldermign          #+#    #+#              #
-#    Updated: 2022/01/22 00:06:36 by ldermign         ###   ########.fr        #
+#    Updated: 2022/03/16 10:58:58 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS	=	./srcs/libft/ft_alloc_strcat.c \
 			./srcs/libft/ft_isprint.c \
 			./srcs/libft/ft_itoa.c \
 			./srcs/libft/ft_len_int.c \
+			./srcs/libft/ft_len_tab.c \
 			./srcs/libft/ft_lstadd_back.c \
 			./srcs/libft/ft_lstadd_front.c \
 			./srcs/libft/ft_lstdel_all.c \

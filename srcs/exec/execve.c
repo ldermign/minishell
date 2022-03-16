@@ -6,13 +6,33 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/15 15:42:25 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/16 11:36:49 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_execve(t_struct *ms, char **cmd)
+static char	*working_path(char **paths, char *name_fct)
+{
+	int		i;
+	int		fd;
+	char	*good_path;
+
+	i = 0;
+	while (paths[i])
+	{
+		good_path = create_path(paths[i], name_fct);
+		fd = access(good_path, F_OK & X_OK);
+		if (fd == -1)
+			i++;
+		else
+			return (good_path);
+		free(good_path);
+	}
+	return (NULL);
+}
+
+int	execute_cmd_execve(t_struct *ms, char **cmd)
 {
 	char	*str_path;
 
@@ -29,7 +49,7 @@ int	cmd_execve(t_struct *ms, char **cmd)
 	return (0);
 }
 
-void	execute_cmd2(t_struct *ms, t_args *stack)
+void	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 {
 	int		status;
 	pid_t	pid;
@@ -50,6 +70,6 @@ void	execute_cmd2(t_struct *ms, t_args *stack)
 		waitpid(pid, &status, 0);
 	}
 	else
-		cmd_execve(ms, stack->arg_to_pass);
+		execute_cmd_execve(ms, stack->arg_to_pass);
 	g_sig_error = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/15 15:42:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:05:45 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 # define MINISHELL_FCTS_H
 
 /*
-**	START
-*/
-
-int			get_prompt(char *prompt, t_env *env);
-
-/*
 **	BUILT-IN SOLO
 */
 
-void		command(t_struct *ms);
+int			built_in(t_struct *ms, t_args *cmd);
+int	built_in_export(t_env_ms **env, char *prompt, char *alpha);
+
 int			recup_var_envs(char **env, t_env *cpy_env);
 int			built_in_cd(t_env *env, char *new_to_go);
 int			built_in_pwd(void);
@@ -31,7 +27,6 @@ void		built_in_exit(t_env *env, char **cmd, char *prompt);
 int			built_in_unset(t_env *env, char *var);
 int			built_in_env(t_env_ms *stack);
 int			built_in_echo(t_struct *ms);
-int			built_in_to_create(t_struct *ms, t_args *cmd);
 
 /*
 **	BUILT-IN PIPE
@@ -43,11 +38,7 @@ void		built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
 **	REDIRECTIONS
 */
 
-int	redirection(t_struct *ms, t_args *stack);
-void	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t_red_std *std);
-// int			get_redirections(t_struct *ms, char **args, int which);
-int			get_redirections(t_struct *ms, t_args *args, int which);
-int			get_good_fd(char **args, char *file, t_red_std *std, int *pipefd);
+int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex);
 int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 
 /*
@@ -60,8 +51,8 @@ void		there_is_pipe(t_struct *ms);
 **	EXECVE
 */
 
-int	cmd_execve(t_struct *ms, char **cmd);
-void	execute_cmd2(t_struct *ms, t_args *stack);
+int	execute_cmd_execve(t_struct *ms, char **cmd);
+void	execute_cmd_with_fork(t_struct *ms, t_args *stack);
 
 /*
 **	UTILS REDIRECTIONS
@@ -89,8 +80,6 @@ int			light_parse_export(char *prompt);
 int			light_parse_echo(char *str);
 char		*create_path(char *path, char *cmd);
 char		*get_good_variable(char *prompt, int size, int add, int pos);
-char		*working_path(char **paths, char *name_fct);
-void		execute_cmd(t_struct *ms, char *path, char **args, char **exec_args_only, char **env);
 int			is_built_in(char *str);
 
 /*
@@ -118,7 +107,6 @@ char		*get_variable_with_pos(t_env_ms **minishell, int pos);
 void		init_struct_std(char **args, t_red_std *std, int which);
 // void	reboot_struct_std(t_red_std *std);
 void		init_struct_it(t_it *it);
-void		close_all_fd(t_red_std *std);
 void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
 
 /*

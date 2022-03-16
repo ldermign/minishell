@@ -6,160 +6,14 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/15 15:43:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/16 11:34:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*working_path(char **paths, char *name_fct)
+int	built_in(t_struct *ms, t_args *cmd)
 {
-	int		i;
-	int		fd;
-	char	*good_path;
-
-	i = 0;
-	while (paths[i])
-	{
-		good_path = create_path(paths[i], name_fct);
-		fd = access(good_path, F_OK & X_OK);
-		if (fd == -1)
-			i++;
-		else
-			return (good_path);
-		free(good_path);
-	}
-	return (NULL);
-}
-
-// 50 lignes
-
-char	**copy_env_in_tab_char(t_env_ms **ms)
-{
-	t_it		it;
-	t_env_ms	*first;
-	char		**copy;
-
-	init_struct_it(&it);
-	first = *ms;
-	copy = malloc(sizeof(char *) * size_env(ms) + 1);
-	if (copy == NULL)
-		return (NULL);
-	while (*ms)
-	{
-		it.j = 0;
-		it.k = 0;
-		it.ret = 0;
-		if (ft_pos_strstr((*ms)->var, "=") == -1)
-		{
-			copy[it.i] = malloc(sizeof(char) * ft_strlen((*ms)->var) + 1);
-			while ((*ms)->var[it.j])
-			{
-				copy[it.i][it.k] = (*ms)->var[it.j];
-				it.j++;
-				it.k++;
-			}
-		}
-		else
-		{
-			copy[it.i] = malloc(sizeof(char) * ft_strlen((*ms)->var) + 3);
-			while ((*ms)->var[it.j])
-			{
-				if (it.ret == 0
-					&& (*ms)->var[it.j - 1] && (*ms)->var[it.j - 1] == '=')
-				{
-					copy[it.i][it.k] = '"';
-					it.k++;
-					it.ret = 1;
-				}
-				copy[it.i][it.k] = (*ms)->var[it.j];
-				it.j++;
-				it.k++;
-			}
-			copy[it.i][it.k] = '"';
-			it.k++;
-		}
-		copy[it.i][it.k] = '\0';
-		it.i++;
-		*ms = (*ms)->next;
-	}
-	copy[it.i] = NULL;
-	*ms = first;
-	return (copy);
-}
-
-// 30 lignes
-
-void	print_in_alphabetical_order(t_struct *ms, t_env_ms **env)
-{
-	int			i;
-	int			len;
-	char		*swap;
-	char		**copy;
-
-	i = 0;
-	len = size_env(env);
-	swap = NULL;
-	copy = copy_env_in_tab_char(env);
-	while (i < len - 1)
-	{
-		if ((ft_strcmp(copy[i], copy[i + 1])) > 0)
-		{
-			swap = copy[i];
-			copy[i] = copy[i + 1];
-			copy[i + 1] = swap;
-			i = 0;
-		}
-		else
-			i++;
-	}
-	i = 0;
-	while (i < len)
-	{
-		write(ms->std.fd_to_write, "export ", 8); ///pas forcement ici, dans fichier aussi
-		ft_putstr_fd(copy[i], ms->std.fd_to_write); ///pas forcement ici, dans fichier aussi
-		write(ms->std.fd_to_write, "\n", 1); ///pas forcement ici, dans fichier aussi
-		i++;
-	}
-	ft_free_tab(copy);
-}
-
-// 29 lignes
-
-int	built_in_export(t_struct *ms, t_env *env, char *prompt, char *alpha)
-{
-	t_it	it;
-	char	*str;
-
-	init_struct_it(&it);
-	if (alpha == NULL)
-	{
-		print_in_alphabetical_order(ms, &(env->env_ms));
-		return (EXIT_SUCCESS);
-	}
-	it.i = 6;
-	it.add = light_parse_export(&prompt[it.i]);
-	if (it.add == -1)
-		return (EXIT_FAILURE);
-	while (prompt[it.i] == ' ')
-		it.i++;
-	it.pos = check_if_variable_already_exist(&(env->env_ms), &prompt[it.i]);
-	it.len = size_variable(&prompt[it.i], it.add, it.pos);
-	if (it.add == 1 && it.pos != -1)
-		str = ft_strjoin(get_variable_with_pos(&(env->env_ms), it.pos),
-				get_good_variable(&prompt[it.i], it.len, it.add, it.pos));
-	else
-		str = get_good_variable(&prompt[it.i], it.len, it.add, it.pos);
-	if (it.pos == -1)
-		add_var_env_minishell(&(env->env_ms), str);
-	else
-		change_var_env_minishell(&(env->env_ms), str, it.pos);
-	return (EXIT_SUCCESS);
-}
-
-int	built_in_to_create(t_struct *ms, t_args *cmd)
-{
-	// fprintf(stderr, "cmd = %s\n", cmd->arg_to_pass[0]);
 	if (ft_memcmp(cmd->arg_to_pass[0], "cd", 3) == 0)
 		return (built_in_cd(&(ms->env), cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "pwd", 4) == 0)
@@ -167,7 +21,7 @@ int	built_in_to_create(t_struct *ms, t_args *cmd)
 	else if (ft_memcmp(cmd->arg_to_pass[0], "env", 4) == 0)
 		return (built_in_env(ms->env.env_ms));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "export", 7) == 0)
-		return (built_in_export(ms, &(ms->env), cmd->command, cmd->arg_to_pass[1]));
+		return (built_in_export(&(ms->env.env_ms), cmd->command, cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "unset", 6) == 0)
 		return (built_in_unset(&(ms->env), cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "echo", 5) == 0)
@@ -179,24 +33,3 @@ int	built_in_to_create(t_struct *ms, t_args *cmd)
 		built_in_exit(&(ms->env), cmd->arg_to_pass, cmd->command);
 	return (-1);
 }
-
-void	command(t_struct *ms)
-{
-	int		i;
-	int		last;
-	t_args	*all_cmds;
-
-	i = 0;
-	all_cmds = ms->args->first;
-	last = last_redir(all_cmds->redir);
-	init_struct_std(all_cmds->redir, &(*ms).std, last);
-	if (ms->parsing.nb_pipe > 0)
-		there_is_pipe(ms);
-	else if (last == -1 && built_in_to_create(ms, all_cmds) == -1)
-		execute_cmd2(ms, all_cmds);
-	else
-		redirection(ms, all_cmds);
-		// get_redirections(ms, all_cmds, last);
-	// free_all_cmds_pompt(all_cmds);
-}
-    

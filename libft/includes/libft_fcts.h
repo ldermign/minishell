@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 16:26:06 by ldermign          #+#    #+#             */
-/*   Updated: 2022/01/22 00:06:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/16 10:58:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int					ft_isdigit(int c);
 int					ft_isprint(int c);
 char				*ft_itoa(int n);
 int					ft_len_int(int nbr);
+int					ft_len_tab(char **tabl);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_front(t_list **alst, t_list *new);
 void				ft_lstdel_all(t_list *alst);
