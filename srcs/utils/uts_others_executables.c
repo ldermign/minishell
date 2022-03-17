@@ -6,17 +6,14 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 09:50:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:35:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell"
+#include "minishell.h"
 
 int	is_new_executable(char *str)
 {
-	int	i;
-
-	i = 0;
 	if (str[0] && str[0] == '.')
 	{
 		if (str[1] && str[1] == '/')
@@ -34,7 +31,7 @@ char	*new_path(char *to_copy)
 
 	i = 0;
 	while (to_copy[i] && to_copy[i] == ' ')
-		i++
+		i++;
 	j = i;
 	len = 0;
 	while (to_copy[i] && to_copy[i] != ' ')
@@ -46,12 +43,17 @@ char	*new_path(char *to_copy)
 	if (new == NULL)
 		return (NULL);
 	i = 0;
-	while (str[j])
+	while (to_copy[j])
 	{
-		new[i] = str[j];
+		new[i] = to_copy[j];
 		i++;
 		j++;
 	}
 	new[i] = '\0';
 	return (new);
+}
+
+char	**new_args(char *cmd)
+{
+	(void)cmd;
 }

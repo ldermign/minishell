@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 09:45:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:33:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 	int		status;
 	pid_t	pid;
 	char	*path;
+	char	**args;
 
 	status = 0;
 	pid = fork();
 	path = NULL;
+	args = NULL;
 	if (pid == -1)
 	{
 		g_sig_error = 127;
@@ -39,7 +41,8 @@ void	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 	else
 	{
 		path = new_path(cmd->command);
-		if (execve("./minishell", cmd->arg_to_pass, NULL) == -1)
+		args = new_args();
+		if (execve(path, cmd->arg_to_pass, NULL) == -1)
 		{
 			free(path);
 			printf("minishell: %s: command not found\n", cmd->arg_to_pass[0]);
@@ -97,8 +100,8 @@ void	loop(t_struct *minish)
 		parsing(&line[i], minish);
 	if (line[i] && minish->parsing.error == 0)
 	{
-		int merde = getpid();
-		printf("%d = [%s], [%s]\n", merde, line, minish->args->first->command);
+		// int merde = getpid();
+		// printf(GREY"%d\n"NORMAL, merde);
 		command(minish);
 		free_list(minish->args);
 	}
@@ -110,8 +113,15 @@ int	main(int ac, char **av, char **env)
 	t_struct	structure;
 
 	(void)av;
+	int	i = 0;
 	if (ac != 1)
 	{
+		printf("There is %d arguments...\n", ac);
+		while (av[i])
+		{
+			printf("[%s]\n", av[i]);
+			i++;
+		}
 		printf("Error, too many arguments.\n");
 		return (0);
 	}
