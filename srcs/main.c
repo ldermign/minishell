@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 16:13:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:45:45 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,39 @@ void	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 {(void)env_bash;
 	int		status;
 	pid_t	pid;
-	
-	if (cmd->command[0] == '.' && cmd->command[1] && cmd->command[1] == '/')
+	char	*path;
+
+	status = 0;
+	pid = fork();
+	path = NULL;
+	if (pid == -1)
 	{
-		status = 0;
-		pid = fork();
-		if (pid == -1)
-		{
-			g_sig_error = 127;
-			perror("fork");
-			return ;
-		}
-		signal(SIGINT, handle_signal_child);
-		signal(SIGQUIT, handle_signal_child);
-		if (pid > 0)
-		{
-			ms->pid = pid;
-			waitpid(pid, &status, 0);
-		}
-		else
-		{
-			if (execve(cmd->command, cmd->arg_to_pass, NULL) == -1)
-			{
-				printf("minishell: %s: command not found\n", cmd->arg_to_pass[0]);
-				g_sig_error = 127;
-				// creer fonction qui close all
-				// freeetoutbalalandls
-				exit (127); // revoir l'exit
-			}
-		}
-		g_sig_error = 0;
+		g_sig_error = 127;
+		perror("fork");
+		return ;
 	}
+	signal(SIGINT, handle_signal_child);
+	signal(SIGQUIT, handle_signal_child);
+	if (pid > 0)
+	{
+		ms->pid = pid;
+		waitpid(pid, &status, 0);
+	}
+	else
+	{
+		path = new_path(cmd->command);
+		if (execve("./minishell", cmd->arg_to_pass, NULL) == -1)
+		{
+			free(path);
+			printf("minishell: %s: command not found\n", cmd->arg_to_pass[0]);
+			g_sig_error = 127;
+			// creer fonction qui close all
+			// freeetoutbalalandls
+			exit (127); // revoir l'exit
+		}
+		free(path);
+	}
+	g_sig_error = 0;
 }
 
 void	command(t_struct *ms)
@@ -63,9 +65,10 @@ void	command(t_struct *ms)
 	init_struct_std(all_cmds->redir, &(*ms).std, last);
 	if (ms->parsing.nb_pipe > 0)
 		there_is_pipe(ms);
-	else if (last == -1 && built_in(ms, all_cmds) == -1)
+	else if (last == -1 && is_new_executable(all_cmds->command) == EXIT_FAILURE
+		&& built_in(ms, all_cmds) == -1)
 		execute_cmd_with_fork(ms, all_cmds);
-	else if (last != -1)
+	else if (last != -1 && is_new_executable(all_cmds->command) == EXIT_FAILURE)
 		redirection(ms, all_cmds, NULL);
 	else
 		other_executable(ms, all_cmds, ms->env.env_bash);
@@ -94,6 +97,8 @@ void	loop(t_struct *minish)
 		parsing(&line[i], minish);
 	if (line[i] && minish->parsing.error == 0)
 	{
+		int merde = getpid();
+		printf("%d = [%s], [%s]\n", merde, line, minish->args->first->command);
 		command(minish);
 		free_list(minish->args);
 	}

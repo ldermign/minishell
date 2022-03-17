@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/15 11:44:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:42:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_environnement
 	char		**env_bash;	// env de bash
 	char		**path;		// variable d'environnement PATH de bash
 	char		*abs;		// chemin absolu du minishell
-	// char		*rel;		// chemin relatif du minishell -> utile ?
 	t_env_ms	*env_ms;
 }	t_env;
 

@@ -6,11 +6,40 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 11:36:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:30:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*create_path(char *path, char *cmd)
+{
+	size_t	i;
+	int		j;
+	char	*dst;
+
+	if (path == NULL || cmd == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	dst = malloc(sizeof(char) * ft_strlen(path) + ft_strlen(cmd) + 2);
+	if (dst == NULL)
+		return (NULL);
+	while (i < ft_strlen(path))
+	{
+		dst[i] = path[i];
+		i++;
+	}
+	dst[i++] = '/';
+	while (i < ft_strlen(path) + ft_strlen(cmd) + 1)
+	{
+		dst[i] = cmd[j];
+		i++;
+		j++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
 
 static char	*working_path(char **paths, char *name_fct)
 {

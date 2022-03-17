@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 14:24:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:19:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,35 +119,6 @@ int	light_parse_echo(char *str)
 		}
 	}
 	return (-1);
-}
-
-char	*create_path(char *path, char *cmd)
-{
-	size_t	i;
-	int		j;
-	char	*dst;
-
-	if (path == NULL || cmd == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	dst = malloc(sizeof(char) * ft_strlen(path) + ft_strlen(cmd) + 2);
-	if (dst == NULL)
-		return (NULL);
-	while (i < ft_strlen(path))
-	{
-		dst[i] = path[i];
-		i++;
-	}
-	dst[i++] = '/';
-	while (i < ft_strlen(path) + ft_strlen(cmd) + 1)
-	{
-		dst[i] = cmd[j];
-		i++;
-		j++;
-	}
-	dst[i] = '\0';
-	return (dst);
 }
 
 char	*get_good_variable(char *prompt, int size, int add, int pos)

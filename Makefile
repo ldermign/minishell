@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/16 11:40:34 by ldermign         ###   ########.fr        #
+#    Updated: 2022/03/17 09:46:18 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/exec/execve.c ./srcs/exec/built_in_export.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \
 			./srcs/utils/uts_list_var_env_ms.c ./srcs/utils/uts_redir.c \
-			./srcs/utils/free.c \
+			./srcs/utils/free.c ./srcs/utils/uts_others_executables.c \
 			./srcs/exec/new_fd_before_execve.c \
 			./srcs/utils/uts_redir_2.c \
 			./srcs/init/init_struct.c \

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 13:05:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:47:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char		**get_cmd_and_args_split(char *str);
 int			size_variable(char *prompt, int add, int pos);
 int			light_parse_export(char *prompt);
 int			light_parse_echo(char *str);
-char		*create_path(char *path, char *cmd);
 char		*get_good_variable(char *prompt, int size, int add, int pos);
 int			is_built_in(char *str);
 
@@ -95,6 +94,13 @@ int			check_if_variable_already_exist(t_env_ms **minishell, char *str);
 char		*get_variable(t_env_ms **minishell, char *str);
 int			size_env(t_env_ms **minishell);
 char		*get_variable_with_pos(t_env_ms **minishell, int pos);
+
+/*
+**	UTILS OTHERS EXECUTABLES
+*/
+
+int	is_new_executable(char *str);
+char	*new_path(char *to_copy);
 
 /*
 **  UTILS PIPE

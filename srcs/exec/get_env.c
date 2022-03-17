@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/02/04 08:29:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:42:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	recup_var_envs(char **env, t_env *cpy_env)
 	cpy_env->env_bash = NULL;
 	cpy_env->path = NULL;
 	cpy_env->abs = NULL;
-	// cpy_env->rel = NULL;
 	cpy_env->env_ms = NULL;
 	get_all_env(env, cpy_env);
 	cpy_env->path = ft_split(get_pwd_and_path(env, "PATH="), ':');
