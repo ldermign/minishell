@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 11:26:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:04:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 */
 
 int			built_in(t_struct *ms, t_args *cmd);
-int	built_in_export(t_env_ms **env, char *prompt, char *alpha);
-
+int	built_in_export(t_args *cmd, t_env_ms **env);
 int			recup_var_envs(char **env, t_env *cpy_env);
 int			built_in_cd(t_env *env, char *new_to_go);
 int			built_in_pwd(void);

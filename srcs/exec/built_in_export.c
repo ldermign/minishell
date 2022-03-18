@@ -6,46 +6,13 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 11:32:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:08:45 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	copy_lines(char **new, char *to_copy, t_it *it)
-{
-	if (ft_pos_strstr(to_copy, "=") == -1)
-	{
-		new[it->i] = malloc(sizeof(char) * ft_strlen(to_copy) + 3);
-		while (to_copy[it->j])
-		{
-			if (it->ret == 0
-				&& to_copy[it->j - 1] && to_copy[it->j - 1] == '=')
-			{
-				new[it->i][it->k] = '"';
-				it->k++;
-				it->ret = 1;
-			}
-			new[it->i][it->k] = to_copy[it->j];
-			it->j++;
-			it->k++;
-		}
-		new[it->i][it->k] = '"';
-		it->k++;
-	}
-	else
-	{
-		new[it->i] = malloc(sizeof(char) * ft_strlen(to_copy) + 1);
-		while (to_copy[it->j])
-		{
-			new[it->i][it->k] = to_copy[it->j];
-			it->j++;
-			it->k++;
-		}
-	}
-}
-
-static char	**copy_env_in_tab_char(t_env_ms **ms)
+char	**copy_env_in_tab_char(t_env_ms **ms)
 {
 	t_it		it;
 	t_env_ms	*first;
@@ -61,7 +28,42 @@ static char	**copy_env_in_tab_char(t_env_ms **ms)
 		it.j = 0;
 		it.k = 0;
 		it.ret = 0;
-		copy_lines(copy, (*ms)->var, &it);
+		if (ft_pos_strstr((*ms)->var, "=") == -1)
+		{
+			copy[it.i] = malloc(sizeof(char) * ft_strlen((*ms)->var) + 1);
+			while ((*ms)->var[it.j])
+			{
+				copy[it.i][it.k] = (*ms)->var[it.j];
+				it.j++;
+				it.k++;
+			}
+		}
+		else
+		{
+			copy[it.i] = malloc(sizeof(char) * ft_strlen((*ms)->var) + 3);
+			if (copy[it.i] == NULL)
+				return (NULL);
+			while ((*ms)->var[it.j])
+			{
+				if (it.ret == 0
+					&& (*ms)->var[it.j - 1] && (*ms)->var[it.j - 1] == '=')
+				{
+					copy[it.i][it.k] = '"';
+					it.k++;
+					it.ret = 1;
+				}
+				copy[it.i][it.k] = (*ms)->var[it.j];
+				it.j++;
+				it.k++;
+			}
+			if (it.ret == 0)
+			{
+				copy[it.i][it.k] = '"';
+				it.k++;
+			}
+			copy[it.i][it.k] = '"';
+			it.k++;
+		}
 		copy[it.i][it.k] = '\0';
 		it.i++;
 		*ms = (*ms)->next;
@@ -109,30 +111,32 @@ static int	print_in_alphabetical_order(t_env_ms **env)
 	return (EXIT_SUCCESS);
 }
 
-int	built_in_export(t_env_ms **env, char *prompt, char *alpha)
+int	built_in_export(t_args *cmd, t_env_ms **env)
 {
 	t_it	it;
 	char	*str;
 
 	init_struct_it(&it);
-	if (alpha == NULL)
+	if (cmd->arg_to_pass[1] == NULL)
 		return (print_in_alphabetical_order(env));
-	it.i = 6;
-	it.add = light_parse_export(&prompt[it.i]);
-	if (it.add == -1)
-		return (EXIT_FAILURE);
-	while (prompt[it.i] == ' ')
+	it.i = 1;
+	while (cmd->arg_to_pass[it.i])
+	{
+		it.add = light_parse_export(cmd->arg_to_pass[it.i]);
+		if (it.add == -1)
+			return (EXIT_FAILURE);
+		it.pos = check_if_variable_already_exist(env, cmd->arg_to_pass[it.i]);
+		it.len = size_variable(cmd->arg_to_pass[it.i], it.add, it.pos);
+		if (it.add == 1 && it.pos != -1)
+			str = ft_strjoin(get_variable_with_pos(env, it.pos),
+					get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos));
+		else
+			str = get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos);
+		if (it.pos == -1)
+			add_var_env_minishell(env, str);
+		else
+			change_var_env_minishell(env, str, it.pos);
 		it.i++;
-	it.pos = check_if_variable_already_exist(env, &prompt[it.i]);
-	it.len = size_variable(&prompt[it.i], it.add, it.pos);
-	if (it.add == 1 && it.pos != -1)
-		str = ft_strjoin(get_variable_with_pos(env, it.pos),
-				get_good_variable(&prompt[it.i], it.len, it.add, it.pos));
-	else
-		str = get_good_variable(&prompt[it.i], it.len, it.add, it.pos);
-	if (it.pos == -1)
-		add_var_env_minishell(env, str);
-	else
-		change_var_env_minishell(env, str, it.pos);
+	}
 	return (EXIT_SUCCESS);
 }

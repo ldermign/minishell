@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 10:59:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:04:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	built_in(t_struct *ms, t_args *cmd)
 	else if (ft_memcmp(cmd->arg_to_pass[0], "env", 4) == 0)
 		return (built_in_env(ms->env.env_ms));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "export", 7) == 0)
-		return (built_in_export(&(ms->env.env_ms), cmd->command, cmd->arg_to_pass[1]));
+	{
+		print_stack_cmd(cmd);
+		return (built_in_export(cmd, &(ms->env.env_ms)));
+	}
 	else if (ft_memcmp(cmd->arg_to_pass[0], "unset", 6) == 0)
 		return (built_in_unset(&(ms->env), cmd->arg_to_pass[1]));
 	else if (ft_memcmp(cmd->arg_to_pass[0], "echo", 5) == 0)

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 14:03:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:49:10 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,26 @@ int	built_in_pwd(void)
 	return (1);
 }
 
-int	echo_sig_error(char *str)
-{
-	int	i;
+// int	echo_sig_error(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	i += 4;
-	while (str[i] && str[i] == ' ')
-		i++;
-	if (str[i] == '$')
-		i++;
-	if (str[i] == '?')
-		i++;
-	while (str[i] && str[i] == ' ')
-		i++;
-	if (str[i] == '\0')
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
-}
+// 	i = 0;
+// 	while (str[i] && str[i] == ' ')
+// 		i++;
+// 	i += 4;
+// 	while (str[i] && str[i] == ' ')
+// 		i++;
+// 	if (str[i] == '$')
+// 		i++;
+// 	if (str[i] == '?')
+// 		i++;
+// 	while (str[i] && str[i] == ' ')
+// 		i++;
+// 	if (str[i] == '\0')
+// 		return (EXIT_SUCCESS);
+// 	return (EXIT_FAILURE);
+// }
 
 int	built_in_echo(t_struct *ms)
 {
@@ -86,17 +86,17 @@ int	built_in_echo(t_struct *ms)
 
 	sig = 0;
 	len = ft_strlen(ms->parsing.result);
-	if (echo_sig_error(ms->args->first->command) == EXIT_FAILURE)
-	{
-		// fprintf(stderr, "test\n");
-		sig = ft_itoa(sig_error(NULL, -1));
-		free(sig);
-	}
-	else
-	{
-		// fprintf(stderr, "test\n");
-		write(1, ms->parsing.result, len);
-	}
+	// if (echo_sig_error(ms->args->first->command) == EXIT_FAILURE)
+	// {
+	// 	// fprintf(stderr, "test\n");
+	// 	sig = ft_itoa(sig_error(NULL, -1));
+	// 	free(sig);
+	// }
+	// else
+	// {
+	// 	// fprintf(stderr, "test\n");
+	write(1, ms->parsing.result, len);
+	// }
 	if (ms->parsing.option != 1)
 		write(1, "\n", 1);
 	free(ms->parsing.result);

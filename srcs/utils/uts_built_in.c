@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 09:19:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:06:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	light_parse_export(char *prompt)
 		i++;
 	if (ft_is_digit(prompt[i]))
 	{
+		printf("1\n");
 		printf("minishell: export: '%s': not a valid identifier\n", prompt);
 		return (-1);
 	}
@@ -81,6 +82,7 @@ int	light_parse_export(char *prompt)
 	}
 	if (prompt[i] != '=' && prompt[i] != '\0')
 	{
+		printf("2\n");
 		printf("minishell: export: '%s': not a valid identifier\n", prompt);
 		return (-1);
 	}
