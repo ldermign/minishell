@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 13:45:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:03:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int	built_in_echo(t_struct *ms)
 	len = ft_strlen(ms->parsing.result);
 	if (echo_sig_error(ms->args->first->command) == EXIT_FAILURE)
 	{
-		fprintf(stderr, "test\n");
+		// fprintf(stderr, "test\n");
 		sig = ft_itoa(sig_error(NULL, -1));
 		free(sig);
 	}
 	else
 	{
-		fprintf(stderr, "test\n");
+		// fprintf(stderr, "test\n");
 		write(1, ms->parsing.result, len);
 	}
 	if (ms->parsing.option != 1)
