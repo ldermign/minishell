@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 16:00:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:28:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,7 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 	status = 0;
 	pid = fork();
 	if (pid == -1)
-	{
-		g_sig_error = 127;
-		perror("fork");
-		return (EXIT_FAILURE);
-	}
+		return (sig_error("fork", 127));
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
 	if (pid == 0)
@@ -143,15 +139,14 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 			built_in(ms, stack);
 		else
 			execute_cmd_execve(ms, stack->arg_to_pass);
-		g_sig_error = 0;
-		exit (0);
+		exit (sig_error(NULL, 0));
 	}
 	else
 	{
 		ms->pid = pid;
 		wait(NULL);
 	}
-	return (EXIT_SUCCESS);
+	return (sig_error(NULL, 0));
 }
 
 int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)

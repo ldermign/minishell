@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 15:05:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:27:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	init_fork(int *pid)
 	*pid = fork();
 	if (*pid == -1)
 	{
-		g_sig_error = 127;
-		perror("fork");
+		sig_error("fork", 127);
 		return (-1);
 	}
 	return (1);

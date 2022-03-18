@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 15:38:58 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 13:45:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	built_in_cd(t_env *env, char *new_to_go)
 		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
 	path_to_go = ft_alloc_strcat("./", new_to_go);
 	if (chdir(path_to_go) == -1)
-	{
-		g_sig_error = errno;
-		perror("cd");
-	}
+		sig_error("cd", errno);
 	free(path_to_go);
 	path_to_go = ft_alloc_strcat("PWD=", getcwd(act_path, sizeof(act_path)));
 	env->abs = act_path;
@@ -57,23 +54,52 @@ int	built_in_pwd(void)
 	if (getcwd(actual_path, sizeof(actual_path)) != NULL)
 		printf("%s\n", actual_path);
 	else
-	{
-		g_sig_error = errno;
-		perror("getcwd");
-	}
+		sig_error("getcwd", errno);
 	return (1);
+}
+
+int	echo_sig_error(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	i += 4;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '$')
+		i++;
+	if (str[i] == '?')
+		i++;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '\0')
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 int	built_in_echo(t_struct *ms)
 {
+	char	*sig;
 	int		len;
 
+	sig = 0;
 	len = ft_strlen(ms->parsing.result);
-	write(1, ms->parsing.result, len);
-	//gerer cas ou $$ chaipukoi
+	if (echo_sig_error(ms->args->first->command) == EXIT_FAILURE)
+	{
+		fprintf(stderr, "test\n");
+		sig = ft_itoa(sig_error(NULL, -1));
+		free(sig);
+	}
+	else
+	{
+		fprintf(stderr, "test\n");
+		write(1, ms->parsing.result, len);
+	}
 	if (ms->parsing.option != 1)
 		write(1, "\n", 1);
 	free(ms->parsing.result);
-	g_sig_error = 0;
+	sig_error(NULL, 0);
 	return (EXIT_SUCCESS);
 }

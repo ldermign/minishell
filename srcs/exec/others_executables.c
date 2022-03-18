@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uts_others_executables.c                           :+:      :+:    :+:   */
+/*   others_executables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 15:35:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 12:52:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,33 @@ int	is_new_executable(char *str)
 	return (EXIT_FAILURE);
 }
 
-char	*new_path(char *to_copy)
+int	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*new;
+	int		status;
+	pid_t	pid;
 
-	i = 0;
-	while (to_copy[i] && to_copy[i] == ' ')
-		i++;
-	j = i;
-	len = 0;
-	while (to_copy[i] && to_copy[i] != ' ')
+	status = 0;
+	pid = fork();
+	if (pid == -1)
 	{
-		i++;
-		len++;
+		//	free
+		return (sig_error("fork", 127));
 	}
-	new = malloc(sizeof(char) * (len + 1));
-	if (new == NULL)
-		return (NULL);
-	i = 0;
-	while (to_copy[j])
+	signal(SIGINT, handle_signal_child);
+	signal(SIGQUIT, handle_signal_child);
+	if (pid > 0)
 	{
-		new[i] = to_copy[j];
-		i++;
-		j++;
+		ms->pid = pid;
+		waitpid(pid, &status, 0);
 	}
-	new[i] = '\0';
-	return (new);
-}
-
-char	**new_args(char *cmd)
-{
-	(void)cmd;
+	else
+	{
+		if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, env_bash) == -1)
+		{
+			printf("minishell: %s: command not found\n", cmd->arg_to_pass[0]);
+			//	free
+			exit (sig_error(NULL, 127));
+		}
+	}
+	return (sig_error(NULL, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 09:47:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:26:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ void		there_is_pipe(t_struct *ms);
 */
 
 int	execute_cmd_execve(t_struct *ms, char **cmd);
-void	execute_cmd_with_fork(t_struct *ms, t_args *stack);
+int	execute_cmd_with_fork(t_struct *ms, t_args *stack);
+
+/*
+**	SIG ERROR
+*/
+
+int	sig_error(char *str, int nbr);
 
 /*
 **	UTILS REDIRECTIONS
@@ -96,11 +102,11 @@ int			size_env(t_env_ms **minishell);
 char		*get_variable_with_pos(t_env_ms **minishell, int pos);
 
 /*
-**	UTILS OTHERS EXECUTABLES
+**	OTHERS EXECUTABLES
 */
 
+int	other_executable(t_struct *ms, t_args *cmd, char **env_bash);
 int	is_new_executable(char *str);
-char	*new_path(char *to_copy);
 
 /*
 **  UTILS PIPE
