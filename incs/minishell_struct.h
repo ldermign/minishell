@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 14:30:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:21:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ typedef struct s_iterator
 	int	ret;
 	int	len;
 	int	bin;
-	int	equal_new_var;
-	int	equal_old_var;
+	int	equal;
 }	t_it;
 
 typedef struct s_pipe

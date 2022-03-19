@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 14:11:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:18:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,19 @@ void	built_in_exit(t_env *env, char **cmd, char *prompt)
 	exit (0);
 }
 
-int	built_in_unset(t_env *env, char *var)
+int	built_in_unset(t_env *env, t_args *cmd)
 {
 	int	i;
 	int	ret;
 
-	i = 0;
-	ret = check_if_variable_already_exist(env->env_ms, var);
-	if (ret != -1)
-		supp_var_env_ms(&(env->env_ms), ret);
+	i = 1;
+	while (cmd->arg_to_pass[i])
+	{
+		ret = check_if_variable_already_exist(env->env_ms, cmd->arg_to_pass[i]);
+		if (ret != -1)
+			supp_var_env_ms(&(env->env_ms), ret);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }
 

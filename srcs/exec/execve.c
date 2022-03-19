@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 13:02:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:23:32 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,12 @@ int	execute_cmd_execve(t_struct *ms, char **cmd)
 	str_path = working_path(ms->env.path, cmd[0]);
 	if (execve(str_path, cmd, ms->env.env_bash) == -1)
 	{
-		// fprintf(stderr, "ici\n");
 		printf("minishell: %s: command not found\n", cmd[0]);
 		//	free
 		return (sig_error(NULL, 127));
 	}
 	else
-	{
-		// fprintf(stderr, "ici\n");
 		sig_error(NULL, 0);
-	}
 	return (0);
 }
 

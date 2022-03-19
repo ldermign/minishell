@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 14:26:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:10:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	change_var_env_minishell(t_env_ms *minishell, char *str, int pos)
 
 int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
 {
-	int			i;
-	int			ret;
+	int	i;
+	int	ret;
 
 	i = 0;
 	ret = 0;
@@ -122,10 +122,10 @@ int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
 				return (ret);
 			i++;
 		}
-		if (str[i] == '\0' && str[i - 1] != '=')
-			return (-2);
-		if (str[i] == '\0' || (str[i + 1] && str[i] == '+'
-				&& str[i + 1] == '=' && minishell->var[i] == '='))
+		if ((str[i] == '\0' && minishell->var[i] == '\0')
+			|| (str[i] == '=' && minishell->var[i] == '\0')
+			|| (str[i] == '\0' && minishell->var[i] == '=')
+			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '='))
 			return (ret);
 		ret++;
 		i = 0;

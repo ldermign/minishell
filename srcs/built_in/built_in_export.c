@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 14:33:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:20:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,8 @@ int	built_in_export(t_args *cmd, t_env_ms **env)
 		it.bin = light_parse_export(cmd->arg_to_pass[it.i]);
 		if (it.bin != -1)
 		{
-			it.equal_new_var = equal_in_var(cmd->arg_to_pass[it.i]);
+			it.equal = equal_in_var(cmd->arg_to_pass[it.i]);
 			it.pos = check_if_variable_already_exist(*env, cmd->arg_to_pass[it.i]);
-			if (it.pos != -1)
-				it.equal_old_var = equal_in_var(get_variable_with_pos(*env, it.pos));
-			printf("it.equal_new_var = %d, it.equal_old_var = %d\n", it.equal_new_var, it.equal_old_var);
 			it.len = size_variable(cmd->arg_to_pass[it.i], it.bin, it.pos);
 			if (it.bin == 1 && it.pos != -1)
 				str = ft_strjoin(get_variable_with_pos(*env, it.pos),
@@ -152,7 +149,7 @@ int	built_in_export(t_args *cmd, t_env_ms **env)
 				str = get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos);
 			if (it.pos == -1)
 				add_var_env_minishell(env, str);
-			else if (it.pos != -1 && it.pos != -2)
+			else if (it.pos != -1 && it.equal != -1)
 				change_var_env_minishell(*env, str, it.pos);
 		}
 		it.i++;
