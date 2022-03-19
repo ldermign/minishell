@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 11:23:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:11:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	built_in_unset(t_env *env, char *var)
 	int	ret;
 
 	i = 0;
-	ret = check_if_variable_already_exist(&(env->env_ms), var);
+	ret = check_if_variable_already_exist(env->env_ms, var);
 	if (ret != -1)
 		supp_var_env_ms(&(env->env_ms), ret);
 	return (EXIT_SUCCESS);

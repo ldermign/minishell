@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 16:04:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:26:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ void		free_lst(t_env_ms *stack);
 void		add_var_env_minishell(t_env_ms **stack, char *str_var);
 int			search_for_var_in_env(t_env_ms **stack, char *var);
 void		supp_var_env_ms(t_env_ms **stack, int pos);
-void		change_var_env_minishell(t_env_ms **minishell, char *str, int pos);
-int			check_if_variable_already_exist(t_env_ms **minishell, char *str);
-char		*get_variable(t_env_ms **minishell, char *str);
+void		change_var_env_minishell(t_env_ms *minishell, char *str, int pos);
+int			check_if_variable_already_exist(t_env_ms *minishell, char *str);
+char		*get_variable(t_env_ms *minishell, char *str);
 int			size_env(t_env_ms **minishell);
-char		*get_variable_with_pos(t_env_ms **minishell, int pos);
+char		*get_variable_with_pos(t_env_ms *minishell, int pos);
 
 /*
 **	OTHERS EXECUTABLES

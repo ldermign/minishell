@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 16:08:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:26:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,21 +122,37 @@ int	built_in_export(t_args *cmd, t_env_ms **env)
 	it.i = 1;
 	while (cmd->arg_to_pass[it.i])
 	{
-		it.add = light_parse_export(cmd->arg_to_pass[it.i]);
-		if (it.add == -1)
-			return (EXIT_FAILURE);
-		it.pos = check_if_variable_already_exist(env, cmd->arg_to_pass[it.i]);
-		it.len = size_variable(cmd->arg_to_pass[it.i], it.add, it.pos);
-		if (it.add == 1 && it.pos != -1)
-			str = ft_strjoin(get_variable_with_pos(env, it.pos),
-					get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos));
-		else
-			str = get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos);
-		if (it.pos == -1)
-			add_var_env_minishell(env, str);
-		else
-			change_var_env_minishell(env, str, it.pos);
+		it.bin = light_parse_export(cmd->arg_to_pass[it.i]);
+		if (it.bin != -1)
+		{
+			it.pos = check_if_variable_already_exist(*env, cmd->arg_to_pass[it.i]);
+			it.len = size_variable(cmd->arg_to_pass[it.i], it.bin, it.pos);
+			if (it.bin == 1 && it.pos != -1)
+				str = ft_strjoin(get_variable_with_pos(*env, it.pos),
+						get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos));
+			else
+				str = get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos);
+			if (it.pos == -1)
+				add_var_env_minishell(env, str);
+			else if (it.pos != -1 && it.pos != -2)
+				change_var_env_minishell(*env, str, it.pos);
+		}
 		it.i++;
 	}
 	return (EXIT_SUCCESS);
 }
+
+
+/*
+
+si on a deja
+
+aa="merde"
+ et qu'on fait
+
+export aa
+
+ca ne change rien
+a partir du egal, on change
+
+*/

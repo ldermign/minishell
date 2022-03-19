@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 09:42:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:22:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_iterator
 	int	add;
 	int	ret;
 	int	len;
+	int	bin;
 }	t_it;
 
 typedef struct s_pipe

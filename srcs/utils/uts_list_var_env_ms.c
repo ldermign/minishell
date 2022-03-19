@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_list_var_env_ms.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/06 19:55:47 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/19 14:26:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,97 +94,79 @@ void	add_var_env_minishell(t_env_ms **stack, char *str_var)
 	*stack = first;
 }
 
-void	change_var_env_minishell(t_env_ms **minishell, char *str, int pos)
+void	change_var_env_minishell(t_env_ms *minishell, char *str, int pos)
 {
-	int			i;
-	t_env_ms	*first;
+	int	i;
 
 	i = 0;
-	first = *minishell;
 	while (i < pos)
 	{
-		*minishell = (*minishell)->next;
+		minishell = minishell->next;
 		i++;
 	}
-	(*minishell)->var = str;
-	*minishell = first;
+	minishell->var = str;
 }
 
-int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
+int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
 {
 	int			i;
 	int			ret;
-	t_env_ms	*first;
 
 	i = 0;
 	ret = 0;
-	first = *minishell;
-	while (*minishell)
+	while (minishell)
 	{
-		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
+		while (str[i] && minishell->var[i] && str[i] == minishell->var[i])
 		{
-			if ((*minishell)->var[i] == '=' && str[i] == '=')
-			{
-				*minishell = first;
+			if (minishell->var[i] == '=' && str[i] == '=')
 				return (ret);
-			}
 			i++;
 		}
+		if (str[i] == '\0' && str[i - 1] != '=')
+			return (-2);
 		if (str[i] == '\0' || (str[i + 1] && str[i] == '+'
-				&& str[i + 1] == '=' && (*minishell)->var[i] == '='))
-		{
-			*minishell = first;
+				&& str[i + 1] == '=' && minishell->var[i] == '='))
 			return (ret);
-		}
 		ret++;
 		i = 0;
-		*minishell = (*minishell)->next;
+		minishell = minishell->next;
 	}
-	*minishell = first;
 	return (-1);
 }
 
-char	*get_variable(t_env_ms **minishell, char *str)
+char	*get_variable(t_env_ms *minishell, char *str)
 {
 	int			i;
 	char		*tmp;
-	t_env_ms	*first;
 
 	i = 0;
 	tmp = NULL;
-	first = *minishell;
-	while (*minishell)
+	while (minishell)
 	{
-		// printf("%s\n", str);
-		while (str[i] && (*minishell)->var[i] && str[i] == (*minishell)->var[i])
+		while (str[i] && minishell->var[i] && str[i] == minishell->var[i])
 			i++;
-		if (str[i] == '\0' && (*minishell)->var[i] == '=')
+		if (str[i] == '\0' && minishell->var[i] == '=')
 		{
-			tmp = &((*minishell)->var[ft_strlen(str) + 1]);
-			// printf("ca passe pas ici en theorie [%s], [%s]\n", tmp, str);
+			tmp = &(minishell->var[ft_strlen(str) + 1]);
 			break ;
 		}
 		i = 0;
-		*minishell = (*minishell)->next;
+		minishell = minishell->next;
 	}
-	*minishell = first;
 	return (tmp);
 }
 
-char	*get_variable_with_pos(t_env_ms **minishell, int pos)
+char	*get_variable_with_pos(t_env_ms *minishell, int pos)
 {
 	int			i;
 	char		*tmp;
-	t_env_ms	*first;
 
 	i = 0;
-	first = *minishell;
-	while (*minishell && i < pos)
+	while (minishell && i < pos)
 	{
-		*minishell = (*minishell)->next;
+		minishell = minishell->next;
 		i++;
 	}
-	tmp = (*minishell)->var;
-	*minishell = first;
+	tmp = minishell->var;
 	return (tmp);
 }

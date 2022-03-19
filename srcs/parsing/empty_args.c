@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   empty_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 07:27:25 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/19 14:25:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_empty_brace2(char *line, t_struct *minish, int i)
 		str[i - 2] = line[i];
 		i--;
 	}
-	tmp = get_variable(&minish->env.env_ms, str);
+	tmp = get_variable(minish->env.env_ms, str);
 	free(str);
 	if (tmp == NULL)
 		return (0);
@@ -73,7 +73,7 @@ int	is_empty_no_brace(char *line, t_struct *minish)
 		str[i - 1] = line[i];
 		i--;
 	}
-	tmp = get_variable(&minish->env.env_ms, str);
+	tmp = get_variable(minish->env.env_ms, str);
 	free(str);
 	if (tmp == NULL && (line[j] == ' ' || line[j] == '\0'))
 		return (0);

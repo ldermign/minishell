@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/16 15:08:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:23:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	init_struct_it(t_it *it)
 	it->add = 0;
 	it->ret = 0;
 	it->len = 0;
+	it->bin = 0;
 }
 
 void	init_struct_pipe(t_pipe *pipe, t_struct *ms)

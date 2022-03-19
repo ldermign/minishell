@@ -42,8 +42,8 @@ https://stackoverflow-com.translate.goog/questions/18042369/bash-export-not-a-va
 
 
 
-int	check_if_variable_already_exist(t_env_ms **minishell, char *str)
-char	*get_variable(t_env_ms **minishell, char *str)
+int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
+char	*get_variable(t_env_ms *minishell, char *str)
 
 
 
