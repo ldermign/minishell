@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/14 04:49:34 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 15:08:00 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	free_list(t_list_arg *list)
 		free(to_delete);
 	}
 	free(list);
+	list = NULL;
 	return (0);
 }
 
@@ -99,6 +100,7 @@ int	free_list2(t_list_arg *list)
 		free(to_delete);
 	}
 	free(list);
+	list = NULL;
 	return (0);
 }
 
@@ -124,5 +126,6 @@ int	free_list3(t_list_arg *list)
 		free(to_delete);
 	}
 	free(list);
+	list = NULL;
 	return (0);
 }

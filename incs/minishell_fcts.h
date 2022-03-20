@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 16:50:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:59:18 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int			free_list3(t_list_arg *list);
 int			free_list_hd(t_list_hd *list);
 void		handle_signal(int sig);
 void		handle_signal_child(int sig);
+void		handle_signal_hd(int sig);
 int			if_is_empty(char *line, int i);
 t_list_arg	*init_args(void);
 t_list_hd	*init_here_doc(void);
