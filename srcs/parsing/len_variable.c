@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   len_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/19 14:25:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 18:00:51 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	len_variable2(char *line, t_struct *minish, int i)
 		i++;
 		while (line[i] && line[i] != 34 && line[i] != 39 && line[i] != '<'
 			&& line[i] != '>' && line[i] != '$' && line[i] != '}'
-			&& line[i] != ' ' && line[i] != '{')
+			&& line[i] != ' ' && line[i] != '{' && line[i] != ':')
 			i++;
 	}
 	return (i);
@@ -94,7 +94,7 @@ int	if_is_empty(char *line, int i)
 	i++;
 	while (line[i] && line[i] != ' ' && line[i] != 34 && line[i] != 39
 		&& line[i] != '<' && line[i] != '>' && line[i] != '$'
-		&& line[i] != '}' && line[i] != '{')
+		&& line[i] != '}' && line[i] != '{' && line[i] != ':')
 		i++;
 	while (line[i] == ' ')
 		i++;
