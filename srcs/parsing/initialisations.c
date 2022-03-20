@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:55:27 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 15:45:16 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 18:12:06 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_list_arg	*init_args(void)
 	if (list == NULL)
 		return (NULL);
 	list->first = NULL;
+	// list->first->arg_to_pass = NULL;
 	return (list);
 }
 

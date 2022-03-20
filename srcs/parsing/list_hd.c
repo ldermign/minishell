@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 15:32:44 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 23:05:52 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,17 @@ int	delete_hd(t_list_hd *list)
 	t_here_doc	*to_delete;
 
 	if (list == NULL)
+	{
+		printf("oui\n");
 		return (-1);
+	}
 	if (list->first != NULL)
 	{
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);
 	}
+	printf("oui\n");
 	return (0);
 }
 
@@ -69,6 +73,7 @@ t_list_hd	*reverse_list_hd(t_list_hd *list)
 		insertion_here_doc(ret, list->first->here_doc);
 		delete_hd(list);
 	}
+	delete_hd(list);
 	free(list);
 	return (ret);
 }
@@ -85,8 +90,8 @@ int	free_list_hd(t_list_hd *list)
 		list->first = list->first->next;
 		free(to_delete);
 	}
-	// printf("free hd\n");
 	free(list);
+	// free(list);
 	list = NULL;
 	return (0);
 }
