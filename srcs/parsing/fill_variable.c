@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 04:30:23 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/19 14:25:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:43:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	fill_variable2(char *line, char *str, t_struct *minish, int i)
 		i++;
 		while (line[i] && line[i] != 34 && line[i] != 39 && line[i] != '<'
 			&& line[i] != '>' && line[i] != '$' && line[i] != '}'
-			&& line[i] != ' ' && line[i] != '{')
+			&& line[i] != ' ' && line[i] != '{' && line[i] != ':')
 			i++;
 	}
 	return (i);

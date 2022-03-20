@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 20:17:21 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/11 13:43:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 19:27:31 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,17 @@ void	print_tab_char(char **tabl)
 	printf("--------------------\n"NORMAL);
 }
 
-void	print_env_ms(t_env_ms **stack)
+void	print_env_ms(t_env_ms *stack)
 {
-	t_env_ms	*first;
-
-	first = *stack;
-	if (*stack == NULL)
+	if (stack == NULL)
 		exit (0);
 	printf(GREY"_______________________________\n");
-	while (*stack != NULL)
+	while (stack != NULL)
 	{
-		printf("%s\n", (*stack)->var);
-		*stack = (*stack)->next;
+		printf("%s\n", stack->var);
+		stack = stack->next;
 	}
 	printf("_______________________________\n"NORMAL);
-	*stack = first;
 }
 
 void	print_stack_cmd(t_args *stack)

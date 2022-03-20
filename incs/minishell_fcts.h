@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 16:59:18 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 19:33:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void		there_is_pipe(t_struct *ms);
 
 int			execute_cmd_execve(t_struct *ms, char **cmd);
 int			execute_cmd_with_fork(t_struct *ms, t_args *stack);
+char	**get_new_env(t_env_ms *env_ms);
+char	*get_pwd_and_path(char **env, char *str);
 
 /*
 **	SIG ERROR
@@ -125,13 +127,15 @@ void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
 */
 
 void		free_all_cmds_pompt(t_args *stack);
+void	free_env_ms(t_env_ms *stack);
+void	ft_free_tab_char(char **tabl);
 
 /*
 **	TEMPORAIRE A SUPPRIMEEEEEERRRRRR
 */
 
 void		print_tab_char(char **tabl);
-void		print_env_ms(t_env_ms **stack);
+void		print_env_ms(t_env_ms *stack);
 void		print_stack_cmd(t_args *stack);
 
 /*
