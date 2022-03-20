@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 22:01:36 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 22:07:21 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*fill_redir(char *str, char *line, t_struct *minish, int i)
 			return (NULL);
 		i++;
 	}
-	printf("line = [%s]\n", &line[i]);
 	str[minish->parsing.fill_arg] = '\0';
 	return (str);
 }

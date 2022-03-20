@@ -199,9 +199,6 @@ norme liena
 
 
 
-
-
-
 sig_error == 127 tout le temps
 else
 	{
@@ -228,6 +225,10 @@ else
 	// exit(0); // sig_error marche pas
 }
 
+
+
+
+
 =========    8 bytes in 1 blocks are definitely lost in loss record 12 of 75
 ==89325==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
 ==89325==    by 0x405CE1: init_here_doc (initialisations.c:43)
@@ -241,145 +242,8 @@ else
 
 
 
-avec free
-___________________
-==114128== Syscall param execve(filename) points to unaddressable byte(s)
-==114128==    at 0x49971AB: execve (syscall-template.S:78)
-==114128==    by 0x401B5C: execute_cmd_execve (execve.c:69)
-==114128==    by 0x401D03: execute_cmd_with_fork (execve.c:98)
-==114128==    by 0x401382: command (main.c:32)
-==114128==    by 0x4014DB: loop (main.c:58)
-==114128==    by 0x4015B0: main (main.c:81)
-==114128==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==114128== 
-minishell: tughi: command not found
-==114128== 
-==114128== HEAP SUMMARY:
-==114128==     in use at exit: 206,315 bytes in 292 blocks
-==114128==   total heap usage: 520 allocs, 228 frees, 227,077 bytes allocated
-==114128== 
-==114128== 8 bytes in 1 blocks are definitely lost in loss record 7 of 68
-==114128==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==114128==    by 0x405D01: init_here_doc (initialisations.c:43)
-==114128==    by 0x405D9C: insertion (lists.c:25)
-==114128==    by 0x4067E8: recup_pipe2 (recup_pipe.c:112)
-==114128==    by 0x405BC7: recup_pipe (parsing.c:64)
-==114128==    by 0x40597C: recup_args (parsing.c:78)
-==114128==    by 0x405889: parsing (parsing.c:19)
-==114128==    by 0x4014AF: loop (main.c:55)
-==114128==    by 0x4015B0: main (main.c:81)
-==114128== 
-==114128== LEAK SUMMARY:
-==114128==    definitely lost: 8 bytes in 1 blocks
-==114128==    indirectly lost: 0 bytes in 0 blocks
-==114128==      possibly lost: 0 bytes in 0 blocks
-==114128==    still reachable: 1,661 bytes in 72 blocks
-==114128==         suppressed: 204,646 bytes in 219 blocks
-==114128== 
-==114128== For lists of detected and suppressed errors, rerun with: -s
-==114128== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+
+exit tout quand y'a une redirection
 
 
 
-sans free
-___________________
-==113625== Syscall param execve(filename) points to unaddressable byte(s)
-==113625==    at 0x49971AB: execve (syscall-template.S:78)
-==113625==    by 0x401B5C: execute_cmd_execve (execve.c:69)
-==113625==    by 0x401CF3: execute_cmd_with_fork (execve.c:98)
-==113625==    by 0x401382: command (main.c:32)
-==113625==    by 0x4014DB: loop (main.c:58)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==113625== 
-minishell: ytgui: command not found
-==113625== 
-==113625== HEAP SUMMARY:
-==113625==     in use at exit: 206,415 bytes in 299 blocks
-==113625==   total heap usage: 520 allocs, 221 frees, 227,077 bytes allocated
-==113625== 
-==113625== 6 bytes in 1 blocks are still reachable in loss record 5 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x406745: recup_pipe2 (recup_pipe.c:100)
-==113625==    by 0x405BB7: recup_pipe (parsing.c:64)
-==113625==    by 0x40596C: recup_args (parsing.c:78)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 6 bytes in 1 blocks are still reachable in loss record 6 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x406031: fill_arg (sep_args.c:38)
-==113625==    by 0x40612E: interpret_args (sep_args.c:59)
-==113625==    by 0x406279: sep_and_check_args (sep_args.c:89)
-==113625==    by 0x4059D9: recup_args (parsing.c:85)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 8 bytes in 1 blocks are still reachable in loss record 9 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x405CA1: init_args (initialisations.c:32)
-==113625==    by 0x405EF0: reverse_list (lists.c:69)
-==113625==    by 0x40598E: recup_args (parsing.c:80)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 8 bytes in 1 blocks are still reachable in loss record 10 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x405CF1: init_here_doc (initialisations.c:43)
-==113625==    by 0x409210: reverse_list_hd (list_hd.c:66)
-==113625==    by 0x40A5E7: exec_here_doc (here_doc.c:104)
-==113625==    by 0x4061FC: sep_and_check_args (sep_args.c:78)
-==113625==    by 0x4059D9: recup_args (parsing.c:85)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 8 bytes in 1 blocks are still reachable in loss record 11 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x409A34: recup_redir (recup_redir.c:117)
-==113625==    by 0x405A2C: recup_args (parsing.c:91)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 8 bytes in 1 blocks are definitely lost in loss record 12 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x405CF1: init_here_doc (initialisations.c:43)
-==113625==    by 0x405D8C: insertion (lists.c:25)
-==113625==    by 0x4067D8: recup_pipe2 (recup_pipe.c:112)
-==113625==    by 0x405BB7: recup_pipe (parsing.c:64)
-==113625==    by 0x40596C: recup_args (parsing.c:78)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 16 bytes in 1 blocks are still reachable in loss record 19 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x40622F: sep_and_check_args (sep_args.c:82)
-==113625==    by 0x4059D9: recup_args (parsing.c:85)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-==113625== 
-==113625== 48 bytes in 1 blocks are still reachable in loss record 27 of 75
-==113625==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113625==    by 0x405D60: insertion (lists.c:21)
-==113625==    by 0x405F16: reverse_list (lists.c:72)
-==113625==    by 0x40598E: recup_args (parsing.c:80)
-==113625==    by 0x405879: parsing (parsing.c:19)
-==113625==    by 0x4014AF: loop (main.c:55)
-==113625==    by 0x4015B0: main (main.c:81)
-
-==113625== LEAK SUMMARY:
-==113625==    definitely lost: 8 bytes in 1 blocks
-==113625==    indirectly lost: 0 bytes in 0 blocks
-==113625==      possibly lost: 0 bytes in 0 blocks
-==113625==    still reachable: 1,761 bytes in 79 blocks
-==113625==         suppressed: 204,646 bytes in 219 blocks
-==113625== 
-==113625== For lists of detected and suppressed errors, rerun with: -s
-==113625== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
-$ exit
