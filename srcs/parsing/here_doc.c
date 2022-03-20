@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/14 06:34:34 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 14:54:46 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	here_doc(char *str)
 {
 	char	*line;
+
 	line = readline("> ");
 	if (line == NULL)
 	{

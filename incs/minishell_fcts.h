@@ -6,11 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/03/20 15:14:12 by ldermign         ###   ########.fr       */
-=======
-/*   Updated: 2022/03/20 11:39:08 by ejahan           ###   ########.fr       */
->>>>>>> 94e48d75bec4d18f725e3a74b876bfe567c16230
+/*   Updated: 2022/03/20 15:47:50 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +161,7 @@ int			free_list3(t_list_arg *list);
 int			free_list_hd(t_list_hd *list);
 void		handle_signal(int sig);
 void		handle_signal_child(int sig);
+void		handle_signal_hd(int sig);
 int			if_is_empty(char *line, int i);
 t_list_arg	*init_args(void);
 t_list_hd	*init_here_doc(void);
