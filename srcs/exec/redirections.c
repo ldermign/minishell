@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 11:28:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 14:02:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)
 	t_red_std	fd_redir;
 
 	ret = 0;
-	if (!ft_is_alpha(stack->arg_to_pass[0][0]))
+	if (stack->arg_to_pass != NULL && !ft_is_alpha(stack->arg_to_pass[0][0]))
 		return (1);
 	init_struct_std(stack->redir, &fd_redir, last_redir(stack->redir));
 	i = 0;

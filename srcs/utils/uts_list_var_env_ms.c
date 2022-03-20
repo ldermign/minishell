@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 19:10:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 15:14:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,16 @@ void	free_lst(t_env_ms *stack)
 	free(stack);
 }
 
-int	size_env(t_env_ms **minishell)
+int	size_env(t_env_ms *minishell)
 {
 	int			len;
-	t_env_ms	*first;
 
 	len = 0;
-	first = *minishell;
-	while (*minishell)
+	while (minishell)
 	{
-		*minishell = (*minishell)->next;
+		minishell = minishell->next;
 		len++;
 	}
-	*minishell = first;
 	return (len);
 }
 

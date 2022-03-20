@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 14:13:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 15:28:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,11 @@ int	size_variable(char *prompt, int add, int pos)
 	}
 	while (prompt[i])
 	{
-		if (add != 1 && pos == -1)
-		{
-			while (prompt[i] && prompt[i] != '=')
-			{
-				i++;
-				len++;
-			}
-		}
-		if (add == 1 && pos == -1)
-			len--;
 		i++;
 		len++;
-		if (prompt[i] == '"')
-		{
-			i++;
-			ret = 1;
-		}
-		while (prompt[i]
-			&& ((ret == 1 && prompt[i] != '"')
-				|| (ret == 0 && prompt[i] != ' ')))
-		{
-			i++;
-			len++;
-		}
 	}
+	if (add == 1 && pos == -1)
+		len--;
 	return (len);
 }
 
@@ -129,7 +109,6 @@ char	*get_good_variable(char *prompt, int size, int add, int pos)
 	char	*str;
 
 	i = 0;
-	j = 0;
 	ret = 0;
 	str = malloc(sizeof(char) * (size + 1));
 	if (str == NULL)
@@ -143,6 +122,7 @@ char	*get_good_variable(char *prompt, int size, int add, int pos)
 			i++;
 		i++;
 	}
+	j = 0;
 	while (j < size)
 	{
 		if (add == 1 && pos == -1

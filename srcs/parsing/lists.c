@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/14 06:31:15 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 14:01:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	insertion(t_list_arg *list, char *new_arg)
 	// new->here_doc = NULL;
 	new->next = list->first;
 	new->args_here_doc = NULL;
+	new->arg_to_pass = NULL;
 	list->first = new;
 	return (0);
 }
