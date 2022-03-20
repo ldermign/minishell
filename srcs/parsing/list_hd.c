@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 15:32:44 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/20 18:45:21 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	free_list_hd(t_list_hd *list)
 	}
 	// printf("free hd\n");
 	free(list);
+	// free(list);
 	list = NULL;
 	return (0);
 }
