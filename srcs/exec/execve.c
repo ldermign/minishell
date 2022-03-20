@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 19:23:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 15:18:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	execute_cmd_execve(t_struct *ms, char **cmd)
 	{
 		printf("minishell: %s: command not found\n", cmd[0]);
 		//	free
+		free_list(ms->args);
 		return (sig_error(NULL, 127));
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 12:44:20 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/20 15:07:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	loop(t_struct *minish)
 	if (line[i] && minish->parsing.error == 0)
 	{
 		command(minish);
-		free_list(minish->args);
+		if (minish->args != NULL)
+			free_list(minish->args);
 	}
 	free(line);
 }
