@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/03/20 15:14:12 by ldermign         ###   ########.fr       */
+=======
+/*   Updated: 2022/03/20 11:39:08 by ejahan           ###   ########.fr       */
+>>>>>>> 94e48d75bec4d18f725e3a74b876bfe567c16230
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +41,7 @@ void		built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
 **	REDIRECTIONS
 */
 
-int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex);
+int			redirection(t_struct *ms, t_args *stack, t_pipe	*pipex);
 int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
 
 /*
@@ -50,14 +54,14 @@ void		there_is_pipe(t_struct *ms);
 **	EXECVE
 */
 
-int	execute_cmd_execve(t_struct *ms, char **cmd);
-int	execute_cmd_with_fork(t_struct *ms, t_args *stack);
+int			execute_cmd_execve(t_struct *ms, char **cmd);
+int			execute_cmd_with_fork(t_struct *ms, t_args *stack);
 
 /*
 **	SIG ERROR
 */
 
-int	sig_error(char *str, int nbr);
+int			sig_error(char *str, int nbr);
 
 /*
 **	UTILS REDIRECTIONS
@@ -104,8 +108,8 @@ char		*get_variable_with_pos(t_env_ms *minishell, int pos);
 **	OTHERS EXECUTABLES
 */
 
-int	other_executable(t_struct *ms, t_args *cmd, char **env_bash);
-int	is_new_executable(char *str);
+int			other_executable(t_struct *ms, t_args *cmd, char **env_bash);
+int			is_new_executable(char *str);
 
 /*
 **  UTILS PIPE
@@ -138,7 +142,7 @@ void		print_stack_cmd(t_args *stack);
 **		>>>>>>>>>  PARSING  <<<<<<<<<
 */
 
-char    	**arg_list(t_list_hd *hd, t_struct *minish);
+char		**arg_list(t_list_hd *hd, t_struct *minish);
 void		check_file(char *arg, t_struct *minish);
 int			check_pipe2(char *line, t_struct *minish);
 int			count_redir(char *line);
