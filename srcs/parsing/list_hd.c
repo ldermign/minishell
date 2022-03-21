@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_hd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 23:05:52 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/21 12:53:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	delete_hd(t_list_hd *list)
 
 	if (list == NULL)
 	{
-		printf("oui\n");
+		// printf("oui\n");
 		return (-1);
 	}
 	if (list->first != NULL)
@@ -42,7 +42,7 @@ int	delete_hd(t_list_hd *list)
 		list->first = list->first->next;
 		free(to_delete);
 	}
-	printf("oui\n");
+	// printf("oui\n");
 	return (0);
 }
 

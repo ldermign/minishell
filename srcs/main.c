@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 15:46:09 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/21 07:24:16 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	command(t_struct *ms)
 	if (ms->args->first->arg_to_pass == NULL)
 		return ;
 	all_cmds = ms->args->first;
-	print_stack_cmd(all_cmds);
+	// print_stack_cmd(all_cmds);
 	last = last_redir(all_cmds->redir);
 	init_struct_std(all_cmds->redir, &(*ms).std, last);
 	if (ms->parsing.nb_pipe > 0)

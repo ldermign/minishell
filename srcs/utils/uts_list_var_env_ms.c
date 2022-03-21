@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 15:14:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 10:44:58 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	size_env(t_env_ms *minishell)
 	int			len;
 
 	len = 0;
+	if (minishell == NULL)
+		return (len);
 	while (minishell)
 	{
 		minishell = minishell->next;
@@ -55,19 +57,23 @@ static t_env_ms	*new_var(char *str)
 void	supp_var_env_ms(t_env_ms **stack, int pos)
 {
 	int			i;
+	t_env_ms	*before;
 	t_env_ms	*first;
-	t_env_ms	*ret;
 
 	i = 0;
 	first = *stack;
-	ret = *stack;
+	before = *stack;
 	while (*stack && i < pos)
 	{
-		ret = *stack;
+		before = *stack;
 		*stack = (*stack)->next;
 		i++;
 	}
-	ret->next = (*stack)->next;
+	if (first == *stack)
+		first = (*stack)->next;
+	else
+		before->next = (*stack)->next;
+	free((*stack)->var);
 	free(*stack);
 	*stack = first;
 }

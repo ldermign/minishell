@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 17:40:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 09:22:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static int	print_in_alphabetical_order(t_env_ms **env)
 	int			len_name;
 	char		**copy;
 
+	if (*env == NULL)
+		return (EXIT_SUCCESS);
 	len_tab = size_env(*env);
 	copy = copy_env_in_tab_char(*env, len_tab);
 	i = 0;

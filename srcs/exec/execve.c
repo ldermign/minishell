@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 19:42:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 07:22:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,6 @@ int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 		waitpid(pid, &status, 0);
 	}
 	else
-	{
 		exit (execute_cmd_execve(ms, stack->arg_to_pass));
-	}
 	return (0);
 }
