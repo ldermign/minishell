@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 07:22:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:36:19 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ int	execute_cmd_execve(t_struct *ms, char **cmd)
 		free(str_path);
 		return (sig_error(NULL, 127));
 	}
-	else
-		sig_error(NULL, 0);
+	sig_error(NULL, 0);
 	ft_free_tab_char(new_env);
 	ft_free_tab_char(paths);
 	free(str_path);

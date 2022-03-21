@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 14:02:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:11:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,20 +132,28 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 		return (sig_error("fork", 127));
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
+	int ret = dup(STDOUT_FILENO);
+	good_fd_for_redir(stack, std);
 	if (pid == 0)
 	{
-		good_fd_for_redir(stack, std);
 		if (is_built_in(stack->arg_to_pass[0]) == EXIT_SUCCESS)
 			built_in(ms, stack);
 		else
 			execute_cmd_execve(ms, stack->arg_to_pass);
-		exit (sig_error(NULL, 0));
+		exit (0);
+		
 	}
+	dup2(ret, STDOUT_FILENO);
+	if (std->fd_to_write > 0)
+		close(std->fd_to_write);
+	if (std->fd_to_read > 0)
+		close(std->fd_to_read);
 	else
 	{
 		ms->pid = pid;
 		wait(NULL);
 	}
+	// dup2(STDOUT_FILENO, STDIN_FILENO);
 	return (sig_error(NULL, 0));
 }
 
@@ -168,7 +176,7 @@ int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)
 		|| stack->redir[i][j] == '>' || stack->redir[i][j] == '<')
 		j++;
 	fd_redir.name_file = &(stack->redir[i][j]);
-	if (&pipe == NULL)
+	if (ms->parsing.nb_pipe == 0)
 		return (execute_redirection_built_in_or_execve(ms, stack, &fd_redir));
 	good_fd_for_redir_with_pipe(stack, &fd_redir, pipex);
 	if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
@@ -179,5 +187,5 @@ int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)
 		close(fd_redir.fd_to_read);
 	if (fd_redir.fd_to_write != 0)
 		close(fd_redir.fd_to_write);
-	exit (ret);
+	return (ret);
 }

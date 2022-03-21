@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/21 12:53:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:49:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_list_hd	*reverse_list_hd(t_list_hd *list)
 		insertion_here_doc(ret, list->first->here_doc);
 		delete_hd(list);
 	}
-	delete_hd(list);
+	free(list->first);
 	free(list);
 	return (ret);
 }

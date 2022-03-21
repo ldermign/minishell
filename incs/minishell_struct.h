@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 12:55:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:23:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef struct s_pipe
 	int		nbr_exec;
 	int		fd0[2];
 	int		fd1[2];
+	int		fd_to_read;
+	int		fd_to_write;
 	pid_t	pid;
 }	t_pipe;
 

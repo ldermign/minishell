@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 23:03:05 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/21 13:38:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	free_list(t_list_arg *list)
 		free(to_delete);
 	}
 	free(list);
-	list = NULL;
 	return (0);
 }
 
