@@ -6,25 +6,42 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 16:11:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:43:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	both_redirections(t_red_std *std, char **args)
+// static void	both_redirections(t_red_std *std, char **args)
+// {
+// 	std->fd_to_read = open(args[std->last_left + 1], O_RDONLY, 0644);
+// 	if (std->which == 1)
+// 		std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+// 	else
+// 		std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
+// 	dup2(std->fd_to_read, 0);
+// 	dup2(std->fd_to_write, 1);
+// }
+
+char	*get_good_string(char *str)
 {
-	std->fd_to_read = open(args[std->last_left + 1], O_RDONLY, 0644);
-	if (std->which == 1)
-		std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
-	else
-		std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
-	dup2(std->fd_to_read, 0);
-	dup2(std->fd_to_write, 1);
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	while (str[i] && (str[i] == '>' || str[i] == '<'))
+		i++;
+	while (str[i] && str[i] == ' ')
+		i++;
+	return (&str[i]);
 }
 
 static int	good_fd_for_redir(t_args *stack, t_red_std *std)
 {
+	char	*str;
+
+	str = NULL;
 	if (std->both == 0)
 	{
 		if (std->which == 1)
@@ -32,11 +49,17 @@ static int	good_fd_for_redir(t_args *stack, t_red_std *std)
 		else if (std->which == 3)
 			std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
 		if (std->which == 1 || std->which == 3)
+		{
 			dup2(std->fd_to_write, 1);
+			close(std->fd_to_write);
+		}
 		if (std->which == 2)
 		{
-			std->fd_to_read = open(stack->arg_to_pass[std->last_left + 1], O_RDONLY);
+			str = get_good_string(stack->redir[std->last_left]);
+			// fprintf(stderr, "[%s]\n", str);
+			std->fd_to_read = open(str, O_RDONLY);
 			dup2(std->fd_to_read, 0);
+			// close(std->fd_to_read);
 		}
 		// else if (std->which == 4)
 		// {
@@ -52,7 +75,19 @@ static int	good_fd_for_redir(t_args *stack, t_red_std *std)
 		// }
 	}
 	else if (std->both == 1)
-		both_redirections(std, stack->arg_to_pass);
+	{
+		str = get_good_string(stack->redir[std->last_left]);
+		// fprintf(stderr, "[%s][%s]\n", str, std->name_file);
+		std->fd_to_read = open(str, O_RDONLY, 0644);
+		if (std->which == 1)
+			std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
+		else
+			std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
+		dup2(std->fd_to_read, 0);
+		close(std->fd_to_read);
+		dup2(std->fd_to_write, 1);
+		close(std->fd_to_write);
+	}
 	if (std->fd_to_write == -1 || std->fd_to_read == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -132,28 +167,21 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 		return (sig_error("fork", 127));
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
-	int ret = dup(STDOUT_FILENO);
-	good_fd_for_redir(stack, std);
 	if (pid == 0)
 	{
+		good_fd_for_redir(stack, std);
+		// fprintf(stderr, "ici\n");
 		if (is_built_in(stack->arg_to_pass[0]) == EXIT_SUCCESS)
 			built_in(ms, stack);
 		else
 			execute_cmd_execve(ms, stack->arg_to_pass);
-		exit (0);
-		
+		exit (sig_error(NULL, 0));
 	}
-	dup2(ret, STDOUT_FILENO);
-	if (std->fd_to_write > 0)
-		close(std->fd_to_write);
-	if (std->fd_to_read > 0)
-		close(std->fd_to_read);
 	else
 	{
 		ms->pid = pid;
 		wait(NULL);
 	}
-	// dup2(STDOUT_FILENO, STDIN_FILENO);
 	return (sig_error(NULL, 0));
 }
 

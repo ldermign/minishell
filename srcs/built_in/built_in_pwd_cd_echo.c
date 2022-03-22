@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/19 14:26:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/22 13:47:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,15 @@ int	built_in_cd(t_env *env, char *new_to_go)
 	return (1);
 }
 
-int	built_in_pwd(void)
+int	built_in_pwd()
 {
 	char	actual_path[PATH_MAX];
 
 	if (getcwd(actual_path, sizeof(actual_path)) != NULL)
-		printf("%s\n", actual_path);
+	{
+		write(1, actual_path, ft_strlen(actual_path));
+		write(1, "\n", 1);
+	}
 	else
 		sig_error("getcwd", errno);
 	return (1);
