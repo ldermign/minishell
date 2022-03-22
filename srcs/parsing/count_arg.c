@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/22 17:43:35 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/22 20:37:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ int	count_redir(char *line)
 	j = 0;
 	while (line[i])
 	{
-		if (line[i] == '<' || line[i] == '>')
+		if (line[i] == 34 || line[i] == 39)
+			i += (pass_quotes(&line[i]) + 1);
+		else if (line[i] == '<' || line[i] == '>')
 		{
 			if (line[i + 1] != '<')
 				j++;

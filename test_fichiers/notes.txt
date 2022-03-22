@@ -267,3 +267,18 @@ AddressSanitizer:DEADLYSIGNAL
 
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV (/mnt/nfs/homes/ejahan/Desktop/minishell/minishell+0x41d144) in __asan::Allocator::Deallocate(void*, unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType)
+
+
+
+
+
+A REGLER
+echo hello > /dev/full					>>>>>>		je comrpends pas
+                          >             >>>>>>		cest boooon
+cd										>>>>>>		j ai pas compris 
+|										>>>>>>		cest boooon
+'										>>>>>>		cest boooon
+cd $HOME								>>>>>>		ca va etre complique
+echo ${USER }							>>>>>>		cest boooon
+">"										>>>>>>		cest boooon
+"<" ">"									>>>>>>		cest boooon
