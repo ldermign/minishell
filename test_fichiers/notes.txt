@@ -174,16 +174,16 @@ $$				->>>>> pas possible?
 
 
 A FAIRE
-options echo									>>>>>>  ok?
-echo											>>>>>>  ok?
-liste a l'endroit							 	>>>>>>  ok?
-$?												>>>>>>  ok?
-recup redirections interpretees dans char **	>>>>>>  ok?
-signal ctrl D									>>>>>>  ok?
-signal ctrl \									>>>>>>  ok?
-signal ctrl C quand cat							>>>>>>  ok?
-leaks parsing									>>>>>>  ok?
-norme moi										>>>>>>  ok?
+options echo									>>>>>>	ok?
+echo											>>>>>>	ok?
+liste a l'endroit							 	>>>>>>	ok?
+$?												>>>>>>	ok?
+recup redirections interpretees dans char **	>>>>>>	ok?
+signal ctrl D									>>>>>>	ok?
+signal ctrl \									>>>>>>	ok?
+signal ctrl C quand cat							>>>>>>	ok?
+leaks parsing									>>>>>>	ok?
+norme moi										>>>>>>	ok?
 exec here_doc									>>>>>>	ok?
 recup dernier '<<'								>>>>>>	ok?
 changer list en char **							>>>>>>	ok?
@@ -193,6 +193,14 @@ sig_error
 leaks
 mettre en commun
 norme liena
+
+
+
+
+
+
+redirections -> machin< truc				>>>>>>>>	cest booooon
+leak -> je trouverai jamais je pense
 
 
 
@@ -242,8 +250,20 @@ else
 
 
 
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==1136772==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x00000041d144 bp 0x000000000000 sp 0x7ffc1ae6de40 T0)
+==1136772==The signal is caused by a READ memory access.
+==1136772==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+    #0 0x41d144 in __asan::Allocator::Deallocate(void*, unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType) (/mnt/nfs/homes/ejahan/Desktop/minishell/minishell+0x41d144)
+    #1 0x4973f5 in free (/mnt/nfs/homes/ejahan/Desktop/minishell/minishell+0x4973f5)
+    #2 0x4e59b6 in free_arg_to_pass /mnt/nfs/homes/ejahan/Desktop/minishell/srcs/parsing/free.c:22:3
+    #3 0x4e5631 in free_list /mnt/nfs/homes/ejahan/Desktop/minishell/srcs/parsing/free.c:68:4
+    #4 0x4d8780 in parsing /mnt/nfs/homes/ejahan/Desktop/minishell/srcs/parsing/parsing.c:33:3
+    #5 0x4c8b17 in loop /mnt/nfs/homes/ejahan/Desktop/minishell/srcs/main.c:58:3
+    #6 0x4c8e06 in main /mnt/nfs/homes/ejahan/Desktop/minishell/srcs/main.c:84:3
+    #7 0x7f79e67e80b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16
+    #8 0x41c39d in _start (/mnt/nfs/homes/ejahan/Desktop/minishell/minishell+0x41c39d)
 
-exit tout quand y'a une redirection
-
-
-
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV (/mnt/nfs/homes/ejahan/Desktop/minishell/minishell+0x41d144) in __asan::Allocator::Deallocate(void*, unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType)

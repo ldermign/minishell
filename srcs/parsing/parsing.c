@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 22:07:44 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/22 00:10:10 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	parsing(char *line, t_struct *minish)
 	redirections(minish->args, minish);
 	if (minish->parsing.error != 0)
 	{
-		free_list(minish->args);
+		// free_list(minish->args);
 		return (-1);
 	}
 	minish->parsing.nb_pipe -= 1;
