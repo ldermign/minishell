@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 21:46:21 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/08 07:33:33 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 01:00:31 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	len_echo(char **args, int j)
 			i++;
 			k++;
 		}
+		if (args[j + 1] != NULL)
+			k++;
 		j++;
 		i = 0;
 	}
-	return (k + j - 2);
+	return (k);
 }
 
 char	*fill_echo(char **arg, int len, int j, t_struct *minish)

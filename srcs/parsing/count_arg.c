@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/12 04:26:22 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/22 20:37:45 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	pass_arg_count2(char *line, t_struct *minish, int i)
 {
 	while (line[i])
 	{
-		while (line[i] && line[i] != 39 && line[i] != 34
-			&& line[i] != ' ' && line[i] != '$')
+		while (line[i] && line[i] != 39 && line[i] != 34 && line[i] != ' '
+			&& line[i] != '$' && line[i] != '<' && line[i] != '>')
 			i++;
 		if (line[i] == 39 || line[i] == 34)
 			i += pass_quotes(&line[i]);
+		else if (line[i] == '<' || line[i] == '>')
+			i += (pass_redir_hd(&line[i], minish) - 1);
 		else if (line[i] == '$')
 			i += pass_variable(&line[i]);
 		else if (line[i] == '\0' || line[i] == ' ')
@@ -85,7 +87,9 @@ int	count_redir(char *line)
 	j = 0;
 	while (line[i])
 	{
-		if (line[i] == '<' || line[i] == '>')
+		if (line[i] == 34 || line[i] == 39)
+			i += (pass_quotes(&line[i]) + 1);
+		else if (line[i] == '<' || line[i] == '>')
 		{
 			if (line[i + 1] != '<')
 				j++;

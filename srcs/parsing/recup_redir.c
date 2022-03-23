@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recup_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/21 14:33:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/22 20:39:44 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char	*len_fill_redir(char *line, t_struct *minish)
 			i += 2;
 	}
 	j = len_redir(&line[i], minish);
-	// printf("j = %d\n", j);
 	str = malloc(sizeof(char) * (minish->parsing.len_arg + 1));
 	if (str == NULL)
 	{

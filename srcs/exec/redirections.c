@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/22 14:43:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 08:58:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ char	*get_name_left(char *str)
 }
 
 int	good_fd_for_redir_with_pipe(t_args *stack, t_red_std *std, t_pipe *pipex)
-{(void)stack;(void)std;(void)pipex;
+{
+	(void)stack;
+	(void)std;
+	(void)pipex;
 	//	ici, on est sur que y'a des pipes
 	//	on est dans le child
 	//	on est pas a la premiere commande
@@ -175,7 +178,7 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 			built_in(ms, stack);
 		else
 			execute_cmd_execve(ms, stack->arg_to_pass);
-		exit (sig_error(NULL, 0));
+		exit (0);
 	}
 	else
 	{

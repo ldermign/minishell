@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:55:27 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/21 13:51:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:44:42 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_list_arg	*init_args(void)
 	if (list == NULL)
 		return (NULL);
 	list->first = NULL;
-	// list->first->arg_to_pass = NULL;
 	return (list);
 }
 

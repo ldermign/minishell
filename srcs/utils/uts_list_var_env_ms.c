@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_list_var_env_ms.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 10:44:58 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:54:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
 		if ((str[i] == '\0' && minishell->var[i] == '\0')
 			|| (str[i] == '=' && minishell->var[i] == '\0')
 			|| (str[i] == '\0' && minishell->var[i] == '=')
-			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '='))
+			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '='
+				&& minishell->var[i] == '='))
 			return (ret);
 		ret++;
 		i = 0;

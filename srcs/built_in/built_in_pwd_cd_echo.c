@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/22 13:47:11 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 08:58:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,12 @@ int	built_in_echo(t_struct *ms)
 	// else
 	// {
 	// 	// fprintf(stderr, "test\n");
-	write(1, ms->parsing.result, len);
+	if (write(1, ms->parsing.result, len) == -1)
+	{
+		free(ms->parsing.result);
+		printf("echo: write error: No space left on device\n"); // ca marche pas du tout
+		return (EXIT_FAILURE);
+	}
 	// }
 	if (ms->parsing.option != 1)
 		write(1, "\n", 1);

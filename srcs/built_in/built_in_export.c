@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 09:22:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:59:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**copy_env_in_tab_char(t_env_ms *ms, int size_tab)
 	return (copy);
 }
 
-static void swap(char **copy_env, int *i)
+static void	swap(char **copy_env, int *i)
 {
 	char		*swap;
 

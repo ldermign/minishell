@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:54:17 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/16 15:28:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/22 21:12:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	redirections(t_list_arg *args, t_struct *minish)
 				check_file(args->first->redir[i], minish);
 			i++;
 			if (minish->parsing.error != 0)
+			{
+				args->first = tmp;
 				return ;
+			}
 		}
 		args->first = args->first->next;
 	}

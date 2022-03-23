@@ -174,25 +174,33 @@ $$				->>>>> pas possible?
 
 
 A FAIRE
-options echo									>>>>>>  ok?
-echo											>>>>>>  ok?
-liste a l'endroit							 	>>>>>>  ok?
-$?												>>>>>>  ok?
-recup redirections interpretees dans char **	>>>>>>  ok?
-signal ctrl D									>>>>>>  ok?
-signal ctrl \									>>>>>>  ok?
-signal ctrl C quand cat							>>>>>>  ok?
-leaks parsing									>>>>>>  ok?
-norme moi										>>>>>>  ok?
+options echo									>>>>>>	ok?
+echo											>>>>>>	ok?
+liste a l'endroit							 	>>>>>>	ok?
+$?												>>>>>>	ok?
+recup redirections interpretees dans char **	>>>>>>	ok?
+signal ctrl D									>>>>>>	ok?
+signal ctrl \									>>>>>>	ok?
+signal ctrl C quand cat							>>>>>>	ok?
+leaks parsing									>>>>>>	ok?
+norme moi										>>>>>>	ok?
 exec here_doc									>>>>>>	ok?
 recup dernier '<<'								>>>>>>	ok?
 changer list en char **							>>>>>>	ok?
 free here_doc									>>>>>>	ok?
 redirections									>>>>>>	ok?
 sig_error
-leaks
-mettre en commun
+leaks											>>>>>>	ok?
+mettre en commun								>>>>>>	ok?
 norme liena
+
+
+
+
+
+
+redirections -> machin< truc				>>>>>>>>	cest booooon
+leak -> je trouverai jamais je pense		>>>>>>>>	en fait j ai menti j ai trouve 
 
 
 
@@ -229,21 +237,44 @@ else
 
 
 
-=========    8 bytes in 1 blocks are definitely lost in loss record 12 of 75
-==89325==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==89325==    by 0x405CE1: init_here_doc (initialisations.c:43)
-==89325==    by 0x405D7C: insertion (lists.c:25)
-==89325==    by 0x4067C8: recup_pipe2 (recup_pipe.c:112)
-==89325==    by 0x405BA7: recup_pipe (parsing.c:63)
-==89325==    by 0x40595C: recup_args (parsing.c:77)
-==89325==    by 0x405869: parsing (parsing.c:19)
-==89325==    by 0x4014AF: loop (main.c:55)
-==89325==    by 0x4015A0: main (main.c:80)
+$ echo ui $ jio ${i} $} 4$>oui
+$ cat oui
+ui $ jio {i} $}
+$ echo ui $ jio ${i} $} $>oui
+$ cat oui
+ui $ jio {i} $}
+$ echo $>oui
+$ cat oui
+$
+$ echo 4$>oui
+$ cat oui
+4$
+$ echo oui 4$>oui
+$ cat oui
+oui 4$
+$ exit
 
 
 
 
-exit tout quand y'a une redirection
 
 
-
+A REGLER
+cat < Makefile > walter					>>>>>>		voir avec liena
+cat << end								>>>>>>		voir avec liena
+echo hello > /dev/full					>>>>>>		je comprends pas
+cd										>>>>>>		j ai pas compris
+cd $HOME								>>>>>>		ca va etre complique
+                          >             >>>>>>		cest boooon
+|										>>>>>>		cest boooon
+'										>>>>>>		cest boooon
+echo ${USER }							>>>>>>		cest boooon
+">"										>>>>>>		cest boooon
+"<" ">"									>>>>>>		cest boooon
+echo -n ouiji							>>>>>>		cest boooon
+${}										>>>>>>		cest boooon
+$}										>>>>>>		cest boooon
+echo $>oui								>>>>>>		cest boooon
+echo ui $ jio ${i} $} 4$>oui
+echo ui $ jio ${i} $} 4$> oui			>>>>>>		cest boooon
+echo oui ${i} oui						>>>>>>		cets boooon

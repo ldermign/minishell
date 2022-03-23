@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 06:07:10 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/21 13:38:55 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:30:33 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,6 @@ static void	free_redir(char **arg)
 		i++;
 	}
 	free(arg);
-}
-
-void	free_arg_hd(char **args)
-{
-	int	i;
-
-	i = 0;
-	if (args != NULL)
-	{
-		while (args[i] != NULL)
-		{
-			free(args[i]);
-			i++;
-		}
-		free(args);
-	}
 }
 
 int	free_list(t_list_arg *list)
