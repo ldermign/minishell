@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 08:58:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 10:38:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int	good_fd_for_redir_with_pipe(t_args *stack, t_red_std *std, t_pipe *pipex)
 	return (EXIT_SUCCESS);
 }
 
-static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t_red_std *std)
+static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t_execute *exec, t_red_std *std)
 {
 	int		status;
 	pid_t	pid;
@@ -177,7 +177,7 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 		if (is_built_in(stack->arg_to_pass[0]) == EXIT_SUCCESS)
 			built_in(ms, stack);
 		else
-			execute_cmd_execve(ms, stack->arg_to_pass);
+			execute_cmd_execve(ms, exec, stack->arg_to_pass);
 		exit (0);
 	}
 	else
@@ -194,6 +194,7 @@ int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)
 	int			j;
 	int			ret;
 	t_red_std	fd_redir;
+	t_execute	exec;
 
 	ret = 0;
 	if (stack->arg_to_pass != NULL && !ft_is_alpha(stack->arg_to_pass[0][0]))
@@ -207,16 +208,18 @@ int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)
 		|| stack->redir[i][j] == '>' || stack->redir[i][j] == '<')
 		j++;
 	fd_redir.name_file = &(stack->redir[i][j]);
+	init_struct_execute(ms, &exec, stack->arg_to_pass);
 	if (ms->parsing.nb_pipe == 0)
-		return (execute_redirection_built_in_or_execve(ms, stack, &fd_redir));
+		return (execute_redirection_built_in_or_execve(ms, stack, &exec, &fd_redir));
 	good_fd_for_redir_with_pipe(stack, &fd_redir, pipex);
 	if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
-		ret = execute_cmd_execve(ms, stack->arg_to_pass);
+		ret = execute_cmd_execve(ms, &exec, stack->arg_to_pass);
 	else
 		ret = built_in(ms, stack);
 	if (fd_redir.fd_to_read != 0)
 		close(fd_redir.fd_to_read);
 	if (fd_redir.fd_to_write != 0)
 		close(fd_redir.fd_to_write);
+	ft_free_struct_execute(&exec);
 	return (ret);
 }

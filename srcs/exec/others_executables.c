@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 12:52:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 10:32:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ int	is_new_executable(char *str)
 	if (str[0] && str[0] == '.')
 	{
 		if (str[1] && str[1] == '/')
-			return (EXIT_SUCCESS);
+			return (1);
+		else
+			return (2);
 	}
-	return (EXIT_FAILURE);
+	if (str[0] && str[0] == '/')
+		return (3);
+	return (-1);
 }
 
 int	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
@@ -28,6 +32,7 @@ int	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 	pid_t	pid;
 
 	status = 0;
+	// si pas path, voir si ./ / ou a.out fonctionnent
 	pid = fork();
 	if (pid == -1)
 	{
@@ -50,5 +55,6 @@ int	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 			exit (sig_error(NULL, 127));
 		}
 	}
+
 	return (sig_error(NULL, 0));
 }

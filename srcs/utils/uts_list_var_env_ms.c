@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uts_list_var_env_ms.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 02:54:38 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 13:43:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ int	size_env(t_env_ms *minishell)
 
 static t_env_ms	*new_var(char *str)
 {
+	char		*tmp;
 	t_env_ms	*elem;
 
 	elem = malloc(sizeof(t_env_ms));
 	if (!elem)
 		return (NULL);
-	elem->var = str;
+	tmp = ft_strdup(str);
+	elem->var = tmp;
 	elem->next = NULL;
 	return (elem);
 }
@@ -73,7 +75,6 @@ void	supp_var_env_ms(t_env_ms **stack, int pos)
 		first = (*stack)->next;
 	else
 		before->next = (*stack)->next;
-	free((*stack)->var);
 	free(*stack);
 	*stack = first;
 }
@@ -102,11 +103,13 @@ void	change_var_env_minishell(t_env_ms *minishell, char *str, int pos)
 	int	i;
 
 	i = 0;
+	// fprintf(stderr, "str = [%s], ms->var = [%s]\n", str, get_variable_with_pos(minishell, pos));
 	while (i < pos)
 	{
 		minishell = minishell->next;
 		i++;
 	}
+	free(minishell->var);
 	minishell->var = str;
 }
 
@@ -125,12 +128,16 @@ int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
 				return (ret);
 			i++;
 		}
+		// printf("str[i] = %c, str[i + 1] = %c, var[i] = %c\n", str[i], str[i + 1], minishell->var[i]);
 		if ((str[i] == '\0' && minishell->var[i] == '\0')
 			|| (str[i] == '=' && minishell->var[i] == '\0')
 			|| (str[i] == '\0' && minishell->var[i] == '=')
-			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '='
-				&& minishell->var[i] == '='))
+			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '=')
+			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '\0'))
+		{
+			// printf("str == [%s], var = [%s]\n", &str[i], &minishell->var[i]);
 			return (ret);
+		}
 		ret++;
 		i = 0;
 		minishell = minishell->next;
@@ -172,5 +179,7 @@ char	*get_variable_with_pos(t_env_ms *minishell, int pos)
 		i++;
 	}
 	tmp = minishell->var;
+	if (ft_int_strchr(minishell->var, '=') == 0)
+		tmp = ft_strjoin(minishell->var, "=");
 	return (tmp);
 }

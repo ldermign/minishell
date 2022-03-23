@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 08:59:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:21:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ void		there_is_pipe(t_struct *ms);
 **	EXECVE
 */
 
-int			execute_cmd_execve(t_struct *ms, char **cmd);
-int			execute_cmd_with_fork(t_struct *ms, t_args *stack);
+int		execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd);
+int		execute_cmd_with_fork(t_struct *ms, t_args *stack);
 char	**get_new_env(t_env_ms *env_ms);
 char	*get_pwd_and_path(char **env, char *str);
+char	*working_path(char **paths, char *name_fct);
 
 /*
 **	SIG ERROR
@@ -121,6 +122,7 @@ void		init_struct_std(char **args, t_red_std *std, int which);
 // void	reboot_struct_std(t_red_std *std);
 void		init_struct_it(t_it *it);
 void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
+void	init_struct_execute(t_struct *ms, t_execute *exec, char **cmd);
 
 /*
 **	FREE
@@ -129,6 +131,8 @@ void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
 void		free_all_cmds_pompt(t_args *stack);
 void	free_env_ms(t_env_ms *stack);
 void	ft_free_tab_char(char **tabl);
+void	ft_free_struct_execute(t_execute *exec);
+void	ft_free_all(t_struct *ms);
 
 /*
 **	TEMPORAIRE A SUPPRIMEEEEEERRRRRR

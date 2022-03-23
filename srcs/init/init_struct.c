@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/22 14:40:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 10:36:55 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,11 @@ void	init_struct_pipe(t_pipe *pipe, t_struct *ms)
 	pipe->nbr_exec = 0;
 	pipe->fd_to_read = 0;
 	pipe->fd_to_write = 0;
+}
+
+void	init_struct_execute(t_struct *ms, t_execute *exec, char **cmd)
+{
+	exec->new_env = get_new_env(ms->env.env_ms);
+	exec->paths = ft_split(get_pwd_and_path(exec->new_env, "PATH="), ':');
+	exec->str_path = working_path(exec->paths, cmd[0]);
 }

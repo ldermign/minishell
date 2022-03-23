@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 02:53:05 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 15:12:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,49 +104,54 @@ int	pipe_the_good_one(t_pipe *pipex)
 
 void	there_is_pipe(t_struct *ms)
 {
-	t_pipe	*pipex;
-	t_args	*stack;
-	int		i;
+	t_execute	exec;
+	t_args		*stack;
+	int			i;
 
 	stack = ms->args->first;
-	pipex = malloc(sizeof(t_pipe));
-	if (pipex == NULL)
+	ms->pipex = malloc(sizeof(t_pipe));
+	if (ms->pipex == NULL)
 		return ;
-	init_struct_pipe(pipex, ms);
+	init_struct_pipe(ms->pipex, ms);
 	while (stack)
 	{
-		if (pipe_the_good_one(pipex) == EXIT_FAILURE)
+		init_struct_execute(ms, &exec, stack->arg_to_pass);
+		if (pipe_the_good_one(ms->pipex) == EXIT_FAILURE)
 			exit (127); // pas le bon chiffre
-		pipex->nbr_exec++;
-		if (init_fork(&pipex->pid) == -1)
+		ms->pipex->nbr_exec++;
+		if (init_fork(&(ms->pipex->pid)) == -1)
 		{
 			perror("fork");
 			return ;
 		}
-		if (pipex->pid == 0)
+		if (ms->pipex->pid == 0)
 		{
-			close_fd_pipe_child(pipex);
+			close_fd_pipe_child(ms->pipex);
 			if (stack->redir[0] != NULL)
-				exit (redirection(ms, stack, pipex));
+				exit (redirection(ms, stack, ms->pipex));
 		}
 		else
-			close_fd_pipe_main(pipex);
-		if (pipex->pid == 0)
+			close_fd_pipe_main(ms->pipex);
+		if (ms->pipex->pid == 0)
 		{
 			if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
-				exit (execute_cmd_execve(ms, stack->arg_to_pass));
+			{
+				// ft_free_all(ms); // NON
+				exit (execute_cmd_execve(ms, &exec, stack->arg_to_pass));
+			}
 			else
 				exit (built_in(ms, stack));
 		}
+		ft_free_struct_execute(&exec);
 		stack = stack->next;
-		pipex->cmd_nbr++;
-		pipex->pipe++;
+		ms->pipex->cmd_nbr++;
+		ms->pipex->pipe++;
 	}
 	i = 0;
-	while (i < pipex->nbr_exec)
+	while (i < ms->pipex->nbr_exec)
 	{
 		wait(NULL);
 		i++;
 	}
-	free(pipex);
+	free(ms->pipex);
 }

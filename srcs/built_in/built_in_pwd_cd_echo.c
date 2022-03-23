@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 08:58:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:51:19 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ void	change_old_pwd(t_env_ms **stack, char *name, char *str)
 	*stack = first;
 }
 
+static void	go_to_home(t_env *env)
+{
+	int		pos;
+	char	*home;
+
+	pos = check_if_variable_already_exist(env->env_ms, "HOME=");
+	if (pos == -1)
+		return ;
+	home = get_variable_with_pos(env->env_ms, pos);
+	if (chdir(&home[5]) == -1)
+		sig_error("cd", errno);
+}
+
 int	built_in_cd(t_env *env, char *new_to_go)
 {
 	int		ret;
@@ -30,20 +43,25 @@ int	built_in_cd(t_env *env, char *new_to_go)
 	char	*old_pwd;
 	char	act_path[PATH_MAX];
 
+	if (new_to_go == NULL)
+	{
+		go_to_home(env);
+		return (1);
+	}
 	ret = check_if_variable_already_exist(env->env_ms, "OLDPWD=");
-	old_pwd = ft_alloc_strcat("OLDPWD=", getcwd(act_path, sizeof(act_path)));
+	old_pwd = ft_strjoin("OLDPWD=", getcwd(act_path, sizeof(act_path)));
 	if (ret == -1)
 		add_var_env_minishell(&(env->env_ms), old_pwd);
 	else
 		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
-	path_to_go = ft_alloc_strcat("./", new_to_go);
+	path_to_go = ft_strjoin("./", new_to_go);
 	if (chdir(path_to_go) == -1)
 		sig_error("cd", errno);
 	free(path_to_go);
-	path_to_go = ft_alloc_strcat("PWD=", getcwd(act_path, sizeof(act_path)));
-	env->abs = act_path;
+	path_to_go = ft_strjoin("PWD=", getcwd(act_path, sizeof(act_path)));
 	change_var_env_minishell(env->env_ms, path_to_go,
 		check_if_variable_already_exist(env->env_ms, "PWD="));
+	// free(path_to_go);
 	return (1);
 }
 
@@ -60,27 +78,6 @@ int	built_in_pwd()
 		sig_error("getcwd", errno);
 	return (1);
 }
-
-// int	echo_sig_error(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str[i] && str[i] == ' ')
-// 		i++;
-// 	i += 4;
-// 	while (str[i] && str[i] == ' ')
-// 		i++;
-// 	if (str[i] == '$')
-// 		i++;
-// 	if (str[i] == '?')
-// 		i++;
-// 	while (str[i] && str[i] == ' ')
-// 		i++;
-// 	if (str[i] == '\0')
-// 		return (EXIT_SUCCESS);
-// 	return (EXIT_FAILURE);
-// }
 
 int	built_in_echo(t_struct *ms)
 {

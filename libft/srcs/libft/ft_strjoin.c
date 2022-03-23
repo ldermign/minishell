@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 21:51:48 by ldermign          #+#    #+#             */
-/*   Updated: 2021/04/25 14:39:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:31:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = -1;
 	j = -1;
-	size_tot = ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1;
-	dst = (char *)malloc(sizeof(char) * size_tot);
+	size_tot = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	dst = malloc(sizeof(char) * (size_tot + 1));
 	if (dst == NULL)
 		return (NULL);
 	while (s1[++i])

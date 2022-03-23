@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/22 14:04:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 15:05:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ typedef struct s_env_minishell
 typedef struct s_environnement
 {
 	char		**env_bash;	// env de bash
-	char		**path;		// variable d'environnement PATH de bash
-	char		*abs;		// chemin absolu du minishell
 	t_env_ms	*env_ms;
 }	t_env;
 
@@ -87,28 +85,27 @@ typedef struct s_redirection_std
 	char	*name_file;
 }	t_red_std;
 
-typedef struct s_structure
+typedef struct s_execute
 {
-	pid_t			pid;
-	t_parsing		parsing;
-	t_env			env;
-	t_list_arg		*args;
-	t_red_std		std;		// pas forcement
-	char			*prompt;
-}	t_struct;
+	char	**new_env;
+	char	**paths;
+	char	*str_path;
+}	t_execute;
 
 typedef struct s_iterator
 {
-	int	i;
-	int	j;
-	int	k;
-	int	l;
-	int	pos;
-	int	add;
-	int	ret;
-	int	len;
-	int	bin;
-	int	equal;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		pos;
+	int		add;
+	int		ret;
+	int		len;
+	int		bin;
+	int		equal;
+	char	*tmp1;
+	char	*tmp2;
 }	t_it;
 
 typedef struct s_pipe
@@ -123,6 +120,18 @@ typedef struct s_pipe
 	int		fd_to_write;
 	pid_t	pid;
 }	t_pipe;
+
+typedef struct s_structure
+{
+	pid_t			pid;
+	t_parsing		parsing;
+	t_env			env;
+	t_list_arg		*args;
+	t_red_std		std;		// pas forcement
+	t_execute		exec;
+	char			*prompt;
+	t_pipe			*pipex;
+}	t_struct;
 
 #endif
 

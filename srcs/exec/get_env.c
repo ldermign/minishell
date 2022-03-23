@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/17 09:42:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:37:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,18 @@ char	*get_pwd_and_path(char **env, char *str)
 	return (NULL);
 }
 
-void	create_env_minishell(t_env_ms **env_minishell, char **env_bash)
+int	recup_var_envs(char **env, t_env *cpy_env)
 {
 	int	i;
 
-	i = 0;
-	while (env_bash[i])
-	{
-		add_var_env_minishell(env_minishell, env_bash[i]);
-		i++;
-	}
-}
-
-int	recup_var_envs(char **env, t_env *cpy_env)
-{
-	// print_tab_char(env);
 	cpy_env->env_bash = NULL;
-	cpy_env->path = NULL;
-	cpy_env->abs = NULL;
 	cpy_env->env_ms = NULL;
 	get_all_env(env, cpy_env);
-	cpy_env->path = ft_split(get_pwd_and_path(env, "PATH="), ':');
-	cpy_env->abs = get_pwd_and_path(env, "PWD=");
-	create_env_minishell(&(cpy_env->env_ms), env);
-	// print_env_ms(&(cpy_env->env_ms));
+	i = 0;
+	while (env[i])
+	{
+		add_var_env_minishell(&(cpy_env->env_ms), env[i]);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }

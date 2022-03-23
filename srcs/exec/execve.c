@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/22 17:47:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 15:28:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*create_path(char *path, char *cmd)
 	return (dst);
 }
 
-static char	*working_path(char **paths, char *name_fct)
+char	*working_path(char **paths, char *name_fct)
 {
 	int		i;
 	int		fd;
@@ -75,9 +75,6 @@ char	**get_new_env(t_env_ms *env_ms)
 		return (NULL);
 	while (env_ms)
 	{
-		new[it.i] = malloc(sizeof(char) * (ft_strlen(env_ms->var) + 1));
-		if (new[it.i] == NULL)
-			return (NULL);
 		new[it.i] = ft_strdup(env_ms->var);
 		it.i++;
 		env_ms = env_ms->next;
@@ -86,38 +83,35 @@ char	**get_new_env(t_env_ms *env_ms)
 	return (new);
 }
 
-int	execute_cmd_execve(t_struct *ms, char **cmd)
+int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 {
-	char	**new_env;
-	char	**paths;
-	char	*str_path;
-
-	new_env = get_new_env(ms->env.env_ms);
-	paths = ft_split(get_pwd_and_path(new_env, "PATH="), ':');
-	str_path = working_path(paths, cmd[0]);
-	if (execve(str_path, cmd, new_env) == -1)
+	// print_tab_char(exec->new_env);
+	// print_tab_char(exec->paths);
+	// printf("%s\n", exec->str_path);	// il est a null
+	if (exec->str_path == NULL || execve(exec->str_path, cmd, exec->new_env) == -1)
 	{
 		printf("minishell: %s: command not found\n", cmd[0]);
-		//	free new_env
-		ft_free_tab_char(new_env);
-		ft_free_tab_char(paths);
+		ft_free_struct_execute(exec);
 		free_list(ms->args);
-		free(str_path);
-		return (sig_error(NULL, 127));
+		if (ms->parsing.nb_pipe > 0)
+			free(ms->pipex);
+		exit (sig_error(NULL, 127));
 	}
-	sig_error(NULL, 0);
-	ft_free_tab_char(new_env);
-	ft_free_tab_char(paths);
-	free(str_path);
+	// sig_error(NULL, 0);
+	// ft_free_tab_char(new_env);
+	// ft_free_tab_char(paths);
+	// free(str_path);
 	return (0);
 }
 
 int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 {
-	int		status;
-	pid_t	pid;
+	int			status;
+	pid_t		pid;
+	t_execute	exec;
 
 	status = 0;
+	init_struct_execute(ms, &exec, stack->arg_to_pass);
 	pid = fork();
 	if (pid == -1)
 		return (sig_error("fork", 127));
@@ -129,6 +123,10 @@ int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 		waitpid(pid, &status, 0);
 	}
 	else
-		exit (execute_cmd_execve(ms, stack->arg_to_pass));
+	{
+		ft_free_all(ms);
+		execute_cmd_execve(ms, &exec, stack->arg_to_pass);
+	}
+	ft_free_struct_execute(&exec);
 	return (0);
 }
