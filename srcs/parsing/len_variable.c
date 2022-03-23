@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 00:54:11 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 23:15:59 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 05:29:01 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,16 @@ int	len_variable2(char *line, t_struct *minish, int i)
 int	if_is_empty(char *line, int i)
 {
 	i++;
+	if (line[i] == '{')
+	{
+		while (line[i] && line[i] != '}')
+			i++;
+		if (line[i] == '}')
+			i++;
+		while (line[i] == ' ')
+			i++;
+		return (i - 1);
+	}
 	while (line[i] && line[i] != ' ' && line[i] != 34 && line[i] != 39
 		&& line[i] != '<' && line[i] != '>' && line[i] != '$'
 		&& line[i] != '}' && line[i] != '{' && line[i] != ':')
@@ -106,6 +116,13 @@ int	len_variable(char *line, t_struct *minish)
 	int	i;
 
 	i = 0;
+	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
+			|| (line[i + 1] == 34 && minish->parsing.quotes == 1)
+			|| line[i + 1] == '<' || line[i + 1] == '>' || line[i + 1] == '}'))
+	{
+		minish->parsing.len_arg++;
+		return (0);
+	}
 	if (line[i] == '$' && line[i + 1] == '?')
 		return (len_sig_error(minish));
 	if (is_empty(line, minish) == 0)
@@ -114,12 +131,6 @@ int	len_variable(char *line, t_struct *minish)
 		return (-1);
 	if (line[i] == '$' && line[i + 1] == '$')
 		return (double_dollar(minish));
-	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
-			|| (line[i + 1] == 34 && minish->parsing.quotes == 1)))
-	{
-		minish->parsing.len_arg++;
-		return (0);
-	}
 	else
 		i = len_variable2(line, minish, i);
 	return (i - 1);

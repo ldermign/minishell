@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/18 11:27:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:53:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	close_fd_pipe_child(t_pipe *pipex)
 	}
 }
 
-void	close_fd_pipe_main(t_pipe * pipex)
+void	close_fd_pipe_main(t_pipe *pipex)
 {
 	if (pipex->cmd_nbr == 0)
 		close(pipex->fd0[1]);

@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 17:12:59 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/22 21:00:59 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/22 21:21:22 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ t_list_arg	*reverse_list(t_list_arg *list)
 		delete(list);
 	}
 	free(list);
-	// delete(list);
 	return (ret);
 }

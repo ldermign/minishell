@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 12:59:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:33:48 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int			fill_double_quotes(char *line, char *str, t_struct *minish);
 int			fill_sig_error(t_struct *minish, char *str);
 int			fill_simple_quote(char *line, char *str, t_struct *minish);
 int			fill_variable(char *line, char *str, t_struct *minish);
+void		free_arg_hd(char **args);
 int			free_list(t_list_arg *list);
 int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);

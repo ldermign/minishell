@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/22 19:45:09 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 02:58:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	built_in_echo(t_struct *ms)
 	if (write(1, ms->parsing.result, len) == -1)
 	{
 		free(ms->parsing.result);
-		printf("echo: write error: No space left on device\n");
+		printf("echo: write error: No space left on device\n"); // ca marche pas du tout
 		return (EXIT_FAILURE);
 	}
 	// }

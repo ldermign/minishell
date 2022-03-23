@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   empty_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:51:31 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/19 14:25:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 04:38:10 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,17 @@ int	is_empty_brace(char *line, t_struct *minish)
 	i = 2;
 	while (is_variable_char(line[i]) == 0 && line[i] != '}')
 		i++;
-	if (is_variable_char(line[i]) == 1)
+	if (is_variable_char(line[i]) == 1 || i == 2)
 	{
-		printf("${%c}: bad substitution\n", line[i]);
+		i = 0;
+		while (line[i] && line[i] != '}')
+		{
+			write(1, &line[i], 1);
+			i++;
+		}
+		if (line[i] == '}')
+			write(1, "}", 1);
+		write(1, ": bad substitution\n", 19);
 		minish->parsing.error = 3;
 		return (-1);
 	}
@@ -85,7 +93,8 @@ int	is_empty(char *line, t_struct *minish)
 	int		i;
 
 	i = 0;
-	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '))
+	if (line[i] == '$' && (line[i + 1] == '\0' || line[i + 1] == ' '
+			|| line[i + 1] == '<' || line[i + 1] == '>' || line[i + 1] == '}'))
 		return (1);
 	if (line[i + 1] == 34 || line[i + 1] == 39)
 		return (1);

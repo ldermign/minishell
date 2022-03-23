@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/21 16:11:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 03:05:54 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ char	*get_name_left(char *str)
 }
 
 int	good_fd_for_redir_with_pipe(t_args *stack, t_red_std *std, t_pipe *pipex)
-{(void)stack;(void)std;(void)pipex;
+{
+	(void)stack;
+	(void)std;
+	(void)pipex;
 	//	ici, on est sur que y'a des pipes
 	//	on est dans le child
 	//	on est pas a la premiere commande
@@ -141,7 +144,6 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 		else
 			execute_cmd_execve(ms, stack->arg_to_pass);
 		exit (0);
-		
 	}
 	dup2(ret, STDOUT_FILENO);
 	if (std->fd_to_write > 0)

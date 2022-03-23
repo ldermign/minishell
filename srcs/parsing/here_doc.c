@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/20 22:06:26 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/23 02:42:34 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	here_doc(char *str)
 	free(line);
 }
 
+static t_list_hd	*ctrl_d(char *str, t_list_hd *hd)
+{
+	free(str);
+	rl_on_new_line();
+	return (hd);
+}
+
 t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 {
 	char	*line;
@@ -45,11 +52,7 @@ t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 	delete_hd(hd);
 	line = readline("> ");
 	if (line == NULL)
-	{
-		free(str);
-		rl_on_new_line();
-		return (hd);
-	}
+		return (ctrl_d(str, hd));
 	while (ft_strcmp(line, str) != 0)
 	{
 		insertion_here_doc(hd, ft_strdup(line));

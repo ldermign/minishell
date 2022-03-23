@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_hd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 08:10:26 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/21 13:49:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:32:02 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,13 @@ int	delete_hd(t_list_hd *list)
 	t_here_doc	*to_delete;
 
 	if (list == NULL)
-	{
-		// printf("oui\n");
 		return (-1);
-	}
 	if (list->first != NULL)
 	{
 		to_delete = list->first;
 		list->first = list->first->next;
 		free(to_delete);
 	}
-	// printf("oui\n");
 	return (0);
 }
 
@@ -76,22 +72,4 @@ t_list_hd	*reverse_list_hd(t_list_hd *list)
 	free(list->first);
 	free(list);
 	return (ret);
-}
-
-int	free_list_hd(t_list_hd *list)
-{
-	t_here_doc	*to_delete;
-
-	if (list == NULL)
-		return (-1);
-	while (list->first != NULL)
-	{
-		to_delete = list->first;
-		list->first = list->first->next;
-		free(to_delete);
-	}
-	free(list);
-	// free(list);
-	list = NULL;
-	return (0);
 }

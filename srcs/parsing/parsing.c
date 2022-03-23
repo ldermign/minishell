@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 16:42:38 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/22 20:26:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/22 21:11:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	parsing(char *line, t_struct *minish)
 	init_parsing(&minish->parsing);
 	if (recup_args(line, minish) == -1)
 	{
-		printf("ouiii\n");
-		print_list(minish->args);
 		minish->args = reverse_list(minish->args);
 		exec_here_doc(minish->args, minish);
 		if (minish->parsing.error == 2)
@@ -33,7 +31,7 @@ int	parsing(char *line, t_struct *minish)
 	redirections(minish->args, minish);
 	if (minish->parsing.error != 0)
 	{
-		// free_list(minish->args);
+		free_list(minish->args);
 		return (-1);
 	}
 	minish->parsing.nb_pipe -= 1;
