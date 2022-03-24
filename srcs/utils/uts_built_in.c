@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/20 16:51:52 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 09:33:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,6 @@ char	*get_good_variable(char *prompt, int size, int add, int pos)
 		i++;
 	}
 	str[j] = '\0';
+	fprintf(stderr, "[%s]\n", str);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 16:07:19 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 09:35:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ char	*get_str_export(char *str)
 	int		len_name;
 	char	*new;
 
-	len_tot = ft_strlen(str) + 3;
+	len_tot = ft_strlen(str) + 10;
 	if (ft_int_strchr(str, '=') == 0)
-		len_tot -= 3;
+		len_tot -= 2;
 	len_name = 0;
 	while (str[len_name] && str[len_name] != '=')
 			len_name++;
@@ -80,6 +80,7 @@ char	*get_str_export(char *str)
 		return (NULL);
 	get_export(new);
 	i = 7;
+	// printf("[%d]\n", len_tot);
 	len_name += 7;
 	j = 0;
 	while (i < len_name)
@@ -94,14 +95,18 @@ char	*get_str_export(char *str)
 		i++;
 		j++;
 		new[i] = '"';
+		i++;
 		while (str[j])
 		{
+			new[i] = str[j];
 			i++;
 			j++;
-			new[i] = str[j];
 		}
 		new[i] = '"';
+		i++;
 	}
+	new[i] = '\n';
+	i++;
 	new[i] = '\0';
 	return (new);
 }
@@ -132,20 +137,8 @@ static int	print_in_alphabetical_order(t_env_ms **env)
 		len_name = 0;
 		test = get_str_export(copy[i]);
 		write(1, test, ft_strlen(test));
-		// while (copy[i][len_name] && copy[i][len_name] != '=')
-		// 	len_name++;
-		// write(1, "export ", 8);
-		// write(1, copy[i], len_name);
-		// if (copy[i][len_name])
-		// {
-		// 	write(1, "=\"", 2);
-		// 	len_name++;
-		// 	if (copy[i][len_name])
-		// 		write(1, &copy[i][len_name], ft_strlen(copy[i]) - len_name);
-		// 	write(1, "\"", 1);
-		// }
-		// write(1, "\n", 1);
-		// i++;
+		free(test);
+		i++;
 	}
 	ft_free_tab(copy);
 	return (EXIT_SUCCESS);
@@ -180,8 +173,6 @@ int	built_in_export(t_args *cmd, t_env_ms **env)
 		if (it.add != -1)
 		{
 			it.pos = check_if_variable_already_exist(*env, cmd->arg_to_pass[it.i]);
-			// printf("[%d][%s]\n", it.pos, get_variable_with_pos(*env, it.pos));
-			// exit (0);
 			it.len = size_variable(cmd->arg_to_pass[it.i], it.add, it.pos);
 			if (it.add == 1 && it.pos != -1)
 			{
@@ -194,7 +185,10 @@ int	built_in_export(t_args *cmd, t_env_ms **env)
 			else
 				str = get_good_variable(cmd->arg_to_pass[it.i], it.len, it.add, it.pos);
 			if (it.pos == -1)
+			{
 				add_var_env_minishell(env, str);
+				free(str);
+			}
 			else if (it.pos != -1 && equal_in_var(cmd->arg_to_pass[it.i]) != -1)
 				change_var_env_minishell(*env, str, it.pos);
 		}
