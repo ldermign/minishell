@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:40:54 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 15:44:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:00:42 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_free_tab_char(char **tabl)
 	int	i;
 
 	i = 0;
+	if (tabl == NULL)
+		return ;
 	while (tabl[i])
 	{
 		free(tabl[i]);
@@ -62,13 +64,15 @@ void	ft_free_struct_execute(t_execute *exec)
 {
 	ft_free_tab_char(exec->new_env);
 	ft_free_tab_char(exec->paths);
-	free(exec->str_path);
+	if (exec->str_path != NULL)
+		free(exec->str_path);
 }
 
 void	ft_free_all(t_struct *ms)
 {
 	// free(ms->prompt);
-	free(ms->env.env_bash);
+	if (ms->env.env_bash != NULL)
+		free(ms->env.env_bash);
 	free_env_ms(ms->env.env_ms);
 }
 

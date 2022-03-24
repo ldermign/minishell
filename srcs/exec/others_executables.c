@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 10:32:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:30:42 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ int	is_new_executable(char *str)
 	return (-1);
 }
 
-int	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
+int	other_executable(t_struct *ms, t_args *cmd)
 {
-	int		status;
-	pid_t	pid;
+	int			status;
+	pid_t		pid;
+	char		**new_env;
 
 	status = 0;
+	new_env = get_new_env(ms->env.env_ms);
 	// si pas path, voir si ./ / ou a.out fonctionnent
 	pid = fork();
 	if (pid == -1)
@@ -48,13 +50,15 @@ int	other_executable(t_struct *ms, t_args *cmd, char **env_bash)
 	}
 	else
 	{
-		if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, env_bash) == -1)
+		if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, new_env) == -1)
 		{
+			free_env_ms(ms->env.env_ms);
+			ft_free_tab_char(new_env);
 			printf("minishell: %s: command not found\n", cmd->arg_to_pass[0]);
 			//	free
 			exit (sig_error(NULL, 127));
 		}
 	}
-
-	return (sig_error(NULL, 0));
+	ft_free_tab_char(new_env);
+	return (0);
 }

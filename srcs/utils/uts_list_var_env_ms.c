@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 13:43:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:21:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	supp_var_env_ms(t_env_ms **stack, int pos)
 		first = (*stack)->next;
 	else
 		before->next = (*stack)->next;
+	free((*stack)->var);
 	free(*stack);
 	*stack = first;
 }

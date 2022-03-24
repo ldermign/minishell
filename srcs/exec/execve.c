@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 15:28:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:33:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 		printf("minishell: %s: command not found\n", cmd[0]);
 		ft_free_struct_execute(exec);
 		free_list(ms->args);
+		// free_env_ms(ms->env.env_ms);
 		if (ms->parsing.nb_pipe > 0)
 			free(ms->pipex);
 		exit (sig_error(NULL, 127));

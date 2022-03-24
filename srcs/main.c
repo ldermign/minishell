@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 10:30:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:22:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	command(t_struct *ms)
 	if (ms->parsing.nb_pipe > 0)
 		there_is_pipe(ms);
 	else if (is_new_executable(all_cmds->command) != -1)
-		other_executable(ms, all_cmds, ms->env.env_bash);
+		other_executable(ms, all_cmds);
 	else if (last != -1)
 		redirection(ms, all_cmds, NULL);
 	else if (last == -1 && built_in(ms, all_cmds) == -1)

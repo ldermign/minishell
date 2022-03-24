@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 14:21:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/24 13:03:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char		*get_variable_with_pos(t_env_ms *minishell, int pos);
 **	OTHERS EXECUTABLES
 */
 
-int			other_executable(t_struct *ms, t_args *cmd, char **env_bash);
+int			other_executable(t_struct *ms, t_args *cmd);
 int			is_new_executable(char *str);
 
 /*
