@@ -275,6 +275,7 @@ echo -n ouiji							>>>>>>		cest boooon
 ${}										>>>>>>		cest boooon
 $}										>>>>>>		cest boooon
 echo $>oui								>>>>>>		cest boooon
-echo ui $ jio ${i} $} 4$>oui
+echo ui $ jio ${i} $} 4$>oui			>>>>>>		cest boooon
 echo ui $ jio ${i} $} 4$> oui			>>>>>>		cest boooon
 echo oui ${i} oui						>>>>>>		cets boooon
+cd .. trop de fois 						>>>>>>		bah en fait ca marche maintenant
