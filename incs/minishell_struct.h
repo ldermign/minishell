@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 15:05:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 13:28:18 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_env_minishell
 
 typedef struct s_environnement
 {
-	char		**env_bash;	// env de bash
 	t_env_ms	*env_ms;
 }	t_env;
 
@@ -98,6 +97,11 @@ typedef struct s_iterator
 	int		j;
 	int		k;
 	int		l;
+	int		right;
+	int		right_right;
+	int		left;
+	int		left_left;
+	int		last;
 	int		pos;
 	int		add;
 	int		ret;

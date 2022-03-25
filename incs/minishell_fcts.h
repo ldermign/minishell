@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/24 13:03:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 14:17:01 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,12 @@ int			sig_error(char *str, int nbr);
 int			redirection_first(char *args);
 int			only_right(char **args);
 int			is_redir(char **args, char *str);
-int			last_redir(char **args);
+int			last_redir(char *args);
 int			pos_last_redir_left(char **args);
 int			pos_last_redir_right(char **args);
+int		max(int nb1, int nb2);
+int		last_right(char *str);
+int		last_left(char *str);
 
 /*
 **	UTILS
@@ -118,7 +121,7 @@ int			is_new_executable(char *str);
 **	INIT
 */
 
-void		init_struct_std(char **args, t_red_std *std, int which);
+void		init_struct_std(t_args *stack, t_red_std *std, int which);
 // void	reboot_struct_std(t_red_std *std);
 void		init_struct_it(t_it *it);
 void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
