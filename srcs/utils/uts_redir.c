@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/14 15:54:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:17:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,67 @@ int	is_redir(char **args, char *str)
 	return (0);
 }
 
-int	last_redir(char **args)
+int	max(int nb1, int nb2)
+{
+	if (nb1 > nb2)
+		return (nb1);
+	return (nb2);
+}
+
+int	last_right(char *str)
 {
 	int	i;
-	int	last;
+	int	ret_r;
+	int	ret_rr;
 
 	i = 0;
-	last = -1;
-	while (args[i])
+	ret_r = -1;
+	ret_rr = -1;
+	while (str[i])
 	{
-		if (args[i][1] != ' ' && (args[i][0] == '>' || args[i][0] == '<'))
+		if (str[i] == '>')
 		{
-			if (args[i][0] == '>' && args[i][1] == '>' && args[i][2])
-				last = 3;
-			if (args[i][0] == '<' && args[i][1] == '<' && args[i][2])
-				last = 4;
+			i++;
+			if (str[i] && str[i] == '>')
+				ret_rr = i;
+			else
+				ret_r = i;
 		}
-		else if (args[i][0] == '>')
-			last = 1;
-		else if (args[i][0] == '<')
-			last = 2;
 		i++;
 	}
-	return (last);
+	if (ret_r == -1 && ret_rr == -1)
+		return (-1);
+	if (ret_r > ret_rr)
+		return (1);
+	return (3);
+}
+
+int	last_left(char *str)
+{
+	int	i;
+	int	ret_l;
+	int	ret_ll;
+
+	i = 0;
+	ret_l = -1;
+	ret_ll = -1;
+	while (str[i])
+	{
+		if (str[i] == '<')
+		{
+			i++;
+			if (str[i] && str[i] == '<')
+				ret_ll = i;
+			else
+				ret_l = i;
+		}
+		i++;
+	}
+	if (ret_l == -1 && ret_ll == -1)
+		return (-1);
+	if (ret_l > ret_ll)
+		return (2);
+	return (4);
 }
 
 int	is_built_in(char *str)

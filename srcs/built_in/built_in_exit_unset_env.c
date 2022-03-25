@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 11:01:25 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 10:42:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	built_in_exit(t_env *env, char **cmd, char *prompt)
 	}
 	free_lst(env->env_ms);
 	ft_free_tab(cmd);
-	// ft_free_tab(env->env_bash); // il me dit qu'il faut pas free parce que j'ai pas alloue mais si ouesh...
 	// free(env->rel); faut l'allouer d'abord en fait....
 	free(prompt);
 	exit (0);

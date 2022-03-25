@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:40:54 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 09:16:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 10:42:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	ft_free_struct_execute(t_execute *exec)
 void	ft_free_all(t_struct *ms)
 {
 	// free(ms->prompt);
-	if (ms->env.env_bash != NULL)
-		free(ms->env.env_bash);
 	free_env_ms(ms->env.env_ms);
 }
 

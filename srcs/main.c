@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 09:16:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:16:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ void	command(t_struct *ms)
 	if (ms->args->first->arg_to_pass == NULL)
 		return ;
 	all_cmds = ms->args->first;
-	// print_stack_cmd(all_cmds);
-	last = last_redir(all_cmds->redir);
-	init_struct_std(all_cmds->redir, &(*ms).std, last);
+	last = max(last_left(all_cmds->command), last_right(all_cmds->command));
+	init_struct_std(all_cmds, &(*ms).std, last);
 	if (ms->parsing.nb_pipe > 0)
 		there_is_pipe(ms);
 	else if (is_new_executable(all_cmds->command) != -1)
 		other_executable(ms, all_cmds);
-	else if (last != -1)
+	else if (last != -1 || ft_pos_strstr(all_cmds->command, "<<"))
 		redirection(ms, all_cmds, NULL);
 	else if (last == -1 && built_in(ms, all_cmds) == -1)
 		execute_cmd_with_fork(ms, all_cmds);

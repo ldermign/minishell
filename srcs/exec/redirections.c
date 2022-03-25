@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/23 10:38:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/25 14:40:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@
 // 	dup2(std->fd_to_read, 0);
 // 	dup2(std->fd_to_write, 1);
 // }
+
+// if (pipe(pipefd) == -1)
+// {
+// 	perror("pipe fd");
+// 	return (EXIT_FAILURE);
+// }
+// line = readline("> ");
+// while (ft_strcmp(line, stack->arg_to_pass[std->last_left + 1]) != 0)
+// {
+// 	write(pipefd[1], line, ft_strlen(line));
+// 	write(pipefd[1], "\n", 1);
+// 	line = readline("> ");
+// }
+// dup2(pipefd[0], STDIN_FILENO);
+// close(pipefd[1]);
 
 char	*get_good_string(char *str)
 {
@@ -39,9 +54,12 @@ char	*get_good_string(char *str)
 
 static int	good_fd_for_redir(t_args *stack, t_red_std *std)
 {
+	int		pipefd[2];
 	char	*str;
+	char	*line;
 
 	str = NULL;
+	line = NULL;
 	if (std->both == 0)
 	{
 		if (std->which == 1)
@@ -56,23 +74,28 @@ static int	good_fd_for_redir(t_args *stack, t_red_std *std)
 		if (std->which == 2)
 		{
 			str = get_good_string(stack->redir[std->last_left]);
-			// fprintf(stderr, "[%s]\n", str);
 			std->fd_to_read = open(str, O_RDONLY);
 			dup2(std->fd_to_read, 0);
 			// close(std->fd_to_read);
 		}
-		// else if (std->which == 4)
-		// {
-		// 	line = readline("> ");
-		// 	while (ft_strcmp(line, stack->arg_to_pass[std->last_left + 1]) != 0)
-		// 	{
-		// 		write(pipefd[1], line, ft_strlen(line));
-		// 		write(pipefd[1], "\n", 1);
-		// 		line = readline("> ");
-		// 	}
-		// 	dup2(pipefd[0], STDIN_FILENO);
-		// 	close(pipefd[1]);
-		// }
+		else if (std->which == 4)
+		{
+			int	i = 0;
+			if (pipe(pipefd) == -1)
+			{
+				perror("pipe fd");
+				return (EXIT_FAILURE);
+			}
+			while (stack->args_here_doc[i])
+			{
+				write(pipefd[1], stack->args_here_doc[i], ft_strlen(stack->args_here_doc[i]));
+				write(pipefd[1], "\n", 1);
+				i++;
+			}
+			ft_free_tab_char(stack->args_here_doc);
+			dup2(pipefd[0], STDIN_FILENO);
+			close(pipefd[1]);
+		}
 	}
 	else if (std->both == 1)
 	{
@@ -173,7 +196,6 @@ static int	execute_redirection_built_in_or_execve(t_struct *ms, t_args *stack, t
 	if (pid == 0)
 	{
 		good_fd_for_redir(stack, std);
-		// fprintf(stderr, "ici\n");
 		if (is_built_in(stack->arg_to_pass[0]) == EXIT_SUCCESS)
 			built_in(ms, stack);
 		else
@@ -193,33 +215,33 @@ int	redirection(t_struct *ms, t_args *stack, t_pipe	*pipex)
 	int			i;
 	int			j;
 	int			ret;
-	t_red_std	fd_redir;
 	t_execute	exec;
 
 	ret = 0;
 	if (stack->arg_to_pass != NULL && !ft_is_alpha(stack->arg_to_pass[0][0]))
 		return (1);
-	init_struct_std(stack->redir, &fd_redir, last_redir(stack->redir));
 	i = 0;
-	while (stack->redir[i + 1])
+	while (stack->redir && stack->redir[i] && stack->redir[i + 1])
 		i++;
 	j = 0;
-	while (stack->redir[i][j] == ' '
-		|| stack->redir[i][j] == '>' || stack->redir[i][j] == '<')
+	while (stack->redir && stack->redir[i] && (stack->redir[i][j] == ' '
+		|| stack->redir[i][j] == '>' || stack->redir[i][j] == '<'))
 		j++;
-	fd_redir.name_file = &(stack->redir[i][j]);
+	if (stack->redir)
+		ms->std.name_file = &(stack->redir[i][j]);
 	init_struct_execute(ms, &exec, stack->arg_to_pass);
+
 	if (ms->parsing.nb_pipe == 0)
-		return (execute_redirection_built_in_or_execve(ms, stack, &exec, &fd_redir));
-	good_fd_for_redir_with_pipe(stack, &fd_redir, pipex);
+		return (execute_redirection_built_in_or_execve(ms, stack, &exec, &(ms->std)));
+	good_fd_for_redir_with_pipe(stack, &(ms->std), pipex);
 	if (is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
 		ret = execute_cmd_execve(ms, &exec, stack->arg_to_pass);
 	else
 		ret = built_in(ms, stack);
-	if (fd_redir.fd_to_read != 0)
-		close(fd_redir.fd_to_read);
-	if (fd_redir.fd_to_write != 0)
-		close(fd_redir.fd_to_write);
+	if (ms->std.fd_to_read != 0)
+		close(ms->std.fd_to_read);
+	if (ms->std.fd_to_write != 0)
+		close(ms->std.fd_to_write);
 	ft_free_struct_execute(&exec);
 	return (ret);
 }
