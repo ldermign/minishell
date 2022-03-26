@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 09:16:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:45:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	other_executable(t_struct *ms, t_args *cmd)
 		{
 			free_env_ms(ms->env.env_ms);
 			ft_free_tab_char(new_env);
-			printf("minishell: %s: command not found\n", cmd->arg_to_pass[0]);
+			fprintf(stderr, "minishell: %s: command not found\n", cmd->arg_to_pass[0]);
 			//	free
 			exit (sig_error(NULL, 127));
 		}

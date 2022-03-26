@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 10:33:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/26 18:37:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	there_is_pipe(t_struct *ms)
 	init_struct_pipe(ms->pipex, ms);
 	while (stack)
 	{
-		// printf("%s\n", stack->arg_to_pass[0]);
+		// fprintf(stderr, "%s\n", stack->arg_to_pass[0]);
 		if (stack->arg_to_pass)
 			init_struct_execute(ms, &exec, stack->arg_to_pass);
 		if (pipe_the_good_one(ms->pipex) == EXIT_FAILURE)
@@ -129,7 +129,7 @@ void	there_is_pipe(t_struct *ms)
 		if (ms->pipex->pid == 0)
 		{
 			close_fd_pipe_child(ms->pipex);
-			if (stack->redir[0] != NULL)
+			if (stack->redir != NULL)
 				exit (redirection(ms, stack, ms->pipex));
 		}
 		else
@@ -137,12 +137,14 @@ void	there_is_pipe(t_struct *ms)
 		if (ms->pipex->pid == 0)
 		{
 			if (stack->arg_to_pass && is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
-			{
-				// ft_free_all(ms); // NON
 				exit (execute_cmd_execve(ms, &exec, stack->arg_to_pass));
-			}
 			else if (stack->arg_to_pass)
-				exit (built_in(ms, stack));
+			{
+				ft_free_struct_execute(&exec);
+				built_in(ms, stack);
+				ft_free_all(ms);
+			}
+			free(ms->pipex);
 			exit (sig_error(NULL, 0));
 		}
 		if (stack->arg_to_pass)

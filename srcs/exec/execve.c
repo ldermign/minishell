@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 09:16:31 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/26 18:02:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,13 @@ char	**get_new_env(t_env_ms *env_ms)
 
 int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 {
+	ft_free_all(ms);
 	// print_tab_char(exec->new_env);
 	// print_tab_char(exec->paths);
 	// printf("%s\n", exec->str_path);	// il est a null
 	if (exec->str_path == NULL || execve(exec->str_path, cmd, exec->new_env) == -1)
 	{
-		printf("minishell: %s: command not found\n", cmd[0]);
+		fprintf(stderr, "minishell: %s: command not found\n", cmd[0]);
 		ft_free_struct_execute(exec);
 		free_list(ms->args);
 		// free_env_ms(ms->env.env_ms);
@@ -125,8 +126,8 @@ int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 	}
 	else
 	{
-		ft_free_all(ms);
 		execute_cmd_execve(ms, &exec, stack->arg_to_pass);
+		ft_free_struct_execute(&exec);
 	}
 	ft_free_struct_execute(&exec);
 	return (0);

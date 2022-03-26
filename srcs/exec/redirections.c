@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 14:40:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:13:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ static int	good_fd_for_redir(t_args *stack, t_red_std *std)
 	else if (std->both == 1)
 	{
 		str = get_good_string(stack->redir[std->last_left]);
-		// fprintf(stderr, "[%s][%s]\n", str, std->name_file);
 		std->fd_to_read = open(str, O_RDONLY, 0644);
 		if (std->which == 1)
 			std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);

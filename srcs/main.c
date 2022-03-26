@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 15:16:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/26 18:54:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,27 @@ void	command(t_struct *ms)
 	last = max(last_left(all_cmds->command), last_right(all_cmds->command));
 	init_struct_std(all_cmds, &(*ms).std, last);
 	if (ms->parsing.nb_pipe > 0)
+	{
+		// fprintf(stderr, "PIPE\n");
 		there_is_pipe(ms);
+		//	free le parsing ici
+		// ft_free_tab_char(ms->args->first->args_here_doc);
+	}
 	else if (is_new_executable(all_cmds->command) != -1)
+	{
+		// fprintf(stderr, "NOUVEL EXECUTABLE\n");
 		other_executable(ms, all_cmds);
-	else if (last != -1 || ft_pos_strstr(all_cmds->command, "<<"))
+	}
+	else if (last != -1 || ft_pos_strstr(all_cmds->command, "<<") != -1)
+	{
+		// fprintf(stderr, "REDIRECTIONS\n");
 		redirection(ms, all_cmds, NULL);
+	}
 	else if (last == -1 && built_in(ms, all_cmds) == -1)
+	{
+		// fprintf(stderr, "PAS BUILT_IN, LS, MKDIR...\n");
 		execute_cmd_with_fork(ms, all_cmds);
+	}
 }
 
 void	loop(t_struct *minish)
@@ -47,6 +61,7 @@ void	loop(t_struct *minish)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		write(1, "exit\n", 5);
+		ft_free_all(minish);
 		exit(sig_error(NULL, 0));
 	}
 	if (line[i] != '\0')
@@ -82,5 +97,7 @@ int	main(int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		loop(&structure);
 	}
+	//	la ???
+	ft_free_all(&structure);
 	return (0);
 }

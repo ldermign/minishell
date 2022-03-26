@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/24 15:21:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:52:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,12 @@ int	size_env(t_env_ms *minishell)
 
 static t_env_ms	*new_var(char *str)
 {
-	char		*tmp;
 	t_env_ms	*elem;
 
 	elem = malloc(sizeof(t_env_ms));
 	if (!elem)
 		return (NULL);
-	tmp = ft_strdup(str);
-	elem->var = tmp;
+	elem->var = ft_strdup(str);
 	elem->next = NULL;
 	return (elem);
 }
