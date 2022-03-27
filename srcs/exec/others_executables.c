@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 17:45:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:36:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	other_executable(t_struct *ms, t_args *cmd)
 	if (pid == -1)
 	{
 		//	free
-		return (sig_error("fork", 127));
+		g_sig_error = 127;
+		return (g_sig_error);
 	}
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
@@ -56,7 +57,8 @@ int	other_executable(t_struct *ms, t_args *cmd)
 			ft_free_tab_char(new_env);
 			fprintf(stderr, "minishell: %s: command not found\n", cmd->arg_to_pass[0]);
 			//	free
-			exit (sig_error(NULL, 127));
+			g_sig_error = 127;
+			exit (g_sig_error);
 		}
 	}
 	ft_free_tab_char(new_env);

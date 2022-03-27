@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 18:02:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:36:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,18 @@ char	**get_new_env(t_env_ms *env_ms)
 int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 {
 	ft_free_all(ms);
-	// print_tab_char(exec->new_env);
-	// print_tab_char(exec->paths);
-	// printf("%s\n", exec->str_path);	// il est a null
 	if (exec->str_path == NULL || execve(exec->str_path, cmd, exec->new_env) == -1)
 	{
 		fprintf(stderr, "minishell: %s: command not found\n", cmd[0]);
 		ft_free_struct_execute(exec);
 		free_list(ms->args);
-		// free_env_ms(ms->env.env_ms);
+		ft_free_all(ms);
 		if (ms->parsing.nb_pipe > 0)
 			free(ms->pipex);
-		exit (sig_error(NULL, 127));
+		g_sig_error = 127;
+		exit (g_sig_error);
 	}
-	// sig_error(NULL, 0);
+	g_sig_error = 0;
 	// ft_free_tab_char(new_env);
 	// ft_free_tab_char(paths);
 	// free(str_path);
@@ -116,7 +114,10 @@ int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 	init_struct_execute(ms, &exec, stack->arg_to_pass);
 	pid = fork();
 	if (pid == -1)
-		return (sig_error("fork", 127));
+	{
+		g_sig_error = 127;
+		return (g_sig_error);
+	}
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
 	if (pid > 0)

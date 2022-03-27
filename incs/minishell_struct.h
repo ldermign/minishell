@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 13:28:18 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 16:42:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ typedef struct s_pipe
 	pid_t	pid;
 }	t_pipe;
 
-typedef struct s_structure
+typedef struct	s_structure
 {
 	pid_t			pid;
 	t_parsing		parsing;

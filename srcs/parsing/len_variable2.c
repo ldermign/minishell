@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 00:58:03 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/18 11:29:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:40:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	len_sig_error(t_struct *minish)
 {
 	char	*str;
 
-	str = ft_itoa(sig_error(NULL, -1));
+	str = ft_itoa(g_sig_error);
 	minish->parsing.len_arg += ft_strlen(str);
 	free(str);
 	return (1);
@@ -56,7 +56,7 @@ int	fill_sig_error(t_struct *minish, char *str)
 	int		i;
 
 	i = 0;
-	sig = ft_itoa(sig_error(NULL, -1));
+	sig = ft_itoa(g_sig_error);
 	while (sig[i])
 	{
 		str[minish->parsing.fill_arg] = sig[i];

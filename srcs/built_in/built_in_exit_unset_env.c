@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 10:42:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:34:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ void	built_in_exit(t_env *env, char **cmd, char *prompt)
 	if (len_tab(cmd) > 2)
 	{
 		printf("minishell: exit: too many arguments\n");
-		sig_error(NULL, 2);
+		g_sig_error = 2;
 	}
 	if (cmd[1] != NULL)
 	{
 		nbr = ft_atol(cmd[1]);
-		sig_error(NULL, ft_atoi(cmd[1]));
+		g_sig_error = ft_atoi(cmd[1]);
 		if (nbr_only(cmd[1]) == EXIT_FAILURE
 			|| ft_strlen(cmd[1]) > 20)
 		{
 			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
-			sig_error(NULL, 2);
+			g_sig_error = 2;
 		}
 	}
 	free_lst(env->env_ms);

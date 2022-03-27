@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:19:51 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/23 02:50:57 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/27 19:41:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_signal_child(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		sig_error(NULL, 131);
+		g_sig_error = 131;
 		write(1, "Quit (core dumped)\n", 19);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -28,7 +28,7 @@ void	handle_signal_child(int sig)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		sig_error(NULL, 130);
+		g_sig_error = 130;
 	}
 }
 
@@ -39,7 +39,7 @@ void	handle_signal(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	sig_error(NULL, 130);
+	g_sig_error = 130;
 }
 
 void	handle_signal_hd(int sig)
@@ -49,5 +49,5 @@ void	handle_signal_hd(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	sig_error(NULL, 130);
+	g_sig_error = 130;
 }

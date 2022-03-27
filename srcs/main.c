@@ -6,11 +6,13 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 18:54:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:33:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_sig_error = 0;
 
 void	command(t_struct *ms)
 {
@@ -62,7 +64,8 @@ void	loop(t_struct *minish)
 		rl_replace_line("", 0);
 		write(1, "exit\n", 5);
 		ft_free_all(minish);
-		exit(sig_error(NULL, 0));
+		g_sig_error = 0;
+		exit(g_sig_error);
 	}
 	if (line[i] != '\0')
 		add_history(line);

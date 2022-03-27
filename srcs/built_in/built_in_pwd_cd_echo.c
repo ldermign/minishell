@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 17:49:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:35:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ static void	go_to_home(t_env *env)
 		return ;
 	home = get_variable_with_pos(env->env_ms, pos);
 	if (chdir(&home[5]) == -1)
-		sig_error("cd", errno);
+	{
+		g_sig_error = 127;	//	non, revoir
+	}
 }
 
 int	built_in_cd(t_env *env, char *new_to_go)
@@ -56,7 +58,7 @@ int	built_in_cd(t_env *env, char *new_to_go)
 		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
 	path_to_go = ft_strjoin("./", new_to_go); 
 	if (chdir(path_to_go) == -1)
-		sig_error("cd", errno);
+		g_sig_error = 127;
 	free(path_to_go);
 	path_to_go = ft_strjoin("PWD=", getcwd(act_path, sizeof(act_path)));
 	change_var_env_minishell(env->env_ms, path_to_go,
@@ -74,7 +76,7 @@ int	built_in_pwd()
 		write(1, "\n", 1);
 	}
 	else
-		sig_error("getcwd", errno);
+		g_sig_error = 127;
 	return (1);
 }
 
@@ -85,15 +87,6 @@ int	built_in_echo(t_struct *ms)
 
 	sig = 0;
 	len = ft_strlen(ms->parsing.result);
-	// if (echo_sig_error(ms->args->first->command) == EXIT_FAILURE)
-	// {
-	// 	// fprintf(stderr, "test\n");
-	// 	sig = ft_itoa(sig_error(NULL, -1));
-	// 	free(sig);
-	// }
-	// else
-	// {
-	// 	// fprintf(stderr, "test\n");
 	if (write(1, ms->parsing.result, len) == -1)
 	{
 		free(ms->parsing.result);
@@ -104,6 +97,6 @@ int	built_in_echo(t_struct *ms)
 	if (ms->parsing.option != 1)
 		write(1, "\n", 1);
 	free(ms->parsing.result);
-	sig_error(NULL, 0);
+	g_sig_error = 0;
 	return (EXIT_SUCCESS);
 }

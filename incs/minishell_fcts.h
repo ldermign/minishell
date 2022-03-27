@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 14:17:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:33:16 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ int		execute_cmd_with_fork(t_struct *ms, t_args *stack);
 char	**get_new_env(t_env_ms *env_ms);
 char	*get_pwd_and_path(char **env, char *str);
 char	*working_path(char **paths, char *name_fct);
-
-/*
-**	SIG ERROR
-*/
-
-int			sig_error(char *str, int nbr);
 
 /*
 **	UTILS REDIRECTIONS

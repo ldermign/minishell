@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/24 15:29:11 by ldermign         ###   ########.fr        #
+#    Updated: 2022/03/27 19:39:03 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCS	=	./incs/
 
 SRCS	=	./srcs/main.c \
 			./srcs/exec/get_env.c ./srcs/exec/execve.c ./srcs/exec/redirections.c \
-			./srcs/exec/sig_error.c ./srcs/exec/new_fd_before_execve.c \
+			./srcs/exec/new_fd_before_execve.c \
 			./srcs/built_in/built_in.c ./srcs/built_in/built_in_pwd_cd_echo.c \
 			./srcs/built_in/built_in_exit_unset_env.c ./srcs/built_in/built_in_export.c \
 			./srcs/utils/uts_split_ms.c ./srcs/utils/uts_built_in.c \

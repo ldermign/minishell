@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 18:37:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:41:31 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init_fork(int *pid)
 	*pid = fork();
 	if (*pid == -1)
 	{
-		sig_error("fork", 127);
+		g_sig_error = 127;
 		return (-1);
 	}
 	return (1);
@@ -129,7 +129,7 @@ void	there_is_pipe(t_struct *ms)
 		if (ms->pipex->pid == 0)
 		{
 			close_fd_pipe_child(ms->pipex);
-			if (stack->redir != NULL)
+			if (stack->redir && stack->redir[0] != NULL)
 				exit (redirection(ms, stack, ms->pipex));
 		}
 		else
@@ -145,7 +145,8 @@ void	there_is_pipe(t_struct *ms)
 				ft_free_all(ms);
 			}
 			free(ms->pipex);
-			exit (sig_error(NULL, 0));
+			g_sig_error = 0;
+			exit (g_sig_error);
 		}
 		if (stack->arg_to_pass)
 			ft_free_struct_execute(&exec);
