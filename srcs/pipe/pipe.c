@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 19:41:31 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 16:03:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	there_is_pipe(t_struct *ms)
 {
 	t_execute	exec;
 	t_args		*stack;
+	int			last;
 	int			i;
 
 	stack = ms->args->first;
@@ -115,7 +116,9 @@ void	there_is_pipe(t_struct *ms)
 	init_struct_pipe(ms->pipex, ms);
 	while (stack)
 	{
-		// fprintf(stderr, "%s\n", stack->arg_to_pass[0]);
+		last = max(last_left(stack->command), last_right(stack->command));
+		init_struct_std(stack, &(*ms).std, last);
+		// fprintf(stderr, "last = %d\n", last);
 		if (stack->arg_to_pass)
 			init_struct_execute(ms, &exec, stack->arg_to_pass);
 		if (pipe_the_good_one(ms->pipex) == EXIT_FAILURE)
@@ -129,25 +132,34 @@ void	there_is_pipe(t_struct *ms)
 		if (ms->pipex->pid == 0)
 		{
 			close_fd_pipe_child(ms->pipex);
-			if (stack->redir && stack->redir[0] != NULL)
+			if (ms->std.which == 4 || (stack->redir && stack->redir[0] != NULL))
+			{
+				free(ms->pipex);
 				exit (redirection(ms, stack, ms->pipex));
+			}
 		}
 		else
 			close_fd_pipe_main(ms->pipex);
 		if (ms->pipex->pid == 0)
 		{
 			if (stack->arg_to_pass && is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
+			{
+				// fprintf(stderr, "PAS ICI !\n");
 				exit (execute_cmd_execve(ms, &exec, stack->arg_to_pass));
+			}
 			else if (stack->arg_to_pass)
 			{
 				ft_free_struct_execute(&exec);
 				built_in(ms, stack);
+				free_list(ms->args);
 				ft_free_all(ms);
 			}
+			// fprintf(stderr, "la\n");
 			free(ms->pipex);
-			g_sig_error = 0;
+			// fprintf(stderr, "g_sig fin d'un tour de boucle de pipe = %d\n", g_sig_error);
 			exit (g_sig_error);
 		}
+		// fprintf(stderr, "apres les forks = %d\n", g_sig_error);
 		if (stack->arg_to_pass)
 			ft_free_struct_execute(&exec);
 		stack = stack->next;

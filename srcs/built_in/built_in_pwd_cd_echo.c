@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 19:35:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:18:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	built_in_cd(t_env *env, char *new_to_go)
 	path_to_go = ft_strjoin("PWD=", getcwd(act_path, sizeof(act_path)));
 	change_var_env_minishell(env->env_ms, path_to_go,
 		check_if_variable_already_exist(env->env_ms, "PWD="));
-	return (1);
+	g_sig_error = 0;
+	return (g_sig_error);
 }
 
 int	built_in_pwd()
@@ -74,10 +75,11 @@ int	built_in_pwd()
 	{
 		write(1, actual_path, ft_strlen(actual_path));
 		write(1, "\n", 1);
+		g_sig_error = 0;
 	}
 	else
 		g_sig_error = 127;
-	return (1);
+	return (g_sig_error);
 }
 
 int	built_in_echo(t_struct *ms)
@@ -90,13 +92,13 @@ int	built_in_echo(t_struct *ms)
 	if (write(1, ms->parsing.result, len) == -1)
 	{
 		free(ms->parsing.result);
-		printf("echo: write error: No space left on device\n"); // ca marche pas du tout
+		fprintf(stderr, "echo: write error: No space left on device\n"); // ca marche pas du tout
 		return (EXIT_FAILURE);
 	}
-	// }
 	if (ms->parsing.option != 1)
 		write(1, "\n", 1);
 	free(ms->parsing.result);
 	g_sig_error = 0;
-	return (EXIT_SUCCESS);
+	//	checker si pas echo $?
+	return (g_sig_error);
 }

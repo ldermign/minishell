@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 19:52:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 13:47:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	**get_new_env(t_env_ms *env_ms)
 int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 {
 	ft_free_all(ms);
+	// free_list(ms->args);
 	if (exec->str_path == NULL || execve(exec->str_path, cmd, exec->new_env) == -1)
 	{
 		fprintf(stderr, "minishell: %s: command not found\n", cmd[0]);
@@ -97,9 +98,6 @@ int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 		exit (g_sig_error);
 	}
 	g_sig_error = 0;
-	// ft_free_tab_char(new_env);
-	// ft_free_tab_char(paths);
-	// free(str_path);
 	return (0);
 }
 

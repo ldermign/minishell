@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 19:53:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 13:34:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	command(t_struct *ms)
 	{
 		// fprintf(stderr, "PIPE\n");
 		there_is_pipe(ms);
+		// fprintf(stderr, "dernier message ?\n");
 		//	free le parsing ici
 		// ft_free_tab_char(ms->args->first->args_here_doc);
 	}

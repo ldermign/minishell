@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 14:31:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:01:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	init_struct_execute(t_struct *ms, t_execute *exec, char **cmd)
 	// print_tab_char(exec->new_env);
 	exec->paths = ft_split(get_pwd_and_path(exec->new_env, "PATH="), ':');
 	// print_tab_char(exec->paths);
-	if (exec->paths != NULL)
+	// fprintf(stderr, "cmd[0] = %s\n", cmd[0]);
+	if (exec->paths != NULL && cmd != NULL)
 		exec->str_path = working_path(exec->paths, cmd[0]);
 	else
 		exec->str_path = NULL;

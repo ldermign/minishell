@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 19:34:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 13:53:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ static int	len_tab(char **tabl)
 	return (i);
 }
 
-void	built_in_exit(t_env *env, char **cmd, char *prompt)
+int	built_in_exit(t_struct *ms, char **cmd, char *prompt)
 {
 	int	nbr;
 
 	nbr = 0;
-	printf("exit\n");
+	if (ms->parsing.nb_pipe == 0)
+		printf("exit\n");
 	if (len_tab(cmd) > 2)
 	{
-		printf("minishell: exit: too many arguments\n");
-		g_sig_error = 2;
+		fprintf(stderr, "minishell: exit: too many arguments\n");
+		g_sig_error = 1;
+		return (EXIT_SUCCESS);
 	}
 	if (cmd[1] != NULL)
 	{
@@ -54,15 +56,17 @@ void	built_in_exit(t_env *env, char **cmd, char *prompt)
 		if (nbr_only(cmd[1]) == EXIT_FAILURE
 			|| ft_strlen(cmd[1]) > 20)
 		{
-			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
+			fprintf(stderr, "minishell: exit: %s: numeric argument required\n", cmd[1]);
 			g_sig_error = 2;
 		}
 	}
-	free_lst(env->env_ms);
+	if (ms->parsing.nb_pipe != 0)
+		return (g_sig_error);
 	ft_free_tab(cmd);
-	// free(env->rel); faut l'allouer d'abord en fait....
 	free(prompt);
-	exit (0);
+	// fprintf(stderr, "g_sig fin du built_in = %d\n", g_sig_error);
+	exit (g_sig_error);
+	return (g_sig_error);
 }
 
 int	built_in_unset(t_env *env, t_args *cmd)
@@ -78,7 +82,8 @@ int	built_in_unset(t_env *env, t_args *cmd)
 			supp_var_env_ms(&(env->env_ms), ret);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	g_sig_error = 0;
+	return (g_sig_error);
 }
 
 int	built_in_env(t_env_ms *stack)
@@ -92,5 +97,6 @@ int	built_in_env(t_env_ms *stack)
 		}
 		stack = stack->next;
 	}
-	return (EXIT_SUCCESS);
+	g_sig_error = 0;
+	return (g_sig_error);
 }

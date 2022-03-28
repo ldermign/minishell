@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:38:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/25 15:17:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:30:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,17 @@ int	is_built_in(char *str)
 		|| ft_memcmp(str, "export", 7) == 0
 		|| ft_memcmp(str, "unset", 6) == 0
 		|| ft_memcmp(str, "cd", 3) == 0
+		|| ft_memcmp(str, "exit", 5) == 0)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}
+
+int	is_built_in_write(char *str)
+{
+	if (ft_memcmp(str, "echo", 5) == 0
+		|| ft_memcmp(str, "pwd", 4) == 0
+		|| ft_memcmp(str, "env", 4) == 0
+		|| ft_memcmp(str, "export", 7) == 0
 		|| ft_memcmp(str, "exit", 5) == 0)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);

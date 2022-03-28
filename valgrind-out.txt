@@ -1,183 +1,64 @@
-==69518== Memcheck, a memory error detector
-==69518== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==69518== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==69518== Command: ./minishell
-==69518== Parent PID: 67009
-==69518== 
-==69528== 
-==69528== HEAP SUMMARY:
-==69528==     in use at exit: 214,798 bytes in 445 blocks
-==69528==   total heap usage: 767 allocs, 322 frees, 240,757 bytes allocated
-==69528== 
-==69528== 8 bytes in 1 blocks are still reachable in loss record 5 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x4068F1: init_args (initialisations.c:32)
-==69528==    by 0x406B50: reverse_list (lists.c:69)
-==69528==    by 0x4065DE: recup_args (parsing.c:75)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 13 bytes in 1 blocks are still reachable in loss record 8 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40195B: create_path (execve.c:25)
-==69528==    by 0x401ACB: working_path (execve.c:55)
-==69528==    by 0x405C8B: init_struct_execute (init_struct.c:72)
-==69528==    by 0x4060CC: there_is_pipe (pipe.c:120)
-==69528==    by 0x401341: command (main.c:30)
-==69528==    by 0x401544: loop (main.c:75)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 13 bytes in 3 blocks are still reachable in loss record 9 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x406CA1: fill_arg (sep_args.c:38)
-==69528==    by 0x406D9E: interpret_args (sep_args.c:59)
-==69528==    by 0x406EE9: sep_and_check_args (sep_args.c:89)
-==69528==    by 0x406629: recup_args (parsing.c:80)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 15 bytes in 2 blocks are still reachable in loss record 14 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x4073B5: recup_pipe2 (recup_pipe.c:100)
-==69528==    by 0x406807: recup_pipe (parsing.c:59)
-==69528==    by 0x4065BC: recup_args (parsing.c:73)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 16 bytes in 1 blocks are still reachable in loss record 15 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x404965: new_var (uts_list_var_env_ms.c:49)
-==69528==    by 0x4048D6: add_var_env_minishell (uts_list_var_env_ms.c:87)
-==69528==    by 0x401874: recup_var_envs (get_env.c:72)
-==69528==    by 0x4015D7: main (main.c:92)
-==69528== 
-==69528== 16 bytes in 2 blocks are still reachable in loss record 17 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x406941: init_here_doc (initialisations.c:43)
-==69528==    by 0x40A220: reverse_list_hd (list_hd.c:66)
-==69528==    by 0x40B567: exec_here_doc (here_doc.c:104)
-==69528==    by 0x406E6C: sep_and_check_args (sep_args.c:78)
-==69528==    by 0x406629: recup_args (parsing.c:80)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 16 bytes in 2 blocks are still reachable in loss record 18 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40A9F4: recup_redir (recup_redir.c:118)
-==69528==    by 0x40667C: recup_args (parsing.c:86)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 33 bytes in 1 blocks are still reachable in loss record 22 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40C73B: ft_strdup (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
-==69528==    by 0x40498A: new_var (uts_list_var_env_ms.c:52)
-==69528==    by 0x4048D6: add_var_env_minishell (uts_list_var_env_ms.c:87)
-==69528==    by 0x401874: recup_var_envs (get_env.c:72)
-==69528==    by 0x4015D7: main (main.c:92)
-==69528== 
-==69528== 40 bytes in 2 blocks are still reachable in loss record 24 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x406E9F: sep_and_check_args (sep_args.c:82)
-==69528==    by 0x406629: recup_args (parsing.c:80)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 44 bytes in 1 blocks are still reachable in loss record 25 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x406064: there_is_pipe (pipe.c:112)
-==69528==    by 0x401341: command (main.c:30)
-==69528==    by 0x401544: loop (main.c:75)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 88 bytes in 1 blocks are still reachable in loss record 30 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40C5F5: ft_split (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
-==69528==    by 0x405C5D: init_struct_execute (init_struct.c:69)
-==69528==    by 0x4060CC: there_is_pipe (pipe.c:120)
-==69528==    by 0x401341: command (main.c:30)
-==69528==    by 0x401544: loop (main.c:75)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 96 bytes in 2 blocks are still reachable in loss record 32 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x4069B0: insertion (lists.c:21)
-==69528==    by 0x406B76: reverse_list (lists.c:72)
-==69528==    by 0x4065DE: recup_args (parsing.c:75)
-==69528==    by 0x4064B9: parsing (parsing.c:19)
-==69528==    by 0x401518: loop (main.c:72)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 127 bytes in 10 blocks are still reachable in loss record 34 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40C510: boucle (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
-==69528==    by 0x40C627: ft_split (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
-==69528==    by 0x405C5D: init_struct_execute (init_struct.c:69)
-==69528==    by 0x4060CC: there_is_pipe (pipe.c:120)
-==69528==    by 0x401341: command (main.c:30)
-==69528==    by 0x401544: loop (main.c:75)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 536 bytes in 1 blocks are still reachable in loss record 40 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x401B62: get_new_env (execve.c:73)
-==69528==    by 0x405C30: init_struct_execute (init_struct.c:67)
-==69528==    by 0x4060CC: there_is_pipe (pipe.c:120)
-==69528==    by 0x401341: command (main.c:30)
-==69528==    by 0x401544: loop (main.c:75)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== 1,040 bytes in 65 blocks are still reachable in loss record 48 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x404965: new_var (uts_list_var_env_ms.c:49)
-==69528==    by 0x40492D: add_var_env_minishell (uts_list_var_env_ms.c:95)
-==69528==    by 0x401874: recup_var_envs (get_env.c:72)
-==69528==    by 0x4015D7: main (main.c:92)
-==69528== 
-==69528== 3,997 bytes in 65 blocks are still reachable in loss record 55 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40C73B: ft_strdup (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
-==69528==    by 0x40498A: new_var (uts_list_var_env_ms.c:52)
-==69528==    by 0x40492D: add_var_env_minishell (uts_list_var_env_ms.c:95)
-==69528==    by 0x401874: recup_var_envs (get_env.c:72)
-==69528==    by 0x4015D7: main (main.c:92)
-==69528== 
-==69528== 4,030 bytes in 66 blocks are still reachable in loss record 57 of 79
-==69528==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==69528==    by 0x40C73B: ft_strdup (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
-==69528==    by 0x401B9A: get_new_env (execve.c:78)
-==69528==    by 0x405C30: init_struct_execute (init_struct.c:67)
-==69528==    by 0x4060CC: there_is_pipe (pipe.c:120)
-==69528==    by 0x401341: command (main.c:30)
-==69528==    by 0x401544: loop (main.c:75)
-==69528==    by 0x401620: main (main.c:98)
-==69528== 
-==69528== LEAK SUMMARY:
-==69528==    definitely lost: 0 bytes in 0 blocks
-==69528==    indirectly lost: 0 bytes in 0 blocks
-==69528==      possibly lost: 0 bytes in 0 blocks
-==69528==    still reachable: 10,128 bytes in 226 blocks
-==69528==         suppressed: 204,670 bytes in 219 blocks
-==69528== 
-==69528== For lists of detected and suppressed errors, rerun with: -s
-==69528== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==69518== 
-==69518== HEAP SUMMARY:
-==69518==     in use at exit: 204,655 bytes in 218 blocks
-==69518==   total heap usage: 770 allocs, 552 frees, 240,776 bytes allocated
-==69518== 
-==69518== LEAK SUMMARY:
-==69518==    definitely lost: 0 bytes in 0 blocks
-==69518==    indirectly lost: 0 bytes in 0 blocks
-==69518==      possibly lost: 0 bytes in 0 blocks
-==69518==    still reachable: 0 bytes in 0 blocks
-==69518==         suppressed: 204,655 bytes in 218 blocks
-==69518== 
-==69518== For lists of detected and suppressed errors, rerun with: -s
-==69518== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1607776== Memcheck, a memory error detector
+==1607776== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1607776== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==1607776== Command: ./minishell
+==1607776== Parent PID: 1581675
+==1607776== 
+==1607778== 
+==1607778== HEAP SUMMARY:
+==1607778==     in use at exit: 209,746 bytes in 347 blocks
+==1607778==   total heap usage: 656 allocs, 309 frees, 235,390 bytes allocated
+==1607778== 
+==1607778== 16 bytes in 1 blocks are still reachable in loss record 9 of 66
+==1607778==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1607778==    by 0x404BB5: new_var (uts_list_var_env_ms.c:49)
+==1607778==    by 0x404B26: add_var_env_minishell (uts_list_var_env_ms.c:87)
+==1607778==    by 0x401864: recup_var_envs (get_env.c:72)
+==1607778==    by 0x4015C7: main (main.c:96)
+==1607778== 
+==1607778== 33 bytes in 1 blocks are still reachable in loss record 16 of 66
+==1607778==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1607778==    by 0x40C99B: ft_strdup (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
+==1607778==    by 0x404BDA: new_var (uts_list_var_env_ms.c:52)
+==1607778==    by 0x404B26: add_var_env_minishell (uts_list_var_env_ms.c:87)
+==1607778==    by 0x401864: recup_var_envs (get_env.c:72)
+==1607778==    by 0x4015C7: main (main.c:96)
+==1607778== 
+==1607778== 1,008 bytes in 63 blocks are still reachable in loss record 30 of 66
+==1607778==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1607778==    by 0x404BB5: new_var (uts_list_var_env_ms.c:49)
+==1607778==    by 0x404B7D: add_var_env_minishell (uts_list_var_env_ms.c:95)
+==1607778==    by 0x401864: recup_var_envs (get_env.c:72)
+==1607778==    by 0x4015C7: main (main.c:96)
+==1607778== 
+==1607778== 3,985 bytes in 63 blocks are still reachable in loss record 43 of 66
+==1607778==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1607778==    by 0x40C99B: ft_strdup (in /mnt/nfs/homes/ldermign/Desktop/minishell/minishell)
+==1607778==    by 0x404BDA: new_var (uts_list_var_env_ms.c:52)
+==1607778==    by 0x404B7D: add_var_env_minishell (uts_list_var_env_ms.c:95)
+==1607778==    by 0x401864: recup_var_envs (get_env.c:72)
+==1607778==    by 0x4015C7: main (main.c:96)
+==1607778== 
+==1607778== LEAK SUMMARY:
+==1607778==    definitely lost: 0 bytes in 0 blocks
+==1607778==    indirectly lost: 0 bytes in 0 blocks
+==1607778==      possibly lost: 0 bytes in 0 blocks
+==1607778==    still reachable: 5,042 bytes in 128 blocks
+==1607778==         suppressed: 204,704 bytes in 219 blocks
+==1607778== 
+==1607778== For lists of detected and suppressed errors, rerun with: -s
+==1607778== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1607776== 
+==1607776== HEAP SUMMARY:
+==1607776==     in use at exit: 204,672 bytes in 218 blocks
+==1607776==   total heap usage: 658 allocs, 440 frees, 235,398 bytes allocated
+==1607776== 
+==1607776== LEAK SUMMARY:
+==1607776==    definitely lost: 0 bytes in 0 blocks
+==1607776==    indirectly lost: 0 bytes in 0 blocks
+==1607776==      possibly lost: 0 bytes in 0 blocks
+==1607776==    still reachable: 0 bytes in 0 blocks
+==1607776==         suppressed: 204,672 bytes in 218 blocks
+==1607776== 
+==1607776== For lists of detected and suppressed errors, rerun with: -s
+==1607776== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
