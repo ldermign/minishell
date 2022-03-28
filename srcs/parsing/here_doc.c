@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/23 02:42:34 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/28 17:35:26 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	here_doc(char *str)
 	if (line == NULL)
 	{
 		rl_on_new_line();
+		rl_replace_line("", 0);
+		write(1, "warning: here-document at line 1 delimited by ", 46);
+		printf("end-of-file(wanted `%s')\n", str);
 		return ;
 	}
 	while (ft_strcmp(line, str) != 0)
@@ -29,6 +32,9 @@ void	here_doc(char *str)
 		if (line == NULL)
 		{
 			rl_on_new_line();
+			rl_replace_line("", 0);
+			write(1, "warning: here-document at line 1 delimited by ", 46);
+			printf("end-of-file(wanted `%s')\n", str);
 			return ;
 		}
 	}
@@ -37,8 +43,11 @@ void	here_doc(char *str)
 
 static t_list_hd	*ctrl_d(char *str, t_list_hd *hd)
 {
-	free(str);
 	rl_on_new_line();
+	rl_replace_line("", 0);
+	write(1, "warning: here-document at line 1 delimited by ", 46);
+	printf("end-of-file(wanted `%s')\n", str);
+	free(str);
 	return (hd);
 }
 
@@ -59,8 +68,10 @@ t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 		line = readline("> ");
 		if (line == NULL)
 		{
-			free(str);
 			rl_on_new_line();
+			write(1, "warning: here-document at line 1 delimited by ", 46);
+			printf("end-of-file(wanted `%s')\n", str);
+			free(str);
 			return (hd);
 		}
 	}
