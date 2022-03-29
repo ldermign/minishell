@@ -279,3 +279,251 @@ echo ui $ jio ${i} $} 4$>oui			>>>>>>		cest boooon
 echo ui $ jio ${i} $} 4$> oui			>>>>>>		cest boooon
 echo oui ${i} oui						>>>>>>		cets boooon
 cd .. trop de fois 						>>>>>>		bah en fait ca marche maintenant
+
+
+
+
+
+===================================================================================================================
+===================================================================================================================
+===================================================================================================================
+===================================================================================================================
+
+LEAKS
+
+
+===================================================================================================================
+===================================================================================================================
+
+
+$ ls|gtye|echo oui
+oui
+minishell: gtye: command not found
+==1629834== 
+==1629834== HEAP SUMMARY:
+==1629834==     in use at exit: 204,871 bytes in 231 blocks
+==1629834==   total heap usage: 1,429 allocs, 1,198 frees, 274,047 bytes allocated
+==1629834== 
+==1629834== LEAK SUMMARY:
+==1629834==    definitely lost: 0 bytes in 0 blocks
+==1629834==    indirectly lost: 0 bytes in 0 blocks
+==1629834==      possibly lost: 0 bytes in 0 blocks
+==1629834==    still reachable: 0 bytes in 0 blocks
+==1629834==         suppressed: 204,871 bytes in 231 blocks
+==1629834== 
+==1629834== For lists of detected and suppressed errors, rerun with: -s
+==1629834== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1629833== 
+==1629833== HEAP SUMMARY:
+==1629833==     in use at exit: 204,915 bytes in 232 blocks
+==1629833==   total heap usage: 1,349 allocs, 1,117 frees, 269,424 bytes allocated
+==1629833== 
+==1629833== 44 bytes in 1 blocks are still reachable in loss record 13 of 63
+==1629833==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1629833==    by 0x4065C4: there_is_pipe (pipe.c:113)
+==1629833==    by 0x401341: command (main.c:32)
+==1629833==    by 0x401523: loop (main.c:73)
+==1629833==    by 0x401600: main (main.c:96)
+==1629833== 
+==1629833== LEAK SUMMARY:
+==1629833==    definitely lost: 0 bytes in 0 blocks
+==1629833==    indirectly lost: 0 bytes in 0 blocks
+==1629833==      possibly lost: 0 bytes in 0 blocks
+==1629833==    still reachable: 44 bytes in 1 blocks
+==1629833==         suppressed: 204,871 bytes in 231 blocks
+==1629833== 
+==1629833== For lists of detected and suppressed errors, rerun with: -s
+==1629833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+===================================================================================================================
+===================================================================================================================
+
+
+$ gtye|echo oui
+oui
+minishell: gtye: command not found
+==1630846== 
+==1630846== HEAP SUMMARY:
+==1630846==     in use at exit: 205,107 bytes in 245 blocks
+==1630846==   total heap usage: 2,071 allocs, 1,826 frees, 304,215 bytes allocated
+==1630846== 
+==1630846== LEAK SUMMARY:
+==1630846==    definitely lost: 0 bytes in 0 blocks
+==1630846==    indirectly lost: 0 bytes in 0 blocks
+==1630846==      possibly lost: 0 bytes in 0 blocks
+==1630846==    still reachable: 0 bytes in 0 blocks
+==1630846==         suppressed: 205,107 bytes in 245 blocks
+==1630846== 
+==1630846== For lists of detected and suppressed errors, rerun with: -s
+==1630846== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1630845== 
+==1630845== HEAP SUMMARY:
+==1630845==     in use at exit: 205,151 bytes in 246 blocks
+==1630845==   total heap usage: 1,991 allocs, 1,745 frees, 299,592 bytes allocated
+==1630845== 
+==1630845== 44 bytes in 1 blocks are still reachable in loss record 17 of 68
+==1630845==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1630845==    by 0x4065C4: there_is_pipe (pipe.c:113)
+==1630845==    by 0x401341: command (main.c:32)
+==1630845==    by 0x401523: loop (main.c:73)
+==1630845==    by 0x401600: main (main.c:96)
+==1630845== 
+==1630845== LEAK SUMMARY:
+==1630845==    definitely lost: 0 bytes in 0 blocks
+==1630845==    indirectly lost: 0 bytes in 0 blocks
+==1630845==      possibly lost: 0 bytes in 0 blocks
+==1630845==    still reachable: 44 bytes in 1 blocks
+==1630845==         suppressed: 205,107 bytes in 245 blocks
+==1630845== 
+==1630845== For lists of detected and suppressed errors, rerun with: -s
+==1630845== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+===================================================================================================================
+===================================================================================================================
+
+
+$ ls|vgre
+minishell: vgre: command not found
+==1630919== 
+==1630919== HEAP SUMMARY:
+==1630919==     in use at exit: 205,215 bytes in 252 blocks
+==1630919==   total heap usage: 2,492 allocs, 2,240 frees, 324,292 bytes allocated
+==1630919== 
+==1630919== 44 bytes in 1 blocks are still reachable in loss record 16 of 68
+==1630919==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1630919==    by 0x4065C4: there_is_pipe (pipe.c:113)
+==1630919==    by 0x401341: command (main.c:32)
+==1630919==    by 0x401523: loop (main.c:73)
+==1630919==    by 0x401600: main (main.c:96)
+==1630919== 
+==1630919== LEAK SUMMARY:
+==1630919==    definitely lost: 0 bytes in 0 blocks
+==1630919==    indirectly lost: 0 bytes in 0 blocks
+==1630919==      possibly lost: 0 bytes in 0 blocks
+==1630919==    still reachable: 44 bytes in 1 blocks
+==1630919==         suppressed: 205,171 bytes in 251 blocks
+==1630919== 
+==1630919== For lists of detected and suppressed errors, rerun with: -s
+==1630919== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+===================================================================================================================
+===================================================================================================================
+
+
+
+
+
+
+
+
+MARCHE PAS?
+===================================================================================================================
+===================================================================================================================
+
+
+$ cd libft
+$ pwd
+/mnt/nfs/homes/ejahan/Desktop/minish/libft
+$ cd ..
+$ pwd
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ cd ..
+$ pwd
+/mnt/nfs/homes/ejahan/Desktop
+$ cd ..
+$ pwd
+/mnt/nfs/homes/ejahan
+$ cd ..
+$ pwd
+/mnt/nfs/homes
+$ cd ..
+$ pwd
+/mnt/nfs
+$ cd ..
+$ pwd
+/mnt
+$ cd ..
+$ pwd
+/
+$ cd ..
+$ pwd
+/
+$ cd ..
+$ pwd
+/
+$ cd 
+$ pwd
+/mnt/nfs/homes/ejahan
+$ cd Desktop/
+$ ls
+Cub3D  minish  minishell  minishell_corr_1.pdf	Philosopher  test
+$ cd minish
+$ ls
+a.out	 cmds_a_tester.txt  libft     minishell  srcs			 test_fichiers	   var
+a_trier  incs		    Makefile  salut.c	 supress_readline_error  valgrind-out.txt
+$ cd .
+$ pwd
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ cd ./oij
+minishell: cd: ./oij: No such file or directory
+$ cd oij
+minishell: cd: oij: No such file or directory
+$ pwd
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ pwd oij
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ pwd oij btgef
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ pwd oij btgef gvrt gt
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ pwd oij btgef gvrt gt pwd
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ pwd ..
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ pwd .
+/mnt/nfs/homes/ejahan/Desktop/minish
+$ cd ../../Desktop/
+$ pwd
+/mnt/nfs/homes/ejahan/Desktop
+$ cd ../../../ejahan
+minishell: cd: ../../../ejahan: No such file or directory
+$ cd ../../../Ejahan
+minishell: cd: ../../../Ejahan: No such file or directory
+$ cd ..
+$ cd ..
+$ cd ..
+$ pwd
+/mnt/nfs
+$ ls
+aquota.group  aquota.user  homes
+$ cd homes/
+$ ls
+
+
+
+
+^C
+$ 
+
+
+===================================================================================================================
+===================================================================================================================
+
+
+$ cat | cat | ls
+a.out		   incs      minishell	srcs			valgrind-out.txt
+a_trier		   libft     oui	supress_readline_error	var
+cmds_a_tester.txt  Makefile  salut.c	test_fichiers
+oui
+^C
+$ $ cat 
+^C
+$ 
+
+
+===================================================================================================================
+===================================================================================================================
+

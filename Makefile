@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/27 19:39:03 by ldermign         ###   ########.fr        #
+#    Updated: 2022/03/29 18:48:39 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/error_malloc.c ./srcs/parsing/len_variable2.c \
 			./srcs/parsing/free.c ./srcs/parsing/here_doc.c \
 			./srcs/parsing/files_redir.c ./srcs/parsing/arg_list.c \
-			./srcs/parsing/free_hd.c 
+			./srcs/parsing/free_hd.c ./srcs/parsing/ctrl_d.c
 
 OBJS	=	${SRCS:.c=.o}
 

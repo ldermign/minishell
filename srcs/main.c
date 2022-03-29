@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/29 14:54:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:50:58 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_sig_error = 0;
+int	g_sig_error = 0;
 
 void	command(t_struct *ms)
 {
@@ -61,13 +61,7 @@ void	loop(t_struct *minish)
 	line = NULL;
 	line = readline("$ ");
 	if (line == NULL)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		write(1, "exit\n", 5);
-		ft_free_all(minish);
-		exit(g_sig_error);
-	}
+		ctrl_d_main(minish);
 	if (line[i] != '\0')
 		add_history(line);
 	while (line[i] && line[i] == ' ')

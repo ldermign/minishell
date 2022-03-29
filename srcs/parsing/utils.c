@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/29 11:04:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:37:05 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,56 +26,56 @@ int	pass_quotes(char *line)
 	return (i);
 }
 
-int	pass_redir(char *line, t_struct *minish)
+int	pass_redir(char *s, t_struct *minish)
 {
 	int	i;
 
 	i = 1;
-	if (line[i] == line[0])
+	if (s[i] == s[0])
 		i++;
-	while (line[i] == ' ')
+	while (s[i] == ' ')
 		i++;
-	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
+	if (s[i] == '|' || s[i] == '<' || s[i] == '>' || s[i] == '\0')
 	{
-		if (line[i] == '\0')
+		if (s[i] == '\0')
 			fprintf(stderr, "syntax error near unexpected token `newline'\n");
 		else
-			fprintf(stderr, "syntax error near unexpected token `%c'\n", line[i]);
+			fprintf(stderr, "syntax error near unexpected token `%c'\n", s[i]);
 		minish->parsing.error = 3;
 		g_sig_error = 2;
 		return (-1);
 	}
-	while (line[i] && line[i] != ' ')
+	while (s[i] && s[i] != ' ')
 		i++;
-	while (line[i] == ' ')
+	while (s[i] == ' ')
 		i++;
 	return (i);
 }
 
-int	pass_redir_hd(char *line, t_struct *minish)
+int	pass_redir_hd(char *s, t_struct *minish)
 {
 	int	i;
 
 	i = 1;
-	if (line[i] == line[0])
+	if (s[i] == s[0])
 		i++;
-	while (line[i] == ' ')
+	while (s[i] == ' ')
 		i++;
-	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
+	if (s[i] == '|' || s[i] == '<' || s[i] == '>' || s[i] == '\0')
 	{
-		if (line[i] == '\0')
+		if (s[i] == '\0')
 			fprintf(stderr, "syntax error near unexpected token `newline'\n");
 		else
-			fprintf(stderr, "syntax error near unexpected token `%c'\n", line[i]);
+			fprintf(stderr, "syntax error near unexpected token `%c'\n", s[i]);
 		minish->parsing.error = 3;
 		g_sig_error = 2;
 		return (-1);
 	}
-	if (line[0] == '<' && line[1] == '<')
-		minish = recup_here_doc_end(&line[i], minish);
-	while (line[i] && line[i] != ' ')
+	if (s[0] == '<' && s[1] == '<')
+		minish = recup_here_doc_end(&s[i], minish);
+	while (s[i] && s[i] != ' ')
 		i++;
-	while (line[i] == ' ')
+	while (s[i] == ' ')
 		i++;
 	return (i);
 }

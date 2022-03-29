@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/28 14:30:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:47:40 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,9 @@ void		check_file(char *arg, t_struct *minish);
 int			check_pipe2(char *line, t_struct *minish);
 int			count_redir(char *line);
 void		create_file(char *args, t_struct *minish);
+t_list_hd	*ctrl_d(char *str, t_list_hd *hd, int nbr_line);
+void		ctrl_d_hd(char *str, int nb);
+void		ctrl_d_main(t_struct *minish);
 int			delete(t_list_arg *list);
 int			delete_hd(t_list_hd *list);
 int			double_dollar(t_struct *minish);
@@ -166,6 +169,7 @@ int			free_list(t_list_arg *list);
 int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);
 int			free_list_hd(t_list_hd *list);
+void		handler_here_doc(int sig);
 void		handle_signal(int sig);
 void		handle_signal_child(int sig);
 void		handle_signal_hd(int sig);
