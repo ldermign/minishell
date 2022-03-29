@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/28 14:01:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:05:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	init_struct_execute(t_struct *ms, t_execute *exec, char **cmd)
 	// fprintf(stderr, "cmd[0] = %s\n", cmd[0]);
 	if (exec->paths != NULL && cmd != NULL)
 		exec->str_path = working_path(exec->paths, cmd[0]);
+	else if (exec->str_path == NULL && cmd != NULL && exec->paths == NULL)
+		exec->str_path = ft_strdup(cmd[0]);
 	else
 		exec->str_path = NULL;
 	// printf("[%s]\n", exec->str_path);

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/28 16:03:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 10:27:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,14 @@ void	there_is_pipe(t_struct *ms)
 	{
 		last = max(last_left(stack->command), last_right(stack->command));
 		init_struct_std(stack, &(*ms).std, last);
-		// fprintf(stderr, "last = %d\n", last);
 		if (stack->arg_to_pass)
 			init_struct_execute(ms, &exec, stack->arg_to_pass);
 		if (pipe_the_good_one(ms->pipex) == EXIT_FAILURE)
-			exit (127); // pas le bon chiffre
+		{
+			perror("pipe() failed\n");
+			g_sig_error = 127;
+			exit (g_sig_error); // pas le bon chiffre
+		}
 		ms->pipex->nbr_exec++;
 		if (init_fork(&(ms->pipex->pid)) == -1)
 		{
@@ -142,11 +145,10 @@ void	there_is_pipe(t_struct *ms)
 			close_fd_pipe_main(ms->pipex);
 		if (ms->pipex->pid == 0)
 		{
-			if (stack->arg_to_pass && is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
-			{
-				// fprintf(stderr, "PAS ICI !\n");
+			if (is_new_executable(stack->command) != -1)
+				other_executable(ms, stack);
+			else if (stack->arg_to_pass && is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
 				exit (execute_cmd_execve(ms, &exec, stack->arg_to_pass));
-			}
 			else if (stack->arg_to_pass)
 			{
 				ft_free_struct_execute(&exec);
@@ -154,12 +156,9 @@ void	there_is_pipe(t_struct *ms)
 				free_list(ms->args);
 				ft_free_all(ms);
 			}
-			// fprintf(stderr, "la\n");
 			free(ms->pipex);
-			// fprintf(stderr, "g_sig fin d'un tour de boucle de pipe = %d\n", g_sig_error);
 			exit (g_sig_error);
 		}
-		// fprintf(stderr, "apres les forks = %d\n", g_sig_error);
 		if (stack->arg_to_pass)
 			ft_free_struct_execute(&exec);
 		stack = stack->next;
@@ -167,10 +166,14 @@ void	there_is_pipe(t_struct *ms)
 		ms->pipex->pipe++;
 	}
 	i = 0;
-	while (i < ms->pipex->nbr_exec)
+	int	status= 0;
+	while (ms->pipex->nbr_exec > 0)
 	{
-		wait(NULL);
-		i++;
+		if (waitpid(i, &status, 0) == -1)
+			perror("waitpid() failed\n");
+		if (WIFEXITED(status))
+			g_sig_error = WEXITSTATUS(status);
+		ms->pipex->nbr_exec--;
 	}
 	free(ms->pipex);
 }

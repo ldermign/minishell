@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recup_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/22 20:39:44 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/29 10:02:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*len_fill_redir(char *line, t_struct *minish)
 	str = malloc(sizeof(char) * (minish->parsing.len_arg + 1));
 	if (str == NULL)
 	{
-		printf("ERROR MALLOC\n");
+		fprintf(stderr, "ERROR MALLOC\n");
 		minish->parsing.error = 1;
 		return (NULL);
 	}
@@ -119,7 +119,7 @@ char	**recup_redir(char *line, t_struct *minish)
 	if (red == NULL)
 	{
 		minish->parsing.error = 1;
-		printf("ERROR MALLOC\n");
+		fprintf(stderr, "ERROR MALLOC\n");
 		return (NULL);
 	}
 	red[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 09:54:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/24 10:21:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 11:07:58 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int	light_parse_export(char *prompt)
 	ret = 0;
 	while (prompt[i] && prompt[i] == ' ')
 		i++;
-	if (ft_is_digit(prompt[i]))
+	if (ft_is_digit(prompt[i]) || prompt[i] == '=')
 	{
-		printf("minishell: export: '%s': not a valid identifier\n", prompt);
+		fprintf(stderr, "minishell: export: '%s': not a valid identifier\n", prompt);
+		g_sig_error = 1;
 		return (-1);
 	}
 	while (prompt[i] && (ft_is_alpha(prompt[i])
@@ -61,16 +62,18 @@ int	light_parse_export(char *prompt)
 	}
 	if (prompt[i] != '=' && prompt[i] != '\0')
 	{
-		printf("minishell: export: '%s': not a valid identifier\n", prompt);
+		fprintf(stderr, "minishell: export: '%s': not a valid identifier\n", prompt);
+		g_sig_error = 1;
 		return (-1);
 	}
 	while (prompt[i] && prompt[i] != '&' && prompt[i] != '(' && prompt[i] != ')'
 		&& prompt[i] != ';' && prompt[i] != '<' && prompt[i] != '>'
-		&& prompt[i] != '|') // pas vraiment, checker commant il fonctionnne
+		&& prompt[i] != '|')
 		i++;
 	if (prompt[i] != '\0')
 	{
-		printf("bash: syntax error near unexpected token `%c'\n", prompt[i]);
+		fprintf(stderr, "bash: syntax error near unexpected token `%c'\n", prompt[i]);
+		g_sig_error = 2;
 		return (-1);
 	}
 	return (ret);
@@ -113,7 +116,7 @@ char	*get_good_variable(char *prompt, int size, int add, int pos)
 	str = malloc(sizeof(char) * (size + 1));
 	if (str == NULL)
 	{
-		printf("Bad malloc.\n");
+		fprintf(stderr, "Bad malloc.\n");
 		return (NULL);
 	}
 	if (add == 1 && pos != -1)

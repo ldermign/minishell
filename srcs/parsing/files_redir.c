@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:54:17 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/22 21:12:01 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/29 11:02:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	create_file(char *args, t_struct *minish)
 	if (fd == -1)
 	{
 		minish->parsing.error = 1;
-		printf("error create file\n");
+		fprintf(stderr, "error create file\n");
 		return ;
 	}
 	close(fd);
@@ -42,7 +42,8 @@ void	check_file(char *arg, t_struct *minish)
 	fd = open(&arg[i], O_RDONLY);
 	if (fd == -1)
 	{
-		printf("%s: No such file or directory\n", &arg[i]);
+		fprintf(stderr, "%s: No such file or directory\n", &arg[i]);
+		g_sig_error = 1;
 		minish->parsing.error = 1;
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/28 17:35:26 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/29 13:37:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,63 +14,80 @@
 
 void	here_doc(char *str)
 {
-	char	*line;
+	static int	nbr_line = 0;
+	char		*line;
 
 	line = readline("> ");
 	if (line == NULL)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		write(1, "warning: here-document at line 1 delimited by ", 46);
-		printf("end-of-file(wanted `%s')\n", str);
+		fprintf(stderr, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", nbr_line, str);
+		g_sig_error = 0;
 		return ;
 	}
 	while (ft_strcmp(line, str) != 0)
 	{
 		free(line);
 		line = readline("> ");
+		nbr_line++;
 		if (line == NULL)
 		{
 			rl_on_new_line();
 			rl_replace_line("", 0);
-			write(1, "warning: here-document at line 1 delimited by ", 46);
-			printf("end-of-file(wanted `%s')\n", str);
+			fprintf(stderr, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", nbr_line, str);
+			g_sig_error = 0;
 			return ;
 		}
 	}
 	free(line);
 }
 
-static t_list_hd	*ctrl_d(char *str, t_list_hd *hd)
+void	handle_here_doc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		g_sig_error = 130;
+		exit (g_sig_error);
+	}
+}
+
+static t_list_hd	*ctrl_d(char *str, t_list_hd *hd, int nbr_line)
 {
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	write(1, "warning: here-document at line 1 delimited by ", 46);
-	printf("end-of-file(wanted `%s')\n", str);
+	fprintf(stderr, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", nbr_line, str);
+	g_sig_error = 0;
 	free(str);
 	return (hd);
 }
 
 t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 {
-	char	*line;
-	char	*str;
+	static int	nbr_line = 1;
+	char		*line;
+	char		*str;
 
 	str = ft_strdup(end);
 	free(hd->first->here_doc);
 	delete_hd(hd);
+	signal(SIGINT, handle_here_doc);
 	line = readline("> ");
 	if (line == NULL)
-		return (ctrl_d(str, hd));
+		return (ctrl_d(str, hd, nbr_line));
 	while (ft_strcmp(line, str) != 0)
 	{
 		insertion_here_doc(hd, ft_strdup(line));
 		line = readline("> ");
+		nbr_line++;
 		if (line == NULL)
 		{
 			rl_on_new_line();
-			write(1, "warning: here-document at line 1 delimited by ", 46);
-			printf("end-of-file(wanted `%s')\n", str);
+			fprintf(stderr, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", nbr_line, str);
+			g_sig_error = 0;
 			free(str);
 			return (hd);
 		}
@@ -91,7 +108,7 @@ t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 	{
-		printf("ERROR MALLOC\n");
+		fprintf(stderr, "ERROR MALLOC\n");
 		minish->parsing.error = 1;
 		return (NULL);
 	}

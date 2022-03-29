@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/28 13:34:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 14:54:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	command(t_struct *ms)
 		//	free le parsing ici
 		// ft_free_tab_char(ms->args->first->args_here_doc);
 	}
-	else if (is_new_executable(all_cmds->command) != -1)
+	else if (is_new_executable(all_cmds->command) != -1
+		|| check_if_variable_already_exist(ms->env.env_ms, "PATH=") == -1)
 	{
 		// fprintf(stderr, "NOUVEL EXECUTABLE\n");
 		other_executable(ms, all_cmds);
@@ -65,7 +66,6 @@ void	loop(t_struct *minish)
 		rl_replace_line("", 0);
 		write(1, "exit\n", 5);
 		ft_free_all(minish);
-		g_sig_error = 0;
 		exit(g_sig_error);
 	}
 	if (line[i] != '\0')
@@ -101,7 +101,6 @@ int	main(int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		loop(&structure);
 	}
-	//	la ???
 	ft_free_all(&structure);
 	return (0);
 }

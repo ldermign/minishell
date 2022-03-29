@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 19:36:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:04:23 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 int	is_new_executable(char *str)
 {
-	if (str[0] && str[0] == '.')
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] && str[i] == '.')
 	{
-		if (str[1] && str[1] == '/')
+		if (str[i + 1] && str[i + 1] == '/')
 			return (1);
 		else
 			return (2);
 	}
-	if (str[0] && str[0] == '/')
+	if (str[i] && str[i] == '/')
 		return (3);
 	return (-1);
 }
@@ -34,6 +39,7 @@ int	other_executable(t_struct *ms, t_args *cmd)
 
 	status = 0;
 	new_env = get_new_env(ms->env.env_ms);
+	// fprintf(stderr, "LA !\n");
 	// si pas path, voir si ./ / ou a.out fonctionnent
 	pid = fork();
 	if (pid == -1)
@@ -47,17 +53,26 @@ int	other_executable(t_struct *ms, t_args *cmd)
 	if (pid > 0)
 	{
 		ms->pid = pid;
-		waitpid(pid, &status, 0);
+		if (waitpid(pid, &status, 0) == -1)
+			perror("waitpid() failed\n");
+		if (WIFEXITED(status))
+			g_sig_error = WEXITSTATUS(status);
 	}
 	else
 	{
 		if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, new_env) == -1)
 		{
+			// fprintf(stderr, "new --> errno = %d\n", errno);
 			free_env_ms(ms->env.env_ms);
 			ft_free_tab_char(new_env);
-			fprintf(stderr, "minishell: %s: command not found\n", cmd->arg_to_pass[0]);
-			//	free
-			g_sig_error = 127;
+			if (errno == 13)
+				fprintf(stderr, "minishell: %s: Is a directory\n", cmd->arg_to_pass[0]);
+			else
+				fprintf(stderr, "minishell: %s: command not found\n", cmd->arg_to_pass[0]);
+			if (errno == 13)
+				g_sig_error = 126;
+			else
+				g_sig_error = 127;
 			exit (g_sig_error);
 		}
 	}

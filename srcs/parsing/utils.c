@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:40:00 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/23 02:27:47 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/29 11:04:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ int	pass_redir(char *line, t_struct *minish)
 	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
 	{
 		if (line[i] == '\0')
-			printf("syntax error near unexpected token `newline'\n");
+			fprintf(stderr, "syntax error near unexpected token `newline'\n");
 		else
-			printf("syntax error near unexpected token `%c'\n", line[i]);
+			fprintf(stderr, "syntax error near unexpected token `%c'\n", line[i]);
 		minish->parsing.error = 3;
+		g_sig_error = 2;
 		return (-1);
 	}
 	while (line[i] && line[i] != ' ')
@@ -63,10 +64,11 @@ int	pass_redir_hd(char *line, t_struct *minish)
 	if (line[i] == '|' || line[i] == '<' || line[i] == '>' || line[i] == '\0')
 	{
 		if (line[i] == '\0')
-			printf("syntax error near unexpected token `newline'\n");
+			fprintf(stderr, "syntax error near unexpected token `newline'\n");
 		else
-			printf("syntax error near unexpected token `%c'\n", line[i]);
+			fprintf(stderr, "syntax error near unexpected token `%c'\n", line[i]);
 		minish->parsing.error = 3;
+		g_sig_error = 2;
 		return (-1);
 	}
 	if (line[0] == '<' && line[1] == '<')

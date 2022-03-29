@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 05:42:28 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/13 05:42:31 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/29 10:00:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**arg_list(t_list_hd *hd, t_struct *minish)
 	if (ret == NULL)
 	{
 		minish->parsing.error = 1;
-		printf("ERROR MALLOC\n");
+		fprintf(stderr, "ERROR MALLOC\n");
 		return (NULL);
 	}
 	ret[i] = NULL;

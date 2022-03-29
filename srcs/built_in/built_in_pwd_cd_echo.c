@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/28 14:18:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/29 13:01:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,16 @@ int	built_in_cd(t_env *env, char *new_to_go)
 		change_old_pwd(&(env->env_ms), "OLDPWD=", old_pwd);
 	path_to_go = ft_strjoin("./", new_to_go); 
 	if (chdir(path_to_go) == -1)
-		g_sig_error = 127;
+	{
+		fprintf(stderr, "minishell: cd: %s: No such file or directory\n", new_to_go);
+		g_sig_error = 1;
+	}
+	else
+		g_sig_error = 0;
 	free(path_to_go);
 	path_to_go = ft_strjoin("PWD=", getcwd(act_path, sizeof(act_path)));
 	change_var_env_minishell(env->env_ms, path_to_go,
 		check_if_variable_already_exist(env->env_ms, "PWD="));
-	g_sig_error = 0;
 	return (g_sig_error);
 }
 
