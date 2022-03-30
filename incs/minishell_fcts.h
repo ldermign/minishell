@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/29 18:47:40 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:58:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 */
 
 int			built_in(t_struct *ms, t_args *cmd);
+int			export_print_in_alphabetical_order(t_env_ms **env);
 int			built_in_export(t_args *cmd, t_env_ms **env);
 int			recup_var_envs(char **env, t_env *cpy_env);
 int			built_in_cd(t_env *env, char *new_to_go);
 int			built_in_pwd(void);
-int			built_in_exit(t_struct *ms, char **cmd, char *prompt);
+void		built_in_exit(t_struct *ms, char **cmd, char *prompt);
 int			built_in_unset(t_env *env, t_args *cmd);
 int			built_in_env(t_env_ms *stack);
 int			built_in_echo(t_struct *ms);
@@ -86,6 +87,7 @@ int			light_parse_echo(char *str);
 char		*get_good_variable(char *prompt, int size, int add, int pos);
 int			is_built_in(char *str);
 int			is_built_in_write(char *str);
+char		*get_str_export(char *str);
 
 /*
 **	UTILS LIST

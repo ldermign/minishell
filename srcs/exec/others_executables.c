@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/29 15:04:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 09:33:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	other_executable(t_struct *ms, t_args *cmd)
 	}
 	else
 	{
+		// fprintf(stderr, "test\n");
 		if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, new_env) == -1)
 		{
 			// fprintf(stderr, "new --> errno = %d\n", errno);
@@ -73,8 +74,10 @@ int	other_executable(t_struct *ms, t_args *cmd)
 				g_sig_error = 126;
 			else
 				g_sig_error = 127;
+			free_list(ms->args);
 			exit (g_sig_error);
 		}
+		// fprintf(stderr, "test\n");
 	}
 	ft_free_tab_char(new_env);
 	return (0);

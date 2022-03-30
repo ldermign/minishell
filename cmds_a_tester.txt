@@ -20,18 +20,6 @@ bash-5.0$ pwd << ok | cat -n
 > ok
      1	/mnt/nfs/homes/ldermign/Desktop/test_mini
 
-Direct leak of 8 byte(s) in 1 object(s) allocated from:
-    #0 0x4975ed in malloc (/mnt/nfs/homes/ldermign/Desktop/minishell/minishell+0x4975ed)
-    #1 0x4d8a31 in init_here_doc /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/parsing/initialisations.c:44:9
-    #2 0x4d8b4a in insertion /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/parsing/lists.c:25:18
-    #3 0x4da84d in recup_pipe2 /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/parsing/recup_pipe.c:112:2
-    #4 0x4d84ae in recup_pipe /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/parsing/parsing.c:58:3
-    #5 0x4d798f in recup_args /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/parsing/parsing.c:72:6
-    #6 0x4d7616 in parsing /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/parsing/parsing.c:19:6
-    #7 0x4c8b07 in loop /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/main.c:58:3
-    #8 0x4c8df6 in main /mnt/nfs/homes/ldermign/Desktop/minishell/srcs/main.c:84:3
-    #9 0x7f96e0cfa0b2 in __libc_start_main /build/glibc-sMfBJT/glibc-2.31/csu/../csu/libc-start.c:308:16
-
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/29 18:50:58 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/30 09:33:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	command(t_struct *ms)
 		// ft_free_tab_char(ms->args->first->args_here_doc);
 	}
 	else if (is_new_executable(all_cmds->command) != -1
-		|| check_if_variable_already_exist(ms->env.env_ms, "PATH=") == -1)
+		|| (check_if_variable_already_exist(ms->env.env_ms, "PATH=") == -1
+			&& built_in(ms, all_cmds) == -1))
 	{
 		// fprintf(stderr, "NOUVEL EXECUTABLE\n");
 		other_executable(ms, all_cmds);
@@ -91,6 +92,7 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	while (42)
 	{
+		// signal(SIGPIPE, SIG_IGN);
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		loop(&structure);

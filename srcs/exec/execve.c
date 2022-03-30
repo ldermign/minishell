@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/29 15:04:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:15:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,24 +86,23 @@ char	**get_new_env(t_env_ms *env_ms)
 int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 {
 	ft_free_all(ms);
-	// free_list(ms->args);
-	// fprintf(stderr, "[%s]\n", exec->str_path);
+	// fprintf(stderr, "path = %s\n", exec->str_path);
 	if (exec->str_path == NULL || execve(exec->str_path, cmd, exec->new_env) == -1)
 	{
-		// fprintf(stderr, "normal --> errno = %d\n", errno);
 		if (errno == 13)
 			fprintf(stderr, "minishell: %s: Is a directory\n", cmd[0]);
 		else
 			fprintf(stderr, "minishell: %s: command not found\n", cmd[0]);
 		ft_free_struct_execute(exec);
 		free_list(ms->args);
+		if (ms->pipex != NULL)
+			free(ms->pipex);
 		if (errno == 13)
 			g_sig_error = 126;
 		else
 			g_sig_error = 127;
 		exit (g_sig_error);
 	}
-	// g_sig_error = 0;
 	return (0);
 }
 

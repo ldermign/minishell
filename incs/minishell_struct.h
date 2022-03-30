@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/27 16:42:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:21:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_iterator
 	int		equal;
 	char	*tmp1;
 	char	*tmp2;
+	char	*str;
 }	t_it;
 
 typedef struct s_pipe

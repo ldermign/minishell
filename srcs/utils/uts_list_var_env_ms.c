@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 23:31:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 17:52:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:16:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,13 @@ void	change_var_env_minishell(t_env_ms *minishell, char *str, int pos)
 	int	i;
 
 	i = 0;
-	// fprintf(stderr, "str = [%s], ms->var = [%s]\n", str, get_variable_with_pos(minishell, pos));
 	while (i < pos)
 	{
 		minishell = minishell->next;
 		i++;
 	}
 	free(minishell->var);
-	minishell->var = str;
+	minishell->var = ft_strdup(str);
 }
 
 int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
@@ -131,8 +130,8 @@ int	check_if_variable_already_exist(t_env_ms *minishell, char *str)
 		if ((str[i] == '\0' && minishell->var[i] == '\0')
 			|| (str[i] == '=' && minishell->var[i] == '\0')
 			|| (str[i] == '\0' && minishell->var[i] == '=')
-			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '=')
-			|| (str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '\0'))
+			|| (str[i] && str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '=')
+			|| (str[i] && str[i + 1] && str[i] == '+' && str[i + 1] == '=' && minishell->var[i] == '\0'))
 		{
 			// printf("str == [%s], var = [%s]\n", &str[i], &minishell->var[i]);
 			return (ret);

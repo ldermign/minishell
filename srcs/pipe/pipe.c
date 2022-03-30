@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/29 10:27:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 11:49:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,43 @@ void	close_fd_pipe_child(t_pipe *pipex)
 	}
 }
 
+// void	close_fd_pipe_child_2_0(t_pipe *pipex)
+// {
+// 	if (pipex->cmd_nbr == 0)
+// 	{
+// 		close(pipex->fd0[0]);
+// 		if (dup2(pipex->fd0[1], STDOUT_FILENO) < 0)
+// 			perror("dup2");
+// 		// close(pipex->fd0[1]);
+// 	}
+// 	else if (pipex->cmd_nbr % 2 == 0)
+// 	{
+// 		if (dup2(pipex->fd1[0], STDIN_FILENO) < 0)
+// 			perror("dup2");
+// 		close(pipex->fd1[0]);
+// 		if (pipex->cmd_nbr != pipex->pipe_tot)
+// 		{
+// 			close(pipex->fd0[0]);
+// 			if (dup2(pipex->fd0[1], STDOUT_FILENO) < 0)
+// 				perror("dup2");
+// 			// close(pipex->fd0[1]);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		if (dup2(pipex->fd0[0], STDIN_FILENO) < 0)
+// 			perror("dup2");
+// 		close(pipex->fd0[0]);
+// 		if (pipex->cmd_nbr != pipex->pipe_tot)
+// 		{
+// 			close(pipex->fd1[0]);
+// 			if (dup2(pipex->fd1[1], STDOUT_FILENO) < 0)
+// 				perror("dup2");
+// 			// close(pipex->fd1[1]);
+// 		}
+// 	}
+// }
+
 void	close_fd_pipe_main(t_pipe *pipex)
 {
 	if (pipex->cmd_nbr == 0)
@@ -77,6 +114,25 @@ void	close_fd_pipe_main(t_pipe *pipex)
 			close(pipex->fd1[1]);
 	}
 }
+
+// void	close_fd_pipe_main_2_0(t_pipe *pipex)
+// {
+// 	// if (pipex->cmd_nbr == 0)
+// 	// 	close(pipex->fd0[1]);
+// 	// else 
+// 	if (pipex->cmd_nbr % 2 == 0)
+// 	{
+// 		// close(pipex->fd1[0]);
+// 		if (pipex->cmd_nbr != pipex->pipe_tot)
+// 			close(pipex->fd0[1]);
+// 	}
+// 	else if (pipex->cmd_nbr % 2 != 0)
+// 	{
+// 		// close(pipex->fd0[0]);
+// 		if (pipex->cmd_nbr != pipex->pipe_tot)
+// 			close(pipex->fd1[1]);
+// 	}
+// }
 
 int	pipe_the_good_one(t_pipe *pipex)
 {
@@ -138,13 +194,9 @@ void	there_is_pipe(t_struct *ms)
 			if (ms->std.which == 4 || (stack->redir && stack->redir[0] != NULL))
 			{
 				free(ms->pipex);
+				ft_free_struct_execute(&exec);
 				exit (redirection(ms, stack, ms->pipex));
 			}
-		}
-		else
-			close_fd_pipe_main(ms->pipex);
-		if (ms->pipex->pid == 0)
-		{
 			if (is_new_executable(stack->command) != -1)
 				other_executable(ms, stack);
 			else if (stack->arg_to_pass && is_built_in(stack->arg_to_pass[0]) == EXIT_FAILURE)
@@ -159,6 +211,8 @@ void	there_is_pipe(t_struct *ms)
 			free(ms->pipex);
 			exit (g_sig_error);
 		}
+		else
+			close_fd_pipe_main(ms->pipex);
 		if (stack->arg_to_pass)
 			ft_free_struct_execute(&exec);
 		stack = stack->next;
