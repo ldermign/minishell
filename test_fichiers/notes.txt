@@ -291,239 +291,148 @@ cd .. trop de fois 						>>>>>>		bah en fait ca marche maintenant
 
 LEAKS
 
-
 ===================================================================================================================
 ===================================================================================================================
 
 
-$ ls|gtye|echo oui
+$ ls |vnsdi|echo oui
+minishell: vnsdi: command not found
 oui
-minishell: gtye: command not found
-==1629834== 
-==1629834== HEAP SUMMARY:
-==1629834==     in use at exit: 204,871 bytes in 231 blocks
-==1629834==   total heap usage: 1,429 allocs, 1,198 frees, 274,047 bytes allocated
-==1629834== 
-==1629834== LEAK SUMMARY:
-==1629834==    definitely lost: 0 bytes in 0 blocks
-==1629834==    indirectly lost: 0 bytes in 0 blocks
-==1629834==      possibly lost: 0 bytes in 0 blocks
-==1629834==    still reachable: 0 bytes in 0 blocks
-==1629834==         suppressed: 204,871 bytes in 231 blocks
-==1629834== 
-==1629834== For lists of detected and suppressed errors, rerun with: -s
-==1629834== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1629833== 
-==1629833== HEAP SUMMARY:
-==1629833==     in use at exit: 204,915 bytes in 232 blocks
-==1629833==   total heap usage: 1,349 allocs, 1,117 frees, 269,424 bytes allocated
-==1629833== 
-==1629833== 44 bytes in 1 blocks are still reachable in loss record 13 of 63
-==1629833==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1629833==    by 0x4065C4: there_is_pipe (pipe.c:113)
-==1629833==    by 0x401341: command (main.c:32)
-==1629833==    by 0x401523: loop (main.c:73)
-==1629833==    by 0x401600: main (main.c:96)
-==1629833== 
-==1629833== LEAK SUMMARY:
-==1629833==    definitely lost: 0 bytes in 0 blocks
-==1629833==    indirectly lost: 0 bytes in 0 blocks
-==1629833==      possibly lost: 0 bytes in 0 blocks
-==1629833==    still reachable: 44 bytes in 1 blocks
-==1629833==         suppressed: 204,871 bytes in 231 blocks
-==1629833== 
-==1629833== For lists of detected and suppressed errors, rerun with: -s
-==1629833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
-
-===================================================================================================================
-===================================================================================================================
-
-
-$ gtye|echo oui
+$ vnsdi|echo oui
+minishell: vnsdi: command not found
 oui
-minishell: gtye: command not found
-==1630846== 
-==1630846== HEAP SUMMARY:
-==1630846==     in use at exit: 205,107 bytes in 245 blocks
-==1630846==   total heap usage: 2,071 allocs, 1,826 frees, 304,215 bytes allocated
-==1630846== 
-==1630846== LEAK SUMMARY:
-==1630846==    definitely lost: 0 bytes in 0 blocks
-==1630846==    indirectly lost: 0 bytes in 0 blocks
-==1630846==      possibly lost: 0 bytes in 0 blocks
-==1630846==    still reachable: 0 bytes in 0 blocks
-==1630846==         suppressed: 205,107 bytes in 245 blocks
-==1630846== 
-==1630846== For lists of detected and suppressed errors, rerun with: -s
-==1630846== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1630845== 
-==1630845== HEAP SUMMARY:
-==1630845==     in use at exit: 205,151 bytes in 246 blocks
-==1630845==   total heap usage: 1,991 allocs, 1,745 frees, 299,592 bytes allocated
-==1630845== 
-==1630845== 44 bytes in 1 blocks are still reachable in loss record 17 of 68
-==1630845==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1630845==    by 0x4065C4: there_is_pipe (pipe.c:113)
-==1630845==    by 0x401341: command (main.c:32)
-==1630845==    by 0x401523: loop (main.c:73)
-==1630845==    by 0x401600: main (main.c:96)
-==1630845== 
-==1630845== LEAK SUMMARY:
-==1630845==    definitely lost: 0 bytes in 0 blocks
-==1630845==    indirectly lost: 0 bytes in 0 blocks
-==1630845==      possibly lost: 0 bytes in 0 blocks
-==1630845==    still reachable: 44 bytes in 1 blocks
-==1630845==         suppressed: 205,107 bytes in 245 blocks
-==1630845== 
-==1630845== For lists of detected and suppressed errors, rerun with: -s
-==1630845== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
-
-===================================================================================================================
-===================================================================================================================
-
-
-$ ls|vgre
-minishell: vgre: command not found
-==1630919== 
-==1630919== HEAP SUMMARY:
-==1630919==     in use at exit: 205,215 bytes in 252 blocks
-==1630919==   total heap usage: 2,492 allocs, 2,240 frees, 324,292 bytes allocated
-==1630919== 
-==1630919== 44 bytes in 1 blocks are still reachable in loss record 16 of 68
-==1630919==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1630919==    by 0x4065C4: there_is_pipe (pipe.c:113)
-==1630919==    by 0x401341: command (main.c:32)
-==1630919==    by 0x401523: loop (main.c:73)
-==1630919==    by 0x401600: main (main.c:96)
-==1630919== 
-==1630919== LEAK SUMMARY:
-==1630919==    definitely lost: 0 bytes in 0 blocks
-==1630919==    indirectly lost: 0 bytes in 0 blocks
-==1630919==      possibly lost: 0 bytes in 0 blocks
-==1630919==    still reachable: 44 bytes in 1 blocks
-==1630919==         suppressed: 205,171 bytes in 251 blocks
-==1630919== 
-==1630919== For lists of detected and suppressed errors, rerun with: -s
-==1630919== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
-
-===================================================================================================================
-===================================================================================================================
-
-
-
-
-
-
-
-
-MARCHE PAS?
-===================================================================================================================
-===================================================================================================================
-
-
-$ cd libft
-$ pwd
-/mnt/nfs/homes/ejahan/Desktop/minish/libft
+$ ls|vnsdi
+minishell: vnsdi: command not found
 $ cd ..
-$ pwd
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ cd ..
-$ pwd
-/mnt/nfs/homes/ejahan/Desktop
-$ cd ..
-$ pwd
-/mnt/nfs/homes/ejahan
-$ cd ..
-$ pwd
-/mnt/nfs/homes
-$ cd ..
-$ pwd
-/mnt/nfs
-$ cd ..
-$ pwd
-/mnt
-$ cd ..
-$ pwd
-/
-$ cd ..
-$ pwd
-/
-$ cd ..
-$ pwd
-/
-$ cd 
-$ pwd
-/mnt/nfs/homes/ejahan
-$ cd Desktop/
+$ cd ../Desktop/
 $ ls
 Cub3D  minish  minishell  minishell_corr_1.pdf	Philosopher  test
-$ cd minish
-$ ls
-a.out	 cmds_a_tester.txt  libft     minishell  srcs			 test_fichiers	   var
-a_trier  incs		    Makefile  salut.c	 supress_readline_error  valgrind-out.txt
-$ cd .
-$ pwd
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ cd ./oij
-minishell: cd: ./oij: No such file or directory
-$ cd oij
-minishell: cd: oij: No such file or directory
-$ pwd
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ pwd oij
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ pwd oij btgef
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ pwd oij btgef gvrt gt
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ pwd oij btgef gvrt gt pwd
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ pwd ..
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ pwd .
-/mnt/nfs/homes/ejahan/Desktop/minish
-$ cd ../../Desktop/
-$ pwd
-/mnt/nfs/homes/ejahan/Desktop
-$ cd ../../../ejahan
-minishell: cd: ../../../ejahan: No such file or directory
-$ cd ../../../Ejahan
-minishell: cd: ../../../Ejahan: No such file or directory
 $ cd ..
 $ cd ..
-$ cd ..
-$ pwd
-/mnt/nfs
 $ ls
-aquota.group  aquota.user  homes
-$ cd homes/
-$ ls
-
-
-
-
-^C
-$ 
+ejahan tout ca tout ca
+$ exit
+==926412== 
+==926412== HEAP SUMMARY:
+==926412==     in use at exit: 205,181 bytes in 246 blocks
+==926412==   total heap usage: 1,563 allocs, 1,317 frees, 308,840 bytes allocated
+==926412== 
+==926412== 29 bytes in 1 blocks are definitely lost in loss record 11 of 66
+==926412==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==926412==    by 0x40D09B: ft_strdup (in /mnt/nfs/homes/ejahan/Desktop/minish/minishell)
+==926412==    by 0x404CDA: new_var (uts_list_var_env_ms.c:52)
+==926412==    by 0x404C7D: add_var_env_minishell (uts_list_var_env_ms.c:95)
+==926412==    by 0x401854: recup_var_envs (get_env.c:72)
+==926412==    by 0x4015B7: main (main.c:90)
+==926412== 
+==926412== 118 bytes in 3 blocks are definitely lost in loss record 24 of 66
+==926412==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==926412==    by 0x40D198: ft_strjoin (in /mnt/nfs/homes/ejahan/Desktop/minish/minishell)
+==926412==    by 0x4030BE: built_in_cd (built_in_pwd_cd_echo.c:54)
+==926412==    by 0x402DE0: built_in (built_in.c:18)
+==926412==    by 0x4013E5: command (main.c:48)
+==926412==    by 0x401523: loop (main.c:73)
+==926412==    by 0x401600: main (main.c:96)
+==926412== 
+==926412== LEAK SUMMARY:
+==926412==    definitely lost: 147 bytes in 4 blocks
+==926412==    indirectly lost: 0 bytes in 0 blocks
+==926412==      possibly lost: 0 bytes in 0 blocks
+==926412==    still reachable: 0 bytes in 0 blocks
+==926412==         suppressed: 205,034 bytes in 242 blocks
+==926412== 
+==926412== For lists of detected and suppressed errors, rerun with: -s
+==926412== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
 
 
 ===================================================================================================================
 ===================================================================================================================
 
 
-$ cat | cat | ls
-a.out		   incs      minishell	srcs			valgrind-out.txt
-a_trier		   libft     oui	supress_readline_error	var
-cmds_a_tester.txt  Makefile  salut.c	test_fichiers
-oui
-^C
-$ $ cat 
-^C
-$ 
+$ exit
+exit
+==928113== 
+==928113== HEAP SUMMARY:
+==928113==     in use at exit: 209,497 bytes in 347 blocks
+==928113==   total heap usage: 562 allocs, 215 frees, 230,040 bytes allocated
+==928113== 
+==928113== 8 bytes in 1 blocks are still reachable in loss record 7 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x406F81: init_args (initialisations.c:32)
+==928113==    by 0x4071E0: reverse_list (lists.c:69)
+==928113==    by 0x406C6E: recup_args (parsing.c:75)
+==928113==    by 0x406B49: parsing (parsing.c:19)
+==928113==    by 0x4014F7: loop (main.c:70)
+==928113==    by 0x401600: main (main.c:96)
+==928113== 
+==928113== 8 bytes in 1 blocks are still reachable in loss record 8 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x406FD1: init_here_doc (initialisations.c:43)
+==928113==    by 0x40A920: reverse_list_hd (list_hd.c:66)
+==928113==    by 0x40BD87: exec_here_doc (here_doc.c:105)
+==928113==    by 0x4074FC: sep_and_check_args (sep_args.c:78)
+==928113==    by 0x406CB9: recup_args (parsing.c:80)
+==928113==    by 0x406B49: parsing (parsing.c:19)
+==928113==    by 0x4014F7: loop (main.c:70)
+==928113==    by 0x401600: main (main.c:96)
+==928113== 
+==928113== 8 bytes in 1 blocks are still reachable in loss record 9 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x40B0F4: recup_redir (recup_redir.c:118)
+==928113==    by 0x406D0C: recup_args (parsing.c:86)
+==928113==    by 0x406B49: parsing (parsing.c:19)
+==928113==    by 0x4014F7: loop (main.c:70)
+==928113==    by 0x401600: main (main.c:96)
+==928113== 
+==928113== 16 bytes in 1 blocks are still reachable in loss record 14 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x404CB5: new_var (uts_list_var_env_ms.c:49)
+==928113==    by 0x404C26: add_var_env_minishell (uts_list_var_env_ms.c:87)
+==928113==    by 0x401854: recup_var_envs (get_env.c:72)
+==928113==    by 0x4015B7: main (main.c:90)
+==928113== 
+==928113== 33 bytes in 1 blocks are still reachable in loss record 19 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x40D09B: ft_strdup (in /mnt/nfs/homes/ejahan/Desktop/minish/minishell)
+==928113==    by 0x404CDA: new_var (uts_list_var_env_ms.c:52)
+==928113==    by 0x404C26: add_var_env_minishell (uts_list_var_env_ms.c:87)
+==928113==    by 0x401854: recup_var_envs (get_env.c:72)
+==928113==    by 0x4015B7: main (main.c:90)
+==928113== 
+==928113== 48 bytes in 1 blocks are still reachable in loss record 24 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x407040: insertion (lists.c:21)
+==928113==    by 0x407206: reverse_list (lists.c:72)
+==928113==    by 0x406C6E: recup_args (parsing.c:75)
+==928113==    by 0x406B49: parsing (parsing.c:19)
+==928113==    by 0x4014F7: loop (main.c:70)
+==928113==    by 0x401600: main (main.c:96)
+==928113== 
+==928113== 976 bytes in 61 blocks are still reachable in loss record 34 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x404CB5: new_var (uts_list_var_env_ms.c:49)
+==928113==    by 0x404C7D: add_var_env_minishell (uts_list_var_env_ms.c:95)
+==928113==    by 0x401854: recup_var_envs (get_env.c:72)
+==928113==    by 0x4015B7: main (main.c:90)
+==928113== 
+==928113== 3,756 bytes in 61 blocks are still reachable in loss record 45 of 70
+==928113==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==928113==    by 0x40D09B: ft_strdup (in /mnt/nfs/homes/ejahan/Desktop/minish/minishell)
+==928113==    by 0x404CDA: new_var (uts_list_var_env_ms.c:52)
+==928113==    by 0x404C7D: add_var_env_minishell (uts_list_var_env_ms.c:95)
+==928113==    by 0x401854: recup_var_envs (get_env.c:72)
+==928113==    by 0x4015B7: main (main.c:90)
+==928113== 
+==928113== LEAK SUMMARY:
+==928113==    definitely lost: 0 bytes in 0 blocks
+==928113==    indirectly lost: 0 bytes in 0 blocks
+==928113==      possibly lost: 0 bytes in 0 blocks
+==928113==    still reachable: 4,853 bytes in 128 blocks
+==928113==         suppressed: 204,644 bytes in 219 blocks
+==928113== 
+==928113== For lists of detected and suppressed errors, rerun with: -s
+==928113== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 ===================================================================================================================
 ===================================================================================================================
-
