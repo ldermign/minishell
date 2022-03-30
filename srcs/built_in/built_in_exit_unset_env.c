@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:19:41 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 13:45:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:35:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	len_tab(char **tabl)
 	return (i);
 }
 
-void	built_in_exit(t_struct *ms, char **cmd, char *prompt)
+int	built_in_exit(t_struct *ms, char **cmd, char *prompt)
 {
 	if (ms->parsing.nb_pipe == 0)
 		printf("exit\n");
@@ -44,7 +44,7 @@ void	built_in_exit(t_struct *ms, char **cmd, char *prompt)
 	{
 		fprintf(stderr, "minishell: exit: too many arguments\n");
 		g_sig_error = 1;
-		return ;
+		return (EXIT_SUCCESS);
 	}
 	if (cmd[1] != NULL)
 	{
@@ -57,10 +57,11 @@ void	built_in_exit(t_struct *ms, char **cmd, char *prompt)
 		}
 	}
 	if (ms->parsing.nb_pipe != 0)
-		return ;
+		return (EXIT_SUCCESS);
 	ft_free_tab(cmd);
 	free(prompt);
 	exit (g_sig_error);
+	return (EXIT_SUCCESS);
 }
 
 int	built_in_unset(t_env *env, t_args *cmd)

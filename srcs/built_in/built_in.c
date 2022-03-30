@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 14:13:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:33:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	built_in(t_struct *ms, t_args *cmd)
 		return (built_in_echo(ms));
 	}
 	else if (ft_memcmp(cmd->arg_to_pass[0], "exit", 5) == 0)
-		built_in_exit(ms, cmd->arg_to_pass, cmd->command);
+		return (built_in_exit(ms, cmd->arg_to_pass, cmd->command));
 	return (-1);
 }
