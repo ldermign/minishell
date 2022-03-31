@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:54:17 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/29 11:02:13 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 10:26:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	create_file(char *args, t_struct *minish)
 	if (fd == -1)
 	{
 		minish->parsing.error = 1;
-		fprintf(stderr, "error create file\n");
+		fprintf(stderr, "minishell: %s: is a directory\n", name_file);
+		g_sig_error = 1;
+		free(name_file);
 		return ;
 	}
 	close(fd);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in_pwd_cd_echo.c                             :+:      :+:    :+:   */
+/*   built_in_pwd_echo.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 14:40:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 10:28:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int	built_in_echo(t_struct *ms)
 	if (write(1, ms->parsing.result, len) == -1)
 	{
 		free(ms->parsing.result);
-		fprintf(stderr, "echo: write error: No space left on device\n"); // ca marche pas du tout
-		return (EXIT_FAILURE);
+		fprintf(stderr, "minishell: echo: write error: No space left on device\n"); // ca marche pas du tout
+		g_sig_error = 1;
+		return (g_sig_error);
 	}
 	if (ms->parsing.option != 1)
 		write(1, "\n", 1);

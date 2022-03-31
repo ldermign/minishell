@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 09:33:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 10:12:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ void	command(t_struct *ms)
 	all_cmds = ms->args->first;
 	last = max(last_left(all_cmds->command), last_right(all_cmds->command));
 	init_struct_std(all_cmds, &(*ms).std, last);
+	ms->pipex = NULL;
 	if (ms->parsing.nb_pipe > 0)
 	{
 		// fprintf(stderr, "PIPE\n");
 		there_is_pipe(ms);
-		// fprintf(stderr, "dernier message ?\n");
-		//	free le parsing ici
-		// ft_free_tab_char(ms->args->first->args_here_doc);
 	}
 	else if (is_new_executable(all_cmds->command) != -1
 		|| (check_if_variable_already_exist(ms->env.env_ms, "PATH=") == -1
-			&& built_in(ms, all_cmds) == -1))
+			&& is_built_in(all_cmds->command) == -1))
 	{
 		// fprintf(stderr, "NOUVEL EXECUTABLE\n");
 		other_executable(ms, all_cmds);
