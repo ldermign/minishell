@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:31:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 17:17:28 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/31 12:47:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,11 @@ char	*working_path(char **paths, char *name_fct)
 	return (NULL);
 }
 
-char	**get_new_env(t_env_ms *env_ms)
-{
-	t_it	it;
-	char	**new;
-
-	init_struct_it(&it);
-	it.len = size_env(env_ms);
-	new = malloc(sizeof(char *) * (it.len + 1));
-	if (new == NULL)
-		return (NULL);
-	while (env_ms)
-	{
-		new[it.i] = ft_strdup(env_ms->var);
-		it.i++;
-		env_ms = env_ms->next;
-	}
-	new[it.i] = NULL;
-	return (new);
-}
-
 int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 {
 	ft_free_all(ms);
-	// fprintf(stderr, "path = %s\n", exec->str_path);
-	if (exec->str_path == NULL || execve(exec->str_path, cmd, exec->new_env) == -1)
+	if (exec->str_path == NULL
+		|| execve(exec->str_path, cmd, exec->new_env) == -1)
 	{
 		if (errno == 13)
 			fprintf(stderr, "minishell: %s: Is a directory\n", cmd[0]);
@@ -104,6 +84,15 @@ int	execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd)
 		exit (g_sig_error);
 	}
 	return (0);
+}
+
+void	handle_father(t_struct *ms, int status, int pid)
+{
+	ms->pid = pid;
+	if (waitpid(pid, &status, 0) == -1)
+		perror("waitpid() failed\n");
+	if (WIFEXITED(status))
+		g_sig_error = WEXITSTATUS(status);
 }
 
 int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
@@ -123,18 +112,9 @@ int	execute_cmd_with_fork(t_struct *ms, t_args *stack)
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
 	if (pid > 0)
-	{
-		ms->pid = pid;
-		if (waitpid(pid, &status, 0) == -1)
-			perror("waitpid() failed\n");
-		if (WIFEXITED(status))
-			g_sig_error = WEXITSTATUS(status);
-	}
+		handle_father(ms, status, pid);
 	else
-	{
 		execute_cmd_execve(ms, &exec, stack->arg_to_pass);
-		ft_free_struct_execute(&exec);
-	}
 	ft_free_struct_execute(&exec);
 	return (0);
 }

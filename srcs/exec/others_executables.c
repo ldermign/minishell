@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 09:33:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:58:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,47 @@ int	is_new_executable(char *str)
 	return (-1);
 }
 
+static void	handle_child(t_struct *ms, t_args *cmd, char **new_env)
+{
+	if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, new_env) == -1)
+	{
+		free_env_ms(ms->env.env_ms);
+		ft_free_tab_char(new_env);
+		if (errno == 13)
+			fprintf(stderr, "minishell: %s: Is a directory\n",
+				cmd->arg_to_pass[0]);
+		else
+			fprintf(stderr, "minishell: %s: command not found\n",
+				cmd->arg_to_pass[0]);
+		if (errno == 13)
+			g_sig_error = 126;
+		else
+			g_sig_error = 127;
+		free_list(ms->args);
+		exit (g_sig_error);
+	}
+}
+
+char	**get_new_env(t_env_ms *env_ms)
+{
+	t_it	it;
+	char	**new;
+
+	init_struct_it(&it);
+	it.len = size_env(env_ms);
+	new = malloc(sizeof(char *) * (it.len + 1));
+	if (new == NULL)
+		return (NULL);
+	while (env_ms)
+	{
+		new[it.i] = ft_strdup(env_ms->var);
+		it.i++;
+		env_ms = env_ms->next;
+	}
+	new[it.i] = NULL;
+	return (new);
+}
+
 int	other_executable(t_struct *ms, t_args *cmd)
 {
 	int			status;
@@ -39,46 +80,18 @@ int	other_executable(t_struct *ms, t_args *cmd)
 
 	status = 0;
 	new_env = get_new_env(ms->env.env_ms);
-	// fprintf(stderr, "LA !\n");
-	// si pas path, voir si ./ / ou a.out fonctionnent
 	pid = fork();
 	if (pid == -1)
 	{
-		//	free
 		g_sig_error = 127;
 		return (g_sig_error);
 	}
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
 	if (pid > 0)
-	{
-		ms->pid = pid;
-		if (waitpid(pid, &status, 0) == -1)
-			perror("waitpid() failed\n");
-		if (WIFEXITED(status))
-			g_sig_error = WEXITSTATUS(status);
-	}
+		handle_father(ms, status, pid);
 	else
-	{
-		// fprintf(stderr, "test\n");
-		if (execve(cmd->arg_to_pass[0], cmd->arg_to_pass, new_env) == -1)
-		{
-			// fprintf(stderr, "new --> errno = %d\n", errno);
-			free_env_ms(ms->env.env_ms);
-			ft_free_tab_char(new_env);
-			if (errno == 13)
-				fprintf(stderr, "minishell: %s: Is a directory\n", cmd->arg_to_pass[0]);
-			else
-				fprintf(stderr, "minishell: %s: command not found\n", cmd->arg_to_pass[0]);
-			if (errno == 13)
-				g_sig_error = 126;
-			else
-				g_sig_error = 127;
-			free_list(ms->args);
-			exit (g_sig_error);
-		}
-		// fprintf(stderr, "test\n");
-	}
+		handle_child(ms, cmd, new_env);
 	ft_free_tab_char(new_env);
 	return (0);
 }

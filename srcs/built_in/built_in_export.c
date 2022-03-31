@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 11:26:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 14:22:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:31:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,49 +82,40 @@ int	export_print_in_alphabetical_order(t_env_ms **env)
 	return (EXIT_SUCCESS);
 }
 
-static int	equal_in_var(char *str)
+static char	*add_new_str_to_old(t_env_ms *env, char *cmds, t_it *it)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
+	str = NULL;
+	it->tmp1 = get_var_with_pos(env, it->pos);
+	it->tmp2 = get_good_var(cmds, it->len, it->add, it->pos);
+	str = ft_strjoin(it->tmp1, it->tmp2);
+	free(it->tmp1);
+	free(it->tmp2);
+	return (str);
 }
 
-int	built_in_export(t_args *cmd, t_env_ms **env)
+int	built_in_export(char **cmd, t_env_ms **env)
 {
 	t_it	it;
 
 	init_struct_it(&it);
 	it.i = 1;
-	while (cmd->arg_to_pass[it.i])
+	while (cmd[it.i])
 	{
-		it.add = light_parse_export(cmd->arg_to_pass[it.i]);
+		it.add = light_parse_export(cmd[it.i]);
 		if (it.add != -1)
 		{
-			it.pos = check_if_variable_already_exist(*env,
-					cmd->arg_to_pass[it.i]);
-			it.len = size_variable(cmd->arg_to_pass[it.i], it.add, it.pos);
+			it.pos = check_if_variable_exist(*env,
+					cmd[it.i]);
+			it.len = size_variable(cmd[it.i], it.add, it.pos);
 			if (it.add == 1 && it.pos != -1)
-			{
-				it.tmp1 = get_variable_with_pos(*env, it.pos);
-				it.tmp2 = get_good_variable(cmd->arg_to_pass[it.i], it.len,
-						it.add, it.pos);
-				it.str = ft_strjoin(it.tmp1, it.tmp2);
-				free(it.tmp1);
-				free(it.tmp2);
-			}
+				it.str = add_new_str_to_old(*env, cmd[it.i], &it);
 			else
-				it.str = get_good_variable(cmd->arg_to_pass[it.i], it.len,
-						it.add, it.pos);
+				it.str = get_good_var(cmd[it.i], it.len, it.add, it.pos);
 			if (it.pos == -1)
 				add_var_env_minishell(env, it.str);
-			else if (it.pos != -1 && equal_in_var(cmd->arg_to_pass[it.i]) != -1)
+			else if (it.pos != -1 && ft_int_strchr(cmd[it.i], '=') == 1)
 				change_var_env_minishell(*env, it.str, it.pos);
 			free(it.str);
 		}

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:40:54 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 18:35:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 11:15:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,5 @@ void	ft_free_struct_execute(t_execute *exec)
 
 void	ft_free_all(t_struct *ms)
 {
-	// free(ms->prompt);
 	free_env_ms(ms->env.env_ms);
 }
-

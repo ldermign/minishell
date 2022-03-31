@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 14:21:18 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 18:46:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 11:15:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,17 @@ char	*recup_name(char *args)
 	while (k < j)
 		name[k++] = args[i++];
 	return (name);
+}
+
+int	is_built_in(char *str)
+{
+	if (ft_memcmp(str, "echo", 5) == 0
+		|| ft_memcmp(str, "pwd", 4) == 0
+		|| ft_memcmp(str, "env", 4) == 0
+		|| ft_memcmp(str, "export", 7) == 0
+		|| ft_memcmp(str, "unset", 6) == 0
+		|| ft_memcmp(str, "cd", 3) == 0
+		|| ft_memcmp(str, "exit", 5) == 0)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

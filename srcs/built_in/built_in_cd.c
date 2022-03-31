@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:39:46 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 14:51:13 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 11:02:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static int	go_to_home(t_env *env)
 	int		pos;
 	char	*home;
 
-	pos = check_if_variable_already_exist(env->env_ms, "HOME=");
+	pos = check_if_variable_exist(env->env_ms, "HOME=");
 	if (pos == -1)
 		return (0);
-	home = get_variable_with_pos(env->env_ms, pos);
+	home = get_var_with_pos(env->env_ms, pos);
 	if (chdir(&home[5]) == -1)
 		g_sig_error = 127;
 	else
@@ -59,7 +59,7 @@ int	built_in_cd(t_env *env, char *new_to_go)
 
 	if (new_to_go == NULL)
 		return (go_to_home(env));
-	ret = check_if_variable_already_exist(env->env_ms, "OLDPWD=");
+	ret = check_if_variable_exist(env->env_ms, "OLDPWD=");
 	old_pwd = ft_strjoin("OLDPWD=", getcwd(act_path, sizeof(act_path)));
 	path_to_go = ft_strjoin("./", new_to_go);
 	if (old_pwd == NULL || chdir(path_to_go) == -1)
@@ -74,7 +74,7 @@ int	built_in_cd(t_env *env, char *new_to_go)
 	free(path_to_go);
 	path_to_go = ft_strjoin("PWD=", getcwd(act_path, sizeof(act_path)));
 	change_var_env_minishell(env->env_ms, path_to_go,
-		check_if_variable_already_exist(env->env_ms, "PWD="));
+		check_if_variable_exist(env->env_ms, "PWD="));
 	free(path_to_go);
 	return (g_sig_error);
 }

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 14:21:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:01:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct s_iterator
 
 typedef struct s_pipe
 {
-	int		pipe;
 	int		pipe_tot;
 	int		cmd_nbr;
 	int		nbr_exec;
@@ -126,23 +125,16 @@ typedef struct s_pipe
 	pid_t	pid;
 }	t_pipe;
 
-typedef struct	s_structure
+typedef struct s_structure
 {
 	pid_t			pid;
 	t_parsing		parsing;
 	t_env			env;
 	t_list_arg		*args;
-	t_red_std		std;		// pas forcement
+	t_red_std		std;
 	t_execute		exec;
 	char			*prompt;
 	t_pipe			*pipex;
 }	t_struct;
 
 #endif
-
-/*
-> 1
-< 2
->> 3
-<< 4
-*/

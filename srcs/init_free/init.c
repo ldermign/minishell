@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_len_tab.c                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 10:56:49 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 15:02:07 by ldermign         ###   ########.fr       */
+/*   Created: 2022/03/31 14:41:32 by ldermign          #+#    #+#             */
+/*   Updated: 2022/03/31 14:55:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_len_tab(char **tabl)
+int	init_fork(int *pid)
 {
-	int	i;
-
-	i = 0;
-	while (tabl[i])
-		i++;
-	return (i);
+	*pid = fork();
+	if (*pid == -1)
+	{
+		g_sig_error = 127;
+		perror("minishell: fork");
+		return (-1);
+	}
+	return (1);
 }

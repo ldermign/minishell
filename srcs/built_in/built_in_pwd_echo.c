@@ -6,13 +6,13 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:19:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 10:28:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 10:56:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	built_in_pwd()
+int	built_in_pwd(void)
 {
 	char	actual_path[PATH_MAX];
 
@@ -37,7 +37,8 @@ int	built_in_echo(t_struct *ms)
 	if (write(1, ms->parsing.result, len) == -1)
 	{
 		free(ms->parsing.result);
-		fprintf(stderr, "minishell: echo: write error: No space left on device\n"); // ca marche pas du tout
+		fprintf(stderr,
+			"minishell: echo: write error: No space left on device\n");
 		g_sig_error = 1;
 		return (g_sig_error);
 	}

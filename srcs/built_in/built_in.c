@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 15:19:48 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 10:12:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:11:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	built_in(t_struct *ms, t_args *cmd)
 		if (cmd->arg_to_pass[1] == NULL)
 			return (export_print_in_alphabetical_order(&(ms->env.env_ms)));
 		else
-			return (built_in_export(cmd, &(ms->env.env_ms)));
+			return (built_in_export(cmd->arg_to_pass, &(ms->env.env_ms)));
 	}
 	else if (ft_memcmp(cmd->arg_to_pass[0], "unset", 6) == 0)
 		return (built_in_unset(&(ms->env), cmd));
@@ -35,6 +35,6 @@ int	built_in(t_struct *ms, t_args *cmd)
 		return (built_in_echo(ms));
 	}
 	else if (ft_memcmp(cmd->arg_to_pass[0], "exit", 5) == 0)
-		return (built_in_exit(ms, cmd->arg_to_pass, cmd->command));
+		return (built_in_exit(ms, cmd->arg_to_pass));
 	return (-1);
 }

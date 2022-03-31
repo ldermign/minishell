@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 10:12:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:55:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,15 @@ void	command(t_struct *ms)
 	init_struct_std(all_cmds, &(*ms).std, last);
 	ms->pipex = NULL;
 	if (ms->parsing.nb_pipe > 0)
-	{
-		// fprintf(stderr, "PIPE\n");
 		there_is_pipe(ms);
-	}
 	else if (is_new_executable(all_cmds->command) != -1
-		|| (check_if_variable_already_exist(ms->env.env_ms, "PATH=") == -1
+		|| (check_if_variable_exist(ms->env.env_ms, "PATH=") == -1
 			&& is_built_in(all_cmds->command) == -1))
-	{
-		// fprintf(stderr, "NOUVEL EXECUTABLE\n");
 		other_executable(ms, all_cmds);
-	}
 	else if (last != -1 || ft_pos_strstr(all_cmds->command, "<<") != -1)
-	{
-		// fprintf(stderr, "REDIRECTIONS\n");
-		redirection(ms, all_cmds, NULL);
-	}
+		redirection(ms, all_cmds);
 	else if (last == -1 && built_in(ms, all_cmds) == -1)
-	{
-		// fprintf(stderr, "PAS BUILT_IN, LS, MKDIR...\n");
 		execute_cmd_with_fork(ms, all_cmds);
-	}
 }
 
 void	loop(t_struct *minish)
@@ -90,7 +78,6 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	while (42)
 	{
-		// signal(SIGPIPE, SIG_IGN);
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		loop(&structure);

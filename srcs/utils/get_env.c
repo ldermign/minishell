@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:35:14 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/26 17:13:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:41:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	recup_var_envs(char **env, t_env *cpy_env)
 		add_var_env_minishell(&(cpy_env->env_ms), env[i]);
 		i++;
 	}
-	if (check_if_variable_already_exist(cpy_env->env_ms, "PWD=") == -1)
+	if (check_if_variable_exist(cpy_env->env_ms, "PWD=") == -1)
 	{
 		pwd = ft_strjoin("PWD=", getcwd(act_path, sizeof(act_path)));
 		add_var_env_minishell(&(cpy_env->env_ms), pwd);
@@ -80,4 +80,3 @@ int	recup_var_envs(char **env, t_env *cpy_env)
 	}
 	return (EXIT_SUCCESS);
 }
-

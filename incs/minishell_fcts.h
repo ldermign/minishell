@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 15:34:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:10:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 
 int			built_in(t_struct *ms, t_args *cmd);
 int			export_print_in_alphabetical_order(t_env_ms **env);
-int			built_in_export(t_args *cmd, t_env_ms **env);
+int			built_in_export(char **cmd, t_env_ms **env);
 int			recup_var_envs(char **env, t_env *cpy_env);
 int			built_in_cd(t_env *env, char *new_to_go);
 int			built_in_pwd(void);
-int			built_in_exit(t_struct *ms, char **cmd, char *prompt);
+int			built_in_exit(t_struct *ms, char **cmd);
 int			built_in_unset(t_env *env, t_args *cmd);
 int			built_in_env(t_env_ms *stack);
 int			built_in_echo(t_struct *ms);
@@ -38,38 +38,43 @@ void		built_in_with_pipe(t_struct *ms, t_args *cmd, t_pipe *pipex);
 **	REDIRECTIONS
 */
 
-int			redirection(t_struct *ms, t_args *stack, t_pipe	*pipex);
-int			get_good_fd_built_in(char **args, char *name_file, t_red_std *std);
+int			redirection(t_struct *ms, t_args *stack);
+int			good_fd_for_redir(t_args *stack, t_red_std *std);
 
 /*
 **	PIPE
 */
 
 void		there_is_pipe(t_struct *ms);
+void		close_fd_pipe_child(t_pipe *pipex);
+void		close_fd_pipe_main(t_pipe *pipex);
+int			pipe_the_good_one(t_pipe *pipex);
 
 /*
 **	EXECVE
 */
 
-int		execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd);
-int		execute_cmd_with_fork(t_struct *ms, t_args *stack);
-char	**get_new_env(t_env_ms *env_ms);
-char	*get_pwd_and_path(char **env, char *str);
-char	*working_path(char **paths, char *name_fct);
+void		handle_father(t_struct *ms, int status, int pid);
+int			execute_cmd_execve(t_struct *ms, t_execute *exec, char **cmd);
+int			execute_cmd_with_fork(t_struct *ms, t_args *stack);
+char		**get_new_env(t_env_ms *env_ms);
+char		*get_pwd_and_path(char **env, char *str);
+char		*working_path(char **paths, char *name_fct);
 
 /*
 **	UTILS REDIRECTIONS
 */
 
 int			redirection_first(char *args);
-int			only_right(char **args);
 int			is_redir(char **args, char *str);
 int			last_redir(char *args);
 int			pos_last_redir_left(char **args);
 int			pos_last_redir_right(char **args);
-int		max(int nb1, int nb2);
-int		last_right(char *str);
-int		last_left(char *str);
+int			max(int nb1, int nb2);
+int			last_right(char *str);
+int			last_left(char *str);
+char		*get_good_string(char *str);
+char		*get_name_left(char *str);
 
 /*
 **	UTILS
@@ -83,25 +88,22 @@ char		**get_cmd_and_args_split(char *str);
 
 int			size_variable(char *prompt, int add, int pos);
 int			light_parse_export(char *prompt);
-int			light_parse_echo(char *str);
-char		*get_good_variable(char *prompt, int size, int add, int pos);
+char		*get_good_var(char *prompt, int size, int add, int pos);
 int			is_built_in(char *str);
-int			is_built_in_write(char *str);
 char		*get_str_export(char *str);
 
 /*
 **	UTILS LIST
 */
 
-void		free_lst(t_env_ms *stack);
 void		add_var_env_minishell(t_env_ms **stack, char *str_var);
 int			search_for_var_in_env(t_env_ms **stack, char *var);
 void		supp_var_env_ms(t_env_ms **stack, int pos);
 void		change_var_env_minishell(t_env_ms *minishell, char *str, int pos);
-int			check_if_variable_already_exist(t_env_ms *minishell, char *str);
+int			check_if_variable_exist(t_env_ms *minishell, char *str);
 char		*get_variable(t_env_ms *minishell, char *str);
 int			size_env(t_env_ms *minishell);
-char		*get_variable_with_pos(t_env_ms *minishell, int pos);
+char		*get_var_with_pos(t_env_ms *minishell, int pos);
 
 /*
 **	OTHERS EXECUTABLES
@@ -119,20 +121,20 @@ int			is_new_executable(char *str);
 */
 
 void		init_struct_std(t_args *stack, t_red_std *std, int which);
-// void	reboot_struct_std(t_red_std *std);
 void		init_struct_it(t_it *it);
 void		init_struct_pipe(t_pipe *pipe, t_struct *ms);
-void	init_struct_execute(t_struct *ms, t_execute *exec, char **cmd);
+void		init_struct_execute(t_struct *ms, t_execute *exec, char **cmd);
+int			init_fork(int *pid);
 
 /*
 **	FREE
 */
 
 void		free_all_cmds_pompt(t_args *stack);
-void	free_env_ms(t_env_ms *stack);
-void	ft_free_tab_char(char **tabl);
-void	ft_free_struct_execute(t_execute *exec);
-void	ft_free_all(t_struct *ms);
+void		free_env_ms(t_env_ms *stack);
+void		ft_free_tab_char(char **tabl);
+void		ft_free_struct_execute(t_execute *exec);
+void		ft_free_all(t_struct *ms);
 
 /*
 **	TEMPORAIRE A SUPPRIMEEEEEERRRRRR
