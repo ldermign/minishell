@@ -6,7 +6,7 @@
 #    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/03/31 13:41:54 by ejahan           ###   ########.fr        #
+#    Updated: 2022/03/31 15:02:54 by ejahan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/free.c ./srcs/parsing/here_doc.c \
 			./srcs/parsing/files_redir.c ./srcs/parsing/arg_list.c \
 			./srcs/parsing/free_hd.c ./srcs/parsing/ctrl_d.c \
-			./srcs/parsing/utils_here_doc.c 
+			./srcs/parsing/utils_here_doc.c ./srcs/parsing/utils_recup_hd.c 
 
 OBJS	=	${SRCS:.c=.o}
 

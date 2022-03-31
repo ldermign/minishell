@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 14:32:43 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/31 15:21:19 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int			free_list(t_list_arg *list);
 int			free_list2(t_list_arg *list);
 int			free_list3(t_list_arg *list);
 int			free_list_hd(t_list_hd *list);
+char		*get_var_hd(char *line, t_struct *minish);
 void		handler_here_doc(int sig);
 void		handle_signal(int sig);
 void		handle_signal_child(int sig);

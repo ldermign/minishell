@@ -421,9 +421,13 @@ exit
 
 
 leaks exit
-mauvais messages erreurs 
-here_doc
+mauvais messages erreurs 	>>>>>>	ok
+here_doc quotes				>>>>>>	ok
+here_doc variables
 checker codes erreurs
+
+
+
 
 
 
@@ -452,3 +456,4 @@ checker codes erreurs
 	// 	minish->parsing.error = 1;
 	// 	return (NULL);
 	// }
+
