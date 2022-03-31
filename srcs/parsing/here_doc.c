@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/29 18:43:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/31 14:43:38 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,12 @@ t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 	int		i;
 
 	i = 0;
-	while (line[i] && line[i] != ' ')
-		i++;
-	str = malloc(sizeof(char) * (i + 1));
+	str = fill_hd(line);
 	if (str == NULL)
 	{
 		fprintf(stderr, "ERROR MALLOC\n");
 		minish->parsing.error = 1;
 		return (NULL);
-	}
-	str[i--] = '\0';
-	while (i >= 0)
-	{
-		str[i] = line[i];
-		i--;
 	}
 	insertion_here_doc(minish->args->first->here_doc, str);
 	return (minish);

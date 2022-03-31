@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_fcts.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/30 15:34:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:32:43 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void		exec_here_doc(t_list_arg *args, t_struct *minish);
 int			fill_arg2(char *line, char *str, t_struct *minish);
 int			fill_double_dollar(t_struct *minish, char *str);
 int			fill_double_quotes(char *line, char *str, t_struct *minish);
+char		*fill_hd(char *str);
 int			fill_sig_error(t_struct *minish, char *str);
 int			fill_simple_quote(char *line, char *str, t_struct *minish);
 int			fill_variable(char *line, char *str, t_struct *minish);
@@ -186,6 +187,7 @@ int			is_variable_char(char c);
 char		**interpret_args(char *line, char	**tab_arg, t_struct *minish);
 int			len_arg(char *line, t_struct *minish);
 int			len_double_quotes(char *line, t_struct *minish);
+int			len_hd(char *str);
 int			len_sig_error(t_struct *minish);
 int			len_simple_quote(char *line, t_struct *minish);
 int			len_variable(char *line, t_struct *minish);
@@ -194,7 +196,7 @@ int			pass_arg(char *line, t_struct *minish);
 int			pass_arg_count(char *line, t_struct *minish);
 int			pass_quotes(char *line);
 int			pass_redir(char *line, t_struct *minish);
-int			pass_redir_hd(char *line, t_struct *minish);
+int			pass_redir_hd(char *line, t_struct *minish, int i);
 int			pass_variable(char *line);
 void		print_list(t_list_arg *list);
 void		print_list_hd(t_list_hd *list);

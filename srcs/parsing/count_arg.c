@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 05:13:08 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/22 20:37:45 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/31 13:10:13 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	pass_arg_count2(char *line, t_struct *minish, int i)
 		if (line[i] == 39 || line[i] == 34)
 			i += pass_quotes(&line[i]);
 		else if (line[i] == '<' || line[i] == '>')
-			i += (pass_redir_hd(&line[i], minish) - 1);
+			i += (pass_redir_hd(&line[i], minish, 1) - 1);
 		else if (line[i] == '$')
 			i += pass_variable(&line[i]);
 		else if (line[i] == '\0' || line[i] == ' ')
@@ -58,7 +58,7 @@ int	pass_arg_count(char *line, t_struct *minish)
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == '<' || line[i] == '>')
-		return (pass_redir_hd(&line[i], minish) + i);
+		return (pass_redir_hd(&line[i], minish, 1) + i);
 	else if (line[i] == '\0')
 		return (i);
 	else if (line[i] == '$' && line[i + 1] == '?')
