@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
+#    By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/03/31 15:19:03 by ldermign         ###   ########.fr        #
+=======
+#    Updated: 2022/03/31 10:56:45 by ejahan           ###   ########.fr        #
+>>>>>>> 061ef32d757e7b22d8cfb4e434900c39106333f9
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,12 +79,12 @@ ${NAME}:	${OBJS}
 			@${CC} ${CFLAGS} -MMD -MP -MF ${@:.o=.d} -o $@ -c $<
 
 clean:
-			${MAKE} -C libft clean
-			${RM} ${OBJS} ${DEPS}
+			@${MAKE} -C libft clean
+			@${RM} ${OBJS} ${DEPS}
 
 fclean:		clean
-			${MAKE} -C libft fclean
-			${RM} ${NAME}
+			@${MAKE} -C libft fclean
+			@${RM} ${NAME}
 
 re:			fclean all
 
