@@ -189,7 +189,7 @@ recup dernier '<<'								>>>>>>	ok?
 changer list en char **							>>>>>>	ok?
 free here_doc									>>>>>>	ok?
 redirections									>>>>>>	ok?
-sig_error
+sig_error										>>>>>>	ok?
 leaks											>>>>>>	ok?
 mettre en commun								>>>>>>	ok?
 norme liena
@@ -203,35 +203,6 @@ redirections -> machin< truc				>>>>>>>>	cest booooon
 leak -> je trouverai jamais je pense		>>>>>>>>	en fait j ai menti j ai trouve 
 
 
-
-
-
-
-sig_error == 127 tout le temps
-else
-	{
-		get_good_fd(args, ms->std.name_file, &(ms->std), pipefd);
-		if (execve(path, exec_args_only, env) == -1)
-		{
-			printf("minishell: %s: command not found\n", args[0]);
-			printf("tamereeeeeee\n");
-			g_sig_error = 127;
-			close(pipefd[0]);
-			close(pipefd[1]);
-			close_all_fd(&(ms->std));
-			// exit(0); // je sais pas si ca fait de la merde quelque part mais ca marche
-			return ;
-		}
-		g_sig_error = 0;
-		close(pipefd[0]);
-		close(pipefd[1]);
-		// close_all_fd(&(ms->std));
-		// exit(0);
-	}
-	close_all_fd(&(ms->std));
-	// g_sig_error = 0;
-	// exit(0); // sig_error marche pas
-}
 
 
 
@@ -439,3 +410,50 @@ exit
 
 			# @echo "\033[1;32mThis is my face ! In your FACE !\033[1;0"
 			# @google-chrome /sgoinfre/photos_students/2020/ldermign.JPG 2>/dev/null
+
+
+
+
+
+
+
+
+
+
+leaks exit
+mauvais messages erreurs 	>>>>>>	ok
+here_doc quotes				>>>>>>	ok
+here_doc variables
+checker codes erreurs
+
+
+
+
+
+
+
+	// j = len_hd(line);
+	// printf("j = %d\n", j);
+	// while (line[i] && line[i] != ' ')
+	// 	i++;
+	// str = malloc(sizeof(char) * (i + 1));
+	// if (str == NULL)
+	// {
+	// 	fprintf(stderr, "ERROR MALLOC\n");
+	// 	minish->parsing.error = 1;
+	// 	return (NULL);
+	// }
+	// str[i--] = '\0';
+	// while (i >= 0)
+	// {
+	// 	str[i] = line[i];
+	// 	i--;
+	// }
+	// str = malloc(sizeof(char) * (j + 1));
+	// if (str == NULL)
+	// {
+	// 	fprintf(stderr, "ERROR MALLOC\n");
+	// 	minish->parsing.error = 1;
+	// 	return (NULL);
+	// }
+

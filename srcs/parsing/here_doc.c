@@ -6,7 +6,7 @@
 /*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/29 18:43:54 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/03/31 15:22:20 by ejahan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	here_doc(char *str)
 	free(line);
 }
 
-t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
+t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd, t_struct *minish)
 {
 	static int	nbr_line = 1;
 	char		*line;
@@ -57,7 +57,7 @@ t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd)
 	while (ft_strcmp(line, str) != 0 && g_sig_error != 42)
 	{
 		signal(SIGINT, handler_here_doc);
-		insertion_here_doc(hd, ft_strdup(line));
+		insertion_here_doc(hd, get_var_hd(line, minish));
 		line = readline("> ");
 		nbr_line++;
 		if (line == NULL)
@@ -76,20 +76,12 @@ t_struct	*recup_here_doc_end(char *line, t_struct *minish)
 	int		i;
 
 	i = 0;
-	while (line[i] && line[i] != ' ')
-		i++;
-	str = malloc(sizeof(char) * (i + 1));
+	str = fill_hd(line);
 	if (str == NULL)
 	{
 		fprintf(stderr, "ERROR MALLOC\n");
 		minish->parsing.error = 1;
 		return (NULL);
-	}
-	str[i--] = '\0';
-	while (i >= 0)
-	{
-		str[i] = line[i];
-		i--;
 	}
 	insertion_here_doc(minish->args->first->here_doc, str);
 	return (minish);
@@ -109,7 +101,7 @@ void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 			{
 				arg->first->here_doc
 					= recup_arg_here_doc(arg->first->here_doc->first->here_doc,
-						arg->first->here_doc);
+						arg->first->here_doc, ms);
 				arg->first->here_doc = reverse_list_hd(arg->first->here_doc);
 				arg->first->args_here_doc = arg_list(arg->first->here_doc, ms);
 				break ;
