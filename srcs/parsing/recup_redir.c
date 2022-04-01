@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/29 10:02:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 14:53:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ char	*len_fill_redir(char *line, t_struct *minish)
 	int			j;
 	char		*str;
 
+	if (line[i] == '<' && line[i + 1] == '<')
+		i += 2;
 	while (line[i] && line[i] != '<' && line[i] != '>')
 	{
 		while (line[i] && line[i] != '<' && line[i] != '>')
 			i++;
-		if (line[i] != '\0' && line[i + 1] == '<')
+		if (line[i] == '<' && line[i + 1] == '<')
 			i += 2;
 	}
 	j = len_redir(&line[i], minish);

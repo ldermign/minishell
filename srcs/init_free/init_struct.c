@@ -6,11 +6,32 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 14:57:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 11:31:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	get_last_right(char **redir)
+{
+	int	i;
+	int	last;
+
+	i = 0;
+	last = -1;
+	while (redir[i])
+	{
+		if (redir[i][0] && redir[i][0] == '>')
+		{
+			if (redir[i][1] && redir[i][1] != '>')
+				last = 1;
+			else if (redir[i][1] && redir[i][1] == '>')
+				last = 3;
+		}
+		i++;
+	}
+	return (last);
+}
 
 void	init_struct_std(t_args *stack, t_red_std *std, int which)
 {
@@ -18,6 +39,10 @@ void	init_struct_std(t_args *stack, t_red_std *std, int which)
 	std->fd_to_write = 0;
 	std->last_right = pos_last_redir_right(stack->redir);
 	std->last_left = pos_last_redir_left(stack->redir);
+	if (std->last_right > std->last_left)
+		std->last = get_last_right(stack->redir);
+	else if (std->last_right < std->last_left)
+		std->last = 2;
 	std->which = which;
 	std->right = is_redir(stack->redir, ">");
 	std->dbl_r = is_redir(stack->redir, ">>");

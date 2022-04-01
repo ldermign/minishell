@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:39:46 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 11:02:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 09:52:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	go_to_home(t_env *env)
 	pos = check_if_variable_exist(env->env_ms, "HOME=");
 	if (pos == -1)
 		return (0);
-	home = get_var_with_pos(env->env_ms, pos);
-	if (chdir(&home[5]) == -1)
+	home = get_variable(env->env_ms, "HOME");
+	if (chdir(home) == -1)
 		g_sig_error = 127;
 	else
 		g_sig_error = 1;
@@ -61,7 +61,7 @@ int	built_in_cd(t_env *env, char *new_to_go)
 		return (go_to_home(env));
 	ret = check_if_variable_exist(env->env_ms, "OLDPWD=");
 	old_pwd = ft_strjoin("OLDPWD=", getcwd(act_path, sizeof(act_path)));
-	path_to_go = ft_strjoin("./", new_to_go);
+	path_to_go = ft_strdup(new_to_go);
 	if (old_pwd == NULL || chdir(path_to_go) == -1)
 		return (error_path_null(old_pwd, path_to_go));
 	else

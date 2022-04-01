@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:06:45 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 16:39:11 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/04/01 09:57:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	built_in_exit(t_struct *ms, char **cmd)
 {
 	if (ms->parsing.nb_pipe == 0)
 		printf("exit\n");
-	if (cmd[1] != NULL)
+	if (cmd[1] != NULL && len_tab(cmd) == 2)
 	{
 		g_sig_error = ft_atoi(cmd[1]);
 		if (no_alpha(cmd[1]) == EXIT_FAILURE || ft_strlen(cmd[1]) >= 20)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejahan <ejahan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/31 15:22:20 by ejahan           ###   ########.fr       */
+/*   Updated: 2022/04/01 15:30:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	here_doc(char *str)
 {
-	static int	nbr_line = 0;
+	static int	nbr_line = 1;
 	char		*line;
 
 	signal(SIGINT, handler_here_doc);
@@ -43,30 +43,45 @@ void	here_doc(char *str)
 
 t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd, t_struct *minish)
 {
+	int			pid;	//
+	pid_t		status;	//
 	static int	nbr_line = 1;
 	char		*line;
 	char		*str;
 
-	str = ft_strdup(end);
-	free(hd->first->here_doc);
-	delete_hd(hd);
-	signal(SIGINT, handler_here_doc);
-	line = readline("> ");
-	if (line == NULL)
-		return (ctrl_d(str, hd, nbr_line));
-	while (ft_strcmp(line, str) != 0 && g_sig_error != 42)
+	status = 0;	//
+	pid = fork();	//
+	if (pid == -1)	//
+	{	//
+		g_sig_error = 127;	//
+		return (hd);	//
+	}	//
+	if (pid != 0)
+	{
+		wait(NULL);
+	}
+		// handle_father(minish, status, pid);
+	else
 	{
 		signal(SIGINT, handler_here_doc);
-		insertion_here_doc(hd, get_var_hd(line, minish));
+		str = ft_strdup(end);
+		free(hd->first->here_doc);
+		delete_hd(hd);
 		line = readline("> ");
-		nbr_line++;
 		if (line == NULL)
 			return (ctrl_d(str, hd, nbr_line));
+		while (ft_strcmp(line, str) != 0)
+		{
+			insertion_here_doc(hd, get_var_hd(line, minish));
+			line = readline("> ");
+			nbr_line++;
+			if (line == NULL)
+				return (ctrl_d(str, hd, nbr_line));
+		}
+		free(str);
+		free(line);
+		exit (g_sig_error);
 	}
-	if (g_sig_error == 42)
-		g_sig_error = 130;
-	free(str);
-	free(line);
 	return (hd);
 }
 

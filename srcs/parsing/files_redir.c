@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:54:17 by ejahan            #+#    #+#             */
-/*   Updated: 2022/03/31 10:26:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 14:53:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	check_file(char *arg, t_struct *minish)
 	int	fd;
 
 	i = 0;
+	if (arg[i] && arg[i] == '<' && arg[i + 1] && arg[i + 1] == '<')
+		return ;
 	while (arg[i] && arg[i] != ' ')
 		i++;
 	while (arg[i] && arg[i] == ' ')
@@ -44,7 +46,7 @@ void	check_file(char *arg, t_struct *minish)
 	fd = open(&arg[i], O_RDONLY);
 	if (fd == -1)
 	{
-		fprintf(stderr, "%s: No such file or directory\n", &arg[i]);
+		fprintf(stderr, "minishell: %s: No such file or directory\n", &arg[i]);
 		g_sig_error = 1;
 		minish->parsing.error = 1;
 	}

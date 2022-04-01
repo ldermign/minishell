@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uts_redirections.c                                 :+:      :+:    :+:   */
+/*   uts_redir_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 12:44:06 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 13:09:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:00:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	redir_is_both(t_args *stack, t_red_std *std)
 
 	str = get_good_string(stack->redir[std->last_left]);
 	std->fd_to_read = open(str, O_RDONLY, 0644);
-	if (std->which == 1)
+	if (std->last == 1)
 		std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
 	else
 		std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
@@ -80,19 +80,19 @@ int	good_fd_for_redir(t_args *stack, t_red_std *std)
 {
 	if (std->both == 0)
 	{
-		if (std->which == 1)
+		if (std->last == 1)
 			std->fd_to_write = open(std->name_file, O_WRONLY | O_TRUNC, 0644);
-		else if (std->which == 3)
+		else if (std->last == 3)
 			std->fd_to_write = open(std->name_file, O_WRONLY | O_APPEND, 0644);
-		if (std->which == 1 || std->which == 3)
+		if (std->left == 1 || std->right == 1)
 			dup2(std->fd_to_write, STDOUT_FILENO);
-		if (std->which == 2)
+		if (std->last == 2)
 		{
 			std->fd_to_read = open(get_name_left(stack->redir[std->last_left]),
 					O_RDONLY);
 			dup2(std->fd_to_read, 0);
 		}
-		else if (std->which == 4)
+		if (std->which == 4)
 			redir_is_here_doc(stack);
 	}
 	else if (std->both == 1)

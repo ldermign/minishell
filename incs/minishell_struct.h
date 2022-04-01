@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 15:01:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 11:27:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_redirection_std
 	int		fd_to_write;
 	int		last_right;
 	int		last_left;
+	int		last;
 	int		which;
 	int		right;
 	int		dbl_r;

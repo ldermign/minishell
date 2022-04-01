@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:46:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 15:00:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 09:50:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	handle_child(t_struct *ms, t_args *stack, t_execute *exec)
 	if (ms->std.which == 4 || (stack->redir && stack->redir[0] != NULL))
 	{
 		free(ms->pipex);
-		ft_free_struct_execute(exec);
 		exit (redirection(ms, stack));
 	}
 	if (is_new_executable(stack->command) != -1)
@@ -47,18 +46,24 @@ static void	handle_child(t_struct *ms, t_args *stack, t_execute *exec)
 		exit (execute_cmd_execve(ms, exec, stack->arg_to_pass));
 	else if (stack->arg_to_pass)
 	{
-		ft_free_struct_execute(exec);
+		if (exec != NULL)
+		{
+			ft_free_struct_execute(exec);
+			exec = NULL;
+		}
 		built_in(ms, stack);
 		free_list(ms->args);
 		ft_free_all(ms);
 	}
-	free(ms->pipex);
+	if (ms->pipex != NULL)
+		free(ms->pipex);
 	exit (g_sig_error);
 }
 
-static void	boucle(t_struct *ms, t_args *stack, t_execute *exec)
+static void	boucle(t_struct *ms, t_args *stack)
 {
-	int	last;
+	int			last;
+	t_execute	exec;
 
 	while (stack)
 	{
@@ -66,18 +71,18 @@ static void	boucle(t_struct *ms, t_args *stack, t_execute *exec)
 				last_right(stack->command));
 		init_struct_std(stack, &(*ms).std, last);
 		if (stack->arg_to_pass)
-			init_struct_execute(ms, exec, stack->arg_to_pass);
+			init_struct_execute(ms, &exec, stack->arg_to_pass);
 		if (pipe_the_good_one(ms->pipex) == EXIT_FAILURE)
 			exit (g_sig_error);
 		ms->pipex->nbr_exec++;
 		if (init_fork(&(ms->pipex->pid)) == -1)
 			return ;
 		if (ms->pipex->pid == 0)
-			handle_child(ms, stack, exec);
+			handle_child(ms, stack, &exec);
 		else
 			close_fd_pipe_main(ms->pipex);
 		if (stack->arg_to_pass)
-			ft_free_struct_execute(exec);
+			ft_free_struct_execute(&exec);
 		stack = stack->next;
 		ms->pipex->cmd_nbr++;
 	}
@@ -85,7 +90,6 @@ static void	boucle(t_struct *ms, t_args *stack, t_execute *exec)
 
 void	there_is_pipe(t_struct *ms)
 {
-	t_execute	exec;
 	t_args		*stack;
 
 	stack = ms->args->first;
@@ -93,6 +97,6 @@ void	there_is_pipe(t_struct *ms)
 	if (ms->pipex == NULL)
 		return ;
 	init_struct_pipe(ms->pipex, ms);
-	boucle(ms, stack, &exec);
+	boucle(ms, stack);
 	wait_for_the_end(ms);
 }

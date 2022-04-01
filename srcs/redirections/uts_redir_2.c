@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 14:21:18 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 11:15:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/01 11:20:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	pos_last_redir_right(char **args)
 	last = -1;
 	while (args[i])
 	{
-		if (args[i][0] == '>')
+		if (args[i][0] && args[i][0] == '>')
 		{
-			if (args[i][1] == ' ')
-				last = i;
-			else if (args[i][1] && args[i][1] == '>' && args[i][2] == ' ')
+			if ((args[i][1] && args[i][1] != '>')
+			|| (args[i][1] && args[i][2] && args[i][1] == '>'
+				&& args[i][2] != '>'))
 				last = i;
 		}
 		i++;
@@ -42,11 +42,9 @@ int	pos_last_redir_left(char **args)
 	last = -1;
 	while (args[i])
 	{
-		if (args[i][0] == '<')
+		if (args[i][0] && args[i][0] == '<')
 		{
-			if (args[i][1] == ' ')
-				last = i;
-			else if (args[i][1] && args[i][1] == '<' && args[i][2] == ' ')
+			if (args[i][1] && args[i][1] != '<')
 				last = i;
 		}
 		i++;
