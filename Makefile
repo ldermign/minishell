@@ -6,7 +6,7 @@
 #    By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 10:44:41 by ldermign          #+#    #+#              #
-#    Updated: 2022/04/01 09:03:45 by ldermign         ###   ########.fr        #
+#    Updated: 2022/04/02 11:32:22 by ldermign         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ SRCS	=	./srcs/main.c \
 			./srcs/init_free/init_struct.c \
 			./srcs/init_free/init.c \
 			./srcs/init_free/free.c \
-			./srcs/supprimer.c \
 			./srcs/parsing/parsing.c ./srcs/parsing/initialisations.c\
 			./srcs/parsing/lists.c ./srcs/parsing/sep_args.c \
 			./srcs/parsing/recup_pipe.c ./srcs/parsing/count_arg.c \

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:50:38 by ldermign          #+#    #+#             */
-/*   Updated: 2022/04/01 09:02:18 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 11:32:16 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,6 @@ void		free_env_ms(t_env_ms *stack);
 void		ft_free_tab_char(char **tabl);
 void		ft_free_struct_execute(t_execute *exec);
 void		ft_free_all(t_struct *ms);
-
-/*
-**	TEMPORAIRE A SUPPRIMEEEEEERRRRRR
-*/
-
-void		print_tab_char(char **tabl);
-void		print_env_ms(t_env_ms *stack);
-void		print_stack_cmd(t_args *stack);
 
 /*
 **		>>>>>>>>>  PARSING  <<<<<<<<<

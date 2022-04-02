@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 09:45:28 by ldermign          #+#    #+#             */
-/*   Updated: 2022/03/31 12:58:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 11:28:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,11 @@ int	other_executable(t_struct *ms, t_args *cmd)
 	signal(SIGINT, handle_signal_child);
 	signal(SIGQUIT, handle_signal_child);
 	if (pid > 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		handle_father(ms, status, pid);
+	}
 	else
 		handle_child(ms, cmd, new_env);
 	ft_free_tab_char(new_env);

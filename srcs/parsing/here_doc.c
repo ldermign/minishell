@@ -6,73 +6,83 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 00:35:39 by ejahan            #+#    #+#             */
-/*   Updated: 2022/04/01 15:30:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 11:27:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	here_doc(char *str)
+void	here_doc(char *str, t_struct *minish)
 {
+	int			pid;
+	pid_t		status;
 	static int	nbr_line = 1;
 	char		*line;
 
-	signal(SIGINT, handler_here_doc);
-	line = readline("> ");
-	if (line == NULL)
+	line = NULL;
+	status = 0;
+	pid = fork();
+	if (pid == -1)
 	{
-		ctrl_d_hd(str, nbr_line);
+		g_sig_error = 127;
 		return ;
 	}
-	while (ft_strcmp(line, str) != 0 && g_sig_error != 42)
+	if (pid != 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		handle_father(minish, status, pid);
+	}
+	else
 	{
 		signal(SIGINT, handler_here_doc);
-		free(line);
-		line = readline("> ");
-		nbr_line++;
-		if (line == NULL)
+		while (line == NULL || ft_strcmp(line, str) != 0)
 		{
-			ctrl_d_hd(str, nbr_line);
-			return ;
+			if (line != NULL)
+				free(line);
+			line = readline("> ");
+			nbr_line++;
+			if (line == NULL)
+			{
+				ctrl_d_hd(str, nbr_line);
+				return ;
+			}
 		}
 	}
-	if (g_sig_error == 42)
-		g_sig_error = 130;
 	free(line);
 }
 
 t_list_hd	*recup_arg_here_doc(char *end, t_list_hd *hd, t_struct *minish)
 {
-	int			pid;	//
-	pid_t		status;	//
+	int			pid;
+	pid_t		status;
 	static int	nbr_line = 1;
 	char		*line;
 	char		*str;
 
-	status = 0;	//
-	pid = fork();	//
-	if (pid == -1)	//
-	{	//
-		g_sig_error = 127;	//
-		return (hd);	//
-	}	//
+	status = 0;
+	pid = fork();
+	if (pid == -1)
+	{
+		g_sig_error = 127;
+		return (hd);
+	}
+	line = NULL;
 	if (pid != 0)
 	{
-		wait(NULL);
+		signal(SIGINT, SIG_IGN);
+		handle_father(minish, status, pid);
 	}
-		// handle_father(minish, status, pid);
 	else
 	{
 		signal(SIGINT, handler_here_doc);
 		str = ft_strdup(end);
 		free(hd->first->here_doc);
 		delete_hd(hd);
-		line = readline("> ");
-		if (line == NULL)
-			return (ctrl_d(str, hd, nbr_line));
-		while (ft_strcmp(line, str) != 0)
+		while (line == NULL || ft_strcmp(line, str) != 0)
 		{
-			insertion_here_doc(hd, get_var_hd(line, minish));
+			if (line != NULL)
+				insertion_here_doc(hd, get_var_hd(line, minish));
+			free(line);
 			line = readline("> ");
 			nbr_line++;
 			if (line == NULL)
@@ -122,7 +132,7 @@ void	exec_here_doc(t_list_arg *arg, t_struct *ms)
 				break ;
 			}
 			else
-				here_doc(arg->first->here_doc->first->here_doc);
+				here_doc(arg->first->here_doc->first->here_doc, ms);
 			free(arg->first->here_doc->first->here_doc);
 			delete_hd(arg->first->here_doc);
 		}

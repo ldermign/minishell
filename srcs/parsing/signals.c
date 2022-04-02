@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:19:51 by ejahan            #+#    #+#             */
-/*   Updated: 2022/04/01 15:47:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 11:28:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	handler_here_doc(int sig)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
 		g_sig_error = 130;
 		exit (g_sig_error);
 	}
