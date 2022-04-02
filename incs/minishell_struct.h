@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:48:39 by ldermign          #+#    #+#             */
-/*   Updated: 2022/04/01 11:27:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 15:32:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct s_structure
 	t_execute		exec;
 	char			*prompt;
 	t_pipe			*pipex;
+	int				nbr_line;
 }	t_struct;
 
 #endif

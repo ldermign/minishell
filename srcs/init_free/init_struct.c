@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 09:29:11 by ldermign          #+#    #+#             */
-/*   Updated: 2022/04/01 11:31:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 15:36:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	init_struct_std(t_args *stack, t_red_std *std, int which)
 	std->fd_to_write = 0;
 	std->last_right = pos_last_redir_right(stack->redir);
 	std->last_left = pos_last_redir_left(stack->redir);
+	std->last = -1;
 	if (std->last_right > std->last_left)
 		std->last = get_last_right(stack->redir);
 	else if (std->last_right < std->last_left)

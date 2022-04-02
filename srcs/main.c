@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 10:30:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/04/01 15:47:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 15:33:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	loop(t_struct *minish)
 	char	*line;
 
 	i = 0;
+	minish->nbr_line = 1;
 	line = NULL;
 	line = readline("$ ");
 	if (line == NULL)

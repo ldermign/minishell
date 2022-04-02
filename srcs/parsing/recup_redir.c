@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:18:37 by ejahan            #+#    #+#             */
-/*   Updated: 2022/04/01 14:53:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/04/02 15:35:25 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,7 @@ char	*len_fill_redir(char *line, t_struct *minish)
 	j = len_redir(&line[i], minish);
 	str = malloc(sizeof(char) * (minish->parsing.len_arg + 1));
 	if (str == NULL)
-	{
-		fprintf(stderr, "ERROR MALLOC\n");
-		minish->parsing.error = 1;
-		return (NULL);
-	}
+		return (error_malloc_null(minish));
 	str = fill_redir(str, &line[i], minish, 0);
 	i += j;
 	if (line[i] == '\0')
